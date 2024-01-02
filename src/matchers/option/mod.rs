@@ -8,7 +8,9 @@ trait SomeNone {
 }
 
 impl<T> SomeNone for Option<T>
-    where T: Debug {
+where
+    T: Debug,
+{
     fn should_be_some(&self) -> &Self {
         if self.is_none() {
             assert_failed_unary(AssertKind::Some, self);

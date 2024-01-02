@@ -1,12 +1,17 @@
 use crate::panicking::{assert_failed_unary, AssertKind};
 
-pub(crate) trait Sorted<T> where T: PartialOrd {
+pub(crate) trait Sorted<T>
+where
+    T: PartialOrd,
+{
     fn should_be_sorted_ascending(&self) -> &Self;
     fn should_be_sorted_descending(&self) -> &Self;
 }
 
 impl<T> Sorted<T> for Vec<T>
-    where T: std::fmt::Debug + PartialOrd {
+where
+    T: std::fmt::Debug + PartialOrd,
+{
     fn should_be_sorted_ascending(&self) -> &Self {
         let sorted = (0..self.len() - 1).all(|index| self[index] <= self[index + 1]);
         if !sorted {

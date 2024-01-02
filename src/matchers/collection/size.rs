@@ -9,7 +9,9 @@ pub(crate) trait Size {
 }
 
 impl<T> Size for Vec<T>
-    where T: std::fmt::Debug {
+where
+    T: std::fmt::Debug,
+{
     fn should_have_size(&self, size: usize) -> &Self {
         if self.len() != size {
             assert_failed_binary(AssertKind::EqualSize, self, &size);

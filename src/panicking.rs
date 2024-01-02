@@ -36,23 +36,18 @@ pub(crate) enum AssertKind {
     NotContainsDigits,
 }
 
-pub(crate) fn assert_failed_unary<T>(
-    kind: AssertKind,
-    left: &T,
-) -> !
-    where
-        T: fmt::Debug + ?Sized, {
+pub(crate) fn assert_failed_unary<T>(kind: AssertKind, left: &T) -> !
+where
+    T: fmt::Debug + ?Sized,
+{
     assert_failed_inner(kind, &left, None)
 }
 
-pub(crate) fn assert_failed_binary<T, U>(
-    kind: AssertKind,
-    left: &T,
-    right: &U,
-) -> !
-    where
-        T: fmt::Debug + ?Sized,
-        U: fmt::Debug + ?Sized, {
+pub(crate) fn assert_failed_binary<T, U>(kind: AssertKind, left: &T, right: &U) -> !
+where
+    T: fmt::Debug + ?Sized,
+    U: fmt::Debug + ?Sized,
+{
     assert_failed_inner(kind, &left, Some(&right))
 }
 

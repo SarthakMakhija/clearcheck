@@ -1,13 +1,18 @@
 use crate::panicking::{assert_failed_binary, AssertKind};
 
-pub(crate) trait Contains<T> where T: Eq + std::fmt::Debug {
+pub(crate) trait Contains<T>
+where
+    T: Eq + std::fmt::Debug,
+{
     fn should_contain(&self, element: &T) -> &Self;
     fn should_not_contain(&self, element: &T) -> &Self;
 }
 
 impl<T> Contains<T> for Vec<T>
-    where T: std::fmt::Debug,
-          T: Eq {
+where
+    T: std::fmt::Debug,
+    T: Eq,
+{
     fn should_contain(&self, element: &T) -> &Self {
         let contains = self.iter().any(|source| source == element);
         if !contains {

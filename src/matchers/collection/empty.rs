@@ -6,7 +6,9 @@ pub(crate) trait Empty {
 }
 
 impl<T> Empty for Vec<T>
-    where T: std::fmt::Debug {
+where
+    T: std::fmt::Debug,
+{
     fn should_be_empty(&self) -> &Self {
         if !self.is_empty() {
             assert_failed_unary(AssertKind::Empty, &self)

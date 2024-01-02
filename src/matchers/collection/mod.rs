@@ -1,6 +1,6 @@
-mod empty;
-mod contain;
 mod bound;
+mod contain;
 mod duplicate;
-mod sort;
+mod empty;
 pub(crate) mod size;
+mod sort;

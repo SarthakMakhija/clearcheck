@@ -6,8 +6,10 @@ use crate::matchers::collection::size::Size;
 use crate::panicking::{assert_failed_binary, AssertKind};
 
 impl<K, V> Size for HashMap<K, V>
-    where K: Hash + Eq + PartialEq + Debug,
-          V: Debug {
+where
+    K: Hash + Eq + PartialEq + Debug,
+    V: Debug,
+{
     fn should_have_size(&self, size: usize) -> &Self {
         if self.len() != size {
             assert_failed_binary(AssertKind::EqualSize, self, &size);

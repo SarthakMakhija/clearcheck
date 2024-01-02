@@ -8,8 +8,10 @@ trait OkErr {
 }
 
 impl<T, E> OkErr for Result<T, E>
-    where T: Debug,
-          E: Debug {
+where
+    T: Debug,
+    E: Debug,
+{
     fn should_be_ok(&self) -> &Self {
         if self.is_err() {
             assert_failed_unary(AssertKind::Ok, self);

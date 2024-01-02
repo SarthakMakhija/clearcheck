@@ -9,8 +9,10 @@ pub(crate) trait Duplicates {
 }
 
 impl<T> Duplicates for Vec<T>
-    where T: std::fmt::Debug,
-          T: Hash + Eq {
+where
+    T: std::fmt::Debug,
+    T: Hash + Eq,
+{
     fn should_contain_duplicates(&self) -> &Self {
         let unique = self.iter().collect::<HashSet<_>>();
         if unique.len() == self.len() {
