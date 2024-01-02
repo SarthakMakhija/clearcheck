@@ -5,6 +5,8 @@ pub(crate) enum AssertKind {
     NotEmpty,
     Contains,
     NotContains,
+    UpperBound,
+    LowerBound,
 }
 
 pub(crate) fn assert_failed_unary<T>(
@@ -37,6 +39,8 @@ fn assert_failed_inner(
         AssertKind::NotEmpty => "must not be empty",
         AssertKind::Contains => "must contain",
         AssertKind::NotContains => "must not contain",
+        AssertKind::UpperBound => "must have an upper-bound",
+        AssertKind::LowerBound => "must have a lower-bound",
     };
 
     match right {
