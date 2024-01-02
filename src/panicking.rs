@@ -21,6 +21,8 @@ pub(crate) enum AssertKind {
     Some,
     Ok,
     Err,
+    True,
+    False,
 }
 
 pub(crate) fn assert_failed_unary<T>(
@@ -69,6 +71,8 @@ fn assert_failed_inner(
         AssertKind::Some => "must be some",
         AssertKind::Ok => "must be ok",
         AssertKind::Err => "must be error",
+        AssertKind::True => "must be true",
+        AssertKind::False => "must be false"
     };
 
     match right {
