@@ -1,0 +1,7 @@
+- Provide collection traits for arrays
+- Provide collection traits for slices
+- Handle duplication in collection traits between vector, arrays and slices
+- Use the same borrow concept in vector in contains
+- Handle duplication between size trait for map and collection
+- Make the modules public
+- Provide ContainsKey, NotContainsKey in AssertKind
