@@ -1,2 +1,2 @@
 # assert4rs
-Assertions for rust.
+Powerful and elegant assertions for rust.
