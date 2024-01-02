@@ -3,6 +3,8 @@ use core::fmt;
 pub(crate) enum AssertKind {
     Empty,
     NotEmpty,
+    Contains,
+    NotContains,
 }
 
 pub(crate) fn assert_failed_unary<T>(
@@ -14,14 +16,27 @@ pub(crate) fn assert_failed_unary<T>(
     assert_failed_inner(kind, &left, None)
 }
 
+pub(crate) fn assert_failed_binary<T, U>(
+    kind: AssertKind,
+    left: &T,
+    right: &U,
+) -> !
+    where
+        T: fmt::Debug + ?Sized,
+        U: fmt::Debug + ?Sized, {
+    assert_failed_inner(kind, &left, Some(&right))
+}
+
 fn assert_failed_inner(
     kind: AssertKind,
     left: &dyn fmt::Debug,
     right: Option<&dyn fmt::Debug>,
 ) -> ! {
     let op = match kind {
-        AssertKind::Empty => "left must be empty",
-        AssertKind::NotEmpty => "left must not be empty",
+        AssertKind::Empty => "must be empty",
+        AssertKind::NotEmpty => "must not be empty",
+        AssertKind::Contains => "must contain",
+        AssertKind::NotContains => "must not contain",
     };
 
     match right {
