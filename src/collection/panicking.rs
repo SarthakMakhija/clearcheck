@@ -7,6 +7,8 @@ pub(crate) enum AssertKind {
     NotContains,
     UpperBound,
     LowerBound,
+    ContainsDuplicates,
+    NotContainsDuplicates,
 }
 
 pub(crate) fn assert_failed_unary<T>(
@@ -34,13 +36,15 @@ fn assert_failed_inner(
     left: &dyn fmt::Debug,
     right: Option<&dyn fmt::Debug>,
 ) -> ! {
-    let op = match kind {
+    let operation = match kind {
         AssertKind::Empty => "must be empty",
         AssertKind::NotEmpty => "must not be empty",
         AssertKind::Contains => "must contain",
         AssertKind::NotContains => "must not contain",
         AssertKind::UpperBound => "must have an upper-bound",
         AssertKind::LowerBound => "must have a lower-bound",
+        AssertKind::ContainsDuplicates => "must contain duplicates",
+        AssertKind::NotContainsDuplicates => "must not contain duplicates",
     };
 
     match right {
@@ -48,12 +52,12 @@ fn assert_failed_inner(
             r#"assertion failed: `(left {} right)`
   left: `{:?}`,
  right: `{:?}`"#,
-            op, left, right
+            operation, left, right
         ),
         None => panic!(
             r#"assertion failed: `(left {})`
   left: `{:?}`"#,
-            op, left,
+            operation, left,
         ),
     }
 }
