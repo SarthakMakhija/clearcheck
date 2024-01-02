@@ -23,6 +23,8 @@ pub(crate) enum AssertKind {
     Err,
     True,
     False,
+    LowerCase,
+    UpperCase,
 }
 
 pub(crate) fn assert_failed_unary<T>(
@@ -72,7 +74,9 @@ fn assert_failed_inner(
         AssertKind::Ok => "must be ok",
         AssertKind::Err => "must be error",
         AssertKind::True => "must be true",
-        AssertKind::False => "must be false"
+        AssertKind::False => "must be false",
+        AssertKind::LowerCase => "must be lowercase",
+        AssertKind::UpperCase => "must be uppercase",
     };
 
     match right {
