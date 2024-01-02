@@ -1,4 +1,4 @@
-use crate::collection::panicking::{assert_failed_unary, AssertKind};
+use crate::panicking::{assert_failed_unary, AssertKind};
 
 pub(crate) trait Empty {
     fn should_be_empty(&self) -> &Self;
@@ -24,7 +24,7 @@ impl<T> Empty for Vec<T>
 
 #[cfg(test)]
 mod tests {
-    use crate::collection::matchers::empty::Empty;
+    use crate::matchers::collection::empty::Empty;
 
     #[test]
     #[should_panic]

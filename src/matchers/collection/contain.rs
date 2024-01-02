@@ -1,4 +1,4 @@
-use crate::collection::panicking::{assert_failed_binary, AssertKind};
+use crate::panicking::{assert_failed_binary, AssertKind};
 
 pub(crate) trait Contains<T> where T: Eq + std::fmt::Debug {
     fn should_contain(&self, element: &T) -> &Self;
@@ -27,7 +27,7 @@ impl<T> Contains<T> for Vec<T>
 
 #[cfg(test)]
 mod tests {
-    use crate::collection::matchers::contain::Contains;
+    use crate::matchers::collection::contain::Contains;
 
     #[test]
     fn should_contain() {

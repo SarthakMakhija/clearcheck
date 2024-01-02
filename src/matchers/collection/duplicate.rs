@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 use std::hash::Hash;
 
-use crate::collection::panicking::{assert_failed_unary, AssertKind};
+use crate::panicking::{assert_failed_unary, AssertKind};
 
 pub(crate) trait Duplicates {
     fn should_contain_duplicates(&self) -> &Self;
@@ -30,7 +30,7 @@ impl<T> Duplicates for Vec<T>
 
 #[cfg(test)]
 mod tests {
-    use crate::collection::matchers::duplicate::Duplicates;
+    use crate::matchers::collection::duplicate::Duplicates;
 
     #[test]
     fn should_contain_duplicates() {

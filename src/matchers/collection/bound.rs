@@ -1,4 +1,4 @@
-use crate::collection::panicking::{assert_failed_binary, AssertKind};
+use crate::panicking::{assert_failed_binary, AssertKind};
 
 pub(crate) trait Bounds<T> where T: PartialOrd + std::fmt::Debug {
     fn should_have_upper_bound(&self, element: &T) -> &Self;
@@ -29,7 +29,7 @@ impl<T> Bounds<T> for Vec<T>
 
 #[cfg(test)]
 mod tests {
-    use crate::collection::matchers::bound::Bounds;
+    use crate::matchers::collection::bound::Bounds;
 
     #[test]
     fn should_have_an_upper_bound() {

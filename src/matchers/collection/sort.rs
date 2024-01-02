@@ -1,4 +1,4 @@
-use crate::collection::panicking::{assert_failed_unary, AssertKind};
+use crate::panicking::{assert_failed_unary, AssertKind};
 
 pub(crate) trait Sorted<T> where T: PartialOrd {
     fn should_be_sorted_ascending(&self) -> &Self;
@@ -26,7 +26,7 @@ impl<T> Sorted<T> for Vec<T>
 
 #[cfg(test)]
 mod tests {
-    use crate::collection::matchers::sort::Sorted;
+    use crate::matchers::collection::sort::Sorted;
 
     #[test]
     fn should_be_sorted_in_ascending_order() {

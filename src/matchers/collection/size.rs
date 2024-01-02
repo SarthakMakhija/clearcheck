@@ -1,4 +1,4 @@
-use crate::collection::panicking::{assert_failed_binary, AssertKind};
+use crate::panicking::{assert_failed_binary, AssertKind};
 
 pub(crate) trait Size {
     fn should_have_size(&self, size: usize) -> &Self;
@@ -48,7 +48,7 @@ impl<T> Size for Vec<T>
 
 #[cfg(test)]
 mod tests {
-    use crate::collection::matchers::size::Size;
+    use crate::matchers::collection::size::Size;
 
     #[test]
     fn should_have_size() {
