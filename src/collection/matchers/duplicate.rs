@@ -12,16 +12,16 @@ impl<T> Duplicates for Vec<T>
     where T: std::fmt::Debug,
           T: Hash + Eq {
     fn should_contain_duplicates(&self) -> &Self {
-        let set = self.iter().collect::<HashSet<_>>();
-        if set.len() == self.len() {
+        let unique = self.iter().collect::<HashSet<_>>();
+        if unique.len() == self.len() {
             assert_failed_unary(AssertKind::ContainsDuplicates, &self);
         }
         self
     }
 
     fn should_not_contain_duplicates(&self) -> &Self {
-        let set = self.iter().collect::<HashSet<_>>();
-        if set.len() != self.len() {
+        let unique = self.iter().collect::<HashSet<_>>();
+        if unique.len() != self.len() {
             assert_failed_unary(AssertKind::NotContainsDuplicates, &self);
         }
         self
