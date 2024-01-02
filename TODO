@@ -5,3 +5,7 @@
 - Handle duplication between size trait for map and collection
 - Make the modules public
 - Provide ContainsKey, NotContainsKey in AssertKind
+- Add support for num matchers
+- Add support for string matchers
+- Add support for option matchers
+- Add support for result matchers

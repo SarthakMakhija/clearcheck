@@ -17,6 +17,10 @@ pub(crate) enum AssertKind {
     AtmostSize,
     ContainsValue,
     NotContainsValue,
+    None,
+    Some,
+    Ok,
+    Err,
 }
 
 pub(crate) fn assert_failed_unary<T>(
@@ -61,6 +65,10 @@ fn assert_failed_inner(
         AssertKind::AtmostSize => "must have at most the same size as",
         AssertKind::ContainsValue => "must contain the value of",
         AssertKind::NotContainsValue => "must not contain the value of",
+        AssertKind::None => "must be none",
+        AssertKind::Some => "must be some",
+        AssertKind::Ok => "must be ok",
+        AssertKind::Err => "must be error",
     };
 
     match right {
