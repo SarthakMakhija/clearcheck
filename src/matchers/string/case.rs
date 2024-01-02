@@ -39,27 +39,27 @@ mod tests {
 
     #[test]
     fn should_be_lower_case() {
-        let name = "john";
+        let name = "assert4j";
         name.should_be_lower_case();
     }
 
     #[test]
     #[should_panic]
     fn should_be_lower_case_but_was_not() {
-        let name = "John";
+        let name = "assert4J";
         name.should_be_lower_case();
     }
 
     #[test]
     fn should_be_upper_case() {
-        let name = "JOHN";
+        let name = "ASSERT4J";
         name.should_be_upper_case();
     }
 
     #[test]
     #[should_panic]
     fn should_be_upper_case_but_was_not() {
-        let name = "John";
+        let name = "assert4J";
         name.should_be_upper_case();
     }
 }

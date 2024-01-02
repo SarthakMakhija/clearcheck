@@ -51,7 +51,7 @@ mod tests {
     use crate::matchers::collection::size::Size;
 
     #[test]
-    fn should_have_size() {
+    fn should_have_size_as_1() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.should_have_size(1);
@@ -59,14 +59,14 @@ mod tests {
 
     #[test]
     #[should_panic]
-    fn should_have_size_but_was_not() {
+    fn should_have_size_3_but_was_not() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.should_have_size(3);
     }
 
     #[test]
-    fn should_not_have_size() {
+    fn should_not_have_size_3() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.should_not_have_size(3);
@@ -74,14 +74,14 @@ mod tests {
 
     #[test]
     #[should_panic]
-    fn should_not_have_size_but_was() {
+    fn should_not_have_size_1_but_was() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.should_not_have_size(1);
     }
 
     #[test]
-    fn should_have_at_least_size() {
+    fn should_have_at_least_size_1() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.should_have_at_least_size(1);
@@ -89,14 +89,14 @@ mod tests {
 
     #[test]
     #[should_panic]
-    fn should_have_at_least_size_but_was_not() {
+    fn should_have_at_least_size_2_but_was_not() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.should_have_at_least_size(2);
     }
 
     #[test]
-    fn should_have_at_most_size() {
+    fn should_have_at_most_size_1() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.should_have_at_most_size(1);
@@ -104,7 +104,7 @@ mod tests {
 
     #[test]
     #[should_panic]
-    fn should_have_at_most_size_but_was_not() {
+    fn should_have_at_most_size_1_but_was_not() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.insert("java", "assert4j");

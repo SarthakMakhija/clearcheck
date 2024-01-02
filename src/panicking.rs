@@ -11,8 +11,8 @@ pub(crate) enum AssertKind {
     NotContainsDuplicates,
     SortsAscending,
     SortsDescending,
-    NotEqualSize,
     EqualSize,
+    NotEqualSize,
     AtleastSize,
     AtmostSize,
     ContainsValue,
@@ -25,6 +25,12 @@ pub(crate) enum AssertKind {
     False,
     LowerCase,
     UpperCase,
+    EqualLength,
+    NotEqualLength,
+    AtleastLength,
+    AtmostLength,
+    InRangeLength,
+    NotInRangeLength,
 }
 
 pub(crate) fn assert_failed_unary<T>(
@@ -77,6 +83,12 @@ fn assert_failed_inner(
         AssertKind::False => "must be false",
         AssertKind::LowerCase => "must be lowercase",
         AssertKind::UpperCase => "must be uppercase",
+        AssertKind::EqualLength => "must have the same length as",
+        AssertKind::NotEqualLength => "must not have the same length as",
+        AssertKind::AtleastLength => "must have at least the same length as",
+        AssertKind::AtmostLength => "must have at most the same length as",
+        AssertKind::InRangeLength => "must have the length in the range provided by",
+        AssertKind::NotInRangeLength => "must not have the length in the range provided by",
     };
 
     match right {
