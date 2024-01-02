@@ -1,8 +1,8 @@
 use crate::collection::panicking::{assert_failed_binary, AssertKind};
 
-pub(crate) trait Bounds<U> where U: PartialOrd + std::fmt::Debug {
-    fn should_have_upper_bound(&self, element: &U) -> &Self;
-    fn should_have_lower_bound(&self, element: &U) -> &Self;
+pub(crate) trait Bounds<T> where T: PartialOrd + std::fmt::Debug {
+    fn should_have_upper_bound(&self, element: &T) -> &Self;
+    fn should_have_lower_bound(&self, element: &T) -> &Self;
 }
 
 impl<T> Bounds<T> for Vec<T>

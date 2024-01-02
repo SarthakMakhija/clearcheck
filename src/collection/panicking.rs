@@ -9,6 +9,8 @@ pub(crate) enum AssertKind {
     LowerBound,
     ContainsDuplicates,
     NotContainsDuplicates,
+    SortsAscending,
+    SortsDescending,
 }
 
 pub(crate) fn assert_failed_unary<T>(
@@ -45,6 +47,8 @@ fn assert_failed_inner(
         AssertKind::LowerBound => "must have a lower-bound",
         AssertKind::ContainsDuplicates => "must contain duplicates",
         AssertKind::NotContainsDuplicates => "must not contain duplicates",
+        AssertKind::SortsAscending => "must be sorted in ascending order",
+        AssertKind::SortsDescending => "must be sorted in descending order",
     };
 
     match right {

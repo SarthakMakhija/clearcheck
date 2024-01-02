@@ -1,8 +1,8 @@
 use crate::collection::panicking::{assert_failed_binary, AssertKind};
 
-pub(crate) trait Contains<U> where U: Eq + std::fmt::Debug {
-    fn should_contain(&self, element: &U) -> &Self;
-    fn should_not_contain(&self, element: &U) -> &Self;
+pub(crate) trait Contains<T> where T: Eq + std::fmt::Debug {
+    fn should_contain(&self, element: &T) -> &Self;
+    fn should_not_contain(&self, element: &T) -> &Self;
 }
 
 impl<T> Contains<T> for Vec<T>
