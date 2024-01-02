@@ -31,6 +31,9 @@ pub(crate) enum AssertKind {
     AtmostLength,
     InRangeLength,
     NotInRangeLength,
+    ContainsOnlyDigits,
+    ContainsADigit,
+    NotContainsDigits,
 }
 
 pub(crate) fn assert_failed_unary<T>(
@@ -89,6 +92,9 @@ fn assert_failed_inner(
         AssertKind::AtmostLength => "must have at most the same length as",
         AssertKind::InRangeLength => "must have the length in the range provided by",
         AssertKind::NotInRangeLength => "must not have the length in the range provided by",
+        AssertKind::ContainsOnlyDigits => "must only contain digits",
+        AssertKind::ContainsADigit => "must contain a digit",
+        AssertKind::NotContainsDigits => "must not contain a digit",
     };
 
     match right {

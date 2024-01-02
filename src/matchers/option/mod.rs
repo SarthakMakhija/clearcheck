@@ -2,23 +2,23 @@ use std::fmt::Debug;
 
 use crate::panicking::{assert_failed_unary, AssertKind};
 
-trait NoneSome {
-    fn should_be_none(&self) -> &Self;
+trait SomeNone {
     fn should_be_some(&self) -> &Self;
+    fn should_be_none(&self) -> &Self;
 }
 
-impl<T> NoneSome for Option<T>
+impl<T> SomeNone for Option<T>
     where T: Debug {
-    fn should_be_none(&self) -> &Self {
-        if self.is_some() {
-            assert_failed_unary(AssertKind::None, self);
+    fn should_be_some(&self) -> &Self {
+        if self.is_none() {
+            assert_failed_unary(AssertKind::Some, self);
         }
         self
     }
 
-    fn should_be_some(&self) -> &Self {
-        if self.is_none() {
-            assert_failed_unary(AssertKind::Some, self);
+    fn should_be_none(&self) -> &Self {
+        if self.is_some() {
+            assert_failed_unary(AssertKind::None, self);
         }
         self
     }
@@ -26,7 +26,7 @@ impl<T> NoneSome for Option<T>
 
 #[cfg(test)]
 mod tests {
-    use crate::matchers::option::NoneSome;
+    use crate::matchers::option::SomeNone;
 
     #[test]
     fn should_be_none() {
