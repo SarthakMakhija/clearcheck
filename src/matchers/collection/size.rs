@@ -1,5 +1,6 @@
-use crate::panicking::{assert_failed_binary, AssertKind};
 use std::ops::{Range, RangeInclusive};
+
+use crate::panicking::{assert_failed_binary, AssertKind};
 
 pub trait Size {
     fn should_have_size(&self, size: usize) -> &Self;
@@ -14,8 +15,58 @@ pub trait Size {
 }
 
 impl<T> Size for Vec<T>
-where
-    T: std::fmt::Debug,
+    where
+        T: std::fmt::Debug,
+{
+    fn should_have_size(&self, size: usize) -> &Self {
+        (self as &[T]).should_have_size(size);
+        self
+    }
+
+    fn should_not_have_size(&self, size: usize) -> &Self {
+        (self as &[T]).should_not_have_size(size);
+        self
+    }
+
+    fn should_have_at_least_size(&self, size: usize) -> &Self {
+        (self as &[T]).should_have_at_least_size(size);
+        self
+    }
+
+    fn should_have_at_most_size(&self, size: usize) -> &Self {
+        (self as &[T]).should_have_at_most_size(size);
+        self
+    }
+
+    fn should_be_same_size_as<U>(&self, other: &[U]) -> &Self {
+        (self as &[T]).should_be_same_size_as(other);
+        self
+    }
+
+    fn should_have_size_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
+        (self as &[T]).should_have_size_in_inclusive_range(range);
+        self
+    }
+
+    fn should_not_have_size_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
+        (self as &[T]).should_not_have_size_in_inclusive_range(range);
+        self
+    }
+
+    fn should_have_size_in_exclusive_range(&self, range: Range<usize>) -> &Self {
+        (self as &[T]).should_have_size_in_exclusive_range(range);
+        self
+    }
+
+    fn should_not_have_size_in_exclusive_range(&self, range: Range<usize>) -> &Self {
+        (self as &[T]).should_not_have_size_in_exclusive_range(range);
+        self
+    }
+}
+
+impl<T> Size for [T]
+    where
+        T: std::fmt::Debug,
 {
     fn should_have_size(&self, size: usize) -> &Self {
         if self.len() != size {
