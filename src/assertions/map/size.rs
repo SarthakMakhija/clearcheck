@@ -4,6 +4,8 @@ use std::hash::Hash;
 use std::ops::{Range, RangeInclusive};
 
 use crate::assertions::collection::size::Size;
+use crate::matchers::range::{be_in_exclusive_range, be_in_inclusive_range};
+use crate::matchers::{Should, ShouldNot};
 use crate::panicking::{assert_failed_binary, AssertKind};
 
 impl<K, V> Size for HashMap<K, V>
@@ -47,28 +49,32 @@ where
     }
 
     fn should_have_size_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
-        if !range.contains(&self.len()) {
+        let in_range = self.len().should(&be_in_inclusive_range(&range));
+        if !in_range {
             assert_failed_binary(AssertKind::InRangeSize, self, &range);
         }
         self
     }
 
     fn should_not_have_size_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
-        if range.contains(&self.len()) {
+        let not_in_range = self.len().should_not(&be_in_inclusive_range(&range));
+        if !not_in_range {
             assert_failed_binary(AssertKind::NotInRangeSize, self, &range);
         }
         self
     }
 
     fn should_have_size_in_exclusive_range(&self, range: Range<usize>) -> &Self {
-        if !range.contains(&self.len()) {
+        let in_range = self.len().should(&be_in_exclusive_range(&range));
+        if !in_range {
             assert_failed_binary(AssertKind::InRangeSize, self, &range);
         }
         self
     }
 
     fn should_not_have_size_in_exclusive_range(&self, range: Range<usize>) -> &Self {
-        if range.contains(&self.len()) {
+        let not_in_range = self.len().should_not(&be_in_exclusive_range(&range));
+        if !not_in_range {
             assert_failed_binary(AssertKind::NotInRangeSize, self, &range);
         }
         self
