@@ -131,7 +131,7 @@ impl Contains for &str {
 
 #[cfg(test)]
 mod tests {
-    use crate::matchers::string::contain::Contains;
+    use crate::assertions::string::contain::Contains;
 
     #[test]
     fn should_only_contain_digits() {

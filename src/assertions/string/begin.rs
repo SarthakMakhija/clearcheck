@@ -35,7 +35,7 @@ impl Begin for &str {
 
 #[cfg(test)]
 mod tests {
-    use crate::matchers::string::begin::Begin;
+    use crate::assertions::string::begin::Begin;
 
     #[test]
     fn should_begin_with() {

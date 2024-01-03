@@ -61,7 +61,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::matchers::collection::sort::Sorted;
+    use crate::assertions::collection::sort::Sorted;
 
     #[test]
     fn should_be_sorted_in_ascending_order() {

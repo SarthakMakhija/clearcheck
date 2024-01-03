@@ -65,7 +65,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::matchers::collection::duplicate::Duplicates;
+    use crate::assertions::collection::duplicate::Duplicates;
 
     #[test]
     fn should_contain_duplicates() {

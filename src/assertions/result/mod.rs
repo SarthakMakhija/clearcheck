@@ -29,7 +29,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::matchers::result::OkErr;
+    use crate::assertions::result::OkErr;
 
     #[test]
     fn should_be_ok() {

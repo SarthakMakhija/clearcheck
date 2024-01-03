@@ -184,7 +184,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::matchers::collection::size::Size;
+    use crate::assertions::collection::size::Size;
 
     #[test]
     fn should_have_size_as_2() {

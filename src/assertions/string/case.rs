@@ -35,7 +35,7 @@ impl Case for &str {
 
 #[cfg(test)]
 mod tests {
-    use crate::matchers::string::case::Case;
+    use crate::assertions::string::case::Case;
 
     #[test]
     fn should_be_lower_case() {

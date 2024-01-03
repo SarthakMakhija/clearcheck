@@ -64,7 +64,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::matchers::collection::bound::Bounds;
+    use crate::assertions::collection::bound::Bounds;
 
     #[test]
     fn should_have_an_upper_bound() {

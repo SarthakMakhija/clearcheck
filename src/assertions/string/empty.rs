@@ -35,7 +35,7 @@ impl Empty for &str {
 
 #[cfg(test)]
 mod tests {
-    use crate::matchers::string::empty::Empty;
+    use crate::assertions::string::empty::Empty;
 
     #[test]
     fn should_be_empty() {

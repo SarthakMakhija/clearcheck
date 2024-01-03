@@ -23,7 +23,7 @@ impl TrueFalse for bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::matchers::bool::TrueFalse;
+    use crate::assertions::bool::TrueFalse;
 
     #[test]
     fn should_be_true() {

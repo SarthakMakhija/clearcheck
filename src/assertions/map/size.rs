@@ -3,7 +3,7 @@ use std::fmt::Debug;
 use std::hash::Hash;
 use std::ops::{Range, RangeInclusive};
 
-use crate::matchers::collection::size::Size;
+use crate::assertions::collection::size::Size;
 use crate::panicking::{assert_failed_binary, AssertKind};
 
 impl<K, V> Size for HashMap<K, V>
@@ -79,7 +79,7 @@ where
 mod tests {
     use std::collections::HashMap;
 
-    use crate::matchers::collection::size::Size;
+    use crate::assertions::collection::size::Size;
 
     #[test]
     fn should_have_size_as_1() {

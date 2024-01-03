@@ -149,7 +149,7 @@ where
 mod key_contains_tests {
     use std::collections::HashMap;
 
-    use crate::matchers::map::contain::KeyContains;
+    use crate::assertions::map::contain::KeyContains;
 
     #[test]
     fn should_contain_key() {
@@ -186,7 +186,7 @@ mod key_contains_tests {
 mod value_contains_tests {
     use std::collections::HashMap;
 
-    use crate::matchers::map::contain::ValueContains;
+    use crate::assertions::map::contain::ValueContains;
 
     #[test]
     fn should_contain_value() {
@@ -223,7 +223,7 @@ mod value_contains_tests {
 mod key_value_contains_tests {
     use std::collections::HashMap;
 
-    use crate::matchers::map::contain::KeyValueContains;
+    use crate::assertions::map::contain::KeyValueContains;
 
     #[test]
     fn should_contain_key_value() {

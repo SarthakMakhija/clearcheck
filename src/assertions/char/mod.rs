@@ -62,7 +62,7 @@ impl Equal for char {
 
 #[cfg(test)]
 mod range_tests {
-    use crate::matchers::char::CharRange;
+    use crate::assertions::char::CharRange;
 
     #[test]
     fn should_be_in_the_inclusive_range() {
@@ -119,7 +119,7 @@ mod range_tests {
 
 #[cfg(test)]
 mod equal_tests {
-    use crate::matchers::char::Equal;
+    use crate::assertions::char::Equal;
 
     #[test]
     fn should_be_equal_ignoring_case() {

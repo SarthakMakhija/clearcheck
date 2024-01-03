@@ -97,7 +97,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::matchers::collection::contain::Contains;
+    use crate::assertions::collection::contain::Contains;
 
     #[test]
     fn should_contain() {

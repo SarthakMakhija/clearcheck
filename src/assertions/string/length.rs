@@ -115,7 +115,7 @@ impl Length for &str {
 
 #[cfg(test)]
 mod tests {
-    use crate::matchers::string::length::Length;
+    use crate::assertions::string::length::Length;
 
     #[test]
     fn should_have_length_as_8() {

@@ -35,7 +35,7 @@ impl End for &str {
 
 #[cfg(test)]
 mod tests {
-    use crate::matchers::string::end::End;
+    use crate::assertions::string::end::End;
 
     #[test]
     fn should_end_with() {

@@ -35,7 +35,7 @@ impl Equal for &str {
 
 #[cfg(test)]
 mod tests {
-    use crate::matchers::string::equal::Equal;
+    use crate::assertions::string::equal::Equal;
 
     #[test]
     fn should_be_equal() {

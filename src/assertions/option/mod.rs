@@ -28,7 +28,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::matchers::option::SomeNone;
+    use crate::assertions::option::SomeNone;
 
     #[test]
     fn should_be_none() {
