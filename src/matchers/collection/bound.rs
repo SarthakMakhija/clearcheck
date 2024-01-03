@@ -46,20 +46,18 @@ where
     T: PartialOrd,
 {
     fn should_have_upper_bound(&self, element: &T) -> &Self {
-        self.iter().for_each(|source| {
-            if !(element >= source) {
-                assert_failed_binary(AssertKind::UpperBound, &self, &element)
-            }
-        });
+        let has_upper_bound = self.iter().all(|source| element >= source);
+        if !has_upper_bound {
+            assert_failed_binary(AssertKind::UpperBound, &self, &element)
+        }
         self
     }
 
     fn should_have_lower_bound(&self, element: &T) -> &Self {
-        self.iter().for_each(|source| {
-            if !(element <= source) {
-                assert_failed_binary(AssertKind::LowerBound, &self, &element)
-            }
-        });
+        let has_lower_bound = self.iter().all(|source| element <= source);
+        if !has_lower_bound {
+            assert_failed_binary(AssertKind::LowerBound, &self, &element)
+        }
         self
     }
 }
