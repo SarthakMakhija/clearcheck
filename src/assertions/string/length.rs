@@ -1,5 +1,7 @@
 use std::ops::{Range, RangeInclusive};
 
+use crate::matchers::range::{be_in_exclusive_range, be_in_inclusive_range};
+use crate::matchers::{Should, ShouldNot};
 use crate::panicking::{assert_failed_binary, AssertKind};
 
 pub trait Length {
@@ -85,28 +87,32 @@ impl Length for &str {
     }
 
     fn should_have_length_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
-        if !range.contains(&self.len()) {
+        let in_range = self.len().should(&be_in_inclusive_range(&range));
+        if !in_range {
             assert_failed_binary(AssertKind::InRangeLength, self, &range);
         }
         self
     }
 
     fn should_not_have_length_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
-        if range.contains(&self.len()) {
+        let not_in_range = self.len().should_not(&be_in_inclusive_range(&range));
+        if !not_in_range {
             assert_failed_binary(AssertKind::NotInRangeLength, self, &range);
         }
         self
     }
 
     fn should_have_length_in_exclusive_range(&self, range: Range<usize>) -> &Self {
-        if !range.contains(&self.len()) {
+        let in_range = self.len().should(&be_in_exclusive_range(&range));
+        if !in_range {
             assert_failed_binary(AssertKind::InRangeLength, self, &range);
         }
         self
     }
 
     fn should_not_have_length_in_exclusive_range(&self, range: Range<usize>) -> &Self {
-        if range.contains(&self.len()) {
+        let not_in_range = self.len().should_not(&be_in_exclusive_range(&range));
+        if !not_in_range {
             assert_failed_binary(AssertKind::NotInRangeLength, self, &range);
         }
         self
