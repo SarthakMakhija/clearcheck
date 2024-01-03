@@ -37,20 +37,22 @@ pub(crate) enum AssertKind {
     Equal,
     NotEqual,
     BeginWith,
-    NotBeginWith
+    NotBeginWith,
+    EndWith,
+    NotEndWith,
 }
 
 pub(crate) fn assert_failed_unary<T>(kind: AssertKind, left: &T) -> !
-where
-    T: fmt::Debug + ?Sized,
+    where
+        T: fmt::Debug + ?Sized,
 {
     assert_failed_inner(kind, &left, None)
 }
 
 pub(crate) fn assert_failed_binary<T, U>(kind: AssertKind, left: &T, right: &U) -> !
-where
-    T: fmt::Debug + ?Sized,
-    U: fmt::Debug + ?Sized,
+    where
+        T: fmt::Debug + ?Sized,
+        U: fmt::Debug + ?Sized,
 {
     assert_failed_inner(kind, &left, Some(&right))
 }
@@ -97,7 +99,9 @@ fn assert_failed_inner(
         AssertKind::Equal => "must be equal to",
         AssertKind::NotEqual => "must not be equal to",
         AssertKind::BeginWith => "must begin with",
-        AssertKind::NotBeginWith => "must not begin with"
+        AssertKind::NotBeginWith => "must not begin with",
+        AssertKind::EndWith => "must end with",
+        AssertKind::NotEndWith => "must not end with",
     };
 
     match right {
