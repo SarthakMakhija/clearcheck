@@ -11,6 +11,8 @@ pub(crate) enum AssertKind {
     NotContainsDuplicates,
     SortsAscending,
     SortsDescending,
+    InRange,
+    NotInRange,
     EqualSize,
     NotEqualSize,
     AtleastSize,
@@ -110,6 +112,8 @@ fn assert_failed_inner(
         AssertKind::NotBeginWith => "must not begin with",
         AssertKind::EndWith => "must end with",
         AssertKind::NotEndWith => "must not end with",
+        AssertKind::InRange => "must be in the range provided by",
+        AssertKind::NotInRange => "must not be in the range provided by",
     };
 
     match right {

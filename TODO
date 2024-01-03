@@ -12,4 +12,5 @@
 - Handle duplication between size trait for map and collection
 - Handle duplication in collection traits between vector, arrays and slices
 - Improve panic (AssertKind)
+- Add support for char matchers
 - Add support for num matchers
