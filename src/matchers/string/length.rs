@@ -2,7 +2,7 @@ use std::ops::{Range, RangeInclusive};
 
 use crate::panicking::{assert_failed_binary, AssertKind};
 
-trait Length {
+pub trait Length {
     fn should_have_length(&self, length: usize) -> &Self;
     fn should_not_have_length(&self, length: usize) -> &Self;
     fn should_have_at_least_length(&self, length: usize) -> &Self;

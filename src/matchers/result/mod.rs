@@ -2,7 +2,7 @@ use std::fmt::Debug;
 
 use crate::panicking::{assert_failed_unary, AssertKind};
 
-trait OkErr {
+pub trait OkErr {
     fn should_be_ok(&self) -> &Self;
     fn should_be_err(&self) -> &Self;
 }

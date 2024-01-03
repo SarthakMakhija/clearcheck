@@ -1,6 +1,6 @@
 use crate::panicking::{assert_failed_unary, AssertKind};
 
-trait TrueFalse {
+pub trait TrueFalse {
     fn should_be_true(&self) -> &Self;
     fn should_be_false(&self) -> &Self;
 }

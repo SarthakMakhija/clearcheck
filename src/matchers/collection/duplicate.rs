@@ -3,7 +3,7 @@ use std::hash::Hash;
 
 use crate::panicking::{assert_failed_unary, AssertKind};
 
-pub(crate) trait Duplicates {
+pub trait Duplicates {
     fn should_contain_duplicates(&self) -> &Self;
     fn should_not_contain_duplicates(&self) -> &Self;
 }

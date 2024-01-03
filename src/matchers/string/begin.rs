@@ -1,6 +1,6 @@
 use crate::panicking::{assert_failed_binary, AssertKind};
 
-trait Begin {
+pub trait Begin {
     fn should_begin_with(&self, prefix: &str) -> &Self;
     fn should_not_begin_with(&self, prefix: &str) -> &Self;
 }

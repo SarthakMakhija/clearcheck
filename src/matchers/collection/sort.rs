@@ -1,6 +1,6 @@
 use crate::panicking::{assert_failed_unary, AssertKind};
 
-pub(crate) trait Sorted<T>
+pub trait Sorted<T>
 where
     T: PartialOrd,
 {

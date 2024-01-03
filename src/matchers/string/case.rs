@@ -1,6 +1,6 @@
 use crate::panicking::{assert_failed_unary, AssertKind};
 
-trait Case {
+pub trait Case {
     fn should_be_lower_case(&self) -> &Self;
     fn should_be_upper_case(&self) -> &Self;
 }

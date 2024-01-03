@@ -1,6 +1,6 @@
 use crate::panicking::{assert_failed_binary, assert_failed_unary, AssertKind};
 
-trait Contains {
+pub trait Contains {
     fn should_only_contain_digits(&self) -> &Self;
     fn should_contain_a_digit(&self) -> &Self;
     fn should_not_contain_digits(&self) -> &Self;

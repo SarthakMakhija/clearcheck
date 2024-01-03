@@ -1,6 +1,6 @@
 use crate::panicking::{assert_failed_binary, AssertKind};
 
-trait End {
+pub trait End {
     fn should_end_with(&self, suffix: &str) -> &Self;
     fn should_not_end_with(&self, suffix: &str) -> &Self;
 }

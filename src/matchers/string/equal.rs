@@ -1,6 +1,6 @@
 use crate::panicking::{assert_failed_binary, AssertKind};
 
-trait Equal {
+pub trait Equal {
     fn should_be_equal_ignoring_case(&self, other: &str) -> &Self;
     fn should_not_be_equal_ignoring_case(&self, other: &str) -> &Self;
 }

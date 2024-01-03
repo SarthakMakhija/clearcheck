@@ -1,6 +1,6 @@
 use crate::panicking::{assert_failed_binary, AssertKind};
 
-pub(crate) trait Bounds<T>
+pub trait Bounds<T>
 where
     T: PartialOrd + std::fmt::Debug,
 {

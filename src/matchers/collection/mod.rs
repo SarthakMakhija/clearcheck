@@ -1,6 +1,6 @@
-mod bound;
-mod contain;
-mod duplicate;
-mod empty;
-pub(crate) mod size;
-mod sort;
+pub mod bound;
+pub mod contain;
+pub mod duplicate;
+pub mod empty;
+pub mod size;
+pub mod sort;

@@ -1,6 +1,6 @@
 use crate::panicking::{assert_failed_unary, AssertKind};
 
-pub(crate) trait Empty {
+pub trait Empty {
     fn should_be_empty(&self) -> &Self;
     fn should_not_be_empty(&self) -> &Self;
 }

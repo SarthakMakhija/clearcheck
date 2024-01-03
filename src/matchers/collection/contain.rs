@@ -1,6 +1,6 @@
 use crate::panicking::{assert_failed_binary, AssertKind};
 
-pub(crate) trait Contains<T>
+pub trait Contains<T>
 where
     T: Eq + std::fmt::Debug,
 {

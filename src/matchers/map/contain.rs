@@ -5,7 +5,7 @@ use std::hash::Hash;
 
 use crate::panicking::{assert_failed_binary, AssertKind};
 
-trait KeyContains<K, V> {
+pub trait KeyContains<K, V> {
     fn should_contain_key<Q>(&self, key: &Q) -> &Self
     where
         K: Borrow<Q>,
@@ -17,7 +17,7 @@ trait KeyContains<K, V> {
         Q: Hash + Eq + Debug;
 }
 
-trait ValueContains<K, V> {
+pub trait ValueContains<K, V> {
     fn should_contain_value<S>(&self, value: &S) -> &Self
     where
         V: Borrow<S> + PartialEq<S>,
@@ -29,7 +29,7 @@ trait ValueContains<K, V> {
         S: PartialOrd + Debug;
 }
 
-trait KeyValueContains<K, V> {
+pub trait KeyValueContains<K, V> {
     fn should_contain<Q, S>(&self, key: &Q, value: &S) -> &Self
     where
         K: Borrow<Q>,

@@ -2,7 +2,7 @@ use std::fmt::Debug;
 
 use crate::panicking::{assert_failed_unary, AssertKind};
 
-trait SomeNone {
+pub trait SomeNone {
     fn should_be_some(&self) -> &Self;
     fn should_be_none(&self) -> &Self;
 }
