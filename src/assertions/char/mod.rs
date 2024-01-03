@@ -1,3 +1,5 @@
+use crate::matchers::range::{be_in_exclusive_range, be_in_inclusive_range};
+use crate::matchers::{Should, ShouldNot};
 use std::ops::{Range, RangeInclusive};
 
 use crate::panicking::{assert_failed_binary, AssertKind};
@@ -16,28 +18,32 @@ pub trait Equal {
 
 impl CharRange for char {
     fn should_be_in_inclusive_range(&self, range: RangeInclusive<char>) -> &Self {
-        if !range.contains(&self) {
+        let in_range = self.should(&be_in_inclusive_range(&range));
+        if !in_range {
             assert_failed_binary(AssertKind::InRange, self, &range);
         }
         self
     }
 
     fn should_not_be_in_inclusive_range(&self, range: RangeInclusive<char>) -> &Self {
-        if range.contains(&self) {
+        let not_in_range = self.should_not(&be_in_inclusive_range(&range));
+        if !not_in_range {
             assert_failed_binary(AssertKind::NotInRange, self, &range);
         }
         self
     }
 
     fn should_be_in_exclusive_range(&self, range: Range<char>) -> &Self {
-        if !range.contains(&self) {
+        let in_range = self.should(&be_in_exclusive_range(&range));
+        if !in_range {
             assert_failed_binary(AssertKind::InRange, self, &range);
         }
         self
     }
 
     fn should_not_be_in_exclusive_range(&self, range: Range<char>) -> &Self {
-        if range.contains(&self) {
+        let not_in_range = self.should_not(&be_in_exclusive_range(&range));
+        if !not_in_range {
             assert_failed_binary(AssertKind::NotInRange, self, &range);
         }
         self
