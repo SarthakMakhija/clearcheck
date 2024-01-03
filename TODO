@@ -4,7 +4,8 @@
 - Use the same borrow concept in vector in contains
 - Handle duplication between size trait for map and collection
 - Make the modules public
-- Provide ContainsKey, NotContainsKey in AssertKind -
+- Add Range based methods in Size trait - done
+- Provide ContainsKey, NotContainsKey in AssertKind - done
 - Add support for string matchers - done
 - Add support for option matchers - done
 - Add support for result matchers - done

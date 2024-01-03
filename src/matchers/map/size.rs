@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use std::fmt::Debug;
 use std::hash::Hash;
+use std::ops::{Range, RangeInclusive};
 
 use crate::matchers::collection::size::Size;
 use crate::panicking::{assert_failed_binary, AssertKind};
@@ -41,6 +42,34 @@ where
     fn should_be_same_size_as<U>(&self, other: &[U]) -> &Self {
         if self.len() != other.len() {
             assert_failed_binary(AssertKind::EqualSize, self, &other.len());
+        }
+        self
+    }
+
+    fn should_have_size_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
+        if !range.contains(&self.len()) {
+            assert_failed_binary(AssertKind::InRangeSize, self, &range);
+        }
+        self
+    }
+
+    fn should_not_have_size_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
+        if range.contains(&self.len()) {
+            assert_failed_binary(AssertKind::NotInRangeSize, self, &range);
+        }
+        self
+    }
+
+    fn should_have_size_in_exclusive_range(&self, range: Range<usize>) -> &Self {
+        if !range.contains(&self.len()) {
+            assert_failed_binary(AssertKind::InRangeSize, self, &range);
+        }
+        self
+    }
+
+    fn should_not_have_size_in_exclusive_range(&self, range: Range<usize>) -> &Self {
+        if range.contains(&self.len()) {
+            assert_failed_binary(AssertKind::NotInRangeSize, self, &range);
         }
         self
     }
@@ -126,5 +155,65 @@ mod tests {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.should_be_same_size_as(&[1, 2, 3]);
+    }
+
+    #[test]
+    fn should_have_size_in_the_inclusive_range() {
+        let mut key_value = HashMap::new();
+        key_value.insert("rust", "assert");
+        key_value.should_have_size_in_inclusive_range(1..=8);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_have_size_in_the_inclusive_range_but_was_not() {
+        let mut key_value = HashMap::new();
+        key_value.insert("rust", "assert");
+        key_value.should_have_size_in_inclusive_range(3..=4);
+    }
+
+    #[test]
+    fn should_not_have_size_in_the_inclusive_range() {
+        let mut key_value = HashMap::new();
+        key_value.insert("rust", "assert");
+        key_value.should_not_have_size_in_inclusive_range(3..=4);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_have_size_in_the_inclusive_range_but_was() {
+        let mut key_value = HashMap::new();
+        key_value.insert("rust", "assert");
+        key_value.should_not_have_size_in_inclusive_range(1..=2);
+    }
+
+    #[test]
+    fn should_have_size_in_the_exclusive_range() {
+        let mut key_value = HashMap::new();
+        key_value.insert("rust", "assert");
+        key_value.should_have_size_in_exclusive_range(1..3);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_have_size_in_the_range_but_was_not() {
+        let mut key_value = HashMap::new();
+        key_value.insert("rust", "assert");
+        key_value.should_have_size_in_exclusive_range(3..8);
+    }
+
+    #[test]
+    fn should_not_have_size_in_the_exclusive_range() {
+        let mut key_value = HashMap::new();
+        key_value.insert("rust", "assert");
+        key_value.should_not_have_size_in_exclusive_range(3..4);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_have_size_in_the_exclusive_range_but_was() {
+        let mut key_value = HashMap::new();
+        key_value.insert("rust", "assert");
+        key_value.should_not_have_size_in_exclusive_range(1..9);
     }
 }
