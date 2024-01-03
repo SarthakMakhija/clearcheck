@@ -6,6 +6,7 @@
 - Make the modules public
 - Provide ContainsKey, NotContainsKey in AssertKind
 - Add support for string matchers
+    - eq, empty, prefix, suffix,
 - Add support for option matchers - done
 - Add support for result matchers - done
 - Add support for num matchers
