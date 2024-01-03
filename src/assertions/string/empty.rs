@@ -1,4 +1,4 @@
-use crate::matchers::membership::be_empty;
+use crate::matchers::string::membership::be_empty;
 use crate::matchers::{Should, ShouldNot};
 use crate::panicking::{assert_failed_unary, AssertKind};
 

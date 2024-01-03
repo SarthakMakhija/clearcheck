@@ -1,4 +1,4 @@
-use crate::matchers::case::{be_lowercase, be_uppercase};
+use crate::matchers::string::case::{be_lowercase, be_uppercase};
 use crate::matchers::Should;
 use crate::panicking::{assert_failed_unary, AssertKind};
 

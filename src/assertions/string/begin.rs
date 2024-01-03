@@ -1,4 +1,4 @@
-use crate::matchers::boundary::begin_with;
+use crate::matchers::string::boundary::begin_with;
 use crate::matchers::{Should, ShouldNot};
 use crate::panicking::{assert_failed_binary, AssertKind};
 

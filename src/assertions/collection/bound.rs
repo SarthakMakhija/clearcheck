@@ -1,4 +1,4 @@
-use crate::matchers::bound::{have_lower_bound, have_upper_bound};
+use crate::matchers::collection::bound::{have_lower_bound, have_upper_bound};
 use crate::matchers::Should;
 use crate::panicking::{assert_failed_binary, AssertKind};
 

@@ -1,11 +1,10 @@
-pub mod bound;
-pub mod boundary;
-pub mod case;
-pub mod duplicate;
+pub mod char;
+pub mod collection;
 pub mod equal;
 pub mod length;
-pub mod membership;
+pub mod map;
 pub mod range;
+pub mod string;
 
 pub trait Should<T> {
     fn should(&self, matcher: &dyn Matcher<T>) -> bool;

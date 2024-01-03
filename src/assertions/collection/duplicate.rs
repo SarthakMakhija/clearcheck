@@ -1,7 +1,7 @@
 use std::fmt::Debug;
 use std::hash::Hash;
 
-use crate::matchers::duplicate::contain_duplicates;
+use crate::matchers::collection::duplicate::contain_duplicates;
 use crate::matchers::{Should, ShouldNot};
 use crate::panicking::{assert_failed_unary, AssertKind};
 
