@@ -2,14 +2,14 @@ use std::ops::{Range, RangeInclusive};
 
 use crate::panicking::{assert_failed_binary, AssertKind};
 
-trait CharRange {
+pub trait CharRange {
     fn should_be_in_inclusive_range(&self, range: RangeInclusive<char>) -> &Self;
     fn should_not_be_in_inclusive_range(&self, range: RangeInclusive<char>) -> &Self;
     fn should_be_in_exclusive_range(&self, range: Range<char>) -> &Self;
     fn should_not_be_in_exclusive_range(&self, range: Range<char>) -> &Self;
 }
 
-trait Equal {
+pub trait Equal {
     fn should_be_equal_ignoring_case(&self, other: &char) -> &Self;
     fn should_not_be_equal_ignoring_case(&self, other: &char) -> &Self;
 }

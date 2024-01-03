@@ -8,9 +8,11 @@
 - Add support for string matchers                           - done
 - Add support for option matchers                           - done
 - Add support for result matchers                           - done
+- Add support for char matchers                             - done
 
 - Handle duplication between size trait for map and collection
 - Handle duplication in collection traits between vector, arrays and slices
 - Improve panic (AssertKind)
-- Add support for char matchers
 - Add support for num matchers
+- Add support for contains all
+- Add support for eq
