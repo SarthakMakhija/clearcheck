@@ -9,12 +9,12 @@ pub trait KeyContains<K, V> {
     fn should_contain_key<Q>(&self, key: &Q) -> &Self
     where
         K: Borrow<Q>,
-        Q: Hash + Eq + Debug;
+        Q: Hash + Eq + Debug + ?Sized;
 
     fn should_not_contain_key<Q>(&self, key: &Q) -> &Self
     where
         K: Borrow<Q>,
-        Q: Hash + Eq + Debug;
+        Q: Hash + Eq + Debug + ?Sized;
 }
 
 pub trait ValueContains<K, V> {
@@ -52,7 +52,7 @@ where
     fn should_contain_key<Q>(&self, key: &Q) -> &Self
     where
         K: Borrow<Q>,
-        Q: Hash + Eq + Debug,
+        Q: Hash + Eq + Debug + ?Sized,
     {
         let contains = self.contains_key(key);
         if !contains {
@@ -64,7 +64,7 @@ where
     fn should_not_contain_key<Q>(&self, key: &Q) -> &Self
     where
         K: Borrow<Q>,
-        Q: Hash + Eq + Debug,
+        Q: Hash + Eq + Debug + ?Sized,
     {
         let contains = self.contains_key(key);
         if contains {
@@ -155,7 +155,7 @@ mod key_contains_tests {
     fn should_contain_key() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_contain_key(&"rust");
+        key_value.should_contain_key("rust");
     }
 
     #[test]
@@ -163,14 +163,14 @@ mod key_contains_tests {
     fn should_contain_key_but_it_did_not() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_contain_key(&"java");
+        key_value.should_contain_key("java");
     }
 
     #[test]
     fn should_not_contain_key() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_not_contain_key(&"junit");
+        key_value.should_not_contain_key("junit");
     }
 
     #[test]
@@ -178,7 +178,7 @@ mod key_contains_tests {
     fn should_not_contain_key_but_it_contained() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_not_contain_key(&"rust");
+        key_value.should_not_contain_key("rust");
     }
 }
 
