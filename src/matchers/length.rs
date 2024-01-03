@@ -1,3 +1,6 @@
+use std::collections::HashMap;
+use std::hash::Hash;
+
 use crate::matchers::Matcher;
 
 pub enum LengthBasedMatcher {
@@ -8,6 +11,16 @@ pub enum LengthBasedMatcher {
 
 impl<T> Matcher<&[T]> for LengthBasedMatcher {
     fn test(&self, collection: &&[T]) -> bool {
+        match self {
+            LengthBasedMatcher::Same(length) => collection.len() == *length,
+            LengthBasedMatcher::Atleast(length) => collection.len() >= *length,
+            LengthBasedMatcher::Atmost(length) => collection.len() <= *length,
+        }
+    }
+}
+
+impl<K: Eq + Hash, V> Matcher<HashMap<K, V>> for LengthBasedMatcher {
+    fn test(&self, collection: &HashMap<K, V>) -> bool {
         match self {
             LengthBasedMatcher::Same(length) => collection.len() == *length,
             LengthBasedMatcher::Atleast(length) => collection.len() >= *length,
