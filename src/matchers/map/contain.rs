@@ -33,16 +33,16 @@ pub trait KeyValueContains<K, V> {
     fn should_contain<Q, S>(&self, key: &Q, value: &S) -> &Self
         where
             K: Borrow<Q>,
-            V: Borrow<S> + PartialEq<S>,
+            V: PartialEq<S>,
             Q: Hash + Eq + Debug,
-            S: PartialOrd + Debug;
+            S: Debug;
 
     fn should_not_contain<Q, S>(&self, key: &Q, value: &S) -> &Self
         where
             K: Borrow<Q>,
-            V: Borrow<S> + PartialEq<S>,
+            V: PartialEq<S>,
             Q: Hash + Eq + Debug,
-            S: PartialOrd + Debug;
+            S: Debug;
 }
 
 impl<K, V> KeyContains<K, V> for HashMap<K, V>
@@ -106,15 +106,15 @@ impl<K, V> ValueContains<K, V> for HashMap<K, V>
 
 impl<K, V> KeyValueContains<K, V> for HashMap<K, V>
     where
-        K: Hash + Eq + PartialEq + Debug,
-        V: PartialOrd + Debug,
+        K: Hash + Eq + Debug,
+        V: Debug,
 {
     fn should_contain<Q, S>(&self, key: &Q, value: &S) -> &Self
         where
             K: Borrow<Q>,
-            V: Borrow<S> + PartialEq<S>,
+            V: PartialEq<S>,
             Q: Hash + Eq + Debug,
-            S: PartialOrd + Debug,
+            S: Debug,
     {
         match self.get(key) {
             None => {
@@ -131,9 +131,9 @@ impl<K, V> KeyValueContains<K, V> for HashMap<K, V>
     fn should_not_contain<Q, S>(&self, key: &Q, value: &S) -> &Self
         where
             K: Borrow<Q>,
-            V: Borrow<S> + PartialEq<S>,
+            V: PartialEq<S>,
             Q: Hash + Eq + Debug,
-            S: PartialOrd + Debug,
+            S: Debug,
     {
         match self.get(key) {
             Some(existing) if existing == value => {
