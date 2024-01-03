@@ -1,4 +1,5 @@
 use std::collections::HashSet;
+use std::fmt::Debug;
 use std::hash::Hash;
 
 use crate::panicking::{assert_failed_unary, AssertKind};
@@ -10,7 +11,23 @@ pub trait Duplicates {
 
 impl<T> Duplicates for Vec<T>
 where
-    T: std::fmt::Debug,
+    T: Debug,
+    T: Hash + Eq,
+{
+    fn should_contain_duplicates(&self) -> &Self {
+        (self as &[T]).should_contain_duplicates();
+        self
+    }
+
+    fn should_not_contain_duplicates(&self) -> &Self {
+        (self as &[T]).should_not_contain_duplicates();
+        self
+    }
+}
+
+impl<T, const N: usize> Duplicates for [T; N]
+where
+    T: Debug,
     T: Hash + Eq,
 {
     fn should_contain_duplicates(&self) -> &Self {
@@ -26,7 +43,7 @@ where
 
 impl<T> Duplicates for [T]
 where
-    T: std::fmt::Debug,
+    T: Debug,
     T: Hash + Eq,
 {
     fn should_contain_duplicates(&self) -> &Self {

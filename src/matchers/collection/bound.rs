@@ -24,6 +24,22 @@ where
     }
 }
 
+impl<T, const N: usize> Bounds<T> for [T; N]
+where
+    T: std::fmt::Debug,
+    T: PartialOrd,
+{
+    fn should_have_upper_bound(&self, element: &T) -> &Self {
+        (self as &[T]).should_have_upper_bound(element);
+        self
+    }
+
+    fn should_have_lower_bound(&self, element: &T) -> &Self {
+        (self as &[T]).should_have_lower_bound(element);
+        self
+    }
+}
+
 impl<T> Bounds<T> for [T]
 where
     T: std::fmt::Debug,

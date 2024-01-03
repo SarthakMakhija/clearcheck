@@ -1,5 +1,5 @@
-- Provide collection traits for arrays
-- Provide collection traits for slices
+- Provide collection traits for arrays                      - done
+- Provide collection traits for slices                      - done
 - Handle duplication in collection traits between vector, arrays and slices
 - Use the same borrow concept in vector in contains         - done
 - Use the same borrow concept in map (value contains)       - done

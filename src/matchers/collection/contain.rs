@@ -41,6 +41,30 @@ where
     }
 }
 
+impl<T, const N: usize> Contains<T> for [T; N]
+where
+    T: Debug,
+    T: Eq,
+{
+    fn should_contain<Q>(&self, element: &Q) -> &Self
+    where
+        T: Borrow<Q>,
+        Q: Eq + Debug + ?Sized,
+    {
+        (self as &[T]).should_contain(element);
+        self
+    }
+
+    fn should_not_contain<Q>(&self, element: &Q) -> &Self
+    where
+        T: Borrow<Q>,
+        Q: Eq + Debug + ?Sized,
+    {
+        (self as &[T]).should_not_contain(element);
+        self
+    }
+}
+
 impl<T> Contains<T> for [T]
 where
     T: Debug,

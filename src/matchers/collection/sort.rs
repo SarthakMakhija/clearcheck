@@ -23,6 +23,21 @@ where
     }
 }
 
+impl<T, const N: usize> Sorted<T> for [T; N]
+where
+    T: std::fmt::Debug + PartialOrd,
+{
+    fn should_be_sorted_ascending(&self) -> &Self {
+        (self as &[T]).should_be_sorted_ascending();
+        self
+    }
+
+    fn should_be_sorted_descending(&self) -> &Self {
+        (self as &[T]).should_be_sorted_descending();
+        self
+    }
+}
+
 impl<T> Sorted<T> for [T]
 where
     T: std::fmt::Debug + PartialOrd,
