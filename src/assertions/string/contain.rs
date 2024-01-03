@@ -1,3 +1,8 @@
+use crate::matchers::contains::{
+    contain, contain_a_digit, contain_character, contain_ignoring_case, contain_only_digits,
+    not_contain_digits,
+};
+use crate::matchers::{Should, ShouldNot};
 use crate::panicking::{assert_failed_binary, assert_failed_unary, AssertKind};
 
 pub trait Contains {
@@ -61,68 +66,63 @@ impl Contains for String {
 
 impl Contains for &str {
     fn should_only_contain_digits(&self) -> &Self {
-        let contains = self.chars().all(|ch| ch.is_numeric());
-        if !contains {
+        if !self.should(&contain_only_digits()) {
             assert_failed_unary(AssertKind::ContainsOnlyDigits, self);
         }
         self
     }
 
     fn should_contain_a_digit(&self) -> &Self {
-        let contains = self.chars().any(|ch| ch.is_numeric());
-        if !contains {
+        if !self.should(&contain_a_digit()) {
             assert_failed_unary(AssertKind::ContainsADigit, self);
         }
         self
     }
 
     fn should_not_contain_digits(&self) -> &Self {
-        let contains = self.chars().any(|ch| ch.is_numeric());
-        if contains {
+        if !self.should(&not_contain_digits()) {
             assert_failed_unary(AssertKind::NotContainsDigits, self);
         }
         self
     }
 
     fn should_contain_character(&self, ch: char) -> &Self {
-        let contains = self.chars().any(|source| source == ch);
-        if !contains {
+        if !self.should(&contain_character(ch)) {
             assert_failed_binary(AssertKind::Contains, self, &ch);
         }
         self
     }
 
     fn should_not_contain_character(&self, ch: char) -> &Self {
-        let contains = self.chars().any(|source| source == ch);
-        if contains {
+        if !self.should_not(&contain_character(ch)) {
             assert_failed_binary(AssertKind::NotContains, self, &ch);
         }
         self
     }
 
     fn should_contain(&self, substr: &str) -> &Self {
-        if !self.contains(substr) {
+        if !self.should(&contain(substr)) {
             assert_failed_binary(AssertKind::Contains, self, substr);
         }
         self
     }
 
     fn should_not_contain(&self, substr: &str) -> &Self {
-        if self.contains(substr) {
+        if !self.should_not(&contain(substr)) {
             assert_failed_binary(AssertKind::NotContains, self, substr);
         }
         self
     }
 
     fn should_contain_ignoring_case(&self, substr: &str) -> &Self {
-        if !self.to_lowercase().contains(&substr.to_lowercase()) {
+        if !self.should(&contain_ignoring_case(substr)) {
             assert_failed_binary(AssertKind::Contains, self, substr);
         }
         self
     }
 
     fn should_not_contain_ignoring_case(&self, substr: &str) -> &Self {
-        if self.to_lowercase().contains(&substr.to_lowercase()) {
+        if !self.should_not(&contain_ignoring_case(substr)) {
             assert_failed_binary(AssertKind::NotContains, self, substr);
         }
         self

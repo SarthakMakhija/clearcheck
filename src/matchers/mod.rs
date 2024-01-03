@@ -1,3 +1,4 @@
+pub mod contains;
 pub mod duplicate;
 pub mod equal;
 pub mod length;
