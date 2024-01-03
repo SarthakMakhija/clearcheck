@@ -20,13 +20,13 @@ pub trait KeyContains<K, V> {
 pub trait ValueContains<K, V> {
     fn should_contain_value<S>(&self, value: &S) -> &Self
         where
-            V: PartialEq<S>,
-            S: Debug;
+            V: Eq + Borrow<S>,
+            S: Debug + ?Sized + Eq;
 
     fn should_not_contain_value<S>(&self, value: &S) -> &Self
         where
-            V: PartialEq<S>,
-            S: Debug;
+            V: Eq + Borrow<S>,
+            S: Debug + ?Sized + Eq;
 }
 
 pub trait KeyValueContains<K, V> {
@@ -81,10 +81,10 @@ impl<K, V> ValueContains<K, V> for HashMap<K, V>
 {
     fn should_contain_value<S>(&self, value: &S) -> &Self
         where
-            V: PartialEq<S>,
-            S: Debug,
+            V: Eq + Borrow<S>,
+            S: Debug + ?Sized + Eq,
     {
-        let contains = self.values().any(|source| source == value);
+        let contains = self.values().any(|source| source.borrow() == value);
         if !contains {
             assert_failed_binary(AssertKind::ContainsValue, &self.values(), value);
         }
@@ -93,10 +93,10 @@ impl<K, V> ValueContains<K, V> for HashMap<K, V>
 
     fn should_not_contain_value<S>(&self, value: &S) -> &Self
         where
-            V: PartialEq<S>,
-            S: Debug,
+            V: Eq + Borrow<S>,
+            S: Debug + ?Sized + Eq,
     {
-        let contains = self.values().any(|source| source == value);
+        let contains = self.values().any(|source| source.borrow() == value);
         if contains {
             assert_failed_binary(AssertKind::NotContainsValue, &self.values(), value);
         }
@@ -192,7 +192,7 @@ mod value_contains_tests {
     fn should_contain_value() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_contain_value(&"assert");
+        key_value.should_contain_value("assert");
     }
 
     #[test]
@@ -200,14 +200,14 @@ mod value_contains_tests {
     fn should_contain_value_but_it_did_not() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_contain_value(&"java");
+        key_value.should_contain_value("java");
     }
 
     #[test]
     fn should_not_contain_value() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_not_contain_value(&"catch");
+        key_value.should_not_contain_value("catch");
     }
 
     #[test]
@@ -215,7 +215,7 @@ mod value_contains_tests {
     fn should_not_contain_value_but_it_contained() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_not_contain_value(&"assert");
+        key_value.should_not_contain_value("assert");
     }
 }
 
