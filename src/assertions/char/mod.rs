@@ -1,3 +1,4 @@
+use crate::matchers::equal::be_equal_ignoring_case;
 use crate::matchers::range::{be_in_exclusive_range, be_in_inclusive_range};
 use crate::matchers::{Should, ShouldNot};
 use std::ops::{Range, RangeInclusive};
@@ -48,14 +49,14 @@ impl CharRange for char {
 
 impl Equal for char {
     fn should_be_equal_ignoring_case(&self, other: &char) -> &Self {
-        if !self.eq_ignore_ascii_case(other) {
+        if !self.should(&be_equal_ignoring_case(other)) {
             assert_failed_binary(AssertKind::Equal, self, other);
         }
         self
     }
 
     fn should_not_be_equal_ignoring_case(&self, other: &char) -> &Self {
-        if self.eq_ignore_ascii_case(other) {
+        if !self.should_not(&be_equal_ignoring_case(other)) {
             assert_failed_binary(AssertKind::NotEqual, self, other);
         }
         self

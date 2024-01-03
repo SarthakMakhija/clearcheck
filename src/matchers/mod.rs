@@ -1,4 +1,5 @@
 pub mod duplicate;
+pub mod equal;
 pub mod length;
 pub mod range;
 
