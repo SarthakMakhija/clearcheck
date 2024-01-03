@@ -1,7 +1,8 @@
-use std::collections::HashSet;
 use std::fmt::Debug;
 use std::hash::Hash;
 
+use crate::matchers::duplicate::contain_duplicates;
+use crate::matchers::{Should, ShouldNot};
 use crate::panicking::{assert_failed_unary, AssertKind};
 
 pub trait Duplicates {
@@ -47,16 +48,14 @@ where
     T: Hash + Eq,
 {
     fn should_contain_duplicates(&self) -> &Self {
-        let unique = self.iter().collect::<HashSet<_>>();
-        if unique.len() == self.len() {
+        if !self.should(&contain_duplicates()) {
             assert_failed_unary(AssertKind::ContainsDuplicates, &self);
         }
         self
     }
 
     fn should_not_contain_duplicates(&self) -> &Self {
-        let unique = self.iter().collect::<HashSet<_>>();
-        if unique.len() != self.len() {
+        if !self.should_not(&contain_duplicates()) {
             assert_failed_unary(AssertKind::NotContainsDuplicates, &self);
         }
         self

@@ -1,3 +1,4 @@
+pub mod duplicate;
 pub mod range;
 
 pub trait Should<T> {
