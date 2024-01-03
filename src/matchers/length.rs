@@ -3,50 +3,50 @@ use std::hash::Hash;
 
 use crate::matchers::Matcher;
 
-pub enum LengthBasedMatcher {
+pub enum LengthBased {
     Same(usize),
     Atleast(usize),
     Atmost(usize),
 }
 
-impl<T> Matcher<&[T]> for LengthBasedMatcher {
+impl<T> Matcher<&[T]> for LengthBased {
     fn test(&self, collection: &&[T]) -> bool {
         match self {
-            LengthBasedMatcher::Same(length) => collection.len() == *length,
-            LengthBasedMatcher::Atleast(length) => collection.len() >= *length,
-            LengthBasedMatcher::Atmost(length) => collection.len() <= *length,
+            LengthBased::Same(length) => collection.len() == *length,
+            LengthBased::Atleast(length) => collection.len() >= *length,
+            LengthBased::Atmost(length) => collection.len() <= *length,
         }
     }
 }
 
-impl<K: Eq + Hash, V> Matcher<HashMap<K, V>> for LengthBasedMatcher {
+impl<K: Eq + Hash, V> Matcher<HashMap<K, V>> for LengthBased {
     fn test(&self, collection: &HashMap<K, V>) -> bool {
         match self {
-            LengthBasedMatcher::Same(length) => collection.len() == *length,
-            LengthBasedMatcher::Atleast(length) => collection.len() >= *length,
-            LengthBasedMatcher::Atmost(length) => collection.len() <= *length,
+            LengthBased::Same(length) => collection.len() == *length,
+            LengthBased::Atleast(length) => collection.len() >= *length,
+            LengthBased::Atmost(length) => collection.len() <= *length,
         }
     }
 }
 
-impl Matcher<&str> for LengthBasedMatcher {
+impl Matcher<&str> for LengthBased {
     fn test(&self, value: &&str) -> bool {
         match self {
-            LengthBasedMatcher::Same(length) => value.len() == *length,
-            LengthBasedMatcher::Atleast(length) => value.len() >= *length,
-            LengthBasedMatcher::Atmost(length) => value.len() <= *length,
+            LengthBased::Same(length) => value.len() == *length,
+            LengthBased::Atleast(length) => value.len() >= *length,
+            LengthBased::Atmost(length) => value.len() <= *length,
         }
     }
 }
 
-pub fn have_same_length(length: usize) -> LengthBasedMatcher {
-    LengthBasedMatcher::Same(length)
+pub fn have_same_length(length: usize) -> LengthBased {
+    LengthBased::Same(length)
 }
 
-pub fn have_atleast_same_length(length: usize) -> LengthBasedMatcher {
-    LengthBasedMatcher::Atleast(length)
+pub fn have_atleast_same_length(length: usize) -> LengthBased {
+    LengthBased::Atleast(length)
 }
 
-pub fn have_atmost_same_length(length: usize) -> LengthBasedMatcher {
-    LengthBasedMatcher::Atmost(length)
+pub fn have_atmost_same_length(length: usize) -> LengthBased {
+    LengthBased::Atmost(length)
 }
