@@ -1,5 +1,5 @@
-use std::ops::{Range, RangeInclusive};
 use crate::panicking::{assert_failed_binary, AssertKind};
+use std::ops::{Range, RangeInclusive};
 
 pub trait Size {
     fn should_have_size(&self, size: usize) -> &Self;

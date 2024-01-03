@@ -3,10 +3,10 @@
 - Handle duplication in collection traits between vector, arrays and slices
 - Use the same borrow concept in vector in contains
 - Handle duplication between size trait for map and collection
-- Make the modules public
-- Add Range based methods in Size trait - done
-- Provide ContainsKey, NotContainsKey in AssertKind - done
-- Add support for string matchers - done
-- Add support for option matchers - done
-- Add support for result matchers - done
+- Make the modules public                                   - done
+- Add Range based methods in Size trait                     - done
+- Provide ContainsKey, NotContainsKey in AssertKind         - done
+- Add support for string matchers                           - done
+- Add support for option matchers                           - done
+- Add support for result matchers                           - done
 - Add support for num matchers
