@@ -33,21 +33,21 @@ pub trait KeyValueContains<K, V> {
     fn should_contain<Q, S>(&self, key: &Q, value: &S) -> &Self
         where
             K: Borrow<Q>,
-            V: PartialEq<S>,
-            Q: Hash + Eq + Debug,
-            S: Debug;
+            V: Borrow<S>,
+            Q: Debug + ?Sized + Hash + Eq,
+            S: Debug + ?Sized + Eq;
 
     fn should_not_contain<Q, S>(&self, key: &Q, value: &S) -> &Self
         where
             K: Borrow<Q>,
-            V: PartialEq<S>,
-            Q: Hash + Eq + Debug,
-            S: Debug;
+            V: Borrow<S>,
+            Q: Debug + ?Sized + Hash + Eq,
+            S: Debug + ?Sized + Eq;
 }
 
 impl<K, V> KeyContains<K, V> for HashMap<K, V>
     where
-        K: Hash + Eq + PartialEq + Debug,
+        K: Hash + Eq + Debug,
 {
     fn should_contain_key<Q>(&self, key: &Q) -> &Self
         where
@@ -112,15 +112,15 @@ impl<K, V> KeyValueContains<K, V> for HashMap<K, V>
     fn should_contain<Q, S>(&self, key: &Q, value: &S) -> &Self
         where
             K: Borrow<Q>,
-            V: PartialEq<S>,
-            Q: Hash + Eq + Debug,
-            S: Debug,
+            V: Borrow<S>,
+            Q: Debug + ?Sized + Hash + Eq,
+            S: Debug + ?Sized + Eq,
     {
         match self.get(key) {
             None => {
                 assert_failed_binary(AssertKind::ContainsKey, &self.keys(), key);
             }
-            Some(existing) if existing != value => {
+            Some(existing) if existing.borrow() != value => {
                 assert_failed_binary(AssertKind::ContainsValue, &self.values(), value);
             }
             _ => {}
@@ -131,12 +131,12 @@ impl<K, V> KeyValueContains<K, V> for HashMap<K, V>
     fn should_not_contain<Q, S>(&self, key: &Q, value: &S) -> &Self
         where
             K: Borrow<Q>,
-            V: PartialEq<S>,
-            Q: Hash + Eq + Debug,
-            S: Debug,
+            V: Borrow<S>,
+            Q: Debug + ?Sized + Hash + Eq,
+            S: Debug + ?Sized + Eq,
     {
         match self.get(key) {
-            Some(existing) if existing == value => {
+            Some(existing) if existing.borrow() == value => {
                 assert_failed_binary(AssertKind::NotContainsValue, &self.values(), value);
             }
             _ => {}
@@ -229,7 +229,7 @@ mod key_value_contains_tests {
     fn should_contain_key_value() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_contain(&"rust", &"assert");
+        key_value.should_contain("rust", "assert");
     }
 
     #[test]
@@ -237,7 +237,7 @@ mod key_value_contains_tests {
     fn should_contain_key_value_but_it_did_not_1() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_contain(&"rust", &"catch");
+        key_value.should_contain("rust", "catch");
     }
 
     #[test]
@@ -245,14 +245,14 @@ mod key_value_contains_tests {
     fn should_contain_key_value_but_it_did_not_2() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_contain(&"java", &"catch");
+        key_value.should_contain("java", "catch");
     }
 
     #[test]
     fn should_not_contain_key_value() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_not_contain(&"rust", &"catch");
+        key_value.should_not_contain("rust", "catch");
     }
 
     #[test]
@@ -260,6 +260,6 @@ mod key_value_contains_tests {
     fn should_not_contain_key_value_but_it_did() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_not_contain(&"rust", &"assert");
+        key_value.should_not_contain("rust", "assert");
     }
 }
