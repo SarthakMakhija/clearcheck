@@ -1,3 +1,5 @@
+use crate::matchers::case::{be_lowercase, be_uppercase};
+use crate::matchers::Should;
 use crate::panicking::{assert_failed_unary, AssertKind};
 
 pub trait Case {
@@ -19,14 +21,14 @@ impl Case for String {
 
 impl Case for &str {
     fn should_be_lower_case(&self) -> &Self {
-        if self != &self.to_lowercase() {
+        if !self.should(&be_lowercase()) {
             assert_failed_unary(AssertKind::LowerCase, self);
         }
         self
     }
 
     fn should_be_upper_case(&self) -> &Self {
-        if self != &self.to_uppercase() {
+        if !self.should(&be_uppercase()) {
             assert_failed_unary(AssertKind::UpperCase, self);
         }
         self
