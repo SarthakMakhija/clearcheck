@@ -1,23 +1,23 @@
 use crate::matchers::Matcher;
 
-pub enum StringBoundaryBased<'a> {
+pub enum BoundaryBased<'a> {
     Begin(&'a str),
     End(&'a str),
 }
 
-impl<'a> Matcher<&str> for StringBoundaryBased<'a> {
+impl<'a> Matcher<&str> for BoundaryBased<'a> {
     fn test(&self, value: &&str) -> bool {
         match self {
-            StringBoundaryBased::Begin(prefix) => value.starts_with(prefix),
-            StringBoundaryBased::End(suffix) => value.ends_with(suffix),
+            BoundaryBased::Begin(prefix) => value.starts_with(prefix),
+            BoundaryBased::End(suffix) => value.ends_with(suffix),
         }
     }
 }
 
-pub fn begin_with(prefix: &str) -> StringBoundaryBased<'_> {
-    StringBoundaryBased::Begin(prefix)
+pub fn begin_with(prefix: &str) -> BoundaryBased<'_> {
+    BoundaryBased::Begin(prefix)
 }
 
-pub fn end_with(suffix: &str) -> StringBoundaryBased<'_> {
-    StringBoundaryBased::End(suffix)
+pub fn end_with(suffix: &str) -> BoundaryBased<'_> {
+    BoundaryBased::End(suffix)
 }
