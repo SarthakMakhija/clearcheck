@@ -9,9 +9,9 @@ pub trait Duplicates {
 }
 
 impl<T> Duplicates for Vec<T>
-    where
-        T: std::fmt::Debug,
-        T: Hash + Eq,
+where
+    T: std::fmt::Debug,
+    T: Hash + Eq,
 {
     fn should_contain_duplicates(&self) -> &Self {
         (self as &[T]).should_contain_duplicates();
@@ -25,9 +25,9 @@ impl<T> Duplicates for Vec<T>
 }
 
 impl<T> Duplicates for [T]
-    where
-        T: std::fmt::Debug,
-        T: Hash + Eq,
+where
+    T: std::fmt::Debug,
+    T: Hash + Eq,
 {
     fn should_contain_duplicates(&self) -> &Self {
         let unique = self.iter().collect::<HashSet<_>>();

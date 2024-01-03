@@ -6,8 +6,8 @@ pub trait Empty {
 }
 
 impl<T> Empty for Vec<T>
-    where
-        T: std::fmt::Debug,
+where
+    T: std::fmt::Debug,
 {
     fn should_be_empty(&self) -> &Self {
         (self as &[T]).should_be_empty();
@@ -21,8 +21,8 @@ impl<T> Empty for Vec<T>
 }
 
 impl<T> Empty for [T]
-    where
-        T: std::fmt::Debug,
+where
+    T: std::fmt::Debug,
 {
     fn should_be_empty(&self) -> &Self {
         if !self.is_empty() {

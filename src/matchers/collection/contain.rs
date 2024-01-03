@@ -4,34 +4,37 @@ use std::fmt::Debug;
 use crate::panicking::{assert_failed_binary, AssertKind};
 
 pub trait Contains<T>
-    where
-        T: Eq + Debug,
+where
+    T: Eq + Debug,
 {
     fn should_contain<Q>(&self, element: &Q) -> &Self
-        where
-            T: Borrow<Q>,
-            Q: Eq + Debug + ?Sized;
+    where
+        T: Borrow<Q>,
+        Q: Eq + Debug + ?Sized;
     fn should_not_contain<Q>(&self, element: &Q) -> &Self
-        where T: Borrow<Q>,
-              Q: Eq + Debug + ?Sized;
+    where
+        T: Borrow<Q>,
+        Q: Eq + Debug + ?Sized;
 }
 
 impl<T> Contains<T> for Vec<T>
-    where
-        T: Debug,
-        T: Eq,
+where
+    T: Debug,
+    T: Eq,
 {
     fn should_contain<Q>(&self, element: &Q) -> &Self
-        where T: Borrow<Q>,
-              Q: Eq + Debug + ?Sized
+    where
+        T: Borrow<Q>,
+        Q: Eq + Debug + ?Sized,
     {
         (self as &[T]).should_contain(element);
         self
     }
 
     fn should_not_contain<Q>(&self, element: &Q) -> &Self
-        where T: Borrow<Q>,
-              Q: Eq + Debug + ?Sized
+    where
+        T: Borrow<Q>,
+        Q: Eq + Debug + ?Sized,
     {
         (self as &[T]).should_not_contain(element);
         self
@@ -39,11 +42,15 @@ impl<T> Contains<T> for Vec<T>
 }
 
 impl<T> Contains<T> for [T]
-    where
-        T: Debug,
-        T: Eq,
+where
+    T: Debug,
+    T: Eq,
 {
-    fn should_contain<Q>(&self, element: &Q) -> &Self where T: Borrow<Q>, Q: Eq + Debug + ?Sized {
+    fn should_contain<Q>(&self, element: &Q) -> &Self
+    where
+        T: Borrow<Q>,
+        Q: Eq + Debug + ?Sized,
+    {
         let contains = self.iter().any(|source| source.borrow() == element);
         if !contains {
             assert_failed_binary(AssertKind::Contains, self, element);
@@ -51,7 +58,11 @@ impl<T> Contains<T> for [T]
         self
     }
 
-    fn should_not_contain<Q>(&self, element: &Q) -> &Self where T: Borrow<Q>, Q: Eq + Debug + ?Sized {
+    fn should_not_contain<Q>(&self, element: &Q) -> &Self
+    where
+        T: Borrow<Q>,
+        Q: Eq + Debug + ?Sized,
+    {
         let contains = self.iter().any(|source| source.borrow() == element);
         if contains {
             assert_failed_binary(AssertKind::NotContains, &self, element);

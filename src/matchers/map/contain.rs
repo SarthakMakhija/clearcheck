@@ -7,52 +7,52 @@ use crate::panicking::{assert_failed_binary, AssertKind};
 
 pub trait KeyContains<K, V> {
     fn should_contain_key<Q>(&self, key: &Q) -> &Self
-        where
-            K: Borrow<Q>,
-            Q: Hash + Eq + Debug + ?Sized;
+    where
+        K: Borrow<Q>,
+        Q: Hash + Eq + Debug + ?Sized;
 
     fn should_not_contain_key<Q>(&self, key: &Q) -> &Self
-        where
-            K: Borrow<Q>,
-            Q: Hash + Eq + Debug + ?Sized;
+    where
+        K: Borrow<Q>,
+        Q: Hash + Eq + Debug + ?Sized;
 }
 
 pub trait ValueContains<K, V> {
     fn should_contain_value<S>(&self, value: &S) -> &Self
-        where
-            V: Eq + Borrow<S>,
-            S: Debug + ?Sized + Eq;
+    where
+        V: Eq + Borrow<S>,
+        S: Debug + ?Sized + Eq;
 
     fn should_not_contain_value<S>(&self, value: &S) -> &Self
-        where
-            V: Eq + Borrow<S>,
-            S: Debug + ?Sized + Eq;
+    where
+        V: Eq + Borrow<S>,
+        S: Debug + ?Sized + Eq;
 }
 
 pub trait KeyValueContains<K, V> {
     fn should_contain<Q, S>(&self, key: &Q, value: &S) -> &Self
-        where
-            K: Borrow<Q>,
-            V: Borrow<S>,
-            Q: Debug + ?Sized + Hash + Eq,
-            S: Debug + ?Sized + Eq;
+    where
+        K: Borrow<Q>,
+        V: Borrow<S>,
+        Q: Debug + ?Sized + Hash + Eq,
+        S: Debug + ?Sized + Eq;
 
     fn should_not_contain<Q, S>(&self, key: &Q, value: &S) -> &Self
-        where
-            K: Borrow<Q>,
-            V: Borrow<S>,
-            Q: Debug + ?Sized + Hash + Eq,
-            S: Debug + ?Sized + Eq;
+    where
+        K: Borrow<Q>,
+        V: Borrow<S>,
+        Q: Debug + ?Sized + Hash + Eq,
+        S: Debug + ?Sized + Eq;
 }
 
 impl<K, V> KeyContains<K, V> for HashMap<K, V>
-    where
-        K: Hash + Eq + Debug,
+where
+    K: Hash + Eq + Debug,
 {
     fn should_contain_key<Q>(&self, key: &Q) -> &Self
-        where
-            K: Borrow<Q>,
-            Q: Hash + Eq + Debug + ?Sized,
+    where
+        K: Borrow<Q>,
+        Q: Hash + Eq + Debug + ?Sized,
     {
         let contains = self.contains_key(key);
         if !contains {
@@ -62,9 +62,9 @@ impl<K, V> KeyContains<K, V> for HashMap<K, V>
     }
 
     fn should_not_contain_key<Q>(&self, key: &Q) -> &Self
-        where
-            K: Borrow<Q>,
-            Q: Hash + Eq + Debug + ?Sized,
+    where
+        K: Borrow<Q>,
+        Q: Hash + Eq + Debug + ?Sized,
     {
         let contains = self.contains_key(key);
         if contains {
@@ -75,14 +75,14 @@ impl<K, V> KeyContains<K, V> for HashMap<K, V>
 }
 
 impl<K, V> ValueContains<K, V> for HashMap<K, V>
-    where
-        K: Hash + Eq + Debug,
-        V: Debug,
+where
+    K: Hash + Eq + Debug,
+    V: Debug,
 {
     fn should_contain_value<S>(&self, value: &S) -> &Self
-        where
-            V: Eq + Borrow<S>,
-            S: Debug + ?Sized + Eq,
+    where
+        V: Eq + Borrow<S>,
+        S: Debug + ?Sized + Eq,
     {
         let contains = self.values().any(|source| source.borrow() == value);
         if !contains {
@@ -92,9 +92,9 @@ impl<K, V> ValueContains<K, V> for HashMap<K, V>
     }
 
     fn should_not_contain_value<S>(&self, value: &S) -> &Self
-        where
-            V: Eq + Borrow<S>,
-            S: Debug + ?Sized + Eq,
+    where
+        V: Eq + Borrow<S>,
+        S: Debug + ?Sized + Eq,
     {
         let contains = self.values().any(|source| source.borrow() == value);
         if contains {
@@ -105,16 +105,16 @@ impl<K, V> ValueContains<K, V> for HashMap<K, V>
 }
 
 impl<K, V> KeyValueContains<K, V> for HashMap<K, V>
-    where
-        K: Hash + Eq + Debug,
-        V: Debug,
+where
+    K: Hash + Eq + Debug,
+    V: Debug,
 {
     fn should_contain<Q, S>(&self, key: &Q, value: &S) -> &Self
-        where
-            K: Borrow<Q>,
-            V: Borrow<S>,
-            Q: Debug + ?Sized + Hash + Eq,
-            S: Debug + ?Sized + Eq,
+    where
+        K: Borrow<Q>,
+        V: Borrow<S>,
+        Q: Debug + ?Sized + Hash + Eq,
+        S: Debug + ?Sized + Eq,
     {
         match self.get(key) {
             None => {
@@ -129,11 +129,11 @@ impl<K, V> KeyValueContains<K, V> for HashMap<K, V>
     }
 
     fn should_not_contain<Q, S>(&self, key: &Q, value: &S) -> &Self
-        where
-            K: Borrow<Q>,
-            V: Borrow<S>,
-            Q: Debug + ?Sized + Hash + Eq,
-            S: Debug + ?Sized + Eq,
+    where
+        K: Borrow<Q>,
+        V: Borrow<S>,
+        Q: Debug + ?Sized + Hash + Eq,
+        S: Debug + ?Sized + Eq,
     {
         match self.get(key) {
             Some(existing) if existing.borrow() == value => {

@@ -15,8 +15,8 @@ pub trait Size {
 }
 
 impl<T> Size for Vec<T>
-    where
-        T: std::fmt::Debug,
+where
+    T: std::fmt::Debug,
 {
     fn should_have_size(&self, size: usize) -> &Self {
         (self as &[T]).should_have_size(size);
@@ -65,8 +65,8 @@ impl<T> Size for Vec<T>
 }
 
 impl<T> Size for [T]
-    where
-        T: std::fmt::Debug,
+where
+    T: std::fmt::Debug,
 {
     fn should_have_size(&self, size: usize) -> &Self {
         if self.len() != size {
