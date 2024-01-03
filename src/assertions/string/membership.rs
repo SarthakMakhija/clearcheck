@@ -1,11 +1,11 @@
 use crate::matchers::string::membership::{
-    contain, contain_a_digit, contain_character, contain_ignoring_case, contain_only_digits,
-    not_contain_digits,
+    be_empty, contain, contain_a_digit, contain_character, contain_ignoring_case,
+    contain_only_digits, not_contain_digits,
 };
 use crate::matchers::{Should, ShouldNot};
 use crate::panicking::{assert_failed_binary, assert_failed_unary, AssertKind};
 
-pub trait Contains {
+pub trait Membership {
     fn should_only_contain_digits(&self) -> &Self;
     fn should_contain_a_digit(&self) -> &Self;
     fn should_not_contain_digits(&self) -> &Self;
@@ -15,9 +15,11 @@ pub trait Contains {
     fn should_not_contain(&self, substr: &str) -> &Self;
     fn should_contain_ignoring_case(&self, substr: &str) -> &Self;
     fn should_not_contain_ignoring_case(&self, substr: &str) -> &Self;
+    fn should_be_empty(&self) -> &Self;
+    fn should_not_be_empty(&self) -> &Self;
 }
 
-impl Contains for String {
+impl Membership for String {
     fn should_only_contain_digits(&self) -> &Self {
         (self as &str).should_only_contain_digits();
         self
@@ -62,9 +64,19 @@ impl Contains for String {
         (self as &str).should_not_contain_ignoring_case(substr);
         self
     }
+
+    fn should_be_empty(&self) -> &Self {
+        (self as &str).should_be_empty();
+        self
+    }
+
+    fn should_not_be_empty(&self) -> &Self {
+        (self as &str).should_not_be_empty();
+        self
+    }
 }
 
-impl Contains for &str {
+impl Membership for &str {
     fn should_only_contain_digits(&self) -> &Self {
         if !self.should(&contain_only_digits()) {
             assert_failed_unary(AssertKind::ContainsOnlyDigits, self);
@@ -127,11 +139,25 @@ impl Contains for &str {
         }
         self
     }
+
+    fn should_be_empty(&self) -> &Self {
+        if !self.should(&be_empty()) {
+            assert_failed_unary(AssertKind::Empty, self);
+        }
+        self
+    }
+
+    fn should_not_be_empty(&self) -> &Self {
+        if !self.should_not(&be_empty()) {
+            assert_failed_unary(AssertKind::NotEmpty, self);
+        }
+        self
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::string::contain::Contains;
+    use crate::assertions::string::membership::Membership;
 
     #[test]
     fn should_only_contain_digits() {
@@ -248,5 +274,31 @@ mod tests {
     fn should_not_contain_substring_ignoring_case_but_it_did() {
         let email = "john1@gmail.com";
         email.should_not_contain_ignoring_case("GMAIL");
+    }
+
+    #[test]
+    fn should_be_empty() {
+        let name = "";
+        name.should_be_empty();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_empty_but_was_not() {
+        let name = "John";
+        name.should_be_empty();
+    }
+
+    #[test]
+    fn should_not_be_empty() {
+        let name = "John";
+        name.should_not_be_empty();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_be_empty_but_was() {
+        let name = "";
+        name.should_not_be_empty();
     }
 }
