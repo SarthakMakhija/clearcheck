@@ -3,5 +3,6 @@ mod contain;
 mod length;
 mod empty;
 mod equal;
+mod begin;
 
 //contain
