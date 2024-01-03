@@ -29,6 +29,16 @@ impl<K: Eq + Hash, V> Matcher<HashMap<K, V>> for LengthBasedMatcher {
     }
 }
 
+impl Matcher<&str> for LengthBasedMatcher {
+    fn test(&self, value: &&str) -> bool {
+        match self {
+            LengthBasedMatcher::Same(length) => value.len() == *length,
+            LengthBasedMatcher::Atleast(length) => value.len() >= *length,
+            LengthBasedMatcher::Atmost(length) => value.len() <= *length,
+        }
+    }
+}
+
 pub fn have_same_length(length: usize) -> LengthBasedMatcher {
     LengthBasedMatcher::Same(length)
 }
