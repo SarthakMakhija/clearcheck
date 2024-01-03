@@ -34,6 +34,8 @@ pub(crate) enum AssertKind {
     ContainsOnlyDigits,
     ContainsADigit,
     NotContainsDigits,
+    Equal,
+    NotEqual
 }
 
 pub(crate) fn assert_failed_unary<T>(kind: AssertKind, left: &T) -> !
@@ -90,6 +92,8 @@ fn assert_failed_inner(
         AssertKind::ContainsOnlyDigits => "must only contain digits",
         AssertKind::ContainsADigit => "must contain a digit",
         AssertKind::NotContainsDigits => "must not contain a digit",
+        AssertKind::Equal => "must be equal to",
+        AssertKind::NotEqual => "must not be equal to",
     };
 
     match right {
