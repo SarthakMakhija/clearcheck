@@ -1,3 +1,5 @@
+use crate::matchers::boundary::begin_with;
+use crate::matchers::{Should, ShouldNot};
 use crate::panicking::{assert_failed_binary, AssertKind};
 
 pub trait Begin {
@@ -19,14 +21,14 @@ impl Begin for String {
 
 impl Begin for &str {
     fn should_begin_with(&self, prefix: &str) -> &Self {
-        if !self.starts_with(prefix) {
+        if !self.should(&begin_with(prefix)) {
             assert_failed_binary(AssertKind::BeginWith, self, prefix);
         }
         self
     }
 
     fn should_not_begin_with(&self, prefix: &str) -> &Self {
-        if self.starts_with(prefix) {
+        if !self.should_not(&begin_with(prefix)) {
             assert_failed_binary(AssertKind::NotBeginWith, self, prefix);
         }
         self

@@ -1,3 +1,5 @@
+use crate::matchers::boundary::end_with;
+use crate::matchers::{Should, ShouldNot};
 use crate::panicking::{assert_failed_binary, AssertKind};
 
 pub trait End {
@@ -19,14 +21,14 @@ impl End for String {
 
 impl End for &str {
     fn should_end_with(&self, suffix: &str) -> &Self {
-        if !self.ends_with(suffix) {
+        if !self.should(&end_with(suffix)) {
             assert_failed_binary(AssertKind::EndWith, self, suffix);
         }
         self
     }
 
     fn should_not_end_with(&self, suffix: &str) -> &Self {
-        if self.ends_with(suffix) {
+        if !self.should_not(&end_with(suffix)) {
             assert_failed_binary(AssertKind::NotEndWith, self, suffix);
         }
         self

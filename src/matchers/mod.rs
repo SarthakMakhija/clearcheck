@@ -1,4 +1,5 @@
 pub mod bound;
+pub mod boundary;
 pub mod case;
 pub mod contains;
 pub mod duplicate;
