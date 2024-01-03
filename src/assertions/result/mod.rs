@@ -1,5 +1,7 @@
 use std::fmt::Debug;
 
+use crate::matchers::result::{be_err, be_ok};
+use crate::matchers::Should;
 use crate::panicking::{assert_failed_unary, AssertKind};
 
 pub trait OkErr {
@@ -13,14 +15,14 @@ where
     E: Debug,
 {
     fn should_be_ok(&self) -> &Self {
-        if self.is_err() {
+        if !self.should(&be_ok()) {
             assert_failed_unary(AssertKind::Ok, self);
         }
         self
     }
 
     fn should_be_err(&self) -> &Self {
-        if self.is_ok() {
+        if !self.should(&be_err()) {
             assert_failed_unary(AssertKind::Err, self);
         }
         self

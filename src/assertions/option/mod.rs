@@ -1,3 +1,5 @@
+use crate::matchers::option::{be_none, be_some};
+use crate::matchers::Should;
 use std::fmt::Debug;
 
 use crate::panicking::{assert_failed_unary, AssertKind};
@@ -12,14 +14,14 @@ where
     T: Debug,
 {
     fn should_be_some(&self) -> &Self {
-        if self.is_none() {
+        if !self.should(&be_some()) {
             assert_failed_unary(AssertKind::Some, self);
         }
         self
     }
 
     fn should_be_none(&self) -> &Self {
-        if self.is_some() {
+        if !self.should(&be_none()) {
             assert_failed_unary(AssertKind::None, self);
         }
         self

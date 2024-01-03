@@ -3,7 +3,9 @@ pub mod collection;
 pub mod equal;
 pub mod length;
 pub mod map;
+pub mod option;
 pub mod range;
+pub mod result;
 pub mod string;
 
 pub trait Should<T> {
