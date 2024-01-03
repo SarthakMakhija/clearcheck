@@ -1,3 +1,5 @@
+use crate::matchers::membership::be_empty;
+use crate::matchers::{Should, ShouldNot};
 use crate::panicking::{assert_failed_unary, AssertKind};
 
 pub trait Empty {
@@ -19,14 +21,14 @@ impl Empty for String {
 
 impl Empty for &str {
     fn should_be_empty(&self) -> &Self {
-        if !self.is_empty() {
+        if !self.should(&be_empty()) {
             assert_failed_unary(AssertKind::Empty, self);
         }
         self
     }
 
     fn should_not_be_empty(&self) -> &Self {
-        if self.is_empty() {
+        if !self.should_not(&be_empty()) {
             assert_failed_unary(AssertKind::NotEmpty, self);
         }
         self

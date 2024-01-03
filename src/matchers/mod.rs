@@ -1,10 +1,10 @@
 pub mod bound;
 pub mod boundary;
 pub mod case;
-pub mod contains;
 pub mod duplicate;
 pub mod equal;
 pub mod length;
+pub mod membership;
 pub mod range;
 
 pub trait Should<T> {

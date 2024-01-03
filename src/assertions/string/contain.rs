@@ -1,4 +1,4 @@
-use crate::matchers::contains::{
+use crate::matchers::membership::{
     contain, contain_a_digit, contain_character, contain_ignoring_case, contain_only_digits,
     not_contain_digits,
 };
