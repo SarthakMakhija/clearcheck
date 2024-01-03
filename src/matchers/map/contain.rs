@@ -56,7 +56,7 @@ where
     {
         let contains = self.contains_key(key);
         if !contains {
-            assert_failed_binary(AssertKind::Contains, &self.keys(), key);
+            assert_failed_binary(AssertKind::ContainsKey, &self.keys(), key);
         }
         self
     }
@@ -68,7 +68,7 @@ where
     {
         let contains = self.contains_key(key);
         if contains {
-            assert_failed_binary(AssertKind::NotContains, &self.keys(), key);
+            assert_failed_binary(AssertKind::NotContainsKey, &self.keys(), key);
         }
         self
     }
@@ -118,7 +118,7 @@ where
     {
         match self.get(key) {
             None => {
-                assert_failed_binary(AssertKind::Contains, &self.keys(), key);
+                assert_failed_binary(AssertKind::ContainsKey, &self.keys(), key);
             }
             Some(existing) if existing != value => {
                 assert_failed_binary(AssertKind::ContainsValue, &self.values(), value);
