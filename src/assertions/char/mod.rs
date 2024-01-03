@@ -18,32 +18,28 @@ pub trait Equal {
 
 impl CharRange for char {
     fn should_be_in_inclusive_range(&self, range: RangeInclusive<char>) -> &Self {
-        let in_range = self.should(&be_in_inclusive_range(&range));
-        if !in_range {
+        if !self.should(&be_in_inclusive_range(&range)) {
             assert_failed_binary(AssertKind::InRange, self, &range);
         }
         self
     }
 
     fn should_not_be_in_inclusive_range(&self, range: RangeInclusive<char>) -> &Self {
-        let not_in_range = self.should_not(&be_in_inclusive_range(&range));
-        if !not_in_range {
+        if !self.should_not(&be_in_inclusive_range(&range)) {
             assert_failed_binary(AssertKind::NotInRange, self, &range);
         }
         self
     }
 
     fn should_be_in_exclusive_range(&self, range: Range<char>) -> &Self {
-        let in_range = self.should(&be_in_exclusive_range(&range));
-        if !in_range {
+        if !self.should(&be_in_exclusive_range(&range)) {
             assert_failed_binary(AssertKind::InRange, self, &range);
         }
         self
     }
 
     fn should_not_be_in_exclusive_range(&self, range: Range<char>) -> &Self {
-        let not_in_range = self.should_not(&be_in_exclusive_range(&range));
-        if !not_in_range {
+        if !self.should_not(&be_in_exclusive_range(&range)) {
             assert_failed_binary(AssertKind::NotInRange, self, &range);
         }
         self
