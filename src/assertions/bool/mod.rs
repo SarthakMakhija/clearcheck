@@ -1,3 +1,5 @@
+use crate::matchers::bool::{be_false, be_true};
+use crate::matchers::Should;
 use crate::panicking::{assert_failed_unary, AssertKind};
 
 pub trait TrueFalse {
@@ -7,14 +9,14 @@ pub trait TrueFalse {
 
 impl TrueFalse for bool {
     fn should_be_true(&self) -> &Self {
-        if !*self {
+        if !self.should(&be_true()) {
             assert_failed_unary(AssertKind::True, self)
         }
         self
     }
 
     fn should_be_false(&self) -> &Self {
-        if *self {
+        if !self.should(&be_false()) {
             assert_failed_unary(AssertKind::False, self)
         }
         self

@@ -1,3 +1,4 @@
+pub mod bool;
 pub mod char;
 pub mod collection;
 pub mod equal;
