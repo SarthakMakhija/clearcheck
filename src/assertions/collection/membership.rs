@@ -1,6 +1,8 @@
 use std::borrow::Borrow;
 use std::fmt::Debug;
 
+use crate::matchers::collection::membership::contain;
+use crate::matchers::{Should, ShouldNot};
 use crate::panicking::{assert_failed_binary, assert_failed_unary, AssertKind};
 
 pub trait Membership<T>
@@ -97,8 +99,8 @@ where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
     {
-        let contains = self.iter().any(|source| source.borrow() == element);
-        if !contains {
+        let mapped: Vec<_> = self.iter().map(|source| source.borrow()).collect();
+        if !mapped.should(&contain(&element)) {
             assert_failed_binary(AssertKind::Contains, self, element);
         }
         self
@@ -109,8 +111,8 @@ where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
     {
-        let contains = self.iter().any(|source| source.borrow() == element);
-        if contains {
+        let mapped: Vec<_> = self.iter().map(|source| source.borrow()).collect();
+        if !mapped.should_not(&contain(&element)) {
             assert_failed_binary(AssertKind::NotContains, &self, element);
         }
         self
