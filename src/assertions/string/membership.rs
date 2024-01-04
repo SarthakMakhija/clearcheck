@@ -1,6 +1,7 @@
+use crate::matchers::length::have_zero_length;
 use crate::matchers::string::membership::{
-    be_empty, contain, contain_a_digit, contain_character, contain_ignoring_case,
-    contain_only_digits, not_contain_digits,
+    contain, contain_a_digit, contain_character, contain_ignoring_case, contain_only_digits,
+    not_contain_digits,
 };
 use crate::matchers::{Should, ShouldNot};
 use crate::panicking::{assert_failed_binary, assert_failed_unary, AssertKind};
@@ -141,14 +142,14 @@ impl Membership for &str {
     }
 
     fn should_be_empty(&self) -> &Self {
-        if !self.should(&be_empty()) {
+        if !self.should(&have_zero_length()) {
             assert_failed_unary(AssertKind::Empty, self);
         }
         self
     }
 
     fn should_not_be_empty(&self) -> &Self {
-        if !self.should_not(&be_empty()) {
+        if !self.should_not(&have_zero_length()) {
             assert_failed_unary(AssertKind::NotEmpty, self);
         }
         self

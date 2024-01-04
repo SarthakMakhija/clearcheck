@@ -7,6 +7,7 @@ impl<T> Matcher<&[T]> for LengthBased {
             LengthBased::Same(length) => collection.len() == *length,
             LengthBased::Atleast(length) => collection.len() >= *length,
             LengthBased::Atmost(length) => collection.len() <= *length,
+            LengthBased::Zero => collection.len() == 0,
         }
     }
 }

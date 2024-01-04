@@ -1,7 +1,8 @@
-use crate::matchers::length::LengthBased;
-use crate::matchers::Matcher;
 use std::collections::HashMap;
 use std::hash::Hash;
+
+use crate::matchers::length::LengthBased;
+use crate::matchers::Matcher;
 
 impl<K: Eq + Hash, V> Matcher<HashMap<K, V>> for LengthBased {
     fn test(&self, collection: &HashMap<K, V>) -> bool {
@@ -9,6 +10,7 @@ impl<K: Eq + Hash, V> Matcher<HashMap<K, V>> for LengthBased {
             LengthBased::Same(length) => collection.len() == *length,
             LengthBased::Atleast(length) => collection.len() >= *length,
             LengthBased::Atmost(length) => collection.len() <= *length,
+            LengthBased::Zero => collection.len() == 0,
         }
     }
 }

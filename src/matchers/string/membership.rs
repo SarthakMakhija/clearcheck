@@ -7,7 +7,6 @@ pub enum MembershipBased<'a> {
     Char(char),
     Substr(&'a str),
     SubstrIgnoringCase(&'a str),
-    Empty,
 }
 
 impl<'a> Matcher<&str> for MembershipBased<'a> {
@@ -21,7 +20,6 @@ impl<'a> Matcher<&str> for MembershipBased<'a> {
             MembershipBased::SubstrIgnoringCase(substr) => {
                 value.to_lowercase().contains(&substr.to_lowercase())
             }
-            MembershipBased::Empty => value.is_empty(),
         }
     }
 }
@@ -48,8 +46,4 @@ pub fn contain(substr: &str) -> MembershipBased {
 
 pub fn contain_ignoring_case(substr: &str) -> MembershipBased {
     MembershipBased::SubstrIgnoringCase(substr)
-}
-
-pub fn be_empty() -> MembershipBased<'static> {
-    MembershipBased::Empty
 }

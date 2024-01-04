@@ -2,6 +2,7 @@ use std::borrow::Borrow;
 use std::fmt::Debug;
 
 use crate::matchers::collection::membership::contain;
+use crate::matchers::length::have_zero_length;
 use crate::matchers::{Should, ShouldNot};
 use crate::panicking::{assert_failed_binary, assert_failed_unary, AssertKind};
 
@@ -119,14 +120,14 @@ where
     }
 
     fn should_be_empty(&self) -> &Self {
-        if !self.is_empty() {
+        if !self.should(&have_zero_length()) {
             assert_failed_unary(AssertKind::Empty, &self)
         }
         self
     }
 
     fn should_not_be_empty(&self) -> &Self {
-        if self.is_empty() {
+        if !self.should_not(&have_zero_length()) {
             assert_failed_unary(AssertKind::NotEmpty, &self)
         }
         self

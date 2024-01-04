@@ -7,6 +7,7 @@ impl Matcher<&str> for LengthBased {
             LengthBased::Same(length) => value.len() == *length,
             LengthBased::Atleast(length) => value.len() >= *length,
             LengthBased::Atmost(length) => value.len() <= *length,
+            LengthBased::Zero => value.len() == 0,
         }
     }
 }
