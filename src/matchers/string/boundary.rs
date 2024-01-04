@@ -1,4 +1,4 @@
-use crate::matchers::Matcher;
+use crate::matchers::{Matcher, MatcherResult};
 
 pub enum BoundaryBased<'a> {
     Begin(&'a str),
@@ -6,10 +6,18 @@ pub enum BoundaryBased<'a> {
 }
 
 impl<'a> Matcher<&str> for BoundaryBased<'a> {
-    fn test(&self, value: &&str) -> bool {
+    fn test(&self, value: &&str) -> MatcherResult {
         match self {
-            BoundaryBased::Begin(prefix) => value.starts_with(prefix),
-            BoundaryBased::End(suffix) => value.ends_with(suffix),
+            BoundaryBased::Begin(prefix) => MatcherResult::formatted(
+                value.starts_with(prefix),
+                format!("{:?} should begin with {:?}", value, prefix),
+                format!("{:?} should not begin with {:?}", value, prefix),
+            ),
+            BoundaryBased::End(suffix) => MatcherResult::formatted(
+                value.ends_with(suffix),
+                format!("{:?} should end with {:?}", value, suffix),
+                format!("{:?} should not end with {:?}", value, suffix),
+            ),
         }
     }
 }
@@ -31,26 +39,26 @@ mod tests {
     #[test]
     fn should_begin_with() {
         let matcher = begin_with("go");
-        matcher.test(&"goselect").should_be_true();
+        matcher.test(&"goselect").passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
     fn should_begin_with_but_did_not() {
         let matcher = begin_with("go");
-        matcher.test(&"select").should_be_true();
+        matcher.test(&"select").passed.should_be_true();
     }
 
     #[test]
     fn should_end_with() {
         let matcher = end_with("elect");
-        matcher.test(&"goselect").should_be_true();
+        matcher.test(&"goselect").passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
     fn should_end_with_but_did_not() {
         let matcher = end_with("go");
-        matcher.test(&"select").should_be_true();
+        matcher.test(&"select").passed.should_be_true();
     }
 }

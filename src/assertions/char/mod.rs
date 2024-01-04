@@ -1,9 +1,8 @@
+use std::ops::{Range, RangeInclusive};
+
 use crate::matchers::equal::be_equal_ignoring_case;
 use crate::matchers::range::{be_in_exclusive_range, be_in_inclusive_range};
 use crate::matchers::{Should, ShouldNot};
-use std::ops::{Range, RangeInclusive};
-
-use crate::panicking::{assert_failed_binary, AssertKind};
 
 pub trait CharRange {
     fn should_be_in_inclusive_range(&self, range: RangeInclusive<char>) -> &Self;
@@ -19,46 +18,34 @@ pub trait Equal {
 
 impl CharRange for char {
     fn should_be_in_inclusive_range(&self, range: RangeInclusive<char>) -> &Self {
-        if !self.should(&be_in_inclusive_range(&range)) {
-            assert_failed_binary(AssertKind::InRange, self, &range);
-        }
+        self.should(&be_in_inclusive_range(&range));
         self
     }
 
     fn should_not_be_in_inclusive_range(&self, range: RangeInclusive<char>) -> &Self {
-        if !self.should_not(&be_in_inclusive_range(&range)) {
-            assert_failed_binary(AssertKind::NotInRange, self, &range);
-        }
+        self.should_not(&be_in_inclusive_range(&range));
         self
     }
 
     fn should_be_in_exclusive_range(&self, range: Range<char>) -> &Self {
-        if !self.should(&be_in_exclusive_range(&range)) {
-            assert_failed_binary(AssertKind::InRange, self, &range);
-        }
+        self.should(&be_in_exclusive_range(&range));
         self
     }
 
     fn should_not_be_in_exclusive_range(&self, range: Range<char>) -> &Self {
-        if !self.should_not(&be_in_exclusive_range(&range)) {
-            assert_failed_binary(AssertKind::NotInRange, self, &range);
-        }
+        self.should_not(&be_in_exclusive_range(&range));
         self
     }
 }
 
 impl Equal for char {
     fn should_be_equal_ignoring_case(&self, other: &char) -> &Self {
-        if !self.should(&be_equal_ignoring_case(other)) {
-            assert_failed_binary(AssertKind::Equal, self, other);
-        }
+        self.should(&be_equal_ignoring_case(other));
         self
     }
 
     fn should_not_be_equal_ignoring_case(&self, other: &char) -> &Self {
-        if !self.should_not(&be_equal_ignoring_case(other)) {
-            assert_failed_binary(AssertKind::NotEqual, self, other);
-        }
+        self.should_not(&be_equal_ignoring_case(other));
         self
     }
 }

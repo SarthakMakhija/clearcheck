@@ -1,6 +1,5 @@
 use crate::matchers::string::boundary::{begin_with, end_with};
 use crate::matchers::{Should, ShouldNot};
-use crate::panicking::{assert_failed_binary, AssertKind};
 
 pub trait Boundary {
     fn should_begin_with(&self, prefix: &str) -> &Self;
@@ -33,30 +32,22 @@ impl Boundary for String {
 
 impl Boundary for &str {
     fn should_begin_with(&self, prefix: &str) -> &Self {
-        if !self.should(&begin_with(prefix)) {
-            assert_failed_binary(AssertKind::BeginWith, self, prefix);
-        }
+        self.should(&begin_with(prefix));
         self
     }
 
     fn should_not_begin_with(&self, prefix: &str) -> &Self {
-        if !self.should_not(&begin_with(prefix)) {
-            assert_failed_binary(AssertKind::NotBeginWith, self, prefix);
-        }
+        self.should_not(&begin_with(prefix));
         self
     }
 
     fn should_end_with(&self, suffix: &str) -> &Self {
-        if !self.should(&end_with(suffix)) {
-            assert_failed_binary(AssertKind::EndWith, self, suffix);
-        }
+        self.should(&end_with(suffix));
         self
     }
 
     fn should_not_end_with(&self, suffix: &str) -> &Self {
-        if !self.should_not(&end_with(suffix)) {
-            assert_failed_binary(AssertKind::NotEndWith, self, suffix);
-        }
+        self.should_not(&end_with(suffix));
         self
     }
 }

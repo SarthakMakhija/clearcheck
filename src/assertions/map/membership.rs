@@ -5,7 +5,6 @@ use std::hash::Hash;
 
 use crate::matchers::map::membership::{contain_key, contain_key_value, contain_value};
 use crate::matchers::{Should, ShouldNot};
-use crate::panicking::{assert_failed_binary, AssertKind};
 
 pub trait KeyMembership<K, V> {
     fn should_contain_key<Q>(&self, key: &Q) -> &Self
@@ -94,10 +93,7 @@ where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized,
     {
-        let mapped = map_keys(&self);
-        if !mapped.should(&contain_key(&key)) {
-            assert_failed_binary(AssertKind::ContainsKey, &self.keys(), key);
-        }
+        map_keys(&self).should(&contain_key(&key));
         self
     }
 
@@ -106,10 +102,7 @@ where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized,
     {
-        let mapped = map_keys(&self);
-        if !mapped.should_not(&contain_key(&key)) {
-            assert_failed_binary(AssertKind::NotContainsKey, &self.keys(), key);
-        }
+        map_keys(&self).should_not(&contain_key(&key));
         self
     }
 }
@@ -124,10 +117,7 @@ where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq,
     {
-        let mapped = map_values(&self);
-        if !mapped.should(&contain_value(&value)) {
-            assert_failed_binary(AssertKind::ContainsValue, &self.values(), value);
-        }
+        map_values(&self).should(&contain_value(&value));
         self
     }
 
@@ -136,10 +126,7 @@ where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq,
     {
-        let mapped = map_values(&self);
-        if !mapped.should_not(&contain_value(&value)) {
-            assert_failed_binary(AssertKind::NotContainsValue, &self.values(), value);
-        }
+        map_values(&self).should_not(&contain_value(&value));
         self
     }
 }
@@ -156,10 +143,7 @@ where
         Q: Debug + ?Sized + Hash + Eq,
         S: Debug + ?Sized + Eq,
     {
-        let mapped = map_key_value(&self);
-        if !mapped.should(&contain_key_value(&key, &value)) {
-            assert_failed_binary(AssertKind::ContainsKeyValue, &self, value);
-        }
+        map_key_value(&self).should(&contain_key_value(&key, &value));
         self
     }
 
@@ -170,10 +154,7 @@ where
         Q: Debug + ?Sized + Hash + Eq,
         S: Debug + ?Sized + Eq,
     {
-        let mapped = map_key_value(&self);
-        if !mapped.should_not(&contain_key_value(&key, &value)) {
-            assert_failed_binary(AssertKind::NotContainsKeyValue, &self, value);
-        }
+        map_key_value(&self).should_not(&contain_key_value(&key, &value));
         self
     }
 }

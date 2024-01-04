@@ -1,6 +1,5 @@
 use crate::matchers::collection::bound::{have_lower_bound, have_upper_bound};
 use crate::matchers::Should;
-use crate::panicking::{assert_failed_binary, AssertKind};
 
 pub trait Bounds<T>
 where
@@ -48,16 +47,12 @@ where
     T: PartialOrd,
 {
     fn should_have_upper_bound(&self, element: &T) -> &Self {
-        if !self.should(&have_upper_bound(element)) {
-            assert_failed_binary(AssertKind::UpperBound, &self, &element)
-        }
+        self.should(&have_upper_bound(element));
         self
     }
 
     fn should_have_lower_bound(&self, element: &T) -> &Self {
-        if !self.should(&have_lower_bound(element)) {
-            assert_failed_binary(AssertKind::LowerBound, &self, &element)
-        }
+        self.should(&have_lower_bound(element));
         self
     }
 }

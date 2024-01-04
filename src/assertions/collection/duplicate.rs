@@ -3,7 +3,6 @@ use std::hash::Hash;
 
 use crate::matchers::collection::duplicate::contain_duplicates;
 use crate::matchers::{Should, ShouldNot};
-use crate::panicking::{assert_failed_unary, AssertKind};
 
 pub trait Duplicates {
     fn should_contain_duplicates(&self) -> &Self;
@@ -48,16 +47,12 @@ where
     T: Hash + Eq,
 {
     fn should_contain_duplicates(&self) -> &Self {
-        if !self.should(&contain_duplicates()) {
-            assert_failed_unary(AssertKind::ContainsDuplicates, &self);
-        }
+        self.should(&contain_duplicates());
         self
     }
 
     fn should_not_contain_duplicates(&self) -> &Self {
-        if !self.should_not(&contain_duplicates()) {
-            assert_failed_unary(AssertKind::NotContainsDuplicates, &self);
-        }
+        self.should_not(&contain_duplicates());
         self
     }
 }

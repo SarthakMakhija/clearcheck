@@ -1,4 +1,4 @@
-use crate::matchers::Matcher;
+use crate::matchers::{Matcher, MatcherResult};
 
 pub enum SomeNoneBased {
     Some,
@@ -6,10 +6,18 @@ pub enum SomeNoneBased {
 }
 
 impl<T> Matcher<Option<T>> for SomeNoneBased {
-    fn test(&self, value: &Option<T>) -> bool {
+    fn test(&self, value: &Option<T>) -> MatcherResult {
         match self {
-            SomeNoneBased::Some => value.is_some(),
-            SomeNoneBased::None => value.is_none(),
+            SomeNoneBased::Some => MatcherResult::new(
+                value.is_some(),
+                "Value should be Some",
+                "Value should not be Some",
+            ),
+            SomeNoneBased::None => MatcherResult::new(
+                value.is_none(),
+                "Value should be None",
+                "Value should not be None",
+            ),
         }
     }
 }
@@ -31,26 +39,26 @@ mod tests {
     #[test]
     fn should_be_some() {
         let matcher = be_some();
-        matcher.test(&Some(10)).should_be_true();
+        matcher.test(&Some(10)).passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
     fn should_be_some_but_was_not() {
         let matcher = be_some();
-        matcher.test(&None::<()>).should_be_true();
+        matcher.test(&None::<()>).passed.should_be_true();
     }
 
     #[test]
     fn should_be_none() {
         let matcher = be_none();
-        matcher.test(&None::<()>).should_be_true();
+        matcher.test(&None::<()>).passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
     fn should_be_none_but_was_not() {
         let matcher = be_none();
-        matcher.test(&Some(10)).should_be_true();
+        matcher.test(&Some(10)).passed.should_be_true();
     }
 }

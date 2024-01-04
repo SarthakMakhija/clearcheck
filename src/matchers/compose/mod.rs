@@ -1,16 +1,18 @@
-use crate::matchers::Matcher;
+use std::fmt::Debug;
+
+use crate::matchers::{Matcher, MatcherResult};
 
 enum Kind {
     All,
     Any,
 }
 
-pub struct Matchers<'a, T> {
+pub struct Matchers<'a, T: Debug> {
     matchers: Vec<&'a dyn Matcher<T>>,
     kind: Kind,
 }
 
-impl<'a, T> Matchers<'a, T> {
+impl<'a, T: Debug> Matchers<'a, T> {
     pub fn all(matchers: Vec<&'a dyn Matcher<T>>) -> Self {
         Matchers {
             matchers,
@@ -26,19 +28,52 @@ impl<'a, T> Matchers<'a, T> {
     }
 }
 
-impl<'a, T> Matcher<T> for Matchers<'a, T> {
-    fn test(&self, value: &T) -> bool {
-        let all_result = self
+impl<'a, T: Debug> Matcher<T> for Matchers<'a, T> {
+    fn test(&self, value: &T) -> MatcherResult {
+        let results = self
             .matchers
             .iter()
             .map(|matcher| matcher.test(value))
             .collect::<Vec<_>>();
 
         match self.kind {
-            Kind::All => all_result.iter().all(|result| *result == true),
-            Kind::Any => all_result.iter().any(|result| *result == true),
+            Kind::All => MatcherResult::formatted(
+                results.iter().all(|result| result.passed),
+                messages(
+                    &results,
+                    |result| !result.passed,
+                    |result| result.failure_message.clone(),
+                ),
+                messages(
+                    &results,
+                    |result| result.passed,
+                    |result| result.negated_failure_message.clone(),
+                ),
+            ),
+            Kind::Any => MatcherResult::formatted(
+                results.iter().any(|result| result.passed),
+                messages(&results, |_| true, |result| result.failure_message.clone()),
+                messages(
+                    &results,
+                    |_| true,
+                    |result| result.negated_failure_message.clone(),
+                ),
+            ),
         }
     }
+}
+
+fn messages<P, M>(results: &Vec<MatcherResult>, predicate: P, mapper: M) -> String
+where
+    P: FnMut(&&MatcherResult) -> bool,
+    M: FnMut(&MatcherResult) -> String,
+{
+    results
+        .iter()
+        .filter(predicate)
+        .map(mapper)
+        .collect::<Vec<_>>()
+        .join("\n")
 }
 
 #[cfg(test)]
@@ -58,7 +93,7 @@ mod string_matchers {
         let matchers: Matchers<&str> = Matchers::all(vec![begin_with, end_with, atleast_length]);
 
         let term = "goselect";
-        matchers.test(&term).should_be_true();
+        matchers.test(&term).passed.should_be_true();
     }
 
     #[test]
@@ -70,7 +105,7 @@ mod string_matchers {
         let matchers: Matchers<&str> = Matchers::all(vec![begin_with, end_with, atleast_length]);
 
         let term = "goselect";
-        matchers.test(&term).should_be_false();
+        matchers.test(&term).passed.should_be_false();
     }
 
     #[test]
@@ -82,7 +117,7 @@ mod string_matchers {
         let matchers: Matchers<&str> = Matchers::any(vec![begin_with, end_with, atleast_length]);
 
         let term = "goselect";
-        matchers.test(&term).should_be_true();
+        matchers.test(&term).passed.should_be_true();
     }
 
     #[test]
@@ -94,7 +129,7 @@ mod string_matchers {
         let matchers: Matchers<&str> = Matchers::all(vec![begin_with, end_with, atleast_length]);
 
         let term = "testify";
-        matchers.test(&term).should_be_false();
+        matchers.test(&term).passed.should_be_false();
     }
 }
 
@@ -116,7 +151,7 @@ mod slice_matchers {
         let matchers: Matchers<Vec<&str>> = Matchers::all(vec![contain, atmost_length, duplicates]);
         let collection = vec!["junit", "assert4j", "junit"];
 
-        matchers.test(&collection).should_be_true();
+        matchers.test(&collection).passed.should_be_true();
     }
 
     #[test]
@@ -128,7 +163,7 @@ mod slice_matchers {
         let matchers: Matchers<Vec<&str>> = Matchers::all(vec![contain, atmost_length, duplicates]);
         let collection = vec!["junit", "assert4j", "junit"];
 
-        matchers.test(&collection).should_be_false();
+        matchers.test(&collection).passed.should_be_false();
     }
 
     #[test]
@@ -141,7 +176,7 @@ mod slice_matchers {
             Matchers::any(vec![contain, atleast_length, duplicates]);
         let collection = vec!["junit", "assert4j", "testify"];
 
-        matchers.test(&collection).should_be_true();
+        matchers.test(&collection).passed.should_be_true();
     }
 
     #[test]
@@ -154,6 +189,6 @@ mod slice_matchers {
             Matchers::any(vec![contain, atleast_length, duplicates]);
         let collection = vec!["junit", "assert", "testify1"];
 
-        matchers.test(&collection).should_be_false();
+        matchers.test(&collection).passed.should_be_false();
     }
 }

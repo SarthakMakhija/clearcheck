@@ -1,8 +1,7 @@
-use crate::matchers::option::{be_none, be_some};
-use crate::matchers::Should;
 use std::fmt::Debug;
 
-use crate::panicking::{assert_failed_unary, AssertKind};
+use crate::matchers::option::{be_none, be_some};
+use crate::matchers::Should;
 
 pub trait SomeNone {
     fn should_be_some(&self) -> &Self;
@@ -14,16 +13,12 @@ where
     T: Debug,
 {
     fn should_be_some(&self) -> &Self {
-        if !self.should(&be_some()) {
-            assert_failed_unary(AssertKind::Some, self);
-        }
+        self.should(&be_some());
         self
     }
 
     fn should_be_none(&self) -> &Self {
-        if !self.should(&be_none()) {
-            assert_failed_unary(AssertKind::None, self);
-        }
+        self.should(&be_none());
         self
     }
 }

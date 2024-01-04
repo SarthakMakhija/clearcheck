@@ -1,6 +1,5 @@
 use crate::matchers::collection::sort::{be_sorted_ascending, be_sorted_descending};
 use crate::matchers::Should;
-use crate::panicking::{assert_failed_unary, AssertKind};
 
 pub trait Sorted<T>
 where
@@ -45,16 +44,12 @@ where
     T: std::fmt::Debug + PartialOrd,
 {
     fn should_be_sorted_ascending(&self) -> &Self {
-        if !self.should(&be_sorted_ascending()) {
-            assert_failed_unary(AssertKind::SortsAscending, &self);
-        }
+        self.should(&be_sorted_ascending());
         self
     }
 
     fn should_be_sorted_descending(&self) -> &Self {
-        if !self.should(&be_sorted_descending()) {
-            assert_failed_unary(AssertKind::SortsDescending, &self);
-        }
+        self.should(&be_sorted_descending());
         self
     }
 }

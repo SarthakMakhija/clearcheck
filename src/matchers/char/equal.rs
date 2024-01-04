@@ -1,10 +1,14 @@
 use crate::matchers::equal::EqualityBased;
-use crate::matchers::Matcher;
+use crate::matchers::{Matcher, MatcherResult};
 
 impl Matcher<char> for EqualityBased<'_, char> {
-    fn test(&self, value: &char) -> bool {
+    fn test(&self, value: &char) -> MatcherResult {
         match self {
-            EqualityBased::IgnoringCase(other) => value.eq_ignore_ascii_case(other),
+            EqualityBased::IgnoringCase(other) => MatcherResult::formatted(
+                value.eq_ignore_ascii_case(other),
+                format!("{} should match {}", value, other),
+                format!("{} should not match {}", value, other),
+            ),
         }
     }
 }
@@ -18,12 +22,12 @@ mod tests {
     #[test]
     fn should_be_equal() {
         let based = be_equal_ignoring_case(&'a');
-        based.test(&'a').should_be_true();
+        based.test(&'a').passed.should_be_true();
     }
 
     #[test]
     fn should_not_be_equal() {
         let based = be_equal_ignoring_case(&'b');
-        based.test(&'a').should_be_false();
+        based.test(&'a').passed.should_be_false();
     }
 }

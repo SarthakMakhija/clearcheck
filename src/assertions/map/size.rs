@@ -9,7 +9,6 @@ use crate::matchers::length::{
 };
 use crate::matchers::range::{be_in_exclusive_range, be_in_inclusive_range};
 use crate::matchers::{Should, ShouldNot};
-use crate::panicking::{assert_failed_binary, AssertKind};
 
 impl<K, V> Size for HashMap<K, V>
 where
@@ -17,30 +16,22 @@ where
     V: Debug,
 {
     fn should_have_size(&self, size: usize) -> &Self {
-        if !self.should(&have_same_length(size)) {
-            assert_failed_binary(AssertKind::EqualSize, self, &size);
-        }
+        self.should(&have_same_length(size));
         self
     }
 
     fn should_not_have_size(&self, size: usize) -> &Self {
-        if !self.should_not(&have_same_length(size)) {
-            assert_failed_binary(AssertKind::NotEqualSize, self, &size);
-        }
+        self.should_not(&have_same_length(size));
         self
     }
 
     fn should_have_at_least_size(&self, size: usize) -> &Self {
-        if !self.should(&have_atleast_same_length(size)) {
-            assert_failed_binary(AssertKind::AtleastSize, self, &size);
-        }
+        self.should(&have_atleast_same_length(size));
         self
     }
 
     fn should_have_at_most_size(&self, size: usize) -> &Self {
-        if !self.should(&have_atmost_same_length(size)) {
-            assert_failed_binary(AssertKind::AtmostSize, self, &size);
-        }
+        self.should(&have_atmost_same_length(size));
         self
     }
 
@@ -50,30 +41,22 @@ where
     }
 
     fn should_have_size_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
-        if !self.len().should(&be_in_inclusive_range(&range)) {
-            assert_failed_binary(AssertKind::InRangeSize, self, &range);
-        }
+        self.len().should(&be_in_inclusive_range(&range));
         self
     }
 
     fn should_not_have_size_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
-        if !self.len().should_not(&be_in_inclusive_range(&range)) {
-            assert_failed_binary(AssertKind::NotInRangeSize, self, &range);
-        }
+        self.len().should_not(&be_in_inclusive_range(&range));
         self
     }
 
     fn should_have_size_in_exclusive_range(&self, range: Range<usize>) -> &Self {
-        if !self.len().should(&be_in_exclusive_range(&range)) {
-            assert_failed_binary(AssertKind::InRangeSize, self, &range);
-        }
+        self.len().should(&be_in_exclusive_range(&range));
         self
     }
 
     fn should_not_have_size_in_exclusive_range(&self, range: Range<usize>) -> &Self {
-        if !self.len().should_not(&be_in_exclusive_range(&range)) {
-            assert_failed_binary(AssertKind::NotInRangeSize, self, &range);
-        }
+        self.len().should_not(&be_in_exclusive_range(&range));
         self
     }
 }

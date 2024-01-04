@@ -1,4 +1,4 @@
-use crate::matchers::Matcher;
+use crate::matchers::{Matcher, MatcherResult};
 
 pub enum OkErrBased {
     Ok,
@@ -6,10 +6,18 @@ pub enum OkErrBased {
 }
 
 impl<T, E> Matcher<Result<T, E>> for OkErrBased {
-    fn test(&self, value: &Result<T, E>) -> bool {
+    fn test(&self, value: &Result<T, E>) -> MatcherResult {
         match self {
-            OkErrBased::Ok => value.is_ok(),
-            OkErrBased::Err => value.is_err(),
+            OkErrBased::Ok => MatcherResult::new(
+                value.is_ok(),
+                "Value should be Ok",
+                "Value should not be Ok",
+            ),
+            OkErrBased::Err => MatcherResult::new(
+                value.is_err(),
+                "Value should be Err",
+                "Value should not be Err",
+            ),
         }
     }
 }
@@ -31,7 +39,7 @@ mod tests {
     #[test]
     fn should_be_ok() {
         let matcher = be_ok();
-        matcher.test(&Ok::<i32, String>(12)).should_be_true();
+        matcher.test(&Ok::<i32, String>(12)).passed.should_be_true();
     }
 
     #[test]
@@ -40,6 +48,7 @@ mod tests {
         let matcher = be_ok();
         matcher
             .test(&Err::<i32, &str>("test error"))
+            .passed
             .should_be_true();
     }
 
@@ -48,6 +57,7 @@ mod tests {
         let matcher = be_err();
         matcher
             .test(&Err::<i32, &str>("test error"))
+            .passed
             .should_be_true();
     }
 
@@ -55,6 +65,6 @@ mod tests {
     #[should_panic]
     fn should_be_err_but_was_not() {
         let matcher = be_err();
-        matcher.test(&Ok::<i32, String>(12)).should_be_true();
+        matcher.test(&Ok::<i32, String>(12)).passed.should_be_true();
     }
 }

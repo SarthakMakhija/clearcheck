@@ -1,3 +1,5 @@
+use crate::matchers::MatcherResult;
+
 pub enum LengthBased {
     Same(usize),
     Atleast(usize),
@@ -6,12 +8,34 @@ pub enum LengthBased {
 }
 
 impl LengthBased {
-    pub fn test(&self, input_length: usize) -> bool {
+    pub fn test(&self, input_length: usize) -> MatcherResult {
         match self {
-            LengthBased::Same(length) => input_length == *length,
-            LengthBased::Atleast(length) => input_length >= *length,
-            LengthBased::Atmost(length) => input_length <= *length,
-            LengthBased::Zero => input_length == 0,
+            LengthBased::Same(length) => MatcherResult::formatted(
+                input_length == *length,
+                format!("Length {:?} should be {:?}", input_length, length),
+                format!("Length {:?} should not be {:?}", input_length, length),
+            ),
+            LengthBased::Atleast(length) => MatcherResult::formatted(
+                input_length >= *length,
+                format!("Length {:?} should be atleast {:?}", input_length, length),
+                format!(
+                    "Length {:?} should not be atleast {:?}",
+                    input_length, length
+                ),
+            ),
+            LengthBased::Atmost(length) => MatcherResult::formatted(
+                input_length <= *length,
+                format!("Length {:?} should be atmost {:?}", input_length, length),
+                format!(
+                    "Length {:?} should not be atmost {:?}",
+                    input_length, length
+                ),
+            ),
+            LengthBased::Zero => MatcherResult::formatted(
+                input_length == 0,
+                format!("Length {:?} should be zero", input_length),
+                format!("Length {:?} should not be zero", input_length),
+            ),
         }
     }
 }
@@ -42,52 +66,52 @@ mod tests {
     #[test]
     fn should_have_same_length() {
         let matcher = have_same_length(4);
-        matcher.test(4).should_be_true();
+        matcher.test(4).passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
     fn should_have_same_length_but_was_not() {
         let matcher = have_same_length(4);
-        matcher.test(2).should_be_true();
+        matcher.test(2).passed.should_be_true();
     }
 
     #[test]
     fn should_have_atleast_same_length() {
         let matcher = have_atleast_same_length(4);
-        matcher.test(5).should_be_true();
+        matcher.test(5).passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
     fn should_have_atleast_same_length_but_was_not() {
         let matcher = have_atleast_same_length(4);
-        matcher.test(2).should_be_true();
+        matcher.test(2).passed.should_be_true();
     }
 
     #[test]
     fn should_have_atmost_length() {
         let matcher = have_atmost_same_length(4);
-        matcher.test(3).should_be_true();
+        matcher.test(3).passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
     fn should_have_atmost_length_but_was_not() {
         let matcher = have_atmost_same_length(4);
-        matcher.test(5).should_be_true();
+        matcher.test(5).passed.should_be_true();
     }
 
     #[test]
     fn should_have_zero_length() {
         let matcher = have_zero_length();
-        matcher.test(0).should_be_true();
+        matcher.test(0).passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
     fn should_have_zero_length_but_was_not() {
         let matcher = have_zero_length();
-        matcher.test(2).should_be_true();
+        matcher.test(2).passed.should_be_true();
     }
 }

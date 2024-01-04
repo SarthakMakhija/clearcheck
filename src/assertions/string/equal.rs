@@ -1,6 +1,5 @@
 use crate::matchers::equal::be_equal_ignoring_case;
 use crate::matchers::{Should, ShouldNot};
-use crate::panicking::{assert_failed_binary, AssertKind};
 
 pub trait Equal {
     fn should_be_equal_ignoring_case(&self, other: &str) -> &Self;
@@ -21,16 +20,12 @@ impl Equal for String {
 
 impl Equal for &str {
     fn should_be_equal_ignoring_case(&self, other: &str) -> &Self {
-        if !self.should(&be_equal_ignoring_case(&other)) {
-            assert_failed_binary(AssertKind::Equal, self, other);
-        }
+        self.should(&be_equal_ignoring_case(&other));
         self
     }
 
     fn should_not_be_equal_ignoring_case(&self, other: &str) -> &Self {
-        if !self.should_not(&be_equal_ignoring_case(&other)) {
-            assert_failed_binary(AssertKind::NotEqual, self, other);
-        }
+        self.should_not(&be_equal_ignoring_case(&other));
         self
     }
 }

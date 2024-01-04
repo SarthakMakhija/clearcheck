@@ -4,7 +4,6 @@ use std::fmt::Debug;
 use crate::matchers::collection::membership::contain;
 use crate::matchers::length::have_zero_length;
 use crate::matchers::{Should, ShouldNot};
-use crate::panicking::{assert_failed_binary, assert_failed_unary, AssertKind};
 
 pub trait Membership<T>
 where
@@ -101,9 +100,7 @@ where
         Q: Eq + Debug + ?Sized,
     {
         let mapped: Vec<_> = self.iter().map(|source| source.borrow()).collect();
-        if !mapped.should(&contain(&element)) {
-            assert_failed_binary(AssertKind::Contains, self, element);
-        }
+        mapped.should(&contain(&element));
         self
     }
 
@@ -113,23 +110,17 @@ where
         Q: Eq + Debug + ?Sized,
     {
         let mapped: Vec<_> = self.iter().map(|source| source.borrow()).collect();
-        if !mapped.should_not(&contain(&element)) {
-            assert_failed_binary(AssertKind::NotContains, &self, element);
-        }
+        mapped.should_not(&contain(&element));
         self
     }
 
     fn should_be_empty(&self) -> &Self {
-        if !self.should(&have_zero_length()) {
-            assert_failed_unary(AssertKind::Empty, &self)
-        }
+        self.should(&have_zero_length());
         self
     }
 
     fn should_not_be_empty(&self) -> &Self {
-        if !self.should_not(&have_zero_length()) {
-            assert_failed_unary(AssertKind::NotEmpty, &self)
-        }
+        self.should_not(&have_zero_length());
         self
     }
 }

@@ -1,4 +1,4 @@
-use crate::matchers::Matcher;
+use crate::matchers::{Matcher, MatcherResult};
 
 pub enum CaseBased {
     Lower,
@@ -6,10 +6,18 @@ pub enum CaseBased {
 }
 
 impl Matcher<&str> for CaseBased {
-    fn test(&self, value: &&str) -> bool {
+    fn test(&self, value: &&str) -> MatcherResult {
         match self {
-            CaseBased::Lower => value == &value.to_lowercase(),
-            CaseBased::Upper => value == &value.to_uppercase(),
+            CaseBased::Lower => MatcherResult::formatted(
+                value == &value.to_lowercase(),
+                format!("{:?} should be lowercase", value),
+                format!("{:?} should not be lowercase", value),
+            ),
+            CaseBased::Upper => MatcherResult::formatted(
+                value == &value.to_uppercase(),
+                format!("{:?} should be uppercase", value),
+                format!("{:?} should not be uppercase", value),
+            ),
         }
     }
 }
@@ -31,26 +39,26 @@ mod tests {
     #[test]
     fn should_be_lowercase() {
         let matcher = be_lowercase();
-        matcher.test(&"goselect").should_be_true();
+        matcher.test(&"goselect").passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
     fn should_be_lowercase_but_was_not() {
         let matcher = be_lowercase();
-        matcher.test(&"GoSelect").should_be_true();
+        matcher.test(&"GoSelect").passed.should_be_true();
     }
 
     #[test]
     fn should_be_uppercase() {
         let matcher = be_uppercase();
-        matcher.test(&"GOSELECT").should_be_true();
+        matcher.test(&"GOSELECT").passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
     fn should_be_uppercase_but_was_not() {
         let matcher = be_uppercase();
-        matcher.test(&"GoSelect").should_be_true();
+        matcher.test(&"GoSelect").passed.should_be_true();
     }
 }

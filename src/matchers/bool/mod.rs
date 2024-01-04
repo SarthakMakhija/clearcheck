@@ -1,4 +1,4 @@
-use crate::matchers::Matcher;
+use crate::matchers::{Matcher, MatcherResult};
 
 pub enum TrueFalseBased {
     True,
@@ -6,10 +6,18 @@ pub enum TrueFalseBased {
 }
 
 impl Matcher<bool> for TrueFalseBased {
-    fn test(&self, value: &bool) -> bool {
+    fn test(&self, value: &bool) -> MatcherResult {
         match self {
-            TrueFalseBased::True => *value == true,
-            TrueFalseBased::False => *value == false,
+            TrueFalseBased::True => MatcherResult::new(
+                *value == true,
+                "Value should be TRUE",
+                "Value should not be TRUE",
+            ),
+            TrueFalseBased::False => MatcherResult::new(
+                *value == false,
+                "Value should be FALSE",
+                "Value should not be FALSE",
+            ),
         }
     }
 }
@@ -31,12 +39,12 @@ mod tests {
     #[test]
     fn should_be_true() {
         let matcher = be_true();
-        matcher.test(&true).should_be_true();
+        matcher.test(&true).passed.should_be_true();
     }
 
     #[test]
     fn should_be_false() {
         let matcher = be_false();
-        matcher.test(&false).should_be_true();
+        matcher.test(&false).passed.should_be_true();
     }
 }
