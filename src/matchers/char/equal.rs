@@ -8,3 +8,22 @@ impl Matcher<char> for EqualityBased<'_, char> {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::assertions::bool::TrueFalse;
+    use crate::matchers::equal::be_equal_ignoring_case;
+    use crate::matchers::Matcher;
+
+    #[test]
+    fn should_be_equal() {
+        let based = be_equal_ignoring_case(&'a');
+        based.test(&'a').should_be_true();
+    }
+
+    #[test]
+    fn should_not_be_equal() {
+        let based = be_equal_ignoring_case(&'b');
+        based.test(&'a').should_be_false();
+    }
+}

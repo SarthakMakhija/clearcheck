@@ -21,3 +21,40 @@ pub fn be_ok() -> OkErrBased {
 pub fn be_err() -> OkErrBased {
     OkErrBased::Err
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::assertions::bool::TrueFalse;
+    use crate::matchers::result::{be_err, be_ok};
+    use crate::matchers::Matcher;
+
+    #[test]
+    fn should_be_ok() {
+        let matcher = be_ok();
+        matcher.test(&Ok::<i32, String>(12)).should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_ok_but_was_not() {
+        let matcher = be_ok();
+        matcher
+            .test(&Err::<i32, &str>("test error"))
+            .should_be_true();
+    }
+
+    #[test]
+    fn should_be_err() {
+        let matcher = be_err();
+        matcher
+            .test(&Err::<i32, &str>("test error"))
+            .should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_err_but_was_not() {
+        let matcher = be_err();
+        matcher.test(&Ok::<i32, String>(12)).should_be_true();
+    }
+}
