@@ -76,3 +76,69 @@ where
 {
     KeyValueMembershipBased::KeyValue(key, value)
 }
+
+#[cfg(test)]
+mod tests {
+    use std::collections::HashMap;
+
+    use crate::assertions::bool::TrueFalse;
+    use crate::matchers::map::membership::{contain_key, contain_key_value, contain_value};
+    use crate::matchers::Matcher;
+
+    #[test]
+    fn should_contain_a_key() {
+        let mut collection = HashMap::new();
+        collection.insert("rust", "assert");
+
+        let matcher = contain_key(&"rust");
+        matcher.test(&collection).should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_a_key_but_it_did_not() {
+        let mut collection = HashMap::new();
+        collection.insert("rust", "assert");
+
+        let matcher = contain_key(&"java");
+        matcher.test(&collection).should_be_true();
+    }
+
+    #[test]
+    fn should_contain_a_value() {
+        let mut collection = HashMap::new();
+        collection.insert("rust", "assert");
+
+        let matcher = contain_value(&"assert");
+        matcher.test(&collection).should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_a_value_but_it_did_not() {
+        let mut collection = HashMap::new();
+        collection.insert("rust", "assert");
+
+        let matcher = contain_key(&"java");
+        matcher.test(&collection).should_be_true();
+    }
+
+    #[test]
+    fn should_contain_a_key_value() {
+        let mut collection = HashMap::new();
+        collection.insert("rust", "assert");
+
+        let matcher = contain_key_value(&"rust", &"assert");
+        matcher.test(&collection).should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_a_key_value_but_it_did_not() {
+        let mut collection = HashMap::new();
+        collection.insert("rust", "assert");
+
+        let matcher = contain_key_value(&"rust", &"testify");
+        matcher.test(&collection).should_be_true();
+    }
+}
