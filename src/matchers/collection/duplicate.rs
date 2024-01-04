@@ -33,3 +33,24 @@ impl<T: Hash + Eq> Matcher<&[T]> for DuplicateItemBased {
 pub fn contain_duplicates() -> DuplicateItemBased {
     DuplicateItemBased
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::assertions::bool::TrueFalse;
+    use crate::matchers::collection::duplicate::contain_duplicates;
+
+    #[test]
+    fn should_contains_duplicates() {
+        let matcher = contain_duplicates();
+        let collection = vec!["junit", "assert4j", "junit"];
+        matcher.test(&collection).should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contains_duplicates_but_it_did_not() {
+        let matcher = contain_duplicates();
+        let collection = vec!["junit", "assert4j", ""];
+        matcher.test(&collection).should_be_true();
+    }
+}

@@ -42,3 +42,43 @@ pub fn have_upper_bound<T: PartialOrd>(bound: &T) -> BoundBased<'_, T> {
 pub fn have_lower_bound<T: PartialOrd>(bound: &T) -> BoundBased<'_, T> {
     BoundBased::Lower(bound)
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::assertions::bool::TrueFalse;
+    use crate::matchers::collection::bound::{have_lower_bound, have_upper_bound};
+
+    #[test]
+    fn should_have_an_upper_bound() {
+        let matcher = have_upper_bound(&4);
+        let collection = vec![1, 2, 3, 4];
+
+        matcher.test(&collection).should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_have_an_upper_bound_but_was_not() {
+        let matcher = have_upper_bound(&3);
+        let collection = vec![1, 2, 3, 4];
+
+        matcher.test(&collection).should_be_true();
+    }
+
+    #[test]
+    fn should_have_a_lower_bound() {
+        let matcher = have_lower_bound(&1);
+        let collection = vec![1, 2, 3, 4];
+
+        matcher.test(&collection).should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_have_a_lower_bound_but_was_not() {
+        let matcher = have_lower_bound(&3);
+        let collection = vec![1, 2, 3, 4];
+
+        matcher.test(&collection).should_be_true();
+    }
+}

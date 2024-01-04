@@ -45,3 +45,24 @@ where
 {
     MembershipBased::Contain(element)
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::assertions::bool::TrueFalse;
+    use crate::matchers::collection::membership::contain;
+
+    #[test]
+    fn should_contain() {
+        let collection = vec!["junit", "testify"];
+        let matcher = contain(&"junit");
+        matcher.test(&collection).should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_but_id_did_not() {
+        let collection = vec!["unit4j", "testify"];
+        let matcher = contain(&"junit");
+        matcher.test(&collection).should_be_true();
+    }
+}

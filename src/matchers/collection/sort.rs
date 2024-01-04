@@ -43,3 +43,39 @@ pub fn be_sorted_ascending() -> SortBased {
 pub fn be_sorted_descending() -> SortBased {
     SortBased::Descending
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::assertions::bool::TrueFalse;
+    use crate::matchers::collection::sort::{be_sorted_ascending, be_sorted_descending};
+
+    #[test]
+    fn should_be_sorted_ascending() {
+        let matcher = be_sorted_ascending();
+        let collection = vec!["assert4j", "junit"];
+        matcher.test(&collection).should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_sorted_ascending_but_was_not() {
+        let matcher = be_sorted_ascending();
+        let collection = vec!["junit", "assert4j"];
+        matcher.test(&collection).should_be_true();
+    }
+
+    #[test]
+    fn should_be_sorted_descending() {
+        let matcher = be_sorted_descending();
+        let collection = vec!["junit", "assert4j"];
+        matcher.test(&collection).should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_sorted_descending_but_was_not() {
+        let matcher = be_sorted_descending();
+        let collection = vec!["assert4j", "junit"];
+        matcher.test(&collection).should_be_true();
+    }
+}
