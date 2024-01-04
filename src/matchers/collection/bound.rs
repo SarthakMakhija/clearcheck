@@ -5,12 +5,33 @@ pub enum BoundBased<'a, T: PartialOrd> {
     Lower(&'a T),
 }
 
-impl<T: PartialOrd> Matcher<&[T]> for BoundBased<'_, T> {
-    fn test(&self, value: &&[T]) -> bool {
+impl<'a, T> BoundBased<'a, T>
+where
+    T: PartialOrd,
+{
+    fn test(&self, collection: &[T]) -> bool {
         match self {
-            BoundBased::Upper(bound) => value.iter().all(|source| bound >= &source),
-            BoundBased::Lower(bound) => value.iter().all(|source| bound <= &source),
+            BoundBased::Upper(bound) => collection.iter().all(|source| bound >= &source),
+            BoundBased::Lower(bound) => collection.iter().all(|source| bound <= &source),
         }
+    }
+}
+
+impl<T: PartialOrd> Matcher<Vec<T>> for BoundBased<'_, T> {
+    fn test(&self, collection: &Vec<T>) -> bool {
+        self.test(&collection)
+    }
+}
+
+impl<T: PartialOrd, const N: usize> Matcher<[T; N]> for BoundBased<'_, T> {
+    fn test(&self, collection: &[T; N]) -> bool {
+        self.test(collection as &[T])
+    }
+}
+
+impl<T: PartialOrd> Matcher<&[T]> for BoundBased<'_, T> {
+    fn test(&self, collection: &&[T]) -> bool {
+        self.test(&collection)
     }
 }
 
