@@ -5,6 +5,17 @@ pub enum LengthBased {
     Zero,
 }
 
+impl LengthBased {
+    pub fn test_length(&self, input_length: usize) -> bool {
+        match self {
+            LengthBased::Same(length) => input_length == *length,
+            LengthBased::Atleast(length) => input_length >= *length,
+            LengthBased::Atmost(length) => input_length <= *length,
+            LengthBased::Zero => input_length == 0,
+        }
+    }
+}
+
 pub fn have_same_length(length: usize) -> LengthBased {
     LengthBased::Same(length)
 }
