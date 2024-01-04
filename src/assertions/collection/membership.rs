@@ -1,9 +1,9 @@
 use std::borrow::Borrow;
 use std::fmt::Debug;
 
-use crate::panicking::{assert_failed_binary, AssertKind};
+use crate::panicking::{assert_failed_binary, assert_failed_unary, AssertKind};
 
-pub trait Contains<T>
+pub trait Membership<T>
 where
     T: Eq + Debug,
 {
@@ -15,9 +15,11 @@ where
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized;
+    fn should_be_empty(&self) -> &Self;
+    fn should_not_be_empty(&self) -> &Self;
 }
 
-impl<T> Contains<T> for Vec<T>
+impl<T> Membership<T> for Vec<T>
 where
     T: Debug,
     T: Eq,
@@ -39,9 +41,19 @@ where
         (self as &[T]).should_not_contain(element);
         self
     }
+
+    fn should_be_empty(&self) -> &Self {
+        (self as &[T]).should_be_empty();
+        self
+    }
+
+    fn should_not_be_empty(&self) -> &Self {
+        (self as &[T]).should_not_be_empty();
+        self
+    }
 }
 
-impl<T, const N: usize> Contains<T> for [T; N]
+impl<T, const N: usize> Membership<T> for [T; N]
 where
     T: Debug,
     T: Eq,
@@ -63,9 +75,19 @@ where
         (self as &[T]).should_not_contain(element);
         self
     }
+
+    fn should_be_empty(&self) -> &Self {
+        (self as &[T]).should_be_empty();
+        self
+    }
+
+    fn should_not_be_empty(&self) -> &Self {
+        (self as &[T]).should_not_be_empty();
+        self
+    }
 }
 
-impl<T> Contains<T> for [T]
+impl<T> Membership<T> for [T]
 where
     T: Debug,
     T: Eq,
@@ -93,11 +115,25 @@ where
         }
         self
     }
+
+    fn should_be_empty(&self) -> &Self {
+        if !self.is_empty() {
+            assert_failed_unary(AssertKind::Empty, &self)
+        }
+        self
+    }
+
+    fn should_not_be_empty(&self) -> &Self {
+        if self.is_empty() {
+            assert_failed_unary(AssertKind::NotEmpty, &self)
+        }
+        self
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::collection::contain::Contains;
+    use crate::assertions::collection::membership::Membership;
 
     #[test]
     fn should_contain() {
@@ -123,5 +159,31 @@ mod tests {
     fn should_not_contain_but_was_contained() {
         let collection = vec!["junit", "assert4j", "catch2"];
         collection.should_not_contain("catch2");
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_empty_but_was_not() {
+        let collection = vec!["junit", "testify"];
+        collection.should_be_empty();
+    }
+
+    #[test]
+    fn should_be_empty() {
+        let collection: Vec<i32> = vec![];
+        collection.should_be_empty();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_be_empty_but_was() {
+        let collection: Vec<i32> = vec![];
+        collection.should_not_be_empty();
+    }
+
+    #[test]
+    fn should_not_be_empty() {
+        let collection = vec!["junit", "testify"];
+        collection.should_not_be_empty();
     }
 }
