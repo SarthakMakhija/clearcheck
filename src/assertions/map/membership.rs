@@ -5,7 +5,7 @@ use std::hash::Hash;
 
 use crate::panicking::{assert_failed_binary, AssertKind};
 
-pub trait KeyContains<K, V> {
+pub trait KeyMembership<K, V> {
     fn should_contain_key<Q>(&self, key: &Q) -> &Self
     where
         K: Borrow<Q>,
@@ -17,7 +17,7 @@ pub trait KeyContains<K, V> {
         Q: Hash + Eq + Debug + ?Sized;
 }
 
-pub trait ValueContains<K, V> {
+pub trait ValueMembership<K, V> {
     fn should_contain_value<S>(&self, value: &S) -> &Self
     where
         V: Eq + Borrow<S>,
@@ -29,7 +29,7 @@ pub trait ValueContains<K, V> {
         S: Debug + ?Sized + Eq;
 }
 
-pub trait KeyValueContains<K, V> {
+pub trait KeyValueMembership<K, V> {
     fn should_contain<Q, S>(&self, key: &Q, value: &S) -> &Self
     where
         K: Borrow<Q>,
@@ -45,7 +45,7 @@ pub trait KeyValueContains<K, V> {
         S: Debug + ?Sized + Eq;
 }
 
-impl<K, V> KeyContains<K, V> for HashMap<K, V>
+impl<K, V> KeyMembership<K, V> for HashMap<K, V>
 where
     K: Hash + Eq + Debug,
 {
@@ -74,7 +74,7 @@ where
     }
 }
 
-impl<K, V> ValueContains<K, V> for HashMap<K, V>
+impl<K, V> ValueMembership<K, V> for HashMap<K, V>
 where
     K: Hash + Eq + Debug,
     V: Debug,
@@ -104,7 +104,7 @@ where
     }
 }
 
-impl<K, V> KeyValueContains<K, V> for HashMap<K, V>
+impl<K, V> KeyValueMembership<K, V> for HashMap<K, V>
 where
     K: Hash + Eq + Debug,
     V: Debug,
@@ -149,7 +149,7 @@ where
 mod key_contains_tests {
     use std::collections::HashMap;
 
-    use crate::assertions::map::contain::KeyContains;
+    use crate::assertions::map::membership::KeyMembership;
 
     #[test]
     fn should_contain_key() {
@@ -186,7 +186,7 @@ mod key_contains_tests {
 mod value_contains_tests {
     use std::collections::HashMap;
 
-    use crate::assertions::map::contain::ValueContains;
+    use crate::assertions::map::membership::ValueMembership;
 
     #[test]
     fn should_contain_value() {
@@ -223,7 +223,7 @@ mod value_contains_tests {
 mod key_value_contains_tests {
     use std::collections::HashMap;
 
-    use crate::assertions::map::contain::KeyValueContains;
+    use crate::assertions::map::membership::KeyValueMembership;
 
     #[test]
     fn should_contain_key_value() {

@@ -1,2 +1,2 @@
-pub mod contain;
+pub mod membership;
 pub mod size;
