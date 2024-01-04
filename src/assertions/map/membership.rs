@@ -3,6 +3,8 @@ use std::collections::HashMap;
 use std::fmt::Debug;
 use std::hash::Hash;
 
+use crate::matchers::map::membership::{contain_key, contain_key_value, contain_value};
+use crate::matchers::{Should, ShouldNot};
 use crate::panicking::{assert_failed_binary, AssertKind};
 
 pub trait KeyMembership<K, V> {
@@ -45,6 +47,44 @@ pub trait KeyValueMembership<K, V> {
         S: Debug + ?Sized + Eq;
 }
 
+fn map_keys<K, V, Q>(collection: &HashMap<K, V>) -> HashMap<&Q, &V>
+where
+    K: Hash + Eq,
+    K: Borrow<Q>,
+    Q: Hash + Eq + ?Sized,
+{
+    collection
+        .iter()
+        .map(|key_value| (key_value.0.borrow(), key_value.1))
+        .collect::<HashMap<_, _>>()
+}
+
+fn map_values<K, V, S>(collection: &HashMap<K, V>) -> HashMap<&K, &S>
+where
+    K: Hash + Eq,
+    V: Borrow<S>,
+    S: Eq + ?Sized,
+{
+    collection
+        .iter()
+        .map(|key_value| (key_value.0, key_value.1.borrow()))
+        .collect::<HashMap<_, _>>()
+}
+
+fn map_key_value<K, V, Q, S>(collection: &HashMap<K, V>) -> HashMap<&Q, &S>
+where
+    K: Hash + Eq,
+    K: Borrow<Q>,
+    V: Borrow<S>,
+    Q: Hash + Eq + ?Sized,
+    S: Eq + ?Sized,
+{
+    collection
+        .iter()
+        .map(|key_value| (key_value.0.borrow(), key_value.1.borrow()))
+        .collect::<HashMap<_, _>>()
+}
+
 impl<K, V> KeyMembership<K, V> for HashMap<K, V>
 where
     K: Hash + Eq + Debug,
@@ -54,8 +94,8 @@ where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized,
     {
-        let contains = self.contains_key(key);
-        if !contains {
+        let mapped = map_keys(&self);
+        if !mapped.should(&contain_key(&key)) {
             assert_failed_binary(AssertKind::ContainsKey, &self.keys(), key);
         }
         self
@@ -66,8 +106,8 @@ where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized,
     {
-        let contains = self.contains_key(key);
-        if contains {
+        let mapped = map_keys(&self);
+        if !mapped.should_not(&contain_key(&key)) {
             assert_failed_binary(AssertKind::NotContainsKey, &self.keys(), key);
         }
         self
@@ -84,8 +124,8 @@ where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq,
     {
-        let contains = self.values().any(|source| source.borrow() == value);
-        if !contains {
+        let mapped = map_values(&self);
+        if !mapped.should(&contain_value(&value)) {
             assert_failed_binary(AssertKind::ContainsValue, &self.values(), value);
         }
         self
@@ -96,8 +136,8 @@ where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq,
     {
-        let contains = self.values().any(|source| source.borrow() == value);
-        if contains {
+        let mapped = map_values(&self);
+        if !mapped.should_not(&contain_value(&value)) {
             assert_failed_binary(AssertKind::NotContainsValue, &self.values(), value);
         }
         self
@@ -116,14 +156,9 @@ where
         Q: Debug + ?Sized + Hash + Eq,
         S: Debug + ?Sized + Eq,
     {
-        match self.get(key) {
-            None => {
-                assert_failed_binary(AssertKind::ContainsKey, &self.keys(), key);
-            }
-            Some(existing) if existing.borrow() != value => {
-                assert_failed_binary(AssertKind::ContainsValue, &self.values(), value);
-            }
-            _ => {}
+        let mapped = map_key_value(&self);
+        if !mapped.should(&contain_key_value(&key, &value)) {
+            assert_failed_binary(AssertKind::ContainsKeyValue, &self, value);
         }
         self
     }
@@ -135,11 +170,9 @@ where
         Q: Debug + ?Sized + Hash + Eq,
         S: Debug + ?Sized + Eq,
     {
-        match self.get(key) {
-            Some(existing) if existing.borrow() == value => {
-                assert_failed_binary(AssertKind::NotContainsValue, &self.values(), value);
-            }
-            _ => {}
+        let mapped = map_key_value(&self);
+        if !mapped.should_not(&contain_key_value(&key, &value)) {
+            assert_failed_binary(AssertKind::NotContainsKeyValue, &self, value);
         }
         self
     }
