@@ -47,3 +47,90 @@ pub fn contain(substr: &str) -> MembershipBased {
 pub fn contain_ignoring_case(substr: &str) -> MembershipBased {
     MembershipBased::SubstrIgnoringCase(substr)
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::assertions::bool::TrueFalse;
+    use crate::matchers::string::membership::{
+        contain, contain_character, contain_ignoring_case, contain_only_digits, not_contain_digits,
+    };
+    use crate::matchers::Matcher;
+
+    #[test]
+    fn should_contains_only_digits() {
+        let matcher = contain_only_digits();
+        matcher.test(&"12345").should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contains_only_digits_but_did_not() {
+        let matcher = contain_only_digits();
+        matcher.test(&"12345a").should_be_true();
+    }
+
+    #[test]
+    fn should_contain_a_digit() {
+        let matcher = contain_only_digits();
+        matcher.test(&"12345").should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_a_digit_but_did_not() {
+        let matcher = contain_only_digits();
+        matcher.test(&"goselect").should_be_true();
+    }
+
+    #[test]
+    fn should_not_contain_any_digit() {
+        let matcher = not_contain_digits();
+        matcher.test(&"goselect").should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_contain_any_digit_but_it_did() {
+        let matcher = not_contain_digits();
+        matcher.test(&"goselect1").should_be_true();
+    }
+
+    #[test]
+    fn should_contain_a_char() {
+        let matcher = contain_character('g');
+        matcher.test(&"goselect").should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_a_char_but_it_did() {
+        let matcher = contain_character('$');
+        matcher.test(&"goselect").should_be_true();
+    }
+
+    #[test]
+    fn should_contain_substring() {
+        let matcher = contain("select");
+        matcher.test(&"goselect").should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_substring_but_it_did_not() {
+        let matcher = contain("etcd");
+        matcher.test(&"goselect").should_be_true();
+    }
+
+    #[test]
+    fn should_contain_substring_ignoring_case() {
+        let matcher = contain_ignoring_case("SELECT");
+        matcher.test(&"goselect").should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_substring_ignoring_case_but_it_did_not() {
+        let matcher = contain_ignoring_case("ETCD");
+        matcher.test(&"goselect").should_be_true();
+    }
+}
