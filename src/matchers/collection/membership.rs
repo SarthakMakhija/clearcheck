@@ -1,8 +1,10 @@
-use crate::matchers::{Matcher, MatcherResult};
 use std::fmt::Debug;
+
+use crate::matchers::{Matcher, MatcherResult};
 
 pub enum MembershipBased<'a, T: Eq + Debug> {
     Contain(&'a T),
+    ContainAll(&'a [T]),
 }
 
 impl<'a, T: Eq + Debug> MembershipBased<'a, T> {
@@ -13,6 +15,21 @@ impl<'a, T: Eq + Debug> MembershipBased<'a, T> {
                 format!("{:?} should contain {:?}", collection, element),
                 format!("{:?} should not contain {:?}", collection, element),
             ),
+            MembershipBased::ContainAll(target) => {
+                let missing = target
+                    .iter()
+                    .filter(|element| !collection.contains(element))
+                    .collect::<Vec<_>>();
+
+                MatcherResult::formatted(
+                    missing.len() == 0,
+                    format!(
+                        "{:?} should contain {:?} but was missing {:?}",
+                        collection, target, missing
+                    ),
+                    format!("{:?} should not contain {:?}", collection, target),
+                )
+            }
         }
     }
 }
@@ -51,10 +68,17 @@ where
     MembershipBased::Contain(element)
 }
 
+pub fn contain_all<T>(elements: &[T]) -> MembershipBased<'_, T>
+where
+    T: Eq + Debug,
+{
+    MembershipBased::ContainAll(elements)
+}
+
 #[cfg(test)]
 mod tests {
     use crate::assertions::bool::TrueFalse;
-    use crate::matchers::collection::membership::contain;
+    use crate::matchers::collection::membership::{contain, contain_all};
 
     #[test]
     fn should_contain() {
@@ -68,6 +92,23 @@ mod tests {
     fn should_contain_but_id_did_not() {
         let collection = vec!["unit4j", "testify"];
         let matcher = contain(&"junit");
+        matcher.test(&collection).passed.should_be_true();
+    }
+
+    #[test]
+    fn should_contain_all_elements() {
+        let collection = vec!["junit", "testify", "assert4j", "xunit"];
+        let all_to_be_contained = vec!["testify", "assert4j", "xunit"];
+        let matcher = contain_all(&all_to_be_contained);
+        matcher.test(&collection).passed.should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_all_elements_but_it_did_not() {
+        let collection = vec!["junit", "testify", "assert4j", "xunit"];
+        let all_to_be_contained = vec!["testify", "assert", "xunit"];
+        let matcher = contain_all(&all_to_be_contained);
         matcher.test(&collection).passed.should_be_true();
     }
 }
