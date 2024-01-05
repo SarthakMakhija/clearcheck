@@ -1,7 +1,7 @@
 use std::borrow::Borrow;
 use std::fmt::Debug;
 
-use crate::matchers::collection::membership::contain;
+use crate::matchers::collection::membership::{contain, contain_all};
 use crate::matchers::empty::be_empty;
 use crate::matchers::{Should, ShouldNot};
 
@@ -13,10 +13,22 @@ where
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized;
+
     fn should_not_contain<Q>(&self, element: &Q) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized;
+
+    fn should_contain_all<Q>(&self, elements: &[&Q]) -> &Self
+    where
+        T: Borrow<Q>,
+        Q: Eq + Debug + ?Sized;
+
+    fn should_not_contain_all<Q>(&self, elements: &[&Q]) -> &Self
+    where
+        T: Borrow<Q>,
+        Q: Eq + Debug + ?Sized;
+
     fn should_be_empty(&self) -> &Self;
     fn should_not_be_empty(&self) -> &Self;
 }
@@ -41,6 +53,24 @@ where
         Q: Eq + Debug + ?Sized,
     {
         (self as &[T]).should_not_contain(element);
+        self
+    }
+
+    fn should_contain_all<Q>(&self, elements: &[&Q]) -> &Self
+    where
+        T: Borrow<Q>,
+        Q: Eq + Debug + ?Sized,
+    {
+        (self as &[T]).should_contain_all(elements);
+        self
+    }
+
+    fn should_not_contain_all<Q>(&self, elements: &[&Q]) -> &Self
+    where
+        T: Borrow<Q>,
+        Q: Eq + Debug + ?Sized,
+    {
+        (self as &[T]).should_not_contain_all(elements);
         self
     }
 
@@ -78,6 +108,24 @@ where
         self
     }
 
+    fn should_contain_all<Q>(&self, elements: &[&Q]) -> &Self
+    where
+        T: Borrow<Q>,
+        Q: Eq + Debug + ?Sized,
+    {
+        (self as &[T]).should_contain_all(elements);
+        self
+    }
+
+    fn should_not_contain_all<Q>(&self, elements: &[&Q]) -> &Self
+    where
+        T: Borrow<Q>,
+        Q: Eq + Debug + ?Sized,
+    {
+        (self as &[T]).should_not_contain_all(elements);
+        self
+    }
+
     fn should_be_empty(&self) -> &Self {
         (self as &[T]).should_be_empty();
         self
@@ -111,6 +159,26 @@ where
     {
         let mapped: Vec<_> = self.iter().map(|source| source.borrow()).collect();
         mapped.should_not(&contain(&element));
+        self
+    }
+
+    fn should_contain_all<Q>(&self, elements: &[&Q]) -> &Self
+    where
+        T: Borrow<Q>,
+        Q: Eq + Debug + ?Sized,
+    {
+        let mapped: Vec<_> = self.iter().map(|source| source.borrow()).collect();
+        mapped.should(&contain_all(elements));
+        self
+    }
+
+    fn should_not_contain_all<Q>(&self, elements: &[&Q]) -> &Self
+    where
+        T: Borrow<Q>,
+        Q: Eq + Debug + ?Sized,
+    {
+        let mapped: Vec<_> = self.iter().map(|source| source.borrow()).collect();
+        mapped.should_not(&contain_all(elements));
         self
     }
 
@@ -179,5 +247,35 @@ mod tests {
     fn should_not_be_empty() {
         let collection = vec!["junit", "testify"];
         collection.should_not_be_empty();
+    }
+
+    #[test]
+    fn should_contain_all() {
+        let collection = vec!["junit", "assert4j", "catch2"];
+        let to_be_contained = vec!["assert4j", "junit"];
+        collection.should_contain_all(&to_be_contained);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_all_but_was_not_contained() {
+        let collection = vec!["junit", "assert4j", "catch2"];
+        let to_be_contained = vec!["assert4j", "xunit"];
+        collection.should_contain_all(&to_be_contained);
+    }
+
+    #[test]
+    fn should_not_contain_all() {
+        let collection = vec!["junit", "assert4j", "catch2"];
+        let to_be_contained = vec!["assert4j", "junit", "catch"];
+        collection.should_not_contain_all(&to_be_contained);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_contain_all_but_it_did() {
+        let collection = vec!["junit", "assert4j", "catch2"];
+        let to_be_contained = vec!["assert4j", "junit"];
+        collection.should_not_contain_all(&to_be_contained);
     }
 }
