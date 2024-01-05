@@ -5,7 +5,7 @@ use std::hash::Hash;
 
 use crate::matchers::empty::be_empty;
 use crate::matchers::map::membership::{
-    contain_all_keys, contain_key, contain_key_value, contain_value,
+    contain_all_keys, contain_all_values, contain_key, contain_key_value, contain_value,
 };
 use crate::matchers::{Should, ShouldNot};
 
@@ -44,6 +44,16 @@ pub trait ValueMembership<K, V> {
         S: Debug + ?Sized + Eq;
 
     fn should_not_contain_value<S>(&self, value: &S) -> &Self
+    where
+        V: Eq + Borrow<S>,
+        S: Debug + ?Sized + Eq;
+
+    fn should_contain_all_values<S>(&self, values: &[&S]) -> &Self
+    where
+        V: Eq + Borrow<S>,
+        S: Debug + ?Sized + Eq;
+
+    fn should_not_contain_all_values<S>(&self, values: &[&S]) -> &Self
     where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq;
@@ -141,6 +151,24 @@ where
         S: Debug + ?Sized + Eq,
     {
         map_values(&self).should_not(&contain_value(&value));
+        self
+    }
+
+    fn should_contain_all_values<S>(&self, values: &[&S]) -> &Self
+    where
+        V: Eq + Borrow<S>,
+        S: Debug + ?Sized + Eq,
+    {
+        map_values(&self).should(&contain_all_values(values));
+        self
+    }
+
+    fn should_not_contain_all_values<S>(&self, values: &[&S]) -> &Self
+    where
+        V: Eq + Borrow<S>,
+        S: Debug + ?Sized + Eq,
+    {
+        map_values(&self).should_not(&contain_all_values(values));
         self
     }
 }
@@ -337,6 +365,22 @@ mod value_contains_tests {
     }
 
     #[test]
+    fn should_contain_all_values() {
+        let mut key_value = HashMap::new();
+        key_value.insert("rust", "assert");
+        key_value.insert("java", "junit");
+        key_value.should_contain_all_values(&["assert", "junit"]);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_all_values_but_it_did_not() {
+        let mut key_value = HashMap::new();
+        key_value.insert("rust", "assert");
+        key_value.should_contain_all_values(&["java", "xunit"]);
+    }
+
+    #[test]
     fn should_not_contain_value() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
@@ -349,6 +393,22 @@ mod value_contains_tests {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.should_not_contain_value("assert");
+    }
+
+    #[test]
+    fn should_not_contain_all_values() {
+        let mut key_value = HashMap::new();
+        key_value.insert("rust", "assert");
+        key_value.insert("java", "junit");
+        key_value.should_not_contain_all_values(&["catch", "junit"]);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_contain_all_values_but_it_contained() {
+        let mut key_value = HashMap::new();
+        key_value.insert("rust", "assert");
+        key_value.should_not_contain_all_values(&["assert", "assert"]);
     }
 }
 

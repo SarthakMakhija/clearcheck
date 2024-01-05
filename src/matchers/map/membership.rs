@@ -11,6 +11,7 @@ pub enum KeyMembershipBased<'a, T: Debug> {
 
 pub enum ValueMembershipBased<'a, T: Debug> {
     Value(&'a T),
+    AllValues(&'a [T]),
 }
 
 pub enum KeyValueMembershipBased<'a, K: Debug, V: Debug> {
@@ -61,6 +62,15 @@ where
     }
 }
 
+impl<V> ValueMembershipBased<'_, V>
+where
+    V: Eq + Debug,
+{
+    fn contains_value<K: Hash + Eq>(collection: &HashMap<K, V>, value: &&V) -> bool {
+        collection.values().any(|source| &source == value)
+    }
+}
+
 impl<K, V> Matcher<HashMap<K, V>> for ValueMembershipBased<'_, V>
 where
     K: Hash + Eq,
@@ -69,7 +79,7 @@ where
     fn test(&self, collection: &HashMap<K, V>) -> MatcherResult {
         match self {
             ValueMembershipBased::Value(value) => MatcherResult::formatted(
-                collection.values().any(|source| &source == value),
+                Self::contains_value(collection, value),
                 format!(
                     "Values {:?} in the map should contain {:?}",
                     collection.values(),
@@ -81,6 +91,27 @@ where
                     value
                 ),
             ),
+            ValueMembershipBased::AllValues(values) => {
+                let missing = values
+                    .iter()
+                    .filter(|value| !Self::contains_value(collection, value))
+                    .collect::<Vec<_>>();
+
+                MatcherResult::formatted(
+                    missing.len() == 0,
+                    format!(
+                        "Values {:?} in the map should contain all {:?} but it was missing {:?}",
+                        collection.values(),
+                        values,
+                        missing
+                    ),
+                    format!(
+                        "Values {:?} in the map should not contain {:?}",
+                        collection.values(),
+                        values
+                    ),
+                )
+            }
         }
     }
 }
@@ -131,6 +162,13 @@ where
     ValueMembershipBased::Value(value)
 }
 
+pub fn contain_all_values<Q>(values: &[Q]) -> ValueMembershipBased<'_, Q>
+where
+    Q: Eq + Debug,
+{
+    ValueMembershipBased::AllValues(values)
+}
+
 pub fn contain_key_value<'a, K, V>(key: &'a K, value: &'a V) -> KeyValueMembershipBased<'a, K, V>
 where
     K: Eq + Debug,
@@ -145,7 +183,7 @@ mod tests {
 
     use crate::assertions::bool::TrueFalse;
     use crate::matchers::map::membership::{
-        contain_all_keys, contain_key, contain_key_value, contain_value,
+        contain_all_keys, contain_all_values, contain_key, contain_key_value, contain_value,
     };
     use crate::matchers::Matcher;
 
@@ -207,6 +245,27 @@ mod tests {
         collection.insert("rust", "assert");
 
         let matcher = contain_key(&"java");
+        matcher.test(&collection).passed.should_be_true();
+    }
+
+    #[test]
+    fn should_contain_all_values() {
+        let mut collection = HashMap::new();
+        collection.insert("rust", "assert");
+        collection.insert("java", "junit");
+
+        let matcher = contain_all_values(&["assert", "junit"]);
+        matcher.test(&collection).passed.should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_all_values_but_it_did_not() {
+        let mut collection = HashMap::new();
+        collection.insert("rust", "assert");
+        collection.insert("java", "junit");
+
+        let matcher = contain_all_values(&["assert", "xunit"]);
         matcher.test(&collection).passed.should_be_true();
     }
 
