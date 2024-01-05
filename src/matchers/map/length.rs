@@ -6,6 +6,6 @@ use crate::matchers::{Matcher, MatcherResult};
 
 impl<K: Eq + Hash, V> Matcher<HashMap<K, V>> for LengthBased {
     fn test(&self, collection: &HashMap<K, V>) -> MatcherResult {
-        self.test(collection.len())
+        self.test_map(collection)
     }
 }
