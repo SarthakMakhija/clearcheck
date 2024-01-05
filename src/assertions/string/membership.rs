@@ -1,4 +1,4 @@
-use crate::matchers::length::have_zero_length;
+use crate::matchers::empty::be_empty;
 use crate::matchers::string::membership::{
     contain, contain_a_digit, contain_character, contain_ignoring_case, contain_only_digits,
     not_contain_digits,
@@ -123,12 +123,12 @@ impl Membership for &str {
     }
 
     fn should_be_empty(&self) -> &Self {
-        self.should(&have_zero_length());
+        self.should(&be_empty());
         self
     }
 
     fn should_not_be_empty(&self) -> &Self {
-        self.should_not(&have_zero_length());
+        self.should_not(&be_empty());
         self
     }
 }

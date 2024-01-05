@@ -2,7 +2,7 @@ use std::borrow::Borrow;
 use std::fmt::Debug;
 
 use crate::matchers::collection::membership::contain;
-use crate::matchers::length::have_zero_length;
+use crate::matchers::empty::be_empty;
 use crate::matchers::{Should, ShouldNot};
 
 pub trait Membership<T>
@@ -115,12 +115,12 @@ where
     }
 
     fn should_be_empty(&self) -> &Self {
-        self.should(&have_zero_length());
+        self.should(&be_empty());
         self
     }
 
     fn should_not_be_empty(&self) -> &Self {
-        self.should_not(&have_zero_length());
+        self.should_not(&be_empty());
         self
     }
 }
