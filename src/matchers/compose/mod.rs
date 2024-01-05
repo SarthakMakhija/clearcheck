@@ -7,20 +7,20 @@ enum Kind {
     Any,
 }
 
-pub struct Matchers<'a, T: Debug> {
-    matchers: Vec<&'a dyn Matcher<T>>,
+pub struct Matchers<T: Debug> {
+    matchers: Vec<Box<dyn Matcher<T>>>,
     kind: Kind,
 }
 
-impl<'a, T: Debug> Matchers<'a, T> {
-    pub fn all(matchers: Vec<&'a dyn Matcher<T>>) -> Self {
+impl<T: Debug> Matchers<T> {
+    pub fn all(matchers: Vec<Box<dyn Matcher<T>>>) -> Self {
         Matchers {
             matchers,
             kind: Kind::All,
         }
     }
 
-    pub fn any(matchers: Vec<&'a dyn Matcher<T>>) -> Self {
+    pub fn any(matchers: Vec<Box<dyn Matcher<T>>>) -> Self {
         Matchers {
             matchers,
             kind: Kind::Any,
@@ -28,7 +28,7 @@ impl<'a, T: Debug> Matchers<'a, T> {
     }
 }
 
-impl<'a, T: Debug> Matcher<T> for Matchers<'a, T> {
+impl<T: Debug> Matcher<T> for Matchers<T> {
     fn test(&self, value: &T) -> MatcherResult {
         let results = self
             .matchers
@@ -82,13 +82,13 @@ mod string_matchers {
     use crate::matchers::compose::Matchers;
     use crate::matchers::length::have_atleast_same_length;
     use crate::matchers::string::boundary::{begin_with, end_with};
-    use crate::matchers::Matcher;
+    use crate::matchers::{BoxWrap, Matcher};
 
     #[test]
     fn should_run_all_matchers_successfully() {
-        let begin_with = &begin_with("go");
-        let end_with = &end_with("select");
-        let atleast_length = &have_atleast_same_length(4);
+        let begin_with = begin_with("go").wrap();
+        let end_with = end_with("select").wrap();
+        let atleast_length = have_atleast_same_length(4).wrap();
 
         let matchers: Matchers<&str> = Matchers::all(vec![begin_with, end_with, atleast_length]);
 
@@ -98,9 +98,9 @@ mod string_matchers {
 
     #[test]
     fn should_fail_one_of_all_matchers() {
-        let begin_with = &begin_with("go");
-        let end_with = &end_with("select");
-        let atleast_length = &have_atleast_same_length(10);
+        let begin_with = begin_with("go").wrap();
+        let end_with = end_with("select").wrap();
+        let atleast_length = have_atleast_same_length(10).wrap();
 
         let matchers: Matchers<&str> = Matchers::all(vec![begin_with, end_with, atleast_length]);
 
@@ -110,9 +110,9 @@ mod string_matchers {
 
     #[test]
     fn should_run_any_of_all_matchers_successfully() {
-        let begin_with = &begin_with("go");
-        let end_with = &end_with("ted");
-        let atleast_length = &have_atleast_same_length(8);
+        let begin_with = begin_with("go").wrap();
+        let end_with = end_with("ted").wrap();
+        let atleast_length = have_atleast_same_length(8).wrap();
 
         let matchers: Matchers<&str> = Matchers::any(vec![begin_with, end_with, atleast_length]);
 
@@ -122,9 +122,9 @@ mod string_matchers {
 
     #[test]
     fn should_fail_all_of_any_matchers() {
-        let begin_with = &begin_with("go");
-        let end_with = &end_with("select");
-        let atleast_length = &have_atleast_same_length(10);
+        let begin_with = begin_with("go").wrap();
+        let end_with = end_with("select").wrap();
+        let atleast_length = have_atleast_same_length(10).wrap();
 
         let matchers: Matchers<&str> = Matchers::all(vec![begin_with, end_with, atleast_length]);
 
@@ -140,13 +140,13 @@ mod slice_matchers {
     use crate::matchers::collection::membership::contain;
     use crate::matchers::compose::Matchers;
     use crate::matchers::length::{have_atleast_same_length, have_atmost_same_length};
-    use crate::matchers::Matcher;
+    use crate::matchers::{BoxWrap, Matcher};
 
     #[test]
     fn should_run_all_matchers_successfully() {
-        let contain = &contain(&"assert4j");
-        let atmost_length = &have_atmost_same_length(4);
-        let duplicates = &contain_duplicates();
+        let contain = contain(&"assert4j").wrap();
+        let atmost_length = have_atmost_same_length(4).wrap();
+        let duplicates = contain_duplicates().wrap();
 
         let matchers: Matchers<Vec<&str>> = Matchers::all(vec![contain, atmost_length, duplicates]);
         let collection = vec!["junit", "assert4j", "junit"];
@@ -156,9 +156,9 @@ mod slice_matchers {
 
     #[test]
     fn should_fail_one_of_all_matchers() {
-        let contain = &contain(&"assert4j");
-        let atmost_length = &have_atmost_same_length(1);
-        let duplicates = &contain_duplicates();
+        let contain = contain(&"assert4j").wrap();
+        let atmost_length = have_atmost_same_length(1).wrap();
+        let duplicates = contain_duplicates().wrap();
 
         let matchers: Matchers<Vec<&str>> = Matchers::all(vec![contain, atmost_length, duplicates]);
         let collection = vec!["junit", "assert4j", "junit"];
@@ -168,12 +168,11 @@ mod slice_matchers {
 
     #[test]
     fn should_run_any_of_all_matchers_successfully() {
-        let contain = &contain(&"assert4j");
-        let atleast_length = &have_atleast_same_length(4);
-        let duplicates = &contain_duplicates();
+        let contain = contain(&"assert4j").wrap();
+        let atleast_length = have_atleast_same_length(4).wrap();
+        let duplicates = contain_duplicates().wrap();
 
-        let matchers: Matchers<Vec<&str>> =
-            Matchers::any(vec![contain, atleast_length, duplicates]);
+        let matchers = Matchers::any(vec![contain, atleast_length, duplicates]);
         let collection = vec!["junit", "assert4j", "testify"];
 
         matchers.test(&collection).passed.should_be_true();
@@ -181,12 +180,11 @@ mod slice_matchers {
 
     #[test]
     fn should_fail_all_of_any_matchers() {
-        let contain = &contain(&"assert4j");
-        let atleast_length = &have_atleast_same_length(4);
-        let duplicates = &contain_duplicates();
+        let contain = contain(&"assert4j").wrap();
+        let atleast_length = have_atleast_same_length(4).wrap();
+        let duplicates = contain_duplicates().wrap();
 
-        let matchers: Matchers<Vec<&str>> =
-            Matchers::any(vec![contain, atleast_length, duplicates]);
+        let matchers = Matchers::any(vec![contain, atleast_length, duplicates]);
         let collection = vec!["junit", "assert", "testify1"];
 
         matchers.test(&collection).passed.should_be_false();

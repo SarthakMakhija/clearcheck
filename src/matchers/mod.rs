@@ -45,6 +45,16 @@ pub trait Matcher<T> {
     fn test(&self, value: &T) -> MatcherResult;
 }
 
+pub trait BoxWrap<W> {
+    fn wrap(self) -> Box<dyn Matcher<W>>;
+}
+
+impl<M, T: Matcher<M> + 'static> BoxWrap<M> for T {
+    fn wrap(self) -> Box<dyn Matcher<M>> {
+        Box::new(self)
+    }
+}
+
 pub struct MatcherResult {
     passed: bool,
     failure_message: String,
