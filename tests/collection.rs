@@ -1,3 +1,4 @@
+use assert4rs::assertions::collection::duplicate::Duplicates;
 use assert4rs::assertions::collection::membership::Membership;
 use assert4rs::assertions::collection::size::Size;
 
@@ -24,6 +25,7 @@ fn should_match_all() {
 
     library
         .should_not_be_empty()
+        .should_not_contain_duplicates()
         .should_have_at_least_size(3)
         .should_contain_all(&[
             &Book::new(3, "Learning rust"),
@@ -44,6 +46,7 @@ fn should_not_match_all() {
     library
         .should_not_be_empty()
         .should_have_at_least_size(3)
+        .should_not_contain_duplicates()
         .should_contain_all(&[
             &Book::new(3, "Learning rust"),
             &Book::new(4, "Designing a KV storage engine"),
