@@ -3,8 +3,15 @@ use std::collections::HashMap;
 use std::fmt::Debug;
 use std::hash::Hash;
 
+use crate::matchers::empty::be_empty;
 use crate::matchers::map::membership::{contain_key, contain_key_value, contain_value};
 use crate::matchers::{Should, ShouldNot};
+
+pub trait NoMembership<K, V> {
+    fn should_be_empty(&self) -> &Self;
+
+    fn should_not_be_empty(&self) -> &Self;
+}
 
 pub trait KeyMembership<K, V> {
     fn should_contain_key<Q>(&self, key: &Q) -> &Self
@@ -46,42 +53,19 @@ pub trait KeyValueMembership<K, V> {
         S: Debug + ?Sized + Eq;
 }
 
-fn map_keys<K, V, Q>(collection: &HashMap<K, V>) -> HashMap<&Q, &V>
+impl<K, V> NoMembership<K, V> for HashMap<K, V>
 where
     K: Hash + Eq,
-    K: Borrow<Q>,
-    Q: Hash + Eq + ?Sized,
 {
-    collection
-        .iter()
-        .map(|key_value| (key_value.0.borrow(), key_value.1))
-        .collect::<HashMap<_, _>>()
-}
+    fn should_be_empty(&self) -> &Self {
+        self.should(&be_empty());
+        self
+    }
 
-fn map_values<K, V, S>(collection: &HashMap<K, V>) -> HashMap<&K, &S>
-where
-    K: Hash + Eq,
-    V: Borrow<S>,
-    S: Eq + ?Sized,
-{
-    collection
-        .iter()
-        .map(|key_value| (key_value.0, key_value.1.borrow()))
-        .collect::<HashMap<_, _>>()
-}
-
-fn map_key_value<K, V, Q, S>(collection: &HashMap<K, V>) -> HashMap<&Q, &S>
-where
-    K: Hash + Eq,
-    K: Borrow<Q>,
-    V: Borrow<S>,
-    Q: Hash + Eq + ?Sized,
-    S: Eq + ?Sized,
-{
-    collection
-        .iter()
-        .map(|key_value| (key_value.0.borrow(), key_value.1.borrow()))
-        .collect::<HashMap<_, _>>()
+    fn should_not_be_empty(&self) -> &Self {
+        self.should_not(&be_empty());
+        self
+    }
 }
 
 impl<K, V> KeyMembership<K, V> for HashMap<K, V>
@@ -156,6 +140,79 @@ where
     {
         map_key_value(&self).should_not(&contain_key_value(&key, &value));
         self
+    }
+}
+
+fn map_keys<K, V, Q>(collection: &HashMap<K, V>) -> HashMap<&Q, &V>
+where
+    K: Hash + Eq,
+    K: Borrow<Q>,
+    Q: Hash + Eq + ?Sized,
+{
+    collection
+        .iter()
+        .map(|key_value| (key_value.0.borrow(), key_value.1))
+        .collect::<HashMap<_, _>>()
+}
+
+fn map_values<K, V, S>(collection: &HashMap<K, V>) -> HashMap<&K, &S>
+where
+    K: Hash + Eq,
+    V: Borrow<S>,
+    S: Eq + ?Sized,
+{
+    collection
+        .iter()
+        .map(|key_value| (key_value.0, key_value.1.borrow()))
+        .collect::<HashMap<_, _>>()
+}
+
+fn map_key_value<K, V, Q, S>(collection: &HashMap<K, V>) -> HashMap<&Q, &S>
+where
+    K: Hash + Eq,
+    K: Borrow<Q>,
+    V: Borrow<S>,
+    Q: Hash + Eq + ?Sized,
+    S: Eq + ?Sized,
+{
+    collection
+        .iter()
+        .map(|key_value| (key_value.0.borrow(), key_value.1.borrow()))
+        .collect::<HashMap<_, _>>()
+}
+
+#[cfg(test)]
+mod empty_tests {
+    use std::collections::HashMap;
+
+    use crate::assertions::map::membership::NoMembership;
+
+    #[test]
+    fn should_be_empty() {
+        let key_value: HashMap<i32, i32> = HashMap::new();
+        key_value.should_be_empty();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_empty_but_was_not() {
+        let mut key_value = HashMap::new();
+        key_value.insert("rust", "assert");
+        key_value.should_be_empty();
+    }
+
+    #[test]
+    fn should_not_be_empty() {
+        let mut key_value = HashMap::new();
+        key_value.insert("rust", "assert");
+        key_value.should_not_be_empty();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_be_empty_but_was() {
+        let key_value: HashMap<i32, i32> = HashMap::new();
+        key_value.should_not_be_empty();
     }
 }
 
