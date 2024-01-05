@@ -90,7 +90,7 @@ mod string_matchers {
         let end_with = end_with("select").wrap();
         let atleast_length = have_atleast_same_length(4).wrap();
 
-        let matchers: Matchers<&str> = Matchers::all(vec![begin_with, end_with, atleast_length]);
+        let matchers = Matchers::all(vec![begin_with, end_with, atleast_length]);
 
         let term = "goselect";
         matchers.test(&term).passed.should_be_true();
@@ -102,7 +102,7 @@ mod string_matchers {
         let end_with = end_with("select").wrap();
         let atleast_length = have_atleast_same_length(10).wrap();
 
-        let matchers: Matchers<&str> = Matchers::all(vec![begin_with, end_with, atleast_length]);
+        let matchers = Matchers::all(vec![begin_with, end_with, atleast_length]);
 
         let term = "goselect";
         matchers.test(&term).passed.should_be_false();
@@ -114,7 +114,7 @@ mod string_matchers {
         let end_with = end_with("ted").wrap();
         let atleast_length = have_atleast_same_length(8).wrap();
 
-        let matchers: Matchers<&str> = Matchers::any(vec![begin_with, end_with, atleast_length]);
+        let matchers = Matchers::any(vec![begin_with, end_with, atleast_length]);
 
         let term = "goselect";
         matchers.test(&term).passed.should_be_true();
@@ -126,7 +126,7 @@ mod string_matchers {
         let end_with = end_with("select").wrap();
         let atleast_length = have_atleast_same_length(10).wrap();
 
-        let matchers: Matchers<&str> = Matchers::all(vec![begin_with, end_with, atleast_length]);
+        let matchers = Matchers::all(vec![begin_with, end_with, atleast_length]);
 
         let term = "testify";
         matchers.test(&term).passed.should_be_false();
@@ -148,7 +148,7 @@ mod slice_matchers {
         let atmost_length = have_atmost_same_length(4).wrap();
         let duplicates = contain_duplicates().wrap();
 
-        let matchers: Matchers<Vec<&str>> = Matchers::all(vec![contain, atmost_length, duplicates]);
+        let matchers = Matchers::all(vec![contain, atmost_length, duplicates]);
         let collection = vec!["junit", "assert4j", "junit"];
 
         matchers.test(&collection).passed.should_be_true();
@@ -160,7 +160,7 @@ mod slice_matchers {
         let atmost_length = have_atmost_same_length(1).wrap();
         let duplicates = contain_duplicates().wrap();
 
-        let matchers: Matchers<Vec<&str>> = Matchers::all(vec![contain, atmost_length, duplicates]);
+        let matchers = Matchers::all(vec![contain, atmost_length, duplicates]);
         let collection = vec!["junit", "assert4j", "junit"];
 
         matchers.test(&collection).passed.should_be_false();
