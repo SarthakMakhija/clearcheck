@@ -3,7 +3,7 @@ use std::ops::{Range, RangeInclusive};
 use crate::matchers::length::{
     have_atleast_same_length, have_atmost_same_length, have_same_length,
 };
-use crate::matchers::range::{be_in_exclusive_range, be_in_inclusive_range};
+use crate::matchers::range::{have_length_in_exclusive_range, have_length_in_inclusive_range};
 use crate::matchers::{Should, ShouldNot};
 
 pub trait Length {
@@ -81,22 +81,24 @@ impl Length for &str {
     }
 
     fn should_have_length_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
-        self.len().should(&be_in_inclusive_range(&range));
+        self.len().should(&have_length_in_inclusive_range(&range));
         self
     }
 
     fn should_not_have_length_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
-        self.len().should_not(&be_in_inclusive_range(&range));
+        self.len()
+            .should_not(&have_length_in_inclusive_range(&range));
         self
     }
 
     fn should_have_length_in_exclusive_range(&self, range: Range<usize>) -> &Self {
-        self.len().should(&be_in_exclusive_range(&range));
+        self.len().should(&have_length_in_exclusive_range(&range));
         self
     }
 
     fn should_not_have_length_in_exclusive_range(&self, range: Range<usize>) -> &Self {
-        self.len().should_not(&be_in_exclusive_range(&range));
+        self.len()
+            .should_not(&have_length_in_exclusive_range(&range));
         self
     }
 }

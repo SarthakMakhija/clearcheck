@@ -7,7 +7,7 @@ use crate::assertions::collection::size::Size;
 use crate::matchers::length::{
     have_atleast_same_length, have_atmost_same_length, have_same_length,
 };
-use crate::matchers::range::{be_in_exclusive_range, be_in_inclusive_range};
+use crate::matchers::range::{have_length_in_exclusive_range, have_length_in_inclusive_range};
 use crate::matchers::{Should, ShouldNot};
 
 impl<K, V> Size for HashMap<K, V>
@@ -41,22 +41,24 @@ where
     }
 
     fn should_have_size_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
-        self.len().should(&be_in_inclusive_range(&range));
+        self.len().should(&have_length_in_inclusive_range(&range));
         self
     }
 
     fn should_not_have_size_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
-        self.len().should_not(&be_in_inclusive_range(&range));
+        self.len()
+            .should_not(&have_length_in_inclusive_range(&range));
         self
     }
 
     fn should_have_size_in_exclusive_range(&self, range: Range<usize>) -> &Self {
-        self.len().should(&be_in_exclusive_range(&range));
+        self.len().should(&have_length_in_exclusive_range(&range));
         self
     }
 
     fn should_not_have_size_in_exclusive_range(&self, range: Range<usize>) -> &Self {
-        self.len().should_not(&be_in_exclusive_range(&range));
+        self.len()
+            .should_not(&have_length_in_exclusive_range(&range));
         self
     }
 }
