@@ -1,14 +1,18 @@
-use std::collections::HashSet;
 use std::fmt::Debug;
-use std::hash::Hash;
 
 use crate::matchers::{Matcher, MatcherResult};
 
 pub struct DuplicateItemBased;
 
 impl DuplicateItemBased {
-    fn test<T: Hash + Eq + Debug>(&self, collection: &[T]) -> MatcherResult {
-        let unique = collection.iter().collect::<HashSet<_>>();
+    fn test<T: Eq + Debug>(&self, collection: &[T]) -> MatcherResult {
+        let mut unique = Vec::new();
+        collection.iter().for_each(|source| {
+            if !unique.contains(&source) {
+                unique.push(source)
+            }
+        });
+
         MatcherResult::formatted(
             unique.len() != collection.len(),
             format!("{:?} should have duplicates", collection),
@@ -17,19 +21,19 @@ impl DuplicateItemBased {
     }
 }
 
-impl<T: Hash + Eq + Debug> Matcher<Vec<T>> for DuplicateItemBased {
+impl<T: Eq + Debug> Matcher<Vec<T>> for DuplicateItemBased {
     fn test(&self, collection: &Vec<T>) -> MatcherResult {
         self.test(&collection)
     }
 }
 
-impl<T: Hash + Eq + Debug, const N: usize> Matcher<[T; N]> for DuplicateItemBased {
+impl<T: Eq + Debug, const N: usize> Matcher<[T; N]> for DuplicateItemBased {
     fn test(&self, collection: &[T; N]) -> MatcherResult {
         self.test(collection as &[T])
     }
 }
 
-impl<T: Hash + Eq + Debug> Matcher<&[T]> for DuplicateItemBased {
+impl<T: Eq + Debug> Matcher<&[T]> for DuplicateItemBased {
     fn test(&self, collection: &&[T]) -> MatcherResult {
         self.test(&collection)
     }

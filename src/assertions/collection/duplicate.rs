@@ -1,5 +1,4 @@
 use std::fmt::Debug;
-use std::hash::Hash;
 
 use crate::matchers::collection::duplicate::contain_duplicates;
 use crate::matchers::{Should, ShouldNot};
@@ -12,7 +11,7 @@ pub trait Duplicates {
 impl<T> Duplicates for Vec<T>
 where
     T: Debug,
-    T: Hash + Eq,
+    T: Eq,
 {
     fn should_contain_duplicates(&self) -> &Self {
         (self as &[T]).should_contain_duplicates();
@@ -28,7 +27,7 @@ where
 impl<T, const N: usize> Duplicates for [T; N]
 where
     T: Debug,
-    T: Hash + Eq,
+    T: Eq,
 {
     fn should_contain_duplicates(&self) -> &Self {
         (self as &[T]).should_contain_duplicates();
@@ -44,7 +43,7 @@ where
 impl<T> Duplicates for [T]
 where
     T: Debug,
-    T: Hash + Eq,
+    T: Eq,
 {
     fn should_contain_duplicates(&self) -> &Self {
         self.should(&contain_duplicates());
