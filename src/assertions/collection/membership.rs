@@ -147,8 +147,7 @@ where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
     {
-        let mapped: Vec<_> = self.iter().map(|source| source.borrow()).collect();
-        mapped.should(&contain(&element));
+        map(&self).should(&contain(&element));
         self
     }
 
@@ -157,8 +156,7 @@ where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
     {
-        let mapped: Vec<_> = self.iter().map(|source| source.borrow()).collect();
-        mapped.should_not(&contain(&element));
+        map(&self).should_not(&contain(&element));
         self
     }
 
@@ -167,8 +165,7 @@ where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
     {
-        let mapped: Vec<_> = self.iter().map(|source| source.borrow()).collect();
-        mapped.should(&contain_all(elements));
+        map(&self).should(&contain_all(elements));
         self
     }
 
@@ -177,8 +174,7 @@ where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
     {
-        let mapped: Vec<_> = self.iter().map(|source| source.borrow()).collect();
-        mapped.should_not(&contain_all(elements));
+        map(&self).should_not(&contain_all(elements));
         self
     }
 
@@ -191,6 +187,13 @@ where
         self.should_not(&be_empty());
         self
     }
+}
+
+fn map<T, Q: ?Sized>(collection: &[T]) -> Vec<&Q>
+where
+    T: Borrow<Q>,
+{
+    collection.iter().map(|source| source.borrow()).collect()
 }
 
 #[cfg(test)]
