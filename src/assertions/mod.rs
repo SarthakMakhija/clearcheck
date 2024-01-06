@@ -1,6 +1,7 @@
 pub mod bool;
 pub mod char;
 pub mod collection;
+pub mod int;
 pub mod map;
 pub mod option;
 pub mod ordered;
