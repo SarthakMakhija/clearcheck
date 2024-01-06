@@ -146,6 +146,19 @@ where
     }
 }
 
+impl<K, V> KeyValueMembershipBased<'_, K, V>
+where
+    K: Hash + Eq + Debug,
+    V: Eq + Debug,
+{
+    fn contains_key_value(collection: &HashMap<K, V>, key: &K, value: &&V) -> bool {
+        collection
+            .get(key)
+            .filter(|source_value| source_value == value)
+            .is_some()
+    }
+}
+
 impl<K, V> Matcher<HashMap<K, V>> for KeyValueMembershipBased<'_, K, V>
 where
     K: Hash + Eq + Debug,
@@ -154,10 +167,7 @@ where
     fn test(&self, collection: &HashMap<K, V>) -> MatcherResult {
         return match self {
             KeyValueMembershipBased::KeyValue(key, value) => MatcherResult::formatted(
-                collection
-                    .get(key)
-                    .filter(|source| source == value)
-                    .is_some(),
+                Self::contains_key_value(collection, key, value),
                 format!(
                     "Map {:?} should contain key {:?} and value {:?}",
                     collection, key, value
