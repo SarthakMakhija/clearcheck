@@ -49,9 +49,36 @@ pub trait BoxWrap<W> {
     fn wrap(self) -> Box<dyn Matcher<W>>;
 }
 
+pub trait Invert<W> {
+    fn invert(self) -> InvertedMatcher<W>;
+}
+
 impl<M, T: Matcher<M> + 'static> BoxWrap<M> for T {
     fn wrap(self) -> Box<dyn Matcher<M>> {
         Box::new(self)
+    }
+}
+
+impl<M, T: Matcher<M> + 'static> Invert<M> for T {
+    fn invert(self) -> InvertedMatcher<M> {
+        InvertedMatcher {
+            matcher: self.wrap(),
+        }
+    }
+}
+
+pub struct InvertedMatcher<T> {
+    matcher: Box<dyn Matcher<T>>,
+}
+
+impl<T> Matcher<T> for InvertedMatcher<T> {
+    fn test(&self, value: &T) -> MatcherResult {
+        let matcher_result = self.matcher.test(value);
+        MatcherResult::formatted(
+            !matcher_result.passed,
+            matcher_result.negated_failure_message,
+            matcher_result.failure_message,
+        )
     }
 }
 

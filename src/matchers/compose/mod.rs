@@ -80,9 +80,10 @@ where
 mod string_matchers {
     use crate::assertions::bool::TrueFalse;
     use crate::matchers::compose::Matchers;
+    use crate::matchers::empty::be_empty;
     use crate::matchers::length::have_atleast_same_length;
     use crate::matchers::string::boundary::{begin_with, end_with};
-    use crate::matchers::{BoxWrap, Matcher};
+    use crate::matchers::{BoxWrap, Invert, Matcher};
 
     #[test]
     fn should_run_all_matchers_successfully() {
@@ -130,6 +131,18 @@ mod string_matchers {
 
         let term = "testify";
         matchers.test(&term).passed.should_be_false();
+    }
+
+    #[test]
+    fn should_run_negated_matchers_successfully() {
+        let begin_with = begin_with("go").wrap();
+        let not_end_with = end_with("test").invert().wrap();
+        let not_be_empty = be_empty().invert().wrap();
+
+        let matchers = Matchers::all(vec![begin_with, not_end_with, not_be_empty]);
+
+        let term = "goselect";
+        matchers.test(&term).passed.should_be_true();
     }
 }
 
