@@ -16,8 +16,10 @@ pub enum ValueMembershipBased<'a, T: Debug> {
     AnyOfValues(&'a [T]),
 }
 
-pub enum KeyValueMembershipBased<'a, K: Debug, V: Debug> {
+pub enum KeyValueMembershipBased<'a, K: Hash + Eq + Debug, V: Debug> {
     KeyValue(&'a K, &'a V),
+    AllKeyValues(&'a HashMap<K, V>),
+    AnyOfKeyValues(&'a HashMap<K, V>),
 }
 
 impl<K, V> Matcher<HashMap<K, V>> for KeyMembershipBased<'_, K>
@@ -177,6 +179,39 @@ where
                     collection, key, value
                 ),
             ),
+            KeyValueMembershipBased::AllKeyValues(key_values) => {
+                let missing = key_values
+                    .iter()
+                    .filter(|key_value| {
+                        !Self::contains_key_value(collection, key_value.0, &key_value.1)
+                    })
+                    .collect::<Vec<_>>();
+
+                MatcherResult::formatted(
+                    missing.len() == 0,
+                    format!(
+                        "Map {:?} should contain all of key/value pairs {:?} but it was missing {:?}",
+                        collection, key_values, missing
+                    ),
+                    format!(
+                        "Map {:?} should not contain all of key/value pairs {:?}",
+                        collection, key_values
+                    ),
+                )
+            }
+            KeyValueMembershipBased::AnyOfKeyValues(key_values) => MatcherResult::formatted(
+                key_values.iter().any(|key_value| {
+                    Self::contains_key_value(collection, key_value.0, &key_value.1)
+                }),
+                format!(
+                    "Map {:?} should contain any of key/value pairs {:?}",
+                    collection, key_values
+                ),
+                format!(
+                    "Map {:?} should not contain any of key/value pairs {:?}",
+                    collection, key_values
+                ),
+            ),
         };
     }
 }
@@ -225,10 +260,26 @@ where
 
 pub fn contain_key_value<'a, K, V>(key: &'a K, value: &'a V) -> KeyValueMembershipBased<'a, K, V>
 where
-    K: Eq + Debug,
+    K: Eq + Debug + Hash,
     V: Eq + Debug,
 {
     KeyValueMembershipBased::KeyValue(key, value)
+}
+
+pub fn contain_all_key_values<K, V>(key_values: &HashMap<K, V>) -> KeyValueMembershipBased<K, V>
+where
+    K: Eq + Debug + Hash,
+    V: Eq + Debug,
+{
+    KeyValueMembershipBased::AllKeyValues(key_values)
+}
+
+pub fn contain_any_of_key_values<K, V>(key_values: &HashMap<K, V>) -> KeyValueMembershipBased<K, V>
+where
+    K: Eq + Debug + Hash,
+    V: Eq + Debug,
+{
+    KeyValueMembershipBased::AnyOfKeyValues(key_values)
 }
 
 #[cfg(test)]
@@ -237,8 +288,8 @@ mod tests {
 
     use crate::assertions::bool::TrueFalse;
     use crate::matchers::map::membership::{
-        contain_all_keys, contain_all_values, contain_any_of_keys, contain_any_of_values,
-        contain_key, contain_key_value, contain_value,
+        contain_all_key_values, contain_all_keys, contain_all_values, contain_any_of_key_values,
+        contain_any_of_keys, contain_any_of_values, contain_key, contain_key_value, contain_value,
     };
     use crate::matchers::Matcher;
 
@@ -384,6 +435,59 @@ mod tests {
         collection.insert("rust", "assert");
 
         let matcher = contain_key_value(&"rust", &"testify");
+        matcher.test(&collection).passed.should_be_true();
+    }
+
+    #[test]
+    fn should_contain_all_key_values() {
+        let mut collection = HashMap::new();
+        collection.insert("rust", "assert");
+
+        let mut should_contain = HashMap::new();
+        should_contain.insert("rust", "assert");
+
+        let matcher = contain_all_key_values(&should_contain);
+        matcher.test(&collection).passed.should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_all_key_values_but_it_did_not() {
+        let mut collection = HashMap::new();
+        collection.insert("rust", "assert");
+
+        let mut should_contain = HashMap::new();
+        should_contain.insert("rust", "junit");
+
+        let matcher = contain_all_key_values(&should_contain);
+        matcher.test(&collection).passed.should_be_true();
+    }
+
+    #[test]
+    fn should_contain_any_of_key_values() {
+        let mut collection = HashMap::new();
+        collection.insert("rust", "assert");
+
+        let mut should_contain = HashMap::new();
+        should_contain.insert("rust", "assert");
+        should_contain.insert("java", "junit");
+
+        let matcher = contain_any_of_key_values(&should_contain);
+        matcher.test(&collection).passed.should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_any_of_key_values_but_it_did_not() {
+        let mut collection = HashMap::new();
+        collection.insert("rust", "assert");
+        collection.insert("java", "junit");
+
+        let mut should_contain = HashMap::new();
+        should_contain.insert("rust", "junit");
+        should_contain.insert("java", "assert");
+
+        let matcher = contain_any_of_key_values(&should_contain);
         matcher.test(&collection).passed.should_be_true();
     }
 }
