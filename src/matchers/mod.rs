@@ -7,6 +7,7 @@ pub mod equal;
 pub mod length;
 pub mod map;
 pub mod option;
+pub mod ordered;
 pub mod range;
 pub mod result;
 pub mod string;

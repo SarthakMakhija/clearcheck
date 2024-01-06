@@ -13,9 +13,13 @@
 - Handle duplication between size trait for map and collection - done
 - Handle duplication in collection traits between vector, arrays and slices - done
 - Improve panic (AssertKind)                                - done
-- Add support for num matchers
-- Add support for contains all
-- Add support for eq
+- Add support for contains all                              - done
+
 - Check if we need to provide assertions and matcher over String
 - Should the test in matcher (or its implementation) work over Q, where T: Borrow<Q> for contains
 - Take a look at all the messages in MatcherResult
+
+- Add support for eq
+- Add support for num matchers
+- Add support for date/time matchers
+
