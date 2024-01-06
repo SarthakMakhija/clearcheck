@@ -13,6 +13,7 @@ pub enum KeyMembershipBased<'a, T: Debug> {
 pub enum ValueMembershipBased<'a, T: Debug> {
     Value(&'a T),
     AllValues(&'a [T]),
+    AnyOfValues(&'a [T]),
 }
 
 pub enum KeyValueMembershipBased<'a, K: Debug, V: Debug> {
@@ -126,6 +127,21 @@ where
                     ),
                 )
             }
+            ValueMembershipBased::AnyOfValues(values) => MatcherResult::formatted(
+                values
+                    .iter()
+                    .any(|value| Self::contains_value(collection, &value)),
+                format!(
+                    "Values {:?} in the map should contain any of the values {:?}",
+                    collection.values(),
+                    values
+                ),
+                format!(
+                    "Values {:?} in the map should not contain any of the values {:?}",
+                    collection.values(),
+                    values
+                ),
+            ),
         }
     }
 }
@@ -190,6 +206,13 @@ where
     ValueMembershipBased::AllValues(values)
 }
 
+pub fn contain_any_of_values<Q>(values: &[Q]) -> ValueMembershipBased<'_, Q>
+where
+    Q: Eq + Debug,
+{
+    ValueMembershipBased::AnyOfValues(values)
+}
+
 pub fn contain_key_value<'a, K, V>(key: &'a K, value: &'a V) -> KeyValueMembershipBased<'a, K, V>
 where
     K: Eq + Debug,
@@ -204,8 +227,8 @@ mod tests {
 
     use crate::assertions::bool::TrueFalse;
     use crate::matchers::map::membership::{
-        contain_all_keys, contain_all_values, contain_any_of_keys, contain_key, contain_key_value,
-        contain_value,
+        contain_all_keys, contain_all_values, contain_any_of_keys, contain_any_of_values,
+        contain_key, contain_key_value, contain_value,
     };
     use crate::matchers::Matcher;
 
@@ -311,6 +334,27 @@ mod tests {
         collection.insert("java", "junit");
 
         let matcher = contain_all_values(&["assert", "xunit"]);
+        matcher.test(&collection).passed.should_be_true();
+    }
+
+    #[test]
+    fn should_contain_any_of_values() {
+        let mut collection = HashMap::new();
+        collection.insert("rust", "assert");
+        collection.insert("java", "junit");
+
+        let matcher = contain_any_of_values(&["assert", "junit"]);
+        matcher.test(&collection).passed.should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_any_of_values_but_it_did_not() {
+        let mut collection = HashMap::new();
+        collection.insert("rust", "assert");
+        collection.insert("java", "junit");
+
+        let matcher = contain_any_of_values(&["catch", "xunit"]);
         matcher.test(&collection).passed.should_be_true();
     }
 
