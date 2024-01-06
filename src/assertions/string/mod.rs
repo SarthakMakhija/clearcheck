@@ -3,4 +3,5 @@ pub mod case;
 pub mod equal;
 pub mod length;
 pub mod membership;
-mod numeric;
+pub mod numeric;
+pub mod regex;
