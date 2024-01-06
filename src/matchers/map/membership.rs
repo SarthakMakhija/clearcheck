@@ -7,6 +7,7 @@ use crate::matchers::{Matcher, MatcherResult};
 pub enum KeyMembershipBased<'a, T: Debug> {
     Key(&'a T),
     AllKeys(&'a [T]),
+    AnyOfKeys(&'a [T]),
 }
 
 pub enum ValueMembershipBased<'a, T: Debug> {
@@ -58,6 +59,19 @@ where
                     ),
                 )
             }
+            KeyMembershipBased::AnyOfKeys(keys) => MatcherResult::formatted(
+                keys.iter().any(|key| collection.contains_key(key)),
+                format!(
+                    "Keys {:?} in the map should contain any of the keys {:?}",
+                    collection.keys(),
+                    keys
+                ),
+                format!(
+                    "Keys {:?} in the map should not contain any of the keys {:?}",
+                    collection.keys(),
+                    keys
+                ),
+            ),
         }
     }
 }
@@ -155,6 +169,13 @@ where
     KeyMembershipBased::AllKeys(keys)
 }
 
+pub fn contain_any_of_keys<Q>(keys: &[Q]) -> KeyMembershipBased<'_, Q>
+where
+    Q: Hash + Eq + Debug,
+{
+    KeyMembershipBased::AnyOfKeys(keys)
+}
+
 pub fn contain_value<Q>(value: &Q) -> ValueMembershipBased<'_, Q>
 where
     Q: Eq + Debug,
@@ -183,7 +204,8 @@ mod tests {
 
     use crate::assertions::bool::TrueFalse;
     use crate::matchers::map::membership::{
-        contain_all_keys, contain_all_values, contain_key, contain_key_value, contain_value,
+        contain_all_keys, contain_all_values, contain_any_of_keys, contain_key, contain_key_value,
+        contain_value,
     };
     use crate::matchers::Matcher;
 
@@ -226,6 +248,29 @@ mod tests {
 
         let to_contain = vec!["rust", "scala"];
         let matcher = contain_all_keys(&to_contain);
+        matcher.test(&collection).passed.should_be_true();
+    }
+
+    #[test]
+    fn should_contain_any_of_keys() {
+        let mut collection = HashMap::new();
+        collection.insert("rust", "assert");
+        collection.insert("java", "junit");
+
+        let to_contain = vec!["scala", "java"];
+        let matcher = contain_any_of_keys(&to_contain);
+        matcher.test(&collection).passed.should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_any_of_keys_but_it_did_not() {
+        let mut collection = HashMap::new();
+        collection.insert("rust", "assert");
+        collection.insert("java", "junit");
+
+        let to_contain = vec!["scala", "golang"];
+        let matcher = contain_any_of_keys(&to_contain);
         matcher.test(&collection).passed.should_be_true();
     }
 
