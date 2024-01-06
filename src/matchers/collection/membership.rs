@@ -5,6 +5,7 @@ use crate::matchers::{Matcher, MatcherResult};
 pub enum MembershipBased<'a, T: Eq + Debug> {
     Contain(&'a T),
     ContainAll(&'a [T]),
+    ContainAny(&'a [T]),
 }
 
 impl<'a, T: Eq + Debug> MembershipBased<'a, T> {
@@ -30,6 +31,11 @@ impl<'a, T: Eq + Debug> MembershipBased<'a, T> {
                     format!("{:?} should not contain {:?}", collection, target),
                 )
             }
+            MembershipBased::ContainAny(target) => MatcherResult::formatted(
+                target.iter().any(|source| collection.contains(source)),
+                format!("{:?} should contain any of {:?}", collection, target),
+                format!("{:?} should not contain any of {:?}", collection, target),
+            ),
         }
     }
 }
@@ -75,10 +81,17 @@ where
     MembershipBased::ContainAll(elements)
 }
 
+pub fn contain_any<T>(elements: &[T]) -> MembershipBased<'_, T>
+where
+    T: Eq + Debug,
+{
+    MembershipBased::ContainAny(elements)
+}
+
 #[cfg(test)]
 mod tests {
     use crate::assertions::bool::TrueFalse;
-    use crate::matchers::collection::membership::{contain, contain_all};
+    use crate::matchers::collection::membership::{contain, contain_all, contain_any};
 
     #[test]
     fn should_contain() {
@@ -109,6 +122,23 @@ mod tests {
         let collection = vec!["junit", "testify", "assert4j", "xunit"];
         let all_to_be_contained = vec!["testify", "assert", "xunit"];
         let matcher = contain_all(&all_to_be_contained);
+        matcher.test(&collection).passed.should_be_true();
+    }
+
+    #[test]
+    fn should_contain_any_of_elements() {
+        let collection = vec!["junit", "testify", "assert4j", "xunit"];
+        let to_be_contained = vec!["testify", "catch", "xunit"];
+        let matcher = contain_any(&to_be_contained);
+        matcher.test(&collection).passed.should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_any_of_elements_but_it_did_not() {
+        let collection = vec!["junit", "testify", "assert4j", "xunit"];
+        let to_be_contained = vec!["catch", "catch2"];
+        let matcher = contain_any(&to_be_contained);
         matcher.test(&collection).passed.should_be_true();
     }
 }
