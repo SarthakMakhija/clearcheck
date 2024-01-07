@@ -5,6 +5,7 @@ pub mod compose;
 pub mod date;
 pub mod empty;
 pub mod equal;
+pub mod file;
 pub mod float;
 pub mod int;
 pub mod length;
