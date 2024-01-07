@@ -22,4 +22,7 @@
 - Add support for eq
 - Add support for num matchers
 - Add support for date/time matchers
+- Check all assertions to see the parameter that is being accepted
+    - value or reference and see what is being passed to the matcher
+- See if assertions can have macros to generate the code
 

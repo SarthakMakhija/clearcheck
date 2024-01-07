@@ -4,6 +4,7 @@ pub mod collection;
 pub mod compose;
 pub mod empty;
 pub mod equal;
+pub mod float;
 pub mod int;
 pub mod length;
 pub mod map;
