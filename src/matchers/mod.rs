@@ -2,6 +2,7 @@ pub mod bool;
 pub mod char;
 pub mod collection;
 pub mod compose;
+pub mod date;
 pub mod empty;
 pub mod equal;
 pub mod float;
