@@ -1,6 +1,10 @@
+use std::collections::HashSet;
+use std::ffi::OsStr;
 use std::fmt::Debug;
 use std::fs;
 use std::path::Path;
+
+use walkdir::WalkDir;
 
 use crate::matchers::{Matcher, MatcherResult};
 
@@ -17,6 +21,12 @@ pub enum FilePathBased<'a> {
     Absolute,
     Relative,
     Extension(&'a str),
+}
+
+pub enum WalkTreeBased<'a> {
+    Contain(&'a str),
+    ContainAll(&'a [&'a str]),
+    ContainAny(&'a [&'a str]),
 }
 
 impl<T: AsRef<Path> + Debug> Matcher<T> for FileTypeBased {
@@ -83,6 +93,73 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for FilePathBased<'_> {
     }
 }
 
+impl<T: AsRef<Path> + Debug> Matcher<T> for WalkTreeBased<'_> {
+    fn test(&self, value: &T) -> MatcherResult {
+        match self {
+            WalkTreeBased::Contain(name) => {
+                for directory_entry in WalkDir::new(value) {
+                    if let Ok(entry) = directory_entry {
+                        if &entry.file_name() == name {
+                            return MatcherResult::formatted(
+                                true,
+                                format!("{:?} should contain a file name {:?}", value, name),
+                                format!("{:?} should not contain a file name {:?}", value, name),
+                            );
+                        }
+                    }
+                }
+                MatcherResult::formatted(
+                    false,
+                    format!("{:?} should contain a file name {:?}", value, name),
+                    format!("{:?} should not contain a file name {:?}", value, name),
+                )
+            }
+            WalkTreeBased::ContainAll(names) => {
+                let mut unique_names = names
+                    .iter()
+                    .map(|name| OsStr::new(name))
+                    .collect::<HashSet<_>>();
+
+                for directory_entry in WalkDir::new(value) {
+                    if let Ok(entry) = directory_entry {
+                        if unique_names.contains(entry.file_name()) {
+                            unique_names.remove(entry.file_name());
+                        }
+                    }
+                }
+                MatcherResult::formatted(
+                    unique_names.len() == 0,
+                    format!("{:?} should contain all file names {:?}", value, names),
+                    format!("{:?} should not contain all file names {:?}", value, names),
+                )
+            }
+            WalkTreeBased::ContainAny(names) => {
+                let mut unique_names = names
+                    .iter()
+                    .map(|name| OsStr::new(name))
+                    .collect::<HashSet<_>>();
+
+                for directory_entry in WalkDir::new(value) {
+                    if let Ok(entry) = directory_entry {
+                        if unique_names.contains(entry.file_name()) {
+                            unique_names.remove(entry.file_name());
+                            break;
+                        }
+                    }
+                }
+                MatcherResult::formatted(
+                    unique_names.len() != names.len(),
+                    format!("{:?} should contain any of file names {:?}", value, names),
+                    format!(
+                        "{:?} should not contain any of file names {:?}",
+                        value, names
+                    ),
+                )
+            }
+        }
+    }
+}
+
 pub fn be_a_directory() -> FileTypeBased {
     FileTypeBased::Directory
 }
@@ -117,6 +194,18 @@ pub fn be_relative() -> FilePathBased<'static> {
 
 pub fn have_extension(extension: &str) -> FilePathBased {
     FilePathBased::Extension(extension)
+}
+
+pub fn contain_file_name(name: &str) -> WalkTreeBased {
+    WalkTreeBased::Contain(name)
+}
+
+pub fn contain_all_file_names<'a>(names: &'a [&'a str]) -> WalkTreeBased<'a> {
+    WalkTreeBased::ContainAll(names)
+}
+
+pub fn contain_any_file_names<'a>(names: &'a [&'a str]) -> WalkTreeBased<'a> {
+    WalkTreeBased::ContainAny(names)
 }
 
 #[cfg(test)]
@@ -265,5 +354,56 @@ mod file_path_tests {
         let path = Path::new("/etc/sample.txt");
         let matcher = have_extension("txt");
         matcher.test(&path).passed.should_be_true();
+    }
+}
+
+#[cfg(test)]
+mod walk_tree_tests {
+    use std::fs::File;
+
+    use tempdir::TempDir;
+
+    use crate::assertions::bool::TrueFalse;
+    use crate::matchers::file::{
+        contain_all_file_names, contain_any_file_names, contain_file_name,
+    };
+    use crate::matchers::Matcher;
+
+    #[test]
+    fn should_contain_a_file() {
+        let temporary_directory = TempDir::new(".").unwrap();
+        let file_path = temporary_directory.path().join("junit.txt");
+
+        let _ = File::create(file_path.clone()).unwrap();
+
+        let directory_path = temporary_directory.path();
+        let matcher = contain_file_name(&"junit.txt");
+        matcher.test(&directory_path).passed.should_be_true();
+    }
+
+    #[test]
+    fn should_contain_all_files() {
+        let temporary_directory = TempDir::new(".").unwrap();
+        let file_path1 = temporary_directory.path().join("junit.txt");
+        let file_path2 = temporary_directory.path().join("assert4rs.txt");
+
+        let _ = File::create(file_path1.clone()).unwrap();
+        let _ = File::create(file_path2.clone()).unwrap();
+
+        let directory_path = temporary_directory.path();
+        let matcher = contain_all_file_names(&["junit.txt", "assert4rs.txt"]);
+        matcher.test(&directory_path).passed.should_be_true();
+    }
+
+    #[test]
+    fn should_contain_any_files() {
+        let temporary_directory = TempDir::new(".").unwrap();
+        let file_path = temporary_directory.path().join("junit.txt");
+
+        let _ = File::create(file_path.clone()).unwrap();
+
+        let directory_path = temporary_directory.path();
+        let matcher = contain_any_file_names(&["junit.txt", "assert4rs.txt"]);
+        matcher.test(&directory_path).passed.should_be_true();
     }
 }

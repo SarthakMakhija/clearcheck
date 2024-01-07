@@ -9,6 +9,7 @@ edition = "2021"
 chrono = "0.4.31"
 num = "0.4.1"
 regex = "1.10.2"
+walkdir = { version = "2.4.0", features = [] }
 
 [dev-dependencies]
 tempdir = "0.3.7"
