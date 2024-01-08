@@ -2,9 +2,9 @@ use std::fmt::Debug;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub struct DuplicateItemBased;
+pub struct DuplicateContentMatcher;
 
-impl DuplicateItemBased {
+impl DuplicateContentMatcher {
     fn test<T: Eq + Debug>(&self, collection: &[T]) -> MatcherResult {
         let mut unique = Vec::new();
         collection.iter().for_each(|source| {
@@ -21,26 +21,26 @@ impl DuplicateItemBased {
     }
 }
 
-impl<T: Eq + Debug> Matcher<Vec<T>> for DuplicateItemBased {
+impl<T: Eq + Debug> Matcher<Vec<T>> for DuplicateContentMatcher {
     fn test(&self, collection: &Vec<T>) -> MatcherResult {
         self.test(&collection)
     }
 }
 
-impl<T: Eq + Debug, const N: usize> Matcher<[T; N]> for DuplicateItemBased {
+impl<T: Eq + Debug, const N: usize> Matcher<[T; N]> for DuplicateContentMatcher {
     fn test(&self, collection: &[T; N]) -> MatcherResult {
         self.test(collection as &[T])
     }
 }
 
-impl<T: Eq + Debug> Matcher<&[T]> for DuplicateItemBased {
+impl<T: Eq + Debug> Matcher<&[T]> for DuplicateContentMatcher {
     fn test(&self, collection: &&[T]) -> MatcherResult {
         self.test(&collection)
     }
 }
 
-pub fn contain_duplicates() -> DuplicateItemBased {
-    DuplicateItemBased
+pub fn contain_duplicates() -> DuplicateContentMatcher {
+    DuplicateContentMatcher
 }
 
 #[cfg(test)]

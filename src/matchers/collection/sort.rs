@@ -1,20 +1,20 @@
 use crate::matchers::{Matcher, MatcherResult};
 use std::fmt::Debug;
 
-pub enum SortBased {
+pub enum SortMatcher {
     Ascending,
     Descending,
 }
 
-impl SortBased {
+impl SortMatcher {
     fn test<T: PartialOrd + Debug>(&self, collection: &[T]) -> MatcherResult {
         match self {
-            SortBased::Ascending => MatcherResult::formatted(
+            SortMatcher::Ascending => MatcherResult::formatted(
                 (0..collection.len() - 1).all(|index| collection[index] <= collection[index + 1]),
                 format!("{:?} should be sorted ascending", collection),
                 format!("{:?} should not be sorted ascending", collection),
             ),
-            SortBased::Descending => MatcherResult::formatted(
+            SortMatcher::Descending => MatcherResult::formatted(
                 (0..collection.len() - 1).all(|index| collection[index] >= collection[index + 1]),
                 format!("{:?} should be sorted descending", collection),
                 format!("{:?} should not be sorted descending", collection),
@@ -23,30 +23,30 @@ impl SortBased {
     }
 }
 
-impl<T: PartialOrd + Debug> Matcher<Vec<T>> for SortBased {
+impl<T: PartialOrd + Debug> Matcher<Vec<T>> for SortMatcher {
     fn test(&self, collection: &Vec<T>) -> MatcherResult {
         self.test(&collection)
     }
 }
 
-impl<T: PartialOrd + Debug, const N: usize> Matcher<[T; N]> for SortBased {
+impl<T: PartialOrd + Debug, const N: usize> Matcher<[T; N]> for SortMatcher {
     fn test(&self, collection: &[T; N]) -> MatcherResult {
         self.test(collection as &[T])
     }
 }
 
-impl<T: PartialOrd + Debug> Matcher<&[T]> for SortBased {
+impl<T: PartialOrd + Debug> Matcher<&[T]> for SortMatcher {
     fn test(&self, collection: &&[T]) -> MatcherResult {
         self.test(&collection)
     }
 }
 
-pub fn be_sorted_ascending() -> SortBased {
-    SortBased::Ascending
+pub fn be_sorted_ascending() -> SortMatcher {
+    SortMatcher::Ascending
 }
 
-pub fn be_sorted_descending() -> SortBased {
-    SortBased::Descending
+pub fn be_sorted_descending() -> SortMatcher {
+    SortMatcher::Descending
 }
 
 #[cfg(test)]

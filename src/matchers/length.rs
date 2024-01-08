@@ -3,13 +3,13 @@ use std::hash::Hash;
 
 use crate::matchers::MatcherResult;
 
-pub enum LengthBased {
+pub enum LengthMatcher {
     Same(usize),
     Atleast(usize),
     Atmost(usize),
 }
 
-impl LengthBased {
+impl LengthMatcher {
     pub fn test_slice<T>(&self, collection: &[T]) -> MatcherResult {
         self.test(collection.len(), "Collection")
     }
@@ -24,7 +24,7 @@ impl LengthBased {
 
     fn test(&self, input_length: usize, message_prefix: &'static str) -> MatcherResult {
         match self {
-            LengthBased::Same(length) => MatcherResult::formatted(
+            LengthMatcher::Same(length) => MatcherResult::formatted(
                 input_length == *length,
                 format!(
                     "{:?} length {:?} should be {:?}",
@@ -35,7 +35,7 @@ impl LengthBased {
                     message_prefix, input_length, length
                 ),
             ),
-            LengthBased::Atleast(length) => MatcherResult::formatted(
+            LengthMatcher::Atleast(length) => MatcherResult::formatted(
                 input_length >= *length,
                 format!(
                     "{:?} length {:?} should be atleast {:?}",
@@ -46,7 +46,7 @@ impl LengthBased {
                     message_prefix, input_length, length
                 ),
             ),
-            LengthBased::Atmost(length) => MatcherResult::formatted(
+            LengthMatcher::Atmost(length) => MatcherResult::formatted(
                 input_length <= *length,
                 format!(
                     "{:?} length {:?} should be atmost {:?}",
@@ -61,16 +61,16 @@ impl LengthBased {
     }
 }
 
-pub fn have_same_length(length: usize) -> LengthBased {
-    LengthBased::Same(length)
+pub fn have_same_length(length: usize) -> LengthMatcher {
+    LengthMatcher::Same(length)
 }
 
-pub fn have_atleast_same_length(length: usize) -> LengthBased {
-    LengthBased::Atleast(length)
+pub fn have_atleast_same_length(length: usize) -> LengthMatcher {
+    LengthMatcher::Atleast(length)
 }
 
-pub fn have_atmost_same_length(length: usize) -> LengthBased {
-    LengthBased::Atmost(length)
+pub fn have_atmost_same_length(length: usize) -> LengthMatcher {
+    LengthMatcher::Atmost(length)
 }
 
 #[cfg(test)]

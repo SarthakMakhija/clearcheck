@@ -1,19 +1,19 @@
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum OkErrBased {
+pub enum OkErrMatcher {
     Ok,
     Err,
 }
 
-impl<T, E> Matcher<Result<T, E>> for OkErrBased {
+impl<T, E> Matcher<Result<T, E>> for OkErrMatcher {
     fn test(&self, value: &Result<T, E>) -> MatcherResult {
         match self {
-            OkErrBased::Ok => MatcherResult::new(
+            OkErrMatcher::Ok => MatcherResult::new(
                 value.is_ok(),
                 "Value should be Ok",
                 "Value should not be Ok",
             ),
-            OkErrBased::Err => MatcherResult::new(
+            OkErrMatcher::Err => MatcherResult::new(
                 value.is_err(),
                 "Value should be Err",
                 "Value should not be Err",
@@ -22,12 +22,12 @@ impl<T, E> Matcher<Result<T, E>> for OkErrBased {
     }
 }
 
-pub fn be_ok() -> OkErrBased {
-    OkErrBased::Ok
+pub fn be_ok() -> OkErrMatcher {
+    OkErrMatcher::Ok
 }
 
-pub fn be_err() -> OkErrBased {
-    OkErrBased::Err
+pub fn be_err() -> OkErrMatcher {
+    OkErrMatcher::Err
 }
 
 #[cfg(test)]

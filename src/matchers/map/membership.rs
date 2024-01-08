@@ -4,31 +4,31 @@ use std::hash::Hash;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum KeyMembershipBased<'a, T: Debug> {
+pub enum KeyMembershipMatcher<'a, T: Debug> {
     Key(&'a T),
     AllKeys(&'a [T]),
     AnyOfKeys(&'a [T]),
 }
 
-pub enum ValueMembershipBased<'a, T: Debug> {
+pub enum ValueMembershipMatcher<'a, T: Debug> {
     Value(&'a T),
     AllValues(&'a [T]),
     AnyOfValues(&'a [T]),
 }
 
-pub enum KeyValueMembershipBased<'a, K: Hash + Eq + Debug, V: Debug> {
+pub enum KeyValueMembershipMatcher<'a, K: Hash + Eq + Debug, V: Debug> {
     KeyValue(&'a K, &'a V),
     AllKeyValues(&'a HashMap<K, V>),
     AnyOfKeyValues(&'a HashMap<K, V>),
 }
 
-impl<K, V> Matcher<HashMap<K, V>> for KeyMembershipBased<'_, K>
+impl<K, V> Matcher<HashMap<K, V>> for KeyMembershipMatcher<'_, K>
 where
     K: Hash + Eq + Debug,
 {
     fn test(&self, collection: &HashMap<K, V>) -> MatcherResult {
         match self {
-            KeyMembershipBased::Key(key) => MatcherResult::formatted(
+            KeyMembershipMatcher::Key(key) => MatcherResult::formatted(
                 collection.contains_key(key),
                 format!(
                     "Keys {:?} in the map should contain {:?}",
@@ -41,7 +41,7 @@ where
                     key
                 ),
             ),
-            KeyMembershipBased::AllKeys(keys) => {
+            KeyMembershipMatcher::AllKeys(keys) => {
                 let missing = keys
                     .iter()
                     .filter(|key| !collection.contains_key(key))
@@ -62,7 +62,7 @@ where
                     ),
                 )
             }
-            KeyMembershipBased::AnyOfKeys(keys) => MatcherResult::formatted(
+            KeyMembershipMatcher::AnyOfKeys(keys) => MatcherResult::formatted(
                 keys.iter().any(|key| collection.contains_key(key)),
                 format!(
                     "Keys {:?} in the map should contain any of the keys {:?}",
@@ -79,7 +79,7 @@ where
     }
 }
 
-impl<V> ValueMembershipBased<'_, V>
+impl<V> ValueMembershipMatcher<'_, V>
 where
     V: Eq + Debug,
 {
@@ -88,14 +88,14 @@ where
     }
 }
 
-impl<K, V> Matcher<HashMap<K, V>> for ValueMembershipBased<'_, V>
+impl<K, V> Matcher<HashMap<K, V>> for ValueMembershipMatcher<'_, V>
 where
     K: Hash + Eq,
     V: Eq + Debug,
 {
     fn test(&self, collection: &HashMap<K, V>) -> MatcherResult {
         match self {
-            ValueMembershipBased::Value(value) => MatcherResult::formatted(
+            ValueMembershipMatcher::Value(value) => MatcherResult::formatted(
                 Self::contains_value(collection, value),
                 format!(
                     "Values {:?} in the map should contain {:?}",
@@ -108,7 +108,7 @@ where
                     value
                 ),
             ),
-            ValueMembershipBased::AllValues(values) => {
+            ValueMembershipMatcher::AllValues(values) => {
                 let missing = values
                     .iter()
                     .filter(|value| !Self::contains_value(collection, value))
@@ -129,7 +129,7 @@ where
                     ),
                 )
             }
-            ValueMembershipBased::AnyOfValues(values) => MatcherResult::formatted(
+            ValueMembershipMatcher::AnyOfValues(values) => MatcherResult::formatted(
                 values
                     .iter()
                     .any(|value| Self::contains_value(collection, &value)),
@@ -148,7 +148,7 @@ where
     }
 }
 
-impl<K, V> KeyValueMembershipBased<'_, K, V>
+impl<K, V> KeyValueMembershipMatcher<'_, K, V>
 where
     K: Hash + Eq + Debug,
     V: Eq + Debug,
@@ -161,14 +161,14 @@ where
     }
 }
 
-impl<K, V> Matcher<HashMap<K, V>> for KeyValueMembershipBased<'_, K, V>
+impl<K, V> Matcher<HashMap<K, V>> for KeyValueMembershipMatcher<'_, K, V>
 where
     K: Hash + Eq + Debug,
     V: Eq + Debug,
 {
     fn test(&self, collection: &HashMap<K, V>) -> MatcherResult {
         return match self {
-            KeyValueMembershipBased::KeyValue(key, value) => MatcherResult::formatted(
+            KeyValueMembershipMatcher::KeyValue(key, value) => MatcherResult::formatted(
                 Self::contains_key_value(collection, key, value),
                 format!(
                     "Map {:?} should contain key {:?} and value {:?}",
@@ -179,7 +179,7 @@ where
                     collection, key, value
                 ),
             ),
-            KeyValueMembershipBased::AllKeyValues(key_values) => {
+            KeyValueMembershipMatcher::AllKeyValues(key_values) => {
                 let missing = key_values
                     .iter()
                     .filter(|key_value| {
@@ -199,7 +199,7 @@ where
                     ),
                 )
             }
-            KeyValueMembershipBased::AnyOfKeyValues(key_values) => MatcherResult::formatted(
+            KeyValueMembershipMatcher::AnyOfKeyValues(key_values) => MatcherResult::formatted(
                 key_values.iter().any(|key_value| {
                     Self::contains_key_value(collection, key_value.0, &key_value.1)
                 }),
@@ -216,70 +216,72 @@ where
     }
 }
 
-pub fn contain_key<Q>(key: &Q) -> KeyMembershipBased<'_, Q>
+pub fn contain_key<Q>(key: &Q) -> KeyMembershipMatcher<'_, Q>
 where
     Q: Hash + Eq + Debug,
 {
-    KeyMembershipBased::Key(key)
+    KeyMembershipMatcher::Key(key)
 }
 
-pub fn contain_all_keys<Q>(keys: &[Q]) -> KeyMembershipBased<'_, Q>
+pub fn contain_all_keys<Q>(keys: &[Q]) -> KeyMembershipMatcher<'_, Q>
 where
     Q: Hash + Eq + Debug,
 {
-    KeyMembershipBased::AllKeys(keys)
+    KeyMembershipMatcher::AllKeys(keys)
 }
 
-pub fn contain_any_of_keys<Q>(keys: &[Q]) -> KeyMembershipBased<'_, Q>
+pub fn contain_any_of_keys<Q>(keys: &[Q]) -> KeyMembershipMatcher<'_, Q>
 where
     Q: Hash + Eq + Debug,
 {
-    KeyMembershipBased::AnyOfKeys(keys)
+    KeyMembershipMatcher::AnyOfKeys(keys)
 }
 
-pub fn contain_value<Q>(value: &Q) -> ValueMembershipBased<'_, Q>
+pub fn contain_value<Q>(value: &Q) -> ValueMembershipMatcher<'_, Q>
 where
     Q: Eq + Debug,
 {
-    ValueMembershipBased::Value(value)
+    ValueMembershipMatcher::Value(value)
 }
 
-pub fn contain_all_values<Q>(values: &[Q]) -> ValueMembershipBased<'_, Q>
+pub fn contain_all_values<Q>(values: &[Q]) -> ValueMembershipMatcher<'_, Q>
 where
     Q: Eq + Debug,
 {
-    ValueMembershipBased::AllValues(values)
+    ValueMembershipMatcher::AllValues(values)
 }
 
-pub fn contain_any_of_values<Q>(values: &[Q]) -> ValueMembershipBased<'_, Q>
+pub fn contain_any_of_values<Q>(values: &[Q]) -> ValueMembershipMatcher<'_, Q>
 where
     Q: Eq + Debug,
 {
-    ValueMembershipBased::AnyOfValues(values)
+    ValueMembershipMatcher::AnyOfValues(values)
 }
 
-pub fn contain_key_value<'a, K, V>(key: &'a K, value: &'a V) -> KeyValueMembershipBased<'a, K, V>
+pub fn contain_key_value<'a, K, V>(key: &'a K, value: &'a V) -> KeyValueMembershipMatcher<'a, K, V>
 where
     K: Eq + Debug + Hash,
     V: Eq + Debug,
 {
-    KeyValueMembershipBased::KeyValue(key, value)
+    KeyValueMembershipMatcher::KeyValue(key, value)
 }
 
-pub fn contain_all_key_values<K, V>(key_values: &HashMap<K, V>) -> KeyValueMembershipBased<K, V>
+pub fn contain_all_key_values<K, V>(key_values: &HashMap<K, V>) -> KeyValueMembershipMatcher<K, V>
 where
     K: Eq + Debug + Hash,
     V: Eq + Debug,
 {
-    KeyValueMembershipBased::AllKeyValues(key_values)
+    KeyValueMembershipMatcher::AllKeyValues(key_values)
 }
 
-pub fn contain_any_of_key_values<K, V>(key_values: &HashMap<K, V>) -> KeyValueMembershipBased<K, V>
+pub fn contain_any_of_key_values<K, V>(
+    key_values: &HashMap<K, V>,
+) -> KeyValueMembershipMatcher<K, V>
 where
     K: Eq + Debug + Hash,
     V: Eq + Debug,
 {
-    KeyValueMembershipBased::AnyOfKeyValues(key_values)
+    KeyValueMembershipMatcher::AnyOfKeyValues(key_values)
 }
 
 #[cfg(test)]

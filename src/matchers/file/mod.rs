@@ -8,7 +8,7 @@ use walkdir::WalkDir;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum FileTypeBased {
+pub enum FileTypeMatcher {
     File,
     Directory,
     SymbolicLink,
@@ -17,48 +17,48 @@ pub enum FileTypeBased {
     Writable,
 }
 
-pub enum FilePathBased<'a> {
+pub enum FilePathMatcher<'a> {
     Absolute,
     Relative,
     Extension(&'a str),
 }
 
-pub enum WalkTreeBased<'a> {
+pub enum TreeMatcher<'a> {
     Contain(&'a str),
     ContainAll(&'a [&'a str]),
     ContainAny(&'a [&'a str]),
 }
 
-impl<T: AsRef<Path> + Debug> Matcher<T> for FileTypeBased {
+impl<T: AsRef<Path> + Debug> Matcher<T> for FileTypeMatcher {
     fn test(&self, value: &T) -> MatcherResult {
         let metadata = fs::metadata(value);
         match &self {
-            FileTypeBased::File => MatcherResult::formatted(
+            FileTypeMatcher::File => MatcherResult::formatted(
                 value.as_ref().is_file(),
                 format!("{:?} should be a file", value),
                 format!("{:?} should not be a file", value),
             ),
-            FileTypeBased::Directory => MatcherResult::formatted(
+            FileTypeMatcher::Directory => MatcherResult::formatted(
                 value.as_ref().is_dir(),
                 format!("{:?} should be a directory", value),
                 format!("{:?} should not be a directory", value),
             ),
-            FileTypeBased::SymbolicLink => MatcherResult::formatted(
+            FileTypeMatcher::SymbolicLink => MatcherResult::formatted(
                 value.as_ref().is_symlink(),
                 format!("{:?} should be a symbolic link", value),
                 format!("{:?} should not be a symbolic link", value),
             ),
-            FileTypeBased::ZeroSized => MatcherResult::formatted(
+            FileTypeMatcher::ZeroSized => MatcherResult::formatted(
                 metadata.is_ok_and(|metadata| metadata.len() == 0),
                 format!("{:?} should be zero sized", value),
                 format!("{:?} should not be zero sized", value),
             ),
-            FileTypeBased::Readonly => MatcherResult::formatted(
+            FileTypeMatcher::Readonly => MatcherResult::formatted(
                 metadata.is_ok_and(|metadata| metadata.permissions().readonly()),
                 format!("{:?} should be readonly", value),
                 format!("{:?} should not be readonly", value),
             ),
-            FileTypeBased::Writable => MatcherResult::formatted(
+            FileTypeMatcher::Writable => MatcherResult::formatted(
                 metadata.is_ok_and(|metadata| !metadata.permissions().readonly()),
                 format!("{:?} should be writable", value),
                 format!("{:?} should not be writable", value),
@@ -67,20 +67,20 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for FileTypeBased {
     }
 }
 
-impl<T: AsRef<Path> + Debug> Matcher<T> for FilePathBased<'_> {
+impl<T: AsRef<Path> + Debug> Matcher<T> for FilePathMatcher<'_> {
     fn test(&self, value: &T) -> MatcherResult {
         match self {
-            FilePathBased::Absolute => MatcherResult::formatted(
+            FilePathMatcher::Absolute => MatcherResult::formatted(
                 value.as_ref().is_absolute(),
                 format!("{:?} should be absolute", value),
                 format!("{:?} should not be absolute", value),
             ),
-            FilePathBased::Relative => MatcherResult::formatted(
+            FilePathMatcher::Relative => MatcherResult::formatted(
                 value.as_ref().is_relative(),
                 format!("{:?} should be relative", value),
                 format!("{:?} should not be relative", value),
             ),
-            FilePathBased::Extension(extension) => MatcherResult::formatted(
+            FilePathMatcher::Extension(extension) => MatcherResult::formatted(
                 value
                     .as_ref()
                     .extension()
@@ -93,10 +93,10 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for FilePathBased<'_> {
     }
 }
 
-impl<T: AsRef<Path> + Debug> Matcher<T> for WalkTreeBased<'_> {
+impl<T: AsRef<Path> + Debug> Matcher<T> for TreeMatcher<'_> {
     fn test(&self, value: &T) -> MatcherResult {
         match self {
-            WalkTreeBased::Contain(name) => {
+            TreeMatcher::Contain(name) => {
                 for directory_entry in WalkDir::new(value) {
                     if let Ok(entry) = directory_entry {
                         if &entry.file_name() == name {
@@ -114,7 +114,7 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for WalkTreeBased<'_> {
                     format!("{:?} should not contain a file name {:?}", value, name),
                 )
             }
-            WalkTreeBased::ContainAll(names) => {
+            TreeMatcher::ContainAll(names) => {
                 let mut unique_names = names
                     .iter()
                     .map(|name| OsStr::new(name))
@@ -136,7 +136,7 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for WalkTreeBased<'_> {
                     format!("{:?} should not contain all file names {:?}", value, names),
                 )
             }
-            WalkTreeBased::ContainAny(names) => {
+            TreeMatcher::ContainAny(names) => {
                 let mut unique_names = names
                     .iter()
                     .map(|name| OsStr::new(name))
@@ -164,52 +164,52 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for WalkTreeBased<'_> {
     }
 }
 
-pub fn be_a_directory() -> FileTypeBased {
-    FileTypeBased::Directory
+pub fn be_a_directory() -> FileTypeMatcher {
+    FileTypeMatcher::Directory
 }
 
-pub fn be_a_file() -> FileTypeBased {
-    FileTypeBased::File
+pub fn be_a_file() -> FileTypeMatcher {
+    FileTypeMatcher::File
 }
 
-pub fn be_a_symbolic_link() -> FileTypeBased {
-    FileTypeBased::SymbolicLink
+pub fn be_a_symbolic_link() -> FileTypeMatcher {
+    FileTypeMatcher::SymbolicLink
 }
 
-pub fn be_zero_sized() -> FileTypeBased {
-    FileTypeBased::ZeroSized
+pub fn be_zero_sized() -> FileTypeMatcher {
+    FileTypeMatcher::ZeroSized
 }
 
-pub fn be_readonly() -> FileTypeBased {
-    FileTypeBased::Readonly
+pub fn be_readonly() -> FileTypeMatcher {
+    FileTypeMatcher::Readonly
 }
 
-pub fn be_writable() -> FileTypeBased {
-    FileTypeBased::Writable
+pub fn be_writable() -> FileTypeMatcher {
+    FileTypeMatcher::Writable
 }
 
-pub fn be_absolute() -> FilePathBased<'static> {
-    FilePathBased::Absolute
+pub fn be_absolute() -> FilePathMatcher<'static> {
+    FilePathMatcher::Absolute
 }
 
-pub fn be_relative() -> FilePathBased<'static> {
-    FilePathBased::Relative
+pub fn be_relative() -> FilePathMatcher<'static> {
+    FilePathMatcher::Relative
 }
 
-pub fn have_extension(extension: &str) -> FilePathBased {
-    FilePathBased::Extension(extension)
+pub fn have_extension(extension: &str) -> FilePathMatcher {
+    FilePathMatcher::Extension(extension)
 }
 
-pub fn contain_file_name(name: &str) -> WalkTreeBased {
-    WalkTreeBased::Contain(name)
+pub fn contain_file_name(name: &str) -> TreeMatcher {
+    TreeMatcher::Contain(name)
 }
 
-pub fn contain_all_file_names<'a>(names: &'a [&'a str]) -> WalkTreeBased<'a> {
-    WalkTreeBased::ContainAll(names)
+pub fn contain_all_file_names<'a>(names: &'a [&'a str]) -> TreeMatcher<'a> {
+    TreeMatcher::ContainAll(names)
 }
 
-pub fn contain_any_file_names<'a>(names: &'a [&'a str]) -> WalkTreeBased<'a> {
-    WalkTreeBased::ContainAny(names)
+pub fn contain_any_file_names<'a>(names: &'a [&'a str]) -> TreeMatcher<'a> {
+    TreeMatcher::ContainAny(names)
 }
 
 #[cfg(test)]

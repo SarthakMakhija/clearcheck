@@ -4,32 +4,32 @@ use num::Float;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum FloatBased {
+pub enum FloatMatcher {
     NaN,
     Zero,
     Positive,
     Negative,
 }
 
-impl<T: Float + Debug + Default + PartialEq> Matcher<T> for FloatBased {
+impl<T: Float + Debug + Default + PartialEq> Matcher<T> for FloatMatcher {
     fn test(&self, value: &T) -> MatcherResult {
         match self {
-            FloatBased::NaN => MatcherResult::formatted(
+            FloatMatcher::NaN => MatcherResult::formatted(
                 value.is_nan(),
                 format!("{:?} should be NaN", value),
                 format!("{:?} should not be NaN", value),
             ),
-            FloatBased::Zero => MatcherResult::formatted(
+            FloatMatcher::Zero => MatcherResult::formatted(
                 value.is_zero(),
                 format!("{:?} should be zero", value),
                 format!("{:?} should not be zero", value),
             ),
-            FloatBased::Positive => MatcherResult::formatted(
+            FloatMatcher::Positive => MatcherResult::formatted(
                 value.is_sign_positive(),
                 format!("{:?} should be positive", value),
                 format!("{:?} should not be positive", value),
             ),
-            FloatBased::Negative => MatcherResult::formatted(
+            FloatMatcher::Negative => MatcherResult::formatted(
                 value.is_sign_negative(),
                 format!("{:?} should be negative", value),
                 format!("{:?} should not be negative", value),
@@ -38,20 +38,20 @@ impl<T: Float + Debug + Default + PartialEq> Matcher<T> for FloatBased {
     }
 }
 
-pub fn be_nan() -> FloatBased {
-    FloatBased::NaN
+pub fn be_nan() -> FloatMatcher {
+    FloatMatcher::NaN
 }
 
-pub fn be_zero() -> FloatBased {
-    FloatBased::Zero
+pub fn be_zero() -> FloatMatcher {
+    FloatMatcher::Zero
 }
 
-pub fn be_positive() -> FloatBased {
-    FloatBased::Positive
+pub fn be_positive() -> FloatMatcher {
+    FloatMatcher::Positive
 }
 
-pub fn be_negative() -> FloatBased {
-    FloatBased::Negative
+pub fn be_negative() -> FloatMatcher {
+    FloatMatcher::Negative
 }
 
 #[cfg(test)]

@@ -1,19 +1,19 @@
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum TrueFalseBased {
+pub enum TrueFalseMatcher {
     True,
     False,
 }
 
-impl Matcher<bool> for TrueFalseBased {
+impl Matcher<bool> for TrueFalseMatcher {
     fn test(&self, value: &bool) -> MatcherResult {
         match self {
-            TrueFalseBased::True => MatcherResult::new(
+            TrueFalseMatcher::True => MatcherResult::new(
                 *value == true,
                 "Value should be TRUE",
                 "Value should not be TRUE",
             ),
-            TrueFalseBased::False => MatcherResult::new(
+            TrueFalseMatcher::False => MatcherResult::new(
                 *value == false,
                 "Value should be FALSE",
                 "Value should not be FALSE",
@@ -22,12 +22,12 @@ impl Matcher<bool> for TrueFalseBased {
     }
 }
 
-pub fn be_true() -> TrueFalseBased {
-    TrueFalseBased::True
+pub fn be_true() -> TrueFalseMatcher {
+    TrueFalseMatcher::True
 }
 
-pub fn be_false() -> TrueFalseBased {
-    TrueFalseBased::False
+pub fn be_false() -> TrueFalseMatcher {
+    TrueFalseMatcher::False
 }
 
 #[cfg(test)]

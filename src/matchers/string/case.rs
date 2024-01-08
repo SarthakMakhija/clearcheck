@@ -1,19 +1,19 @@
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum CaseBased {
+pub enum CaseMatcher {
     Lower,
     Upper,
 }
 
-impl Matcher<&str> for CaseBased {
+impl Matcher<&str> for CaseMatcher {
     fn test(&self, value: &&str) -> MatcherResult {
         match self {
-            CaseBased::Lower => MatcherResult::formatted(
+            CaseMatcher::Lower => MatcherResult::formatted(
                 value == &value.to_lowercase(),
                 format!("{:?} should be lowercase", value),
                 format!("{:?} should not be lowercase", value),
             ),
-            CaseBased::Upper => MatcherResult::formatted(
+            CaseMatcher::Upper => MatcherResult::formatted(
                 value == &value.to_uppercase(),
                 format!("{:?} should be uppercase", value),
                 format!("{:?} should not be uppercase", value),
@@ -22,12 +22,12 @@ impl Matcher<&str> for CaseBased {
     }
 }
 
-pub fn be_lowercase() -> CaseBased {
-    CaseBased::Lower
+pub fn be_lowercase() -> CaseMatcher {
+    CaseMatcher::Lower
 }
 
-pub fn be_uppercase() -> CaseBased {
-    CaseBased::Upper
+pub fn be_uppercase() -> CaseMatcher {
+    CaseMatcher::Upper
 }
 
 #[cfg(test)]

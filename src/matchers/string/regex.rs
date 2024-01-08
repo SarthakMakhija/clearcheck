@@ -2,11 +2,11 @@ use regex::Regex;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub struct RegexBased {
+pub struct RegexMatcher {
     regexp: Regex,
 }
 
-impl Matcher<&str> for RegexBased {
+impl Matcher<&str> for RegexMatcher {
     fn test(&self, value: &&str) -> MatcherResult {
         MatcherResult::formatted(
             self.regexp.is_match(value),
@@ -22,8 +22,8 @@ impl Matcher<&str> for RegexBased {
     }
 }
 
-pub fn match_with(regular_expression: Regex) -> RegexBased {
-    RegexBased {
+pub fn match_with(regular_expression: Regex) -> RegexMatcher {
+    RegexMatcher {
         regexp: regular_expression,
     }
 }

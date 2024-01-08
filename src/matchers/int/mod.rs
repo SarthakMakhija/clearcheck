@@ -4,7 +4,7 @@ use num::Integer;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum IntBased {
+pub enum IntMatcher {
     Positive,
     Negative,
     Even,
@@ -12,30 +12,30 @@ pub enum IntBased {
     Zero,
 }
 
-impl<T: Integer + Debug + PartialEq + Default> Matcher<T> for IntBased {
+impl<T: Integer + Debug + PartialEq + Default> Matcher<T> for IntMatcher {
     fn test(&self, value: &T) -> MatcherResult {
         match self {
-            IntBased::Positive => MatcherResult::formatted(
+            IntMatcher::Positive => MatcherResult::formatted(
                 *value > T::default(),
                 format!("{:?} should be positive", value),
                 format!("{:?} should not be positive", value),
             ),
-            IntBased::Negative => MatcherResult::formatted(
+            IntMatcher::Negative => MatcherResult::formatted(
                 *value < T::default(),
                 format!("{:?} should be negative", value),
                 format!("{:?} should not be negative", value),
             ),
-            IntBased::Even => MatcherResult::formatted(
+            IntMatcher::Even => MatcherResult::formatted(
                 value.is_even(),
                 format!("{:?} should be even", value),
                 format!("{:?} should not be even", value),
             ),
-            IntBased::Odd => MatcherResult::formatted(
+            IntMatcher::Odd => MatcherResult::formatted(
                 value.is_odd(),
                 format!("{:?} should be odd", value),
                 format!("{:?} should not be odd", value),
             ),
-            IntBased::Zero => MatcherResult::formatted(
+            IntMatcher::Zero => MatcherResult::formatted(
                 *value == T::default(),
                 format!("{:?} should be zero", value),
                 format!("{:?} should not be zero", value),
@@ -44,24 +44,24 @@ impl<T: Integer + Debug + PartialEq + Default> Matcher<T> for IntBased {
     }
 }
 
-pub fn be_positive() -> IntBased {
-    IntBased::Positive
+pub fn be_positive() -> IntMatcher {
+    IntMatcher::Positive
 }
 
-pub fn be_negative() -> IntBased {
-    IntBased::Negative
+pub fn be_negative() -> IntMatcher {
+    IntMatcher::Negative
 }
 
-pub fn be_even() -> IntBased {
-    IntBased::Even
+pub fn be_even() -> IntMatcher {
+    IntMatcher::Even
 }
 
-pub fn be_odd() -> IntBased {
-    IntBased::Odd
+pub fn be_odd() -> IntMatcher {
+    IntMatcher::Odd
 }
 
-pub fn be_zero() -> IntBased {
-    IntBased::Zero
+pub fn be_zero() -> IntMatcher {
+    IntMatcher::Zero
 }
 
 #[cfg(test)]

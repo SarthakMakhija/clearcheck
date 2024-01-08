@@ -3,11 +3,11 @@ use std::str::FromStr;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub struct NumericBased<T: FromStr> {
+pub struct NumericMatcher<T: FromStr> {
     _inner: PhantomData<T>,
 }
 
-impl<T: FromStr> Matcher<&str> for NumericBased<T> {
+impl<T: FromStr> Matcher<&str> for NumericMatcher<T> {
     fn test(&self, value: &&str) -> MatcherResult {
         let parse_result = value.parse::<T>();
         MatcherResult::formatted(
@@ -18,8 +18,8 @@ impl<T: FromStr> Matcher<&str> for NumericBased<T> {
     }
 }
 
-pub fn be_numeric<T: FromStr>() -> NumericBased<T> {
-    NumericBased {
+pub fn be_numeric<T: FromStr>() -> NumericMatcher<T> {
+    NumericMatcher {
         _inner: PhantomData,
     }
 }

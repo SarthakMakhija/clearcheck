@@ -2,22 +2,22 @@ use std::fmt::Debug;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum OrderedBased<'a, T: PartialOrd> {
+pub enum OrderedMatcher<'a, T: PartialOrd> {
     Gt(&'a T),
     Gte(&'a T),
     Lt(&'a T),
     Lte(&'a T),
 }
 
-impl<T: Debug + PartialOrd> Matcher<T> for OrderedBased<'_, T> {
+impl<T: Debug + PartialOrd> Matcher<T> for OrderedMatcher<'_, T> {
     fn test(&self, value: &T) -> MatcherResult {
         match self {
-            OrderedBased::Gt(other) => MatcherResult::formatted(
+            OrderedMatcher::Gt(other) => MatcherResult::formatted(
                 value > other,
                 format!("{:?} should be greater than {:?}", value, other),
                 format!("{:?} should not be greater than {:?}", value, other),
             ),
-            OrderedBased::Gte(other) => MatcherResult::formatted(
+            OrderedMatcher::Gte(other) => MatcherResult::formatted(
                 value >= other,
                 format!("{:?} should be greater than equals to {:?}", value, other),
                 format!(
@@ -25,12 +25,12 @@ impl<T: Debug + PartialOrd> Matcher<T> for OrderedBased<'_, T> {
                     value, other
                 ),
             ),
-            OrderedBased::Lt(other) => MatcherResult::formatted(
+            OrderedMatcher::Lt(other) => MatcherResult::formatted(
                 value < other,
                 format!("{:?} should be less than {:?}", value, other),
                 format!("{:?} should not be less than {:?}", value, other),
             ),
-            OrderedBased::Lte(other) => MatcherResult::formatted(
+            OrderedMatcher::Lte(other) => MatcherResult::formatted(
                 value <= other,
                 format!("{:?} should be less than equals to {:?}", value, other),
                 format!("{:?} should not be less than equals to {:?}", value, other),
@@ -39,20 +39,20 @@ impl<T: Debug + PartialOrd> Matcher<T> for OrderedBased<'_, T> {
     }
 }
 
-pub fn be_greater_than<T: PartialOrd>(other: &T) -> OrderedBased<'_, T> {
-    OrderedBased::Gt(other)
+pub fn be_greater_than<T: PartialOrd>(other: &T) -> OrderedMatcher<'_, T> {
+    OrderedMatcher::Gt(other)
 }
 
-pub fn be_greater_than_equal_to<T: PartialOrd>(other: &T) -> OrderedBased<'_, T> {
-    OrderedBased::Gte(other)
+pub fn be_greater_than_equal_to<T: PartialOrd>(other: &T) -> OrderedMatcher<'_, T> {
+    OrderedMatcher::Gte(other)
 }
 
-pub fn be_less_than<T: PartialOrd>(other: &T) -> OrderedBased<'_, T> {
-    OrderedBased::Lt(other)
+pub fn be_less_than<T: PartialOrd>(other: &T) -> OrderedMatcher<'_, T> {
+    OrderedMatcher::Lt(other)
 }
 
-pub fn be_less_than_equal_to<T: PartialOrd>(other: &T) -> OrderedBased<'_, T> {
-    OrderedBased::Lte(other)
+pub fn be_less_than_equal_to<T: PartialOrd>(other: &T) -> OrderedMatcher<'_, T> {
+    OrderedMatcher::Lte(other)
 }
 
 #[cfg(test)]

@@ -2,32 +2,32 @@ use std::fmt::Debug;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum IncreasingDecreasingBased {
+pub enum IncreasingDecreasingMatcher {
     MonotonicallyIncreasing,
     MonotonicallyDecreasing,
     StrictlyIncreasing,
     StrictlyDecreasing,
 }
 
-impl IncreasingDecreasingBased {
+impl IncreasingDecreasingMatcher {
     fn test<T: PartialOrd + Debug>(&self, collection: &[T]) -> MatcherResult {
         match self {
-            IncreasingDecreasingBased::MonotonicallyIncreasing => MatcherResult::formatted(
+            IncreasingDecreasingMatcher::MonotonicallyIncreasing => MatcherResult::formatted(
                 collection.windows(2).all(|window| window[0] <= window[1]),
                 format!("{:?} should be monotonically increasing", collection),
                 format!("{:?} should not be monotonically increasing", collection),
             ),
-            IncreasingDecreasingBased::MonotonicallyDecreasing => MatcherResult::formatted(
+            IncreasingDecreasingMatcher::MonotonicallyDecreasing => MatcherResult::formatted(
                 collection.windows(2).all(|window| window[0] >= window[1]),
                 format!("{:?} should be monotonically decreasing", collection),
                 format!("{:?} should not be monotonically decreasing", collection),
             ),
-            IncreasingDecreasingBased::StrictlyIncreasing => MatcherResult::formatted(
+            IncreasingDecreasingMatcher::StrictlyIncreasing => MatcherResult::formatted(
                 collection.windows(2).all(|window| window[0] < window[1]),
                 format!("{:?} should be strictly increasing", collection),
                 format!("{:?} should not be strictly increasing", collection),
             ),
-            IncreasingDecreasingBased::StrictlyDecreasing => MatcherResult::formatted(
+            IncreasingDecreasingMatcher::StrictlyDecreasing => MatcherResult::formatted(
                 collection.windows(2).all(|window| window[0] > window[1]),
                 format!("{:?} should be strictly decreasing", collection),
                 format!("{:?} should not be strictly decreasing", collection),
@@ -36,38 +36,38 @@ impl IncreasingDecreasingBased {
     }
 }
 
-impl<T: PartialOrd + Debug> Matcher<Vec<T>> for IncreasingDecreasingBased {
+impl<T: PartialOrd + Debug> Matcher<Vec<T>> for IncreasingDecreasingMatcher {
     fn test(&self, collection: &Vec<T>) -> MatcherResult {
         self.test(&collection)
     }
 }
 
-impl<T: PartialOrd + Debug, const N: usize> Matcher<[T; N]> for IncreasingDecreasingBased {
+impl<T: PartialOrd + Debug, const N: usize> Matcher<[T; N]> for IncreasingDecreasingMatcher {
     fn test(&self, collection: &[T; N]) -> MatcherResult {
         self.test(collection as &[T])
     }
 }
 
-impl<T: PartialOrd + Debug> Matcher<&[T]> for IncreasingDecreasingBased {
+impl<T: PartialOrd + Debug> Matcher<&[T]> for IncreasingDecreasingMatcher {
     fn test(&self, collection: &&[T]) -> MatcherResult {
         self.test(&collection)
     }
 }
 
-pub fn be_monotonically_increasing() -> IncreasingDecreasingBased {
-    IncreasingDecreasingBased::MonotonicallyIncreasing
+pub fn be_monotonically_increasing() -> IncreasingDecreasingMatcher {
+    IncreasingDecreasingMatcher::MonotonicallyIncreasing
 }
 
-pub fn be_monotonically_decreasing() -> IncreasingDecreasingBased {
-    IncreasingDecreasingBased::MonotonicallyDecreasing
+pub fn be_monotonically_decreasing() -> IncreasingDecreasingMatcher {
+    IncreasingDecreasingMatcher::MonotonicallyDecreasing
 }
 
-pub fn be_strictly_increasing() -> IncreasingDecreasingBased {
-    IncreasingDecreasingBased::StrictlyIncreasing
+pub fn be_strictly_increasing() -> IncreasingDecreasingMatcher {
+    IncreasingDecreasingMatcher::StrictlyIncreasing
 }
 
-pub fn be_strictly_decreasing() -> IncreasingDecreasingBased {
-    IncreasingDecreasingBased::StrictlyDecreasing
+pub fn be_strictly_decreasing() -> IncreasingDecreasingMatcher {
+    IncreasingDecreasingMatcher::StrictlyDecreasing
 }
 
 #[cfg(test)]

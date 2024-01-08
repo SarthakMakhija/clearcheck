@@ -1,19 +1,19 @@
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum BoundaryBased<'a> {
+pub enum BoundaryMatcher<'a> {
     Begin(&'a str),
     End(&'a str),
 }
 
-impl<'a> Matcher<&str> for BoundaryBased<'a> {
+impl<'a> Matcher<&str> for BoundaryMatcher<'a> {
     fn test(&self, value: &&str) -> MatcherResult {
         match self {
-            BoundaryBased::Begin(prefix) => MatcherResult::formatted(
+            BoundaryMatcher::Begin(prefix) => MatcherResult::formatted(
                 value.starts_with(prefix),
                 format!("{:?} should begin with {:?}", value, prefix),
                 format!("{:?} should not begin with {:?}", value, prefix),
             ),
-            BoundaryBased::End(suffix) => MatcherResult::formatted(
+            BoundaryMatcher::End(suffix) => MatcherResult::formatted(
                 value.ends_with(suffix),
                 format!("{:?} should end with {:?}", value, suffix),
                 format!("{:?} should not end with {:?}", value, suffix),
@@ -22,12 +22,12 @@ impl<'a> Matcher<&str> for BoundaryBased<'a> {
     }
 }
 
-pub fn begin_with(prefix: &str) -> BoundaryBased<'_> {
-    BoundaryBased::Begin(prefix)
+pub fn begin_with(prefix: &str) -> BoundaryMatcher<'_> {
+    BoundaryMatcher::Begin(prefix)
 }
 
-pub fn end_with(suffix: &str) -> BoundaryBased<'_> {
-    BoundaryBased::End(suffix)
+pub fn end_with(suffix: &str) -> BoundaryMatcher<'_> {
+    BoundaryMatcher::End(suffix)
 }
 
 #[cfg(test)]

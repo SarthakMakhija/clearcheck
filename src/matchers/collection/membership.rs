@@ -2,21 +2,21 @@ use std::fmt::Debug;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum MembershipBased<'a, T: Eq + Debug> {
+pub enum MembershipMatcher<'a, T: Eq + Debug> {
     Contain(&'a T),
     ContainAll(&'a [T]),
     ContainAny(&'a [T]),
 }
 
-impl<'a, T: Eq + Debug> MembershipBased<'a, T> {
+impl<'a, T: Eq + Debug> MembershipMatcher<'a, T> {
     fn test(&self, collection: &[T]) -> MatcherResult {
         match self {
-            MembershipBased::Contain(element) => MatcherResult::formatted(
+            MembershipMatcher::Contain(element) => MatcherResult::formatted(
                 collection.contains(element),
                 format!("{:?} should contain {:?}", collection, element),
                 format!("{:?} should not contain {:?}", collection, element),
             ),
-            MembershipBased::ContainAll(target) => {
+            MembershipMatcher::ContainAll(target) => {
                 let missing = target
                     .iter()
                     .filter(|element| !collection.contains(element))
@@ -31,7 +31,7 @@ impl<'a, T: Eq + Debug> MembershipBased<'a, T> {
                     format!("{:?} should not contain {:?}", collection, target),
                 )
             }
-            MembershipBased::ContainAny(target) => MatcherResult::formatted(
+            MembershipMatcher::ContainAny(target) => MatcherResult::formatted(
                 target.iter().any(|source| collection.contains(source)),
                 format!("{:?} should contain any of {:?}", collection, target),
                 format!("{:?} should not contain any of {:?}", collection, target),
@@ -40,7 +40,7 @@ impl<'a, T: Eq + Debug> MembershipBased<'a, T> {
     }
 }
 
-impl<T> Matcher<Vec<T>> for MembershipBased<'_, T>
+impl<T> Matcher<Vec<T>> for MembershipMatcher<'_, T>
 where
     T: Eq + Debug,
 {
@@ -49,7 +49,7 @@ where
     }
 }
 
-impl<T, const N: usize> Matcher<[T; N]> for MembershipBased<'_, T>
+impl<T, const N: usize> Matcher<[T; N]> for MembershipMatcher<'_, T>
 where
     T: Eq + Debug,
 {
@@ -58,7 +58,7 @@ where
     }
 }
 
-impl<T> Matcher<&[T]> for MembershipBased<'_, T>
+impl<T> Matcher<&[T]> for MembershipMatcher<'_, T>
 where
     T: Eq + Debug,
 {
@@ -67,25 +67,25 @@ where
     }
 }
 
-pub fn contain<T>(element: &T) -> MembershipBased<'_, T>
+pub fn contain<T>(element: &T) -> MembershipMatcher<'_, T>
 where
     T: Eq + Debug,
 {
-    MembershipBased::Contain(element)
+    MembershipMatcher::Contain(element)
 }
 
-pub fn contain_all<T>(elements: &[T]) -> MembershipBased<'_, T>
+pub fn contain_all<T>(elements: &[T]) -> MembershipMatcher<'_, T>
 where
     T: Eq + Debug,
 {
-    MembershipBased::ContainAll(elements)
+    MembershipMatcher::ContainAll(elements)
 }
 
-pub fn contain_any<T>(elements: &[T]) -> MembershipBased<'_, T>
+pub fn contain_any<T>(elements: &[T]) -> MembershipMatcher<'_, T>
 where
     T: Eq + Debug,
 {
-    MembershipBased::ContainAny(elements)
+    MembershipMatcher::ContainAny(elements)
 }
 
 #[cfg(test)]

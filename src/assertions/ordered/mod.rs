@@ -7,7 +7,7 @@ use crate::matchers::ordered::{
 use crate::matchers::range::{be_in_exclusive_range, be_in_inclusive_range};
 use crate::matchers::{Should, ShouldNot};
 
-pub trait OrderAssertion<T: PartialOrd> {
+pub trait OrderedAssertion<T: PartialOrd> {
     fn should_be_greater_than(&self, other: &T) -> &Self;
     fn should_be_greater_than_equal_to(&self, other: &T) -> &Self;
     fn should_be_less_than(&self, other: &T) -> &Self;
@@ -24,7 +24,7 @@ pub trait OrderAssertion<T: PartialOrd> {
     fn should_not_be_in_exclusive_range(&self, range: Range<T>) -> &Self;
 }
 
-impl<T: PartialOrd + Debug> OrderAssertion<T> for T {
+impl<T: PartialOrd + Debug> OrderedAssertion<T> for T {
     fn should_be_greater_than(&self, other: &T) -> &Self {
         self.should(&be_greater_than(other));
         self
@@ -88,7 +88,7 @@ impl<T: PartialOrd + Debug> OrderAssertion<T> for T {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::ordered::OrderAssertion;
+    use crate::assertions::ordered::OrderedAssertion;
 
     #[test]
     fn should_be_greater_than() {
