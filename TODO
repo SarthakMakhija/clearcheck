@@ -29,4 +29,5 @@
 - Check the parameter types of all
     - assertions and
     - matchers
+- Incorporate features for regex, num and date.
 

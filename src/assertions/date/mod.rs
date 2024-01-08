@@ -92,7 +92,7 @@ impl DateAssertion for NaiveDate {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "date"))]
 mod tests {
     use crate::assertions::date::DateAssertion;
     use chrono::NaiveDate;

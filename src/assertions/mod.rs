@@ -1,6 +1,7 @@
 pub mod bool;
 pub mod char;
 pub mod collection;
+#[cfg(feature = "date")]
 pub mod date;
 pub mod file;
 pub mod float;
