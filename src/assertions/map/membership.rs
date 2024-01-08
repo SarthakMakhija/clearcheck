@@ -10,13 +10,13 @@ use crate::matchers::map::membership::{
 };
 use crate::matchers::{Should, ShouldNot};
 
-pub trait NoMembership<K, V> {
+pub trait NoMembershipAssertions<K, V> {
     fn should_be_empty(&self) -> &Self;
 
     fn should_not_be_empty(&self) -> &Self;
 }
 
-pub trait KeyMembership<K, V> {
+pub trait KeyMembershipAssertions<K, V> {
     fn should_contain_key<Q>(&self, key: &Q) -> &Self
     where
         K: Borrow<Q>,
@@ -48,7 +48,7 @@ pub trait KeyMembership<K, V> {
         Q: Hash + Eq + Debug + ?Sized;
 }
 
-pub trait ValueMembership<K, V> {
+pub trait ValueMembershipAssertions<K, V> {
     fn should_contain_value<S>(&self, value: &S) -> &Self
     where
         V: Eq + Borrow<S>,
@@ -80,7 +80,7 @@ pub trait ValueMembership<K, V> {
         S: Debug + ?Sized + Eq;
 }
 
-pub trait KeyValueMembership<K, V> {
+pub trait KeyValueMembershipAssertions<K, V> {
     fn should_contain<Q, S>(&self, key: &Q, value: &S) -> &Self
     where
         K: Borrow<Q>,
@@ -124,7 +124,7 @@ pub trait KeyValueMembership<K, V> {
         S: Debug + ?Sized + Eq;
 }
 
-impl<K, V> NoMembership<K, V> for HashMap<K, V>
+impl<K, V> NoMembershipAssertions<K, V> for HashMap<K, V>
 where
     K: Hash + Eq,
 {
@@ -139,7 +139,7 @@ where
     }
 }
 
-impl<K, V> KeyMembership<K, V> for HashMap<K, V>
+impl<K, V> KeyMembershipAssertions<K, V> for HashMap<K, V>
 where
     K: Hash + Eq + Debug,
 {
@@ -198,7 +198,7 @@ where
     }
 }
 
-impl<K, V> ValueMembership<K, V> for HashMap<K, V>
+impl<K, V> ValueMembershipAssertions<K, V> for HashMap<K, V>
 where
     K: Hash + Eq + Debug,
     V: Debug,
@@ -258,7 +258,7 @@ where
     }
 }
 
-impl<K, V> KeyValueMembership<K, V> for HashMap<K, V>
+impl<K, V> KeyValueMembershipAssertions<K, V> for HashMap<K, V>
 where
     K: Hash + Eq + Debug,
     V: Debug,
@@ -372,7 +372,7 @@ where
 mod empty_tests {
     use std::collections::HashMap;
 
-    use crate::assertions::map::membership::NoMembership;
+    use crate::assertions::map::membership::NoMembershipAssertions;
 
     #[test]
     fn should_be_empty() {
@@ -407,7 +407,7 @@ mod empty_tests {
 mod key_contains_tests {
     use std::collections::HashMap;
 
-    use crate::assertions::map::membership::KeyMembership;
+    use crate::assertions::map::membership::KeyMembershipAssertions;
 
     #[test]
     fn should_contain_key() {
@@ -508,7 +508,7 @@ mod key_contains_tests {
 mod value_contains_tests {
     use std::collections::HashMap;
 
-    use crate::assertions::map::membership::ValueMembership;
+    use crate::assertions::map::membership::ValueMembershipAssertions;
 
     #[test]
     fn should_contain_value() {
@@ -609,7 +609,7 @@ mod value_contains_tests {
 mod key_value_contains_tests {
     use std::collections::HashMap;
 
-    use crate::assertions::map::membership::KeyValueMembership;
+    use crate::assertions::map::membership::KeyValueMembershipAssertions;
 
     #[test]
     fn should_contain_key_value() {

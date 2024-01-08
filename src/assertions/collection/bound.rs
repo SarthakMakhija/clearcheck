@@ -1,7 +1,7 @@
 use crate::matchers::collection::bound::{have_lower_bound, have_upper_bound};
 use crate::matchers::Should;
 
-pub trait Bounds<T>
+pub trait BoundAssertions<T>
 where
     T: PartialOrd + std::fmt::Debug,
 {
@@ -9,7 +9,7 @@ where
     fn should_have_lower_bound(&self, element: &T) -> &Self;
 }
 
-impl<T> Bounds<T> for Vec<T>
+impl<T> BoundAssertions<T> for Vec<T>
 where
     T: std::fmt::Debug,
     T: PartialOrd,
@@ -25,7 +25,7 @@ where
     }
 }
 
-impl<T, const N: usize> Bounds<T> for [T; N]
+impl<T, const N: usize> BoundAssertions<T> for [T; N]
 where
     T: std::fmt::Debug,
     T: PartialOrd,
@@ -41,7 +41,7 @@ where
     }
 }
 
-impl<T> Bounds<T> for [T]
+impl<T> BoundAssertions<T> for [T]
 where
     T: std::fmt::Debug,
     T: PartialOrd,
@@ -59,7 +59,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::collection::bound::Bounds;
+    use crate::assertions::collection::bound::BoundAssertions;
 
     #[test]
     fn should_have_an_upper_bound() {

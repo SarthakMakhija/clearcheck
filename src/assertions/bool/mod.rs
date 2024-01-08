@@ -1,12 +1,12 @@
 use crate::matchers::bool::{be_false, be_true};
 use crate::matchers::Should;
 
-pub trait TrueFalse {
+pub trait TrueFalseAssertions {
     fn should_be_true(&self) -> &Self;
     fn should_be_false(&self) -> &Self;
 }
 
-impl TrueFalse for bool {
+impl TrueFalseAssertions for bool {
     fn should_be_true(&self) -> &Self {
         self.should(&be_true());
         self
@@ -20,7 +20,7 @@ impl TrueFalse for bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalse;
+    use crate::assertions::bool::TrueFalseAssertions;
 
     #[test]
     fn should_be_true() {

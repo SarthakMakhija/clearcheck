@@ -3,31 +3,29 @@ use std::str::FromStr;
 use crate::matchers::string::numeric::be_numeric;
 use crate::matchers::{Should, ShouldNot};
 
-pub trait Numeric {
+pub trait NumericAssertions {
     fn should_be_numeric<T: FromStr>(&self) -> &Self;
     fn should_not_be_numeric<T: FromStr>(&self) -> &Self;
 }
 
-impl Numeric for String {
+impl NumericAssertions for String {
     fn should_be_numeric<T: FromStr>(&self) -> &Self {
         (self as &str).should_be_numeric::<T>();
         self
     }
 
-    //TODO: Remove T when num crate comes in
     fn should_not_be_numeric<T: FromStr>(&self) -> &Self {
         (self as &str).should_not_be_numeric::<T>();
         self
     }
 }
 
-impl Numeric for &str {
+impl NumericAssertions for &str {
     fn should_be_numeric<T: FromStr>(&self) -> &Self {
         self.should(&be_numeric::<T>());
         self
     }
 
-    //TODO: Remove T when num crate comes in
     fn should_not_be_numeric<T: FromStr>(&self) -> &Self {
         self.should_not(&be_numeric::<T>());
         self
@@ -36,7 +34,7 @@ impl Numeric for &str {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::string::numeric::Numeric;
+    use crate::assertions::string::numeric::NumericAssertions;
 
     #[test]
     fn should_be_numeric() {

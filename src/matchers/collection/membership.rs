@@ -90,7 +90,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalse;
+    use crate::assertions::bool::TrueFalseAssertions;
     use crate::matchers::collection::membership::{contain, contain_all, contain_any};
 
     #[test]

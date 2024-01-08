@@ -5,7 +5,7 @@ use crate::matchers::float::{be_nan, be_negative, be_positive, be_zero};
 use crate::matchers::range::{be_in_exclusive_range, be_in_inclusive_range};
 use crate::matchers::{Should, ShouldNot};
 
-pub trait Float<T: num::Float + Debug + Default + PartialEq> {
+pub trait FloatAssertions<T: num::Float + Debug + Default + PartialEq> {
     fn should_be_nan(&self) -> &Self;
     fn should_not_be_nan(&self) -> &Self;
     fn should_be_zero(&self) -> &Self;
@@ -35,7 +35,7 @@ pub trait Float<T: num::Float + Debug + Default + PartialEq> {
     ) -> &Self;
 }
 
-impl<T: num::Float + Debug + Default + PartialEq> Float<T> for T {
+impl<T: num::Float + Debug + Default + PartialEq> FloatAssertions<T> for T {
     fn should_be_nan(&self) -> &Self {
         self.should(&be_nan());
         self
@@ -109,7 +109,7 @@ impl<T: num::Float + Debug + Default + PartialEq> Float<T> for T {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::float::Float;
+    use crate::assertions::float::FloatAssertions;
 
     #[test]
     fn should_be_nan() {

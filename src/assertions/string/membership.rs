@@ -5,7 +5,7 @@ use crate::matchers::string::membership::{
 };
 use crate::matchers::{Should, ShouldNot};
 
-pub trait Membership {
+pub trait MembershipAssertions {
     fn should_only_contain_digits(&self) -> &Self;
     fn should_contain_a_digit(&self) -> &Self;
     fn should_not_contain_digits(&self) -> &Self;
@@ -19,7 +19,7 @@ pub trait Membership {
     fn should_not_be_empty(&self) -> &Self;
 }
 
-impl Membership for String {
+impl MembershipAssertions for String {
     fn should_only_contain_digits(&self) -> &Self {
         (self as &str).should_only_contain_digits();
         self
@@ -76,7 +76,7 @@ impl Membership for String {
     }
 }
 
-impl Membership for &str {
+impl MembershipAssertions for &str {
     fn should_only_contain_digits(&self) -> &Self {
         self.should(&contain_only_digits());
         self
@@ -135,7 +135,7 @@ impl Membership for &str {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::string::membership::Membership;
+    use crate::assertions::string::membership::MembershipAssertions;
 
     #[test]
     fn should_only_contain_digits() {

@@ -78,7 +78,7 @@ pub fn contain_ignoring_case(substr: &str) -> MembershipBased {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalse;
+    use crate::assertions::bool::TrueFalseAssertions;
     use crate::matchers::string::membership::{
         contain, contain_character, contain_ignoring_case, contain_only_digits, not_contain_digits,
     };

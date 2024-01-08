@@ -57,7 +57,7 @@ pub fn be_less_than_equal_to<T: PartialOrd>(other: &T) -> OrderedBased<'_, T> {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalse;
+    use crate::assertions::bool::TrueFalseAssertions;
     use crate::matchers::ordered::{
         be_greater_than, be_greater_than_equal_to, be_less_than, be_less_than_equal_to,
     };

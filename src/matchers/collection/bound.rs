@@ -54,7 +54,7 @@ pub fn have_lower_bound<T: PartialOrd + Debug>(bound: &T) -> BoundBased<'_, T> {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalse;
+    use crate::assertions::bool::TrueFalseAssertions;
     use crate::matchers::collection::bound::{have_lower_bound, have_upper_bound};
 
     #[test]

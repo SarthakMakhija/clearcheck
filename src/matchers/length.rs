@@ -75,7 +75,7 @@ pub fn have_atmost_same_length(length: usize) -> LengthBased {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalse;
+    use crate::assertions::bool::TrueFalseAssertions;
     use crate::matchers::length::{
         have_atleast_same_length, have_atmost_same_length, have_same_length,
     };

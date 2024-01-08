@@ -3,14 +3,14 @@ use std::fmt::Debug;
 use std::hash::Hash;
 use std::ops::{Range, RangeInclusive};
 
-use crate::assertions::collection::size::Size;
+use crate::assertions::collection::size::SizeAssertions;
 use crate::matchers::length::{
     have_atleast_same_length, have_atmost_same_length, have_same_length,
 };
 use crate::matchers::range::{have_length_in_exclusive_range, have_length_in_inclusive_range};
 use crate::matchers::{Should, ShouldNot};
 
-impl<K, V> Size for HashMap<K, V>
+impl<K, V> SizeAssertions for HashMap<K, V>
 where
     K: Hash + Eq + PartialEq + Debug,
     V: Debug,
@@ -67,7 +67,7 @@ where
 mod tests {
     use std::collections::HashMap;
 
-    use crate::assertions::collection::size::Size;
+    use crate::assertions::collection::size::SizeAssertions;
 
     #[test]
     fn should_have_size_as_1() {

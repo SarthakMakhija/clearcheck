@@ -54,7 +54,7 @@ pub fn be_a_leap_year() -> DateBased {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalse;
+    use crate::assertions::bool::TrueFalseAssertions;
     use crate::matchers::date::{be_a_leap_year, have_same_day, have_same_month, have_same_year};
     use crate::matchers::Matcher;
     use chrono::NaiveDate;

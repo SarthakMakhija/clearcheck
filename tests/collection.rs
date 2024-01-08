@@ -1,6 +1,6 @@
-use assert4rs::assertions::collection::duplicate::Duplicates;
-use assert4rs::assertions::collection::membership::Membership;
-use assert4rs::assertions::collection::size::Size;
+use assert4rs::assertions::collection::duplicate::DuplicateContentAssertions;
+use assert4rs::assertions::collection::membership::MembershipAssertions;
+use assert4rs::assertions::collection::size::SizeAssertions;
 
 #[derive(Eq, Debug, PartialEq)]
 struct Book {

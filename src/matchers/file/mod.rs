@@ -219,7 +219,7 @@ mod file_type_tests {
 
     use tempdir::TempDir;
 
-    use crate::assertions::bool::TrueFalse;
+    use crate::assertions::bool::TrueFalseAssertions;
     use crate::matchers::file::{
         be_a_directory, be_a_file, be_readonly, be_writable, be_zero_sized,
     };
@@ -335,7 +335,7 @@ mod file_type_tests {
 mod file_path_tests {
     use std::path::Path;
 
-    use crate::assertions::bool::TrueFalse;
+    use crate::assertions::bool::TrueFalseAssertions;
     use crate::matchers::file::{be_absolute, be_relative, have_extension};
     use crate::matchers::Matcher;
 
@@ -367,7 +367,7 @@ mod walk_tree_tests {
 
     use tempdir::TempDir;
 
-    use crate::assertions::bool::TrueFalse;
+    use crate::assertions::bool::TrueFalseAssertions;
     use crate::matchers::file::{
         contain_all_file_names, contain_any_file_names, contain_file_name,
     };

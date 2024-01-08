@@ -3,7 +3,7 @@ use chrono::{Datelike, NaiveDate};
 use crate::matchers::date::{be_a_leap_year, have_same_day, have_same_month, have_same_year};
 use crate::matchers::{Should, ShouldNot};
 
-pub trait Date {
+pub trait DateAssertions {
     fn should_have_same_year_as(&self, other: &NaiveDate) -> &Self;
     fn should_not_have_same_year_as(&self, other: &NaiveDate) -> &Self;
 
@@ -26,7 +26,7 @@ pub trait Date {
     fn should_not_be_a_leap_year(&self) -> &Self;
 }
 
-impl Date for NaiveDate {
+impl DateAssertions for NaiveDate {
     fn should_have_same_year_as(&self, other: &NaiveDate) -> &Self {
         self.should_have_year(other.year())
     }
@@ -94,7 +94,7 @@ impl Date for NaiveDate {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::date::Date;
+    use crate::assertions::date::DateAssertions;
     use chrono::NaiveDate;
 
     #[test]

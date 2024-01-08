@@ -65,7 +65,7 @@ pub fn not_be_empty() -> EmptyBased {
 
 #[cfg(test)]
 mod collection_tests {
-    use crate::assertions::bool::TrueFalse;
+    use crate::assertions::bool::TrueFalseAssertions;
     use crate::matchers::empty::{be_empty, not_be_empty};
 
     #[test]
@@ -101,7 +101,7 @@ mod collection_tests {
 
 #[cfg(test)]
 mod map_tests {
-    use crate::assertions::bool::TrueFalse;
+    use crate::assertions::bool::TrueFalseAssertions;
     use crate::matchers::empty::{be_empty, not_be_empty};
     use std::collections::HashMap;
 
@@ -143,7 +143,7 @@ mod map_tests {
 
 #[cfg(test)]
 mod string_tests {
-    use crate::assertions::bool::TrueFalse;
+    use crate::assertions::bool::TrueFalseAssertions;
     use crate::matchers::empty::{be_empty, not_be_empty};
 
     #[test]

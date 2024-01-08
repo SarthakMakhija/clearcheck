@@ -26,7 +26,7 @@ pub fn be_numeric<T: FromStr>() -> NumericBased<T> {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalse;
+    use crate::assertions::bool::TrueFalseAssertions;
     use crate::matchers::string::numeric::be_numeric;
     use crate::matchers::Matcher;
 

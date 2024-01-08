@@ -1,14 +1,14 @@
 use crate::matchers::string::boundary::{begin_with, end_with};
 use crate::matchers::{Should, ShouldNot};
 
-pub trait Boundary {
+pub trait BoundaryAssertions {
     fn should_begin_with(&self, prefix: &str) -> &Self;
     fn should_not_begin_with(&self, prefix: &str) -> &Self;
     fn should_end_with(&self, suffix: &str) -> &Self;
     fn should_not_end_with(&self, suffix: &str) -> &Self;
 }
 
-impl Boundary for String {
+impl BoundaryAssertions for String {
     fn should_begin_with(&self, prefix: &str) -> &Self {
         (self as &str).should_begin_with(prefix);
         self
@@ -30,7 +30,7 @@ impl Boundary for String {
     }
 }
 
-impl Boundary for &str {
+impl BoundaryAssertions for &str {
     fn should_begin_with(&self, prefix: &str) -> &Self {
         self.should(&begin_with(prefix));
         self
@@ -54,7 +54,7 @@ impl Boundary for &str {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::string::boundary::Boundary;
+    use crate::assertions::string::boundary::BoundaryAssertions;
 
     #[test]
     fn should_begin_with() {

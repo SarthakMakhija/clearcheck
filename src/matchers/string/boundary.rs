@@ -32,7 +32,7 @@ pub fn end_with(suffix: &str) -> BoundaryBased<'_> {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalse;
+    use crate::assertions::bool::TrueFalseAssertions;
     use crate::matchers::string::boundary::{begin_with, end_with};
     use crate::matchers::Matcher;
 

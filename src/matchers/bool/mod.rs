@@ -32,7 +32,7 @@ pub fn be_false() -> TrueFalseBased {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalse;
+    use crate::assertions::bool::TrueFalseAssertions;
     use crate::matchers::bool::{be_false, be_true};
     use crate::matchers::Matcher;
 

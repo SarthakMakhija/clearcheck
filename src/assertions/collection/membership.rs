@@ -5,7 +5,7 @@ use crate::matchers::collection::membership::{contain, contain_all, contain_any}
 use crate::matchers::empty::be_empty;
 use crate::matchers::{Should, ShouldNot};
 
-pub trait Membership<T>
+pub trait MembershipAssertions<T>
 where
     T: Eq + Debug,
 {
@@ -43,7 +43,7 @@ where
     fn should_not_be_empty(&self) -> &Self;
 }
 
-impl<T> Membership<T> for Vec<T>
+impl<T> MembershipAssertions<T> for Vec<T>
 where
     T: Debug,
     T: Eq,
@@ -113,7 +113,7 @@ where
     }
 }
 
-impl<T, const N: usize> Membership<T> for [T; N]
+impl<T, const N: usize> MembershipAssertions<T> for [T; N]
 where
     T: Debug,
     T: Eq,
@@ -183,7 +183,7 @@ where
     }
 }
 
-impl<T> Membership<T> for [T]
+impl<T> MembershipAssertions<T> for [T]
 where
     T: Debug,
     T: Eq,
@@ -262,7 +262,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::collection::membership::Membership;
+    use crate::assertions::collection::membership::MembershipAssertions;
 
     #[test]
     fn should_contain() {
