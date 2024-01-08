@@ -14,15 +14,19 @@
 - Handle duplication in collection traits between vector, arrays and slices - done
 - Improve panic (AssertKind)                                - done
 - Add support for contains all                              - done
+- Add support for num matchers                              - done
+- Add support for date/time matchers                        - done
+- Add support for file path matchers                        - done
+- Change names of all traits and matchers                   - done
 
-- Check if we need to provide assertions and matcher over String
 - Should the test in matcher (or its implementation) work over Q, where T: Borrow<Q> for contains
 - Take a look at all the messages in MatcherResult
 
 - Add support for eq
-- Add support for num matchers
-- Add support for date/time matchers
 - Check all assertions to see the parameter that is being accepted
     - value or reference and see what is being passed to the matcher
 - See if assertions can have macros to generate the code
+- Check the parameter types of all
+    - assertions and
+    - matchers
 
