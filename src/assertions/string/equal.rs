@@ -1,12 +1,12 @@
 use crate::matchers::equal::be_equal_ignoring_case;
 use crate::matchers::{Should, ShouldNot};
 
-pub trait EqualityAssertion {
+pub trait IgnoreCaseEqualityAssertion {
     fn should_be_equal_ignoring_case(&self, other: &str) -> &Self;
     fn should_not_be_equal_ignoring_case(&self, other: &str) -> &Self;
 }
 
-impl EqualityAssertion for String {
+impl IgnoreCaseEqualityAssertion for String {
     fn should_be_equal_ignoring_case(&self, other: &str) -> &Self {
         (self as &str).should_be_equal_ignoring_case(other);
         self
@@ -18,7 +18,7 @@ impl EqualityAssertion for String {
     }
 }
 
-impl EqualityAssertion for &str {
+impl IgnoreCaseEqualityAssertion for &str {
     fn should_be_equal_ignoring_case(&self, other: &str) -> &Self {
         self.should(&be_equal_ignoring_case(&other));
         self
@@ -32,7 +32,7 @@ impl EqualityAssertion for &str {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::string::equal::EqualityAssertion;
+    use crate::assertions::string::equal::IgnoreCaseEqualityAssertion;
 
     #[test]
     fn should_be_equal() {
