@@ -107,7 +107,7 @@ impl<T: num::Float + Debug + Default + PartialEq> FloatAssertion<T> for T {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "num"))]
 mod tests {
     use crate::assertions::float::FloatAssertion;
 

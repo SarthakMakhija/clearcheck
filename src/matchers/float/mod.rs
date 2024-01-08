@@ -54,7 +54,7 @@ pub fn be_negative() -> FloatMatcher {
     FloatMatcher::Negative
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "num"))]
 mod tests {
     use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::float::{be_nan, be_negative, be_positive, be_zero};

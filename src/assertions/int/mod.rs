@@ -46,7 +46,7 @@ impl<T: Integer + Debug + PartialEq + Default> IntAssertion<T> for T {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "num"))]
 mod tests {
     use crate::assertions::int::IntAssertion;
 

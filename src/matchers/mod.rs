@@ -8,7 +8,9 @@ pub mod empty;
 pub mod equal;
 #[cfg(feature = "file")]
 pub mod file;
+#[cfg(feature = "num")]
 pub mod float;
+#[cfg(feature = "num")]
 pub mod int;
 pub mod length;
 pub mod map;

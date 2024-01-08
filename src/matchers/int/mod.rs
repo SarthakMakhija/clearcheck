@@ -64,7 +64,7 @@ pub fn be_zero() -> IntMatcher {
     IntMatcher::Zero
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "num"))]
 mod tests {
     use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::int::{be_even, be_negative, be_odd, be_positive, be_zero};

@@ -5,7 +5,9 @@ pub mod collection;
 pub mod date;
 #[cfg(feature = "file")]
 pub mod file;
+#[cfg(feature = "num")]
 pub mod float;
+#[cfg(feature = "num")]
 pub mod int;
 pub mod map;
 pub mod option;
