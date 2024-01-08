@@ -50,7 +50,7 @@ where
                 MatcherResult::formatted(
                     missing.len() == 0,
                     format!(
-                        "Keys {:?} in the map should contain all {:?} but it was missing {:?}",
+                        "Keys {:?} in the map should contain all {:?} but was missing {:?}",
                         collection.keys(),
                         keys,
                         missing
@@ -117,7 +117,7 @@ where
                 MatcherResult::formatted(
                     missing.len() == 0,
                     format!(
-                        "Values {:?} in the map should contain all {:?} but it was missing {:?}",
+                        "Values {:?} in the map should contain all {:?} but was missing {:?}",
                         collection.values(),
                         values,
                         missing
@@ -175,7 +175,7 @@ where
                     collection, key, value
                 ),
                 format!(
-                    "Map {:?} should contain key {:?} and value {:?}",
+                    "Map {:?} should not contain key {:?} and value {:?}",
                     collection, key, value
                 ),
             ),
@@ -190,7 +190,7 @@ where
                 MatcherResult::formatted(
                     missing.len() == 0,
                     format!(
-                        "Map {:?} should contain all of key/value pairs {:?} but it was missing {:?}",
+                        "Map {:?} should contain all of key/value pairs {:?} but was missing {:?}",
                         collection, key_values, missing
                     ),
                     format!(

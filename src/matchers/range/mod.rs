@@ -41,11 +41,11 @@ where
 }
 
 pub fn be_in_inclusive_range<T: PartialOrd + Debug>(range: &RangeInclusive<T>) -> RangeMatcher<T> {
-    RangeMatcher::Closed("", range)
+    RangeMatcher::Closed("Value", range)
 }
 
 pub fn be_in_exclusive_range<T: PartialOrd + Debug>(range: &Range<T>) -> RangeMatcher<T> {
-    RangeMatcher::HalfOpen("", range)
+    RangeMatcher::HalfOpen("Value", range)
 }
 
 pub fn have_length_in_inclusive_range(range: &RangeInclusive<usize>) -> RangeMatcher<usize> {

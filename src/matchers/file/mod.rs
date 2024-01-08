@@ -130,10 +130,10 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for TreeMatcher<'_> {
                 MatcherResult::formatted(
                     unique_names.len() == 0,
                     format!(
-                        "{:?} should contain all file names {:?} but it was missing {:?}",
+                        "{:?} should contain file names {:?} but was missing {:?}",
                         value, names, unique_names
                     ),
-                    format!("{:?} should not contain all file names {:?}", value, names),
+                    format!("{:?} should not contain file names {:?}", value, names),
                 )
             }
             TreeMatcher::ContainAny(names) => {

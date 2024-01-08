@@ -15,7 +15,7 @@ impl LengthMatcher {
     }
 
     pub fn test_map<K: Hash + Eq, V>(&self, collection: &HashMap<K, V>) -> MatcherResult {
-        self.test(collection.len(), "Collection")
+        self.test(collection.len(), "Map")
     }
 
     pub fn test_string(&self, collection: &str) -> MatcherResult {

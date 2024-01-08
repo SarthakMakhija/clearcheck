@@ -18,6 +18,7 @@
 - Add support for date/time matchers                        - done
 - Add support for file path matchers                        - done
 - Change names of all traits and matchers                   - done
+- Incorporate features for regex, num, date and file        - done
 
 - Should the test in matcher (or its implementation) work over Q, where T: Borrow<Q> for contains
 - Take a look at all the messages in MatcherResult
@@ -29,5 +30,4 @@
 - Check the parameter types of all
     - assertions and
     - matchers
-- Incorporate features for regex, num and date.
 

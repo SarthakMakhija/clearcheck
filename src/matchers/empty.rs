@@ -28,13 +28,13 @@ impl EmptyBased {
         match self {
             EmptyBased::Empty => MatcherResult::new(
                 collection.len() == 0,
-                "Collection should be empty",
-                "Collection should not be empty",
+                "Map should be empty",
+                "Map should not be empty",
             ),
             EmptyBased::NotEmpty => MatcherResult::new(
                 collection.len() != 0,
-                "Collection should not be empty",
-                "Collection should be empty",
+                "Map should not be empty",
+                "Map should be empty",
             ),
         }
     }
