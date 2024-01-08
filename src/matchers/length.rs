@@ -18,11 +18,11 @@ impl LengthMatcher {
         self.test(collection.len(), "Map")
     }
 
-    pub fn test_string(&self, collection: &str) -> MatcherResult {
-        self.test(collection.len(), "String")
+    pub fn test_string(&self, value: &str) -> MatcherResult {
+        self.test(value.len(), value)
     }
 
-    fn test(&self, input_length: usize, message_prefix: &'static str) -> MatcherResult {
+    fn test(&self, input_length: usize, message_prefix: &str) -> MatcherResult {
         match self {
             LengthMatcher::Same(length) => MatcherResult::formatted(
                 input_length == *length,
