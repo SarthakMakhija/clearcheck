@@ -11,7 +11,7 @@ pub trait RangeAssertion {
     fn should_not_be_in_exclusive_range(&self, range: Range<char>) -> &Self;
 }
 
-pub trait EqualityAssertion {
+pub trait IgnoreCaseEqualityAssertion {
     fn should_be_equal_ignoring_case(&self, other: &char) -> &Self;
     fn should_not_be_equal_ignoring_case(&self, other: &char) -> &Self;
 }
@@ -38,7 +38,7 @@ impl RangeAssertion for char {
     }
 }
 
-impl EqualityAssertion for char {
+impl IgnoreCaseEqualityAssertion for char {
     fn should_be_equal_ignoring_case(&self, other: &char) -> &Self {
         self.should(&be_equal_ignoring_case(other));
         self
@@ -109,7 +109,7 @@ mod range_tests {
 
 #[cfg(test)]
 mod equal_tests {
-    use crate::assertions::char::EqualityAssertion;
+    use crate::assertions::char::IgnoreCaseEqualityAssertion;
 
     #[test]
     fn should_be_equal_ignoring_case() {

@@ -1,10 +1,10 @@
-use crate::matchers::equal::EqualityMatcher;
+use crate::matchers::equal::IgnoreCaseEqualityMatcher;
 use crate::matchers::{Matcher, MatcherResult};
 
-impl Matcher<char> for EqualityMatcher<'_, char> {
+impl Matcher<char> for IgnoreCaseEqualityMatcher<'_, char> {
     fn test(&self, value: &char) -> MatcherResult {
         match self {
-            EqualityMatcher::IgnoringCase(other) => MatcherResult::formatted(
+            IgnoreCaseEqualityMatcher::IgnoringCase(other) => MatcherResult::formatted(
                 value.eq_ignore_ascii_case(other),
                 format!("{} should match {}", value, other),
                 format!("{} should not match {}", value, other),
