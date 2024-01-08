@@ -2,6 +2,7 @@ pub mod bool;
 pub mod char;
 pub mod collection;
 pub mod date;
+pub mod file;
 pub mod float;
 pub mod int;
 pub mod map;

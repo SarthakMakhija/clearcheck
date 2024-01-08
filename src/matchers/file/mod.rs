@@ -129,7 +129,10 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for WalkTreeBased<'_> {
                 }
                 MatcherResult::formatted(
                     unique_names.len() == 0,
-                    format!("{:?} should contain all file names {:?}", value, names),
+                    format!(
+                        "{:?} should contain all file names {:?} but it was missing {:?}",
+                        value, names, unique_names
+                    ),
                     format!("{:?} should not contain all file names {:?}", value, names),
                 )
             }
@@ -138,6 +141,7 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for WalkTreeBased<'_> {
                     .iter()
                     .map(|name| OsStr::new(name))
                     .collect::<HashSet<_>>();
+                let input_names = unique_names.clone();
 
                 for directory_entry in WalkDir::new(value) {
                     if let Ok(entry) = directory_entry {
@@ -148,7 +152,7 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for WalkTreeBased<'_> {
                     }
                 }
                 MatcherResult::formatted(
-                    unique_names.len() != names.len(),
+                    unique_names.len() != input_names.len(),
                     format!("{:?} should contain any of file names {:?}", value, names),
                     format!(
                         "{:?} should not contain any of file names {:?}",
@@ -172,7 +176,7 @@ pub fn be_a_symbolic_link() -> FileTypeBased {
     FileTypeBased::SymbolicLink
 }
 
-pub fn be_a_zero_sized_file() -> FileTypeBased {
+pub fn be_zero_sized() -> FileTypeBased {
     FileTypeBased::ZeroSized
 }
 
@@ -217,7 +221,7 @@ mod file_type_tests {
 
     use crate::assertions::bool::TrueFalse;
     use crate::matchers::file::{
-        be_a_directory, be_a_file, be_a_zero_sized_file, be_readonly, be_writable,
+        be_a_directory, be_a_file, be_readonly, be_writable, be_zero_sized,
     };
     use crate::matchers::Matcher;
 
@@ -241,14 +245,14 @@ mod file_type_tests {
     }
 
     #[test]
-    fn should_be_a_zero_sized_file() {
+    fn should_be_zero_sized() {
         let temporary_directory = TempDir::new(".").unwrap();
         let file_path = temporary_directory.path().join("temporary.txt");
 
         let path = file_path.as_path();
         let _ = File::create(file_path.clone()).unwrap();
 
-        let matcher = be_a_zero_sized_file();
+        let matcher = be_zero_sized();
         matcher.test(&path).passed.should_be_true();
     }
 
@@ -262,7 +266,7 @@ mod file_type_tests {
         let mut file = File::create(file_path.clone()).unwrap();
         writeln!(file, "test content").unwrap();
 
-        let matcher = be_a_zero_sized_file();
+        let matcher = be_zero_sized();
         matcher.test(&path).passed.should_be_true();
     }
 
@@ -404,6 +408,19 @@ mod walk_tree_tests {
 
         let directory_path = temporary_directory.path();
         let matcher = contain_any_file_names(&["junit.txt", "assert4rs.txt"]);
+        matcher.test(&directory_path).passed.should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_any_files_but_did_not() {
+        let temporary_directory = TempDir::new(".").unwrap();
+        let file_path = temporary_directory.path().join("junit.txt");
+
+        let _ = File::create(file_path.clone()).unwrap();
+
+        let directory_path = temporary_directory.path();
+        let matcher = contain_any_file_names(&["assert.txt", "assert.txt"]);
         matcher.test(&directory_path).passed.should_be_true();
     }
 }
