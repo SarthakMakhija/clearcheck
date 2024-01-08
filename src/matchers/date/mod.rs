@@ -52,7 +52,7 @@ pub fn be_a_leap_year() -> DateMatcher {
     DateMatcher::LeapYear
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "date"))]
 mod tests {
     use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::date::{be_a_leap_year, have_same_day, have_same_month, have_same_year};

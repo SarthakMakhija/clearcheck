@@ -3,6 +3,7 @@ pub mod char;
 pub mod collection;
 #[cfg(feature = "date")]
 pub mod date;
+#[cfg(feature = "file")]
 pub mod file;
 pub mod float;
 pub mod int;

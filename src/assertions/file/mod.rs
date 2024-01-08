@@ -122,7 +122,7 @@ impl<T: AsRef<Path> + Debug> FileAssertion for T {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "file"))]
 mod tests {
     use std::fs::File;
     use std::io::Write;

@@ -6,6 +6,7 @@ pub mod compose;
 pub mod date;
 pub mod empty;
 pub mod equal;
+#[cfg(feature = "file")]
 pub mod file;
 pub mod float;
 pub mod int;

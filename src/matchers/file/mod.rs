@@ -212,7 +212,7 @@ pub fn contain_any_file_names<'a>(names: &'a [&'a str]) -> TreeMatcher<'a> {
     TreeMatcher::ContainAny(names)
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "file"))]
 mod file_type_tests {
     use std::fs::File;
     use std::io::Write;
@@ -331,7 +331,7 @@ mod file_type_tests {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "file"))]
 mod file_path_tests {
     use std::path::Path;
 
@@ -361,7 +361,7 @@ mod file_path_tests {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "file"))]
 mod walk_tree_tests {
     use std::fs::File;
 
