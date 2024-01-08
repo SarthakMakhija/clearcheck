@@ -32,7 +32,7 @@ impl RegularExpressionAssertion for &str {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "regex"))]
 mod tests {
     use crate::assertions::string::regex::RegularExpressionAssertion;
     use regex::Regex;

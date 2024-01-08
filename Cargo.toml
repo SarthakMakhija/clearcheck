@@ -6,7 +6,7 @@ edition = "2021"
 [dependencies]
 chrono = { version = "0.4.31", optional = true }
 num = { version = "0.4.1", optional = true }
-regex = "1.10.2"
+regex = { version = "1.10.2", optional = true }
 walkdir = { version = "2.4.0", features = [], optional = true }
 
 [dev-dependencies]
@@ -16,3 +16,4 @@ tempdir = "0.3.7"
 date = ["dep:chrono"]
 file = ["dep:walkdir"]
 num = ["dep:num"]
+regex = ["dep:regex"]

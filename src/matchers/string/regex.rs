@@ -28,7 +28,7 @@ pub fn match_with(regular_expression: Regex) -> RegexMatcher {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "regex"))]
 mod tests {
     use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::string::regex::match_with;
