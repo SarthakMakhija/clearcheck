@@ -3,13 +3,11 @@ use crate::matchers::{Matcher, MatcherResult};
 
 impl Matcher<&str> for IgnoreCaseEqualityMatcher<'_, &str> {
     fn test(&self, value: &&str) -> MatcherResult {
-        match self {
-            IgnoreCaseEqualityMatcher::IgnoringCase(other) => MatcherResult::formatted(
-                value.eq_ignore_ascii_case(other),
-                format!("{:?} should equal {:?}", value, other),
-                format!("{:?} should not equal {:?}", value, other),
-            ),
-        }
+        MatcherResult::formatted(
+            value.eq_ignore_ascii_case(self.other),
+            format!("{:?} should equal {:?}", value, self.other),
+            format!("{:?} should not equal {:?}", value, self.other),
+        )
     }
 }
 
