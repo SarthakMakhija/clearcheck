@@ -32,7 +32,7 @@ pub fn be_none() -> SomeNoneBased {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalseAssertions;
+    use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::option::{be_none, be_some};
     use crate::matchers::Matcher;
 

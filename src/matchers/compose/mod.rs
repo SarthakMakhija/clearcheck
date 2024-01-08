@@ -78,7 +78,7 @@ where
 
 #[cfg(test)]
 mod string_matchers {
-    use crate::assertions::bool::TrueFalseAssertions;
+    use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::compose::Matchers;
     use crate::matchers::empty::be_empty;
     use crate::matchers::length::have_atleast_same_length;
@@ -148,7 +148,7 @@ mod string_matchers {
 
 #[cfg(test)]
 mod slice_matchers {
-    use crate::assertions::bool::TrueFalseAssertions;
+    use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::collection::duplicate::contain_duplicates;
     use crate::matchers::collection::membership::contain;
     use crate::matchers::compose::Matchers;

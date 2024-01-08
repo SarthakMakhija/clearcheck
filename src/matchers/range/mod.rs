@@ -58,7 +58,7 @@ pub fn have_length_in_exclusive_range(range: &Range<usize>) -> RangeBased<usize>
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalseAssertions;
+    use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::range::{be_in_exclusive_range, be_in_inclusive_range};
     use crate::matchers::Matcher;
 

@@ -45,7 +45,7 @@ pub fn contain_duplicates() -> DuplicateItemBased {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalseAssertions;
+    use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::collection::duplicate::contain_duplicates;
 
     #[test]

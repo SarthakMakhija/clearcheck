@@ -4,7 +4,7 @@ use crate::matchers::collection::increasing_decreasing::{
 };
 use crate::matchers::Should;
 
-pub trait IncreasingDecreasingAssertions<T>
+pub trait IncreasingDecreasingAssertion<T>
 where
     T: PartialOrd + std::fmt::Debug,
 {
@@ -14,7 +14,7 @@ where
     fn should_be_strictly_decreasing(&self) -> &Self;
 }
 
-impl<T> IncreasingDecreasingAssertions<T> for Vec<T>
+impl<T> IncreasingDecreasingAssertion<T> for Vec<T>
 where
     T: std::fmt::Debug,
     T: PartialOrd,
@@ -40,7 +40,7 @@ where
     }
 }
 
-impl<T, const N: usize> IncreasingDecreasingAssertions<T> for [T; N]
+impl<T, const N: usize> IncreasingDecreasingAssertion<T> for [T; N]
 where
     T: std::fmt::Debug,
     T: PartialOrd,
@@ -66,7 +66,7 @@ where
     }
 }
 
-impl<T> IncreasingDecreasingAssertions<T> for [T]
+impl<T> IncreasingDecreasingAssertion<T> for [T]
 where
     T: std::fmt::Debug,
     T: PartialOrd,
@@ -94,7 +94,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::collection::increasing_decreasing::IncreasingDecreasingAssertions;
+    use crate::assertions::collection::increasing_decreasing::IncreasingDecreasingAssertion;
 
     #[test]
     fn should_be_monotonically_increasing() {

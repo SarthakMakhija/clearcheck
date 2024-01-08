@@ -32,7 +32,7 @@ pub fn be_err() -> OkErrBased {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalseAssertions;
+    use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::result::{be_err, be_ok};
     use crate::matchers::Matcher;
 

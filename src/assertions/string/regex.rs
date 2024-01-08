@@ -3,12 +3,12 @@ use regex::Regex;
 use crate::matchers::string::regex::match_with;
 use crate::matchers::{Should, ShouldNot};
 
-pub trait RegularExpressionAssertions {
+pub trait RegularExpressionAssertion {
     fn should_match(&self, regex: Regex) -> &Self;
     fn should_not_match(&self, regex: Regex) -> &Self;
 }
 
-impl RegularExpressionAssertions for String {
+impl RegularExpressionAssertion for String {
     fn should_match(&self, regex: Regex) -> &Self {
         (self as &str).should_match(regex);
         self
@@ -20,7 +20,7 @@ impl RegularExpressionAssertions for String {
     }
 }
 
-impl RegularExpressionAssertions for &str {
+impl RegularExpressionAssertion for &str {
     fn should_match(&self, regex: Regex) -> &Self {
         self.should(&match_with(regex));
         self
@@ -34,7 +34,7 @@ impl RegularExpressionAssertions for &str {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::string::regex::RegularExpressionAssertions;
+    use crate::assertions::string::regex::RegularExpressionAssertion;
     use regex::Regex;
 
     #[test]

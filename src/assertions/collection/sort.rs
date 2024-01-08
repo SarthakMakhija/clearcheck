@@ -1,7 +1,7 @@
 use crate::matchers::collection::sort::{be_sorted_ascending, be_sorted_descending};
 use crate::matchers::Should;
 
-pub trait SortAssertions<T>
+pub trait SortAssertion<T>
 where
     T: PartialOrd,
 {
@@ -9,7 +9,7 @@ where
     fn should_be_sorted_descending(&self) -> &Self;
 }
 
-impl<T> SortAssertions<T> for Vec<T>
+impl<T> SortAssertion<T> for Vec<T>
 where
     T: std::fmt::Debug + PartialOrd,
 {
@@ -24,7 +24,7 @@ where
     }
 }
 
-impl<T, const N: usize> SortAssertions<T> for [T; N]
+impl<T, const N: usize> SortAssertion<T> for [T; N]
 where
     T: std::fmt::Debug + PartialOrd,
 {
@@ -39,7 +39,7 @@ where
     }
 }
 
-impl<T> SortAssertions<T> for [T]
+impl<T> SortAssertion<T> for [T]
 where
     T: std::fmt::Debug + PartialOrd,
 {
@@ -56,7 +56,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::collection::sort::SortAssertions;
+    use crate::assertions::collection::sort::SortAssertion;
 
     #[test]
     fn should_be_sorted_in_ascending_order() {

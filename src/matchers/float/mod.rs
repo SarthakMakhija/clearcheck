@@ -56,7 +56,7 @@ pub fn be_negative() -> FloatBased {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalseAssertions;
+    use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::float::{be_nan, be_negative, be_positive, be_zero};
     use crate::matchers::Matcher;
     use num::Float;

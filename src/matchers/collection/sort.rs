@@ -51,7 +51,7 @@ pub fn be_sorted_descending() -> SortBased {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalseAssertions;
+    use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::collection::sort::{be_sorted_ascending, be_sorted_descending};
 
     #[test]

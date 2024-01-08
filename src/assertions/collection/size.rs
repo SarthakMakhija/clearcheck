@@ -6,7 +6,7 @@ use crate::matchers::length::{
 use crate::matchers::range::{have_length_in_exclusive_range, have_length_in_inclusive_range};
 use crate::matchers::{Should, ShouldNot};
 
-pub trait SizeAssertions {
+pub trait SizeAssertion {
     fn should_have_size(&self, size: usize) -> &Self;
     fn should_not_have_size(&self, size: usize) -> &Self;
     fn should_have_at_least_size(&self, size: usize) -> &Self;
@@ -18,7 +18,7 @@ pub trait SizeAssertions {
     fn should_not_have_size_in_exclusive_range(&self, range: Range<usize>) -> &Self;
 }
 
-impl<T> SizeAssertions for Vec<T>
+impl<T> SizeAssertion for Vec<T>
 where
     T: std::fmt::Debug,
 {
@@ -68,7 +68,7 @@ where
     }
 }
 
-impl<T, const N: usize> SizeAssertions for [T; N]
+impl<T, const N: usize> SizeAssertion for [T; N]
 where
     T: std::fmt::Debug,
 {
@@ -118,7 +118,7 @@ where
     }
 }
 
-impl<T> SizeAssertions for [T]
+impl<T> SizeAssertion for [T]
 where
     T: std::fmt::Debug,
 {
@@ -172,7 +172,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::collection::size::SizeAssertions;
+    use crate::assertions::collection::size::SizeAssertion;
 
     #[test]
     fn should_have_size_as_2() {

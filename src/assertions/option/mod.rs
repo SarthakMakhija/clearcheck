@@ -3,12 +3,12 @@ use std::fmt::Debug;
 use crate::matchers::option::{be_none, be_some};
 use crate::matchers::Should;
 
-pub trait SomeNoneAssertions {
+pub trait SomeNoneAssertion {
     fn should_be_some(&self) -> &Self;
     fn should_be_none(&self) -> &Self;
 }
 
-impl<T> SomeNoneAssertions for Option<T>
+impl<T> SomeNoneAssertion for Option<T>
 where
     T: Debug,
 {
@@ -25,7 +25,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::option::SomeNoneAssertions;
+    use crate::assertions::option::SomeNoneAssertion;
 
     #[test]
     fn should_be_none() {

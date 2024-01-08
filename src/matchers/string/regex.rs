@@ -30,7 +30,7 @@ pub fn match_with(regular_expression: Regex) -> RegexBased {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalseAssertions;
+    use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::string::regex::match_with;
     use crate::matchers::Matcher;
     use regex::Regex;

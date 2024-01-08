@@ -1,12 +1,12 @@
 use crate::matchers::string::case::{be_lowercase, be_uppercase};
 use crate::matchers::Should;
 
-pub trait CaseAssertions {
+pub trait CaseAssertion {
     fn should_be_lower_case(&self) -> &Self;
     fn should_be_upper_case(&self) -> &Self;
 }
 
-impl CaseAssertions for String {
+impl CaseAssertion for String {
     fn should_be_lower_case(&self) -> &Self {
         (self as &str).should_be_lower_case();
         self
@@ -18,7 +18,7 @@ impl CaseAssertions for String {
     }
 }
 
-impl CaseAssertions for &str {
+impl CaseAssertion for &str {
     fn should_be_lower_case(&self) -> &Self {
         self.should(&be_lowercase());
         self
@@ -32,7 +32,7 @@ impl CaseAssertions for &str {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::string::case::CaseAssertions;
+    use crate::assertions::string::case::CaseAssertion;
 
     #[test]
     fn should_be_lower_case() {

@@ -8,7 +8,7 @@ use crate::matchers::file::{
 };
 use crate::matchers::{Should, ShouldNot};
 
-pub trait FileAssertions {
+pub trait FileAssertion {
     fn should_be_a_directory(&self) -> &Self;
     fn should_be_a_file(&self) -> &Self;
     fn should_be_a_symbolic_link(&self) -> &Self;
@@ -35,7 +35,7 @@ pub trait FileAssertions {
     fn should_not_contain_any_of_file_names(&self, names: &[&str]) -> &Self;
 }
 
-impl<T: AsRef<Path> + Debug> FileAssertions for T {
+impl<T: AsRef<Path> + Debug> FileAssertion for T {
     fn should_be_a_directory(&self) -> &Self {
         self.should(&be_a_directory());
         self
@@ -130,7 +130,7 @@ mod tests {
 
     use tempdir::TempDir;
 
-    use crate::assertions::file::FileAssertions;
+    use crate::assertions::file::FileAssertion;
 
     #[test]
     fn should_be_a_directory() {

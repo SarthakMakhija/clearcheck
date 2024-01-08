@@ -66,7 +66,7 @@ pub fn be_zero() -> IntBased {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalseAssertions;
+    use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::int::{be_even, be_negative, be_odd, be_positive, be_zero};
     use crate::matchers::Matcher;
 

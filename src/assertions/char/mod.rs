@@ -4,19 +4,19 @@ use crate::matchers::equal::be_equal_ignoring_case;
 use crate::matchers::range::{be_in_exclusive_range, be_in_inclusive_range};
 use crate::matchers::{Should, ShouldNot};
 
-pub trait RangeAssertions {
+pub trait RangeAssertion {
     fn should_be_in_inclusive_range(&self, range: RangeInclusive<char>) -> &Self;
     fn should_not_be_in_inclusive_range(&self, range: RangeInclusive<char>) -> &Self;
     fn should_be_in_exclusive_range(&self, range: Range<char>) -> &Self;
     fn should_not_be_in_exclusive_range(&self, range: Range<char>) -> &Self;
 }
 
-pub trait EqualityAssertions {
+pub trait EqualityAssertion {
     fn should_be_equal_ignoring_case(&self, other: &char) -> &Self;
     fn should_not_be_equal_ignoring_case(&self, other: &char) -> &Self;
 }
 
-impl RangeAssertions for char {
+impl RangeAssertion for char {
     fn should_be_in_inclusive_range(&self, range: RangeInclusive<char>) -> &Self {
         self.should(&be_in_inclusive_range(&range));
         self
@@ -38,7 +38,7 @@ impl RangeAssertions for char {
     }
 }
 
-impl EqualityAssertions for char {
+impl EqualityAssertion for char {
     fn should_be_equal_ignoring_case(&self, other: &char) -> &Self {
         self.should(&be_equal_ignoring_case(other));
         self
@@ -52,7 +52,7 @@ impl EqualityAssertions for char {
 
 #[cfg(test)]
 mod range_tests {
-    use crate::assertions::char::RangeAssertions;
+    use crate::assertions::char::RangeAssertion;
 
     #[test]
     fn should_be_in_the_inclusive_range() {
@@ -109,7 +109,7 @@ mod range_tests {
 
 #[cfg(test)]
 mod equal_tests {
-    use crate::assertions::char::EqualityAssertions;
+    use crate::assertions::char::EqualityAssertion;
 
     #[test]
     fn should_be_equal_ignoring_case() {

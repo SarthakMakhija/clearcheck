@@ -6,7 +6,7 @@ use crate::matchers::length::{
 use crate::matchers::range::{have_length_in_exclusive_range, have_length_in_inclusive_range};
 use crate::matchers::{Should, ShouldNot};
 
-pub trait LengthAssertions {
+pub trait LengthAssertion {
     fn should_have_length(&self, length: usize) -> &Self;
     fn should_not_have_length(&self, length: usize) -> &Self;
     fn should_have_at_least_length(&self, length: usize) -> &Self;
@@ -17,7 +17,7 @@ pub trait LengthAssertions {
     fn should_not_have_length_in_exclusive_range(&self, range: Range<usize>) -> &Self;
 }
 
-impl LengthAssertions for String {
+impl LengthAssertion for String {
     fn should_have_length(&self, length: usize) -> &Self {
         (self as &str).should_have_length(length);
         self
@@ -59,7 +59,7 @@ impl LengthAssertions for String {
     }
 }
 
-impl LengthAssertions for &str {
+impl LengthAssertion for &str {
     fn should_have_length(&self, length: usize) -> &Self {
         self.should(&have_same_length(length));
         self
@@ -105,7 +105,7 @@ impl LengthAssertions for &str {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::string::length::LengthAssertions;
+    use crate::assertions::string::length::LengthAssertion;
 
     #[test]
     fn should_have_length_as_8() {

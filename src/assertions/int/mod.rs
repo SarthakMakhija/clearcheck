@@ -5,7 +5,7 @@ use num::Integer;
 use crate::matchers::int::{be_even, be_negative, be_odd, be_positive, be_zero};
 use crate::matchers::{Should, ShouldNot};
 
-pub trait IntAssertions<T: Integer + Debug + PartialEq + Default> {
+pub trait IntAssertion<T: Integer + Debug + PartialEq + Default> {
     fn should_be_positive(&self) -> &Self;
     fn should_be_negative(&self) -> &Self;
     fn should_be_even(&self) -> &Self;
@@ -14,7 +14,7 @@ pub trait IntAssertions<T: Integer + Debug + PartialEq + Default> {
     fn should_not_be_zero(&self) -> &Self;
 }
 
-impl<T: Integer + Debug + PartialEq + Default> IntAssertions<T> for T {
+impl<T: Integer + Debug + PartialEq + Default> IntAssertion<T> for T {
     fn should_be_positive(&self) -> &Self {
         self.should(&be_positive());
         self
@@ -48,7 +48,7 @@ impl<T: Integer + Debug + PartialEq + Default> IntAssertions<T> for T {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::int::IntAssertions;
+    use crate::assertions::int::IntAssertion;
 
     #[test]
     fn should_be_positive() {

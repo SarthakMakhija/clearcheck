@@ -72,7 +72,7 @@ pub fn be_strictly_decreasing() -> IncreasingDecreasingBased {
 
 #[cfg(test)]
 mod test {
-    use crate::assertions::bool::TrueFalseAssertions;
+    use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::collection::increasing_decreasing::{
         be_monotonically_decreasing, be_monotonically_increasing, be_strictly_decreasing,
         be_strictly_increasing,

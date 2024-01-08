@@ -32,7 +32,7 @@ pub fn be_uppercase() -> CaseBased {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalseAssertions;
+    use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::string::case::{be_lowercase, be_uppercase};
     use crate::matchers::Matcher;
 

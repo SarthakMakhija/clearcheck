@@ -3,12 +3,12 @@ use std::fmt::Debug;
 use crate::matchers::result::{be_err, be_ok};
 use crate::matchers::Should;
 
-pub trait OkErrAssertions {
+pub trait OkErrAssertion {
     fn should_be_ok(&self) -> &Self;
     fn should_be_err(&self) -> &Self;
 }
 
-impl<T, E> OkErrAssertions for Result<T, E>
+impl<T, E> OkErrAssertion for Result<T, E>
 where
     T: Debug,
     E: Debug,
@@ -26,7 +26,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::result::OkErrAssertions;
+    use crate::assertions::result::OkErrAssertion;
 
     #[test]
     fn should_be_ok() {

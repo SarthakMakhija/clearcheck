@@ -15,7 +15,7 @@ impl Matcher<&str> for EqualityBased<'_, &str> {
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::bool::TrueFalseAssertions;
+    use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::equal::be_equal_ignoring_case;
     use crate::matchers::Matcher;
 

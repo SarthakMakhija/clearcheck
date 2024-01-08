@@ -3,12 +3,12 @@ use std::fmt::Debug;
 use crate::matchers::collection::duplicate::contain_duplicates;
 use crate::matchers::{Should, ShouldNot};
 
-pub trait DuplicateContentAssertions {
+pub trait DuplicateContentAssertion {
     fn should_contain_duplicates(&self) -> &Self;
     fn should_not_contain_duplicates(&self) -> &Self;
 }
 
-impl<T> DuplicateContentAssertions for Vec<T>
+impl<T> DuplicateContentAssertion for Vec<T>
 where
     T: Debug,
     T: Eq,
@@ -24,7 +24,7 @@ where
     }
 }
 
-impl<T, const N: usize> DuplicateContentAssertions for [T; N]
+impl<T, const N: usize> DuplicateContentAssertion for [T; N]
 where
     T: Debug,
     T: Eq,
@@ -40,7 +40,7 @@ where
     }
 }
 
-impl<T> DuplicateContentAssertions for [T]
+impl<T> DuplicateContentAssertion for [T]
 where
     T: Debug,
     T: Eq,
@@ -58,7 +58,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::assertions::collection::duplicate::DuplicateContentAssertions;
+    use crate::assertions::collection::duplicate::DuplicateContentAssertion;
 
     #[test]
     fn should_contain_duplicates() {
