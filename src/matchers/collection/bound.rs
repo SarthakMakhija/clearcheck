@@ -28,7 +28,7 @@ where
 
 impl<T: PartialOrd + Debug> Matcher<Vec<T>> for BoundMatcher<'_, T> {
     fn test(&self, collection: &Vec<T>) -> MatcherResult {
-        self.test(&collection)
+        self.test(collection)
     }
 }
 
@@ -40,7 +40,7 @@ impl<T: PartialOrd + Debug, const N: usize> Matcher<[T; N]> for BoundMatcher<'_,
 
 impl<T: PartialOrd + Debug> Matcher<&[T]> for BoundMatcher<'_, T> {
     fn test(&self, collection: &&[T]) -> MatcherResult {
-        self.test(&collection)
+        self.test(collection)
     }
 }
 

@@ -63,7 +63,7 @@ impl<T: Debug> Matcher<T> for Matchers<T> {
     }
 }
 
-fn messages<P, M>(results: &Vec<MatcherResult>, predicate: P, mapper: M) -> String
+fn messages<P, M>(results: &[MatcherResult], predicate: P, mapper: M) -> String
 where
     P: FnMut(&&MatcherResult) -> bool,
     M: FnMut(&MatcherResult) -> String,

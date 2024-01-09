@@ -3,7 +3,7 @@ use crate::matchers::{Matcher, MatcherResult};
 
 impl<T> Matcher<Vec<T>> for EmptyBased {
     fn test(&self, collection: &Vec<T>) -> MatcherResult {
-        self.test_slice(&collection)
+        self.test_slice(collection)
     }
 }
 

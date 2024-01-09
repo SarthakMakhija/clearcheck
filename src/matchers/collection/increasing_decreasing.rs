@@ -38,7 +38,7 @@ impl IncreasingDecreasingMatcher {
 
 impl<T: PartialOrd + Debug> Matcher<Vec<T>> for IncreasingDecreasingMatcher {
     fn test(&self, collection: &Vec<T>) -> MatcherResult {
-        self.test(&collection)
+        self.test(collection)
     }
 }
 
@@ -50,7 +50,7 @@ impl<T: PartialOrd + Debug, const N: usize> Matcher<[T; N]> for IncreasingDecrea
 
 impl<T: PartialOrd + Debug> Matcher<&[T]> for IncreasingDecreasingMatcher {
     fn test(&self, collection: &&[T]) -> MatcherResult {
-        self.test(&collection)
+        self.test(collection)
     }
 }
 

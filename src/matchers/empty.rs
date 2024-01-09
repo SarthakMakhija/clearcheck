@@ -12,12 +12,12 @@ impl EmptyBased {
     pub fn test_slice<T>(&self, collection: &[T]) -> MatcherResult {
         match self {
             EmptyBased::Empty => MatcherResult::new(
-                collection.len() == 0,
+                collection.is_empty(),
                 "Collection should be empty",
                 "Collection should not be empty",
             ),
             EmptyBased::NotEmpty => MatcherResult::new(
-                collection.len() != 0,
+                !collection.is_empty(),
                 "Collection should not be empty",
                 "Collection should be empty",
             ),
@@ -27,12 +27,12 @@ impl EmptyBased {
     pub fn test_map<K: Hash + Eq, V>(&self, collection: &HashMap<K, V>) -> MatcherResult {
         match self {
             EmptyBased::Empty => MatcherResult::new(
-                collection.len() == 0,
+                collection.is_empty(),
                 "Map should be empty",
                 "Map should not be empty",
             ),
             EmptyBased::NotEmpty => MatcherResult::new(
-                collection.len() != 0,
+                !collection.is_empty(),
                 "Map should not be empty",
                 "Map should be empty",
             ),
@@ -42,12 +42,12 @@ impl EmptyBased {
     pub fn test_string(&self, value: &str) -> MatcherResult {
         match self {
             EmptyBased::Empty => MatcherResult::new(
-                value.len() == 0,
+                value.is_empty(),
                 "Value should be empty",
                 "Value should not be empty",
             ),
             EmptyBased::NotEmpty => MatcherResult::new(
-                value.len() != 0,
+                !value.is_empty(),
                 "Value should not be empty",
                 "Value should be empty",
             ),

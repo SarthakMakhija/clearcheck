@@ -23,7 +23,7 @@ impl<'a, T: Eq + Debug> MembershipMatcher<'a, T> {
                     .collect::<Vec<_>>();
 
                 MatcherResult::formatted(
-                    missing.len() == 0,
+                    missing.is_empty(),
                     format!(
                         "{:?} should contain {:?} but was missing {:?}",
                         collection, target, missing
@@ -45,7 +45,7 @@ where
     T: Eq + Debug,
 {
     fn test(&self, collection: &Vec<T>) -> MatcherResult {
-        self.test(&collection)
+        self.test(collection)
     }
 }
 
@@ -63,7 +63,7 @@ where
     T: Eq + Debug,
 {
     fn test(&self, collection: &&[T]) -> MatcherResult {
-        self.test(&collection)
+        self.test(collection)
     }
 }
 

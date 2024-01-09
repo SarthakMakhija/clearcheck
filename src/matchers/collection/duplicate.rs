@@ -23,7 +23,7 @@ impl DuplicateContentMatcher {
 
 impl<T: Eq + Debug> Matcher<Vec<T>> for DuplicateContentMatcher {
     fn test(&self, collection: &Vec<T>) -> MatcherResult {
-        self.test(&collection)
+        self.test(collection)
     }
 }
 
@@ -35,7 +35,7 @@ impl<T: Eq + Debug, const N: usize> Matcher<[T; N]> for DuplicateContentMatcher 
 
 impl<T: Eq + Debug> Matcher<&[T]> for DuplicateContentMatcher {
     fn test(&self, collection: &&[T]) -> MatcherResult {
-        self.test(&collection)
+        self.test(collection)
     }
 }
 

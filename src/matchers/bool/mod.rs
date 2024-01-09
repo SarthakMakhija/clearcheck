@@ -8,13 +8,11 @@ pub enum TrueFalseMatcher {
 impl Matcher<bool> for TrueFalseMatcher {
     fn test(&self, value: &bool) -> MatcherResult {
         match self {
-            TrueFalseMatcher::True => MatcherResult::new(
-                *value == true,
-                "Value should be TRUE",
-                "Value should not be TRUE",
-            ),
+            TrueFalseMatcher::True => {
+                MatcherResult::new(*value, "Value should be TRUE", "Value should not be TRUE")
+            }
             TrueFalseMatcher::False => MatcherResult::new(
-                *value == false,
+                !(*value),
                 "Value should be FALSE",
                 "Value should not be FALSE",
             ),
