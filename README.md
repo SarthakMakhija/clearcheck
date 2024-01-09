@@ -4,12 +4,27 @@
 
 **assert4rs** offers powerful and elegant assertions for rust.
 
-**Example**
+### Example
 
 ```rust
-let collection = vec!["junit", "assert4j", "catch2"];
-        collection
-            .should_not_be_empty()
-            .should_have_at_least_size(2)
-            .should_contain(&"assert4j");
+let libraries = vec!["assert4rs", "gotest", "junit", "scalatest"];
+libraries
+    .should_not_be_empty()
+    .should_not_contain_duplicates()
+    .should_contain("assert4rs")
+    .should_be_sorted_ascending();
 ```
+
+### Why assert4rs?
+
+### Adding assert4rs as a dependency in Cargo.toml 
+
+### Assertions vs Matchers
+
+### List of Assertions 
+
+### Composing Matchers 
+
+### Writing Custom Assertions and Matchers
+
+### Features
