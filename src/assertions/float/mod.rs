@@ -17,21 +17,21 @@ pub trait FloatAssertion<T: num::Float + Debug + Default + PartialEq> {
     fn should_be_in_inclusive_range_with_tolerance(
         &self,
         range: RangeInclusive<T>,
-        tolerance: &T,
+        tolerance: T,
     ) -> &Self;
 
     fn should_not_be_in_inclusive_range_with_tolerance(
         &self,
         range: RangeInclusive<T>,
-        tolerance: &T,
+        tolerance: T,
     ) -> &Self;
 
-    fn should_be_in_exclusive_range_with_tolerance(&self, range: Range<T>, tolerance: &T) -> &Self;
+    fn should_be_in_exclusive_range_with_tolerance(&self, range: Range<T>, tolerance: T) -> &Self;
 
     fn should_not_be_in_exclusive_range_with_tolerance(
         &self,
         range: Range<T>,
-        tolerance: &T,
+        tolerance: T,
     ) -> &Self;
 }
 
@@ -69,11 +69,11 @@ impl<T: num::Float + Debug + Default + PartialEq> FloatAssertion<T> for T {
     fn should_be_in_inclusive_range_with_tolerance(
         &self,
         range: RangeInclusive<T>,
-        tolerance: &T,
+        tolerance: T,
     ) -> &Self {
         self.should(&be_in_inclusive_range(&RangeInclusive::new(
-            range.start().add(*tolerance),
-            range.end().add(*tolerance),
+            range.start().add(tolerance),
+            range.end().add(tolerance),
         )));
         self
     }
@@ -81,17 +81,17 @@ impl<T: num::Float + Debug + Default + PartialEq> FloatAssertion<T> for T {
     fn should_not_be_in_inclusive_range_with_tolerance(
         &self,
         range: RangeInclusive<T>,
-        tolerance: &T,
+        tolerance: T,
     ) -> &Self {
         self.should_not(&be_in_inclusive_range(&RangeInclusive::new(
-            range.start().add(*tolerance),
-            range.end().add(*tolerance),
+            range.start().add(tolerance),
+            range.end().add(tolerance),
         )));
         self
     }
 
-    fn should_be_in_exclusive_range_with_tolerance(&self, range: Range<T>, tolerance: &T) -> &Self {
-        let range_with_tolerance = range.start.add(*tolerance)..range.end.add(*tolerance);
+    fn should_be_in_exclusive_range_with_tolerance(&self, range: Range<T>, tolerance: T) -> &Self {
+        let range_with_tolerance = range.start.add(tolerance)..range.end.add(tolerance);
         self.should(&be_in_exclusive_range(&range_with_tolerance));
         self
     }
@@ -99,9 +99,9 @@ impl<T: num::Float + Debug + Default + PartialEq> FloatAssertion<T> for T {
     fn should_not_be_in_exclusive_range_with_tolerance(
         &self,
         range: Range<T>,
-        tolerance: &T,
+        tolerance: T,
     ) -> &Self {
-        let range_with_tolerance = range.start.add(*tolerance)..range.end.add(*tolerance);
+        let range_with_tolerance = range.start.add(tolerance)..range.end.add(tolerance);
         self.should_not(&be_in_exclusive_range(&range_with_tolerance));
         self
     }
@@ -165,26 +165,26 @@ mod tests {
     #[test]
     fn should_be_in_inclusive_range_with_tolerance() {
         let value: f64 = 8.123;
-        value.should_be_in_inclusive_range_with_tolerance(6.10..=8.10, &0.123);
+        value.should_be_in_inclusive_range_with_tolerance(6.10..=8.10, 0.123);
     }
 
     #[test]
     #[should_panic]
     fn should_be_in_inclusive_range_with_tolerance_but_was_not() {
         let value: f64 = 8.423;
-        value.should_be_in_inclusive_range_with_tolerance(6.10..=8.10, &0.123);
+        value.should_be_in_inclusive_range_with_tolerance(6.10..=8.10, 0.123);
     }
 
     #[test]
     fn should_be_in_exclusive_range_with_tolerance() {
         let value: f64 = 8.123;
-        value.should_be_in_exclusive_range_with_tolerance(6.10..8.10, &0.123);
+        value.should_be_in_exclusive_range_with_tolerance(6.10..8.10, 0.123);
     }
 
     #[test]
     #[should_panic]
     fn should_be_in_exclusive_range_with_tolerance_but_was_not() {
         let value: f64 = 8.423;
-        value.should_be_in_exclusive_range_with_tolerance(6.10..8.10, &0.123);
+        value.should_be_in_exclusive_range_with_tolerance(6.10..8.10, 0.123);
     }
 }
