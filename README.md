@@ -21,10 +21,10 @@ libraries
 
 ### Assertions vs Matchers
 
-### List of Assertions 
+### List of assertions 
 
-### Composing Matchers 
+### Composing matchers 
 
-### Writing Custom Assertions and Matchers
+### Writing custom assertions and matchers
 
 ### Features
