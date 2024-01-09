@@ -76,6 +76,6 @@ mod tests {
         }];
 
         let matcher = equal(&target);
-        matcher.test(&books).passed.should_be_true();
+        matcher.test(books).passed.should_be_true();
     }
 }

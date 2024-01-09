@@ -39,7 +39,7 @@ impl<T> Should<T> for T {
 
 impl<T> ShouldNot<T> for T {
     fn should_not(&self, matcher: &dyn Matcher<T>) {
-        let matcher_result = matcher.test(&self);
+        let matcher_result = matcher.test(self);
         let passed = !matcher_result.passed;
         if !passed {
             panic!(

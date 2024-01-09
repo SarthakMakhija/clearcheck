@@ -310,7 +310,7 @@ mod tests {
         let temporary_directory = TempDir::new(".").unwrap();
         let file_path = temporary_directory.path().join("junit.txt");
 
-        let _ = File::create(file_path.clone()).unwrap();
+        let _ = File::create(file_path).unwrap();
 
         let directory_path = temporary_directory.path();
         directory_path.should_contain_file_name("junit.txt");
@@ -322,7 +322,7 @@ mod tests {
         let temporary_directory = TempDir::new(".").unwrap();
         let file_path = temporary_directory.path().join("junit.txt");
 
-        let _ = File::create(file_path.clone()).unwrap();
+        let _ = File::create(file_path).unwrap();
 
         let directory_path = temporary_directory.path();
         directory_path.should_contain_file_name("assert4rs.txt");
@@ -342,7 +342,7 @@ mod tests {
         let temporary_directory = TempDir::new(".").unwrap();
         let file_path = temporary_directory.path().join("junit.txt");
 
-        let _ = File::create(file_path.clone()).unwrap();
+        let _ = File::create(file_path).unwrap();
 
         let directory_path = temporary_directory.path();
         directory_path.should_not_contain_file_name("junit.txt");
@@ -354,8 +354,8 @@ mod tests {
         let file_path1 = temporary_directory.path().join("junit.txt");
         let file_path2 = temporary_directory.path().join("assert4rs.txt");
 
-        let _ = File::create(file_path1.clone()).unwrap();
-        let _ = File::create(file_path2.clone()).unwrap();
+        let _ = File::create(file_path1).unwrap();
+        let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
         directory_path.should_contain_all_file_names(&["junit.txt", "assert4rs.txt"]);
@@ -368,8 +368,8 @@ mod tests {
         let file_path1 = temporary_directory.path().join("junit.txt");
         let file_path2 = temporary_directory.path().join("assert4rs.txt");
 
-        let _ = File::create(file_path1.clone()).unwrap();
-        let _ = File::create(file_path2.clone()).unwrap();
+        let _ = File::create(file_path1).unwrap();
+        let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
         directory_path.should_contain_all_file_names(&["junit.txt", "gotest.txt"]);
@@ -381,8 +381,8 @@ mod tests {
         let file_path1 = temporary_directory.path().join("junit.txt");
         let file_path2 = temporary_directory.path().join("assert4rs.txt");
 
-        let _ = File::create(file_path1.clone()).unwrap();
-        let _ = File::create(file_path2.clone()).unwrap();
+        let _ = File::create(file_path1).unwrap();
+        let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
         directory_path.should_not_contain_all_file_names(&["scalaunit.txt", "gotest.txt"]);
@@ -395,8 +395,8 @@ mod tests {
         let file_path1 = temporary_directory.path().join("junit.txt");
         let file_path2 = temporary_directory.path().join("assert4rs.txt");
 
-        let _ = File::create(file_path1.clone()).unwrap();
-        let _ = File::create(file_path2.clone()).unwrap();
+        let _ = File::create(file_path1).unwrap();
+        let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
         directory_path.should_not_contain_all_file_names(&["junit.txt", "assert4rs.txt"]);
@@ -408,8 +408,8 @@ mod tests {
         let file_path1 = temporary_directory.path().join("junit.txt");
         let file_path2 = temporary_directory.path().join("assert4rs.txt");
 
-        let _ = File::create(file_path1.clone()).unwrap();
-        let _ = File::create(file_path2.clone()).unwrap();
+        let _ = File::create(file_path1).unwrap();
+        let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
         directory_path.should_contain_any_of_file_names(&["junit.txt", "gotest.txt"]);
@@ -422,8 +422,8 @@ mod tests {
         let file_path1 = temporary_directory.path().join("junit.txt");
         let file_path2 = temporary_directory.path().join("assert4rs.txt");
 
-        let _ = File::create(file_path1.clone()).unwrap();
-        let _ = File::create(file_path2.clone()).unwrap();
+        let _ = File::create(file_path1).unwrap();
+        let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
         directory_path.should_contain_any_of_file_names(&["scalaunit.txt", "gotest.txt"]);
@@ -435,8 +435,8 @@ mod tests {
         let file_path1 = temporary_directory.path().join("junit.txt");
         let file_path2 = temporary_directory.path().join("assert4rs.txt");
 
-        let _ = File::create(file_path1.clone()).unwrap();
-        let _ = File::create(file_path2.clone()).unwrap();
+        let _ = File::create(file_path1).unwrap();
+        let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
         directory_path.should_not_contain_any_of_file_names(&["scalaunit.txt", "gotest.txt"]);
@@ -449,8 +449,8 @@ mod tests {
         let file_path1 = temporary_directory.path().join("junit.txt");
         let file_path2 = temporary_directory.path().join("assert4rs.txt");
 
-        let _ = File::create(file_path1.clone()).unwrap();
-        let _ = File::create(file_path2.clone()).unwrap();
+        let _ = File::create(file_path1).unwrap();
+        let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
         directory_path.should_not_contain_any_of_file_names(&["junit.txt", "gotest.txt"]);

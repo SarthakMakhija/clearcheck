@@ -149,26 +149,26 @@ mod string_tests {
     #[test]
     fn should_be_empty() {
         let matcher = be_empty();
-        matcher.test_string(&"").passed.should_be_true();
+        matcher.test_string("").passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
     fn should_be_empty_but_was_not() {
         let matcher = be_empty();
-        matcher.test_string(&"goselect").passed.should_be_true();
+        matcher.test_string("goselect").passed.should_be_true();
     }
 
     #[test]
     fn should_not_be_empty() {
         let matcher = not_be_empty();
-        matcher.test_string(&"goselect").passed.should_be_true();
+        matcher.test_string("goselect").passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
     fn should_not_be_empty_but_was() {
         let matcher = not_be_empty();
-        matcher.test_string(&"").passed.should_be_true();
+        matcher.test_string("").passed.should_be_true();
     }
 }
