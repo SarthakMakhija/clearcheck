@@ -12,8 +12,8 @@ pub trait RangeAssertion {
 }
 
 pub trait IgnoreCaseEqualityAssertion {
-    fn should_be_equal_ignoring_case(&self, other: &char) -> &Self;
-    fn should_not_be_equal_ignoring_case(&self, other: &char) -> &Self;
+    fn should_be_equal_ignoring_case(&self, other: char) -> &Self;
+    fn should_not_be_equal_ignoring_case(&self, other: char) -> &Self;
 }
 
 impl RangeAssertion for char {
@@ -39,13 +39,13 @@ impl RangeAssertion for char {
 }
 
 impl IgnoreCaseEqualityAssertion for char {
-    fn should_be_equal_ignoring_case(&self, other: &char) -> &Self {
-        self.should(&be_equal_ignoring_case(other));
+    fn should_be_equal_ignoring_case(&self, other: char) -> &Self {
+        self.should(&be_equal_ignoring_case(&other));
         self
     }
 
-    fn should_not_be_equal_ignoring_case(&self, other: &char) -> &Self {
-        self.should_not(&be_equal_ignoring_case(other));
+    fn should_not_be_equal_ignoring_case(&self, other: char) -> &Self {
+        self.should_not(&be_equal_ignoring_case(&other));
         self
     }
 }
@@ -114,26 +114,26 @@ mod equal_tests {
     #[test]
     fn should_be_equal_ignoring_case() {
         let letter = 'd';
-        letter.should_be_equal_ignoring_case(&'D');
+        letter.should_be_equal_ignoring_case('D');
     }
 
     #[test]
     #[should_panic]
     fn should_be_equal_ignoring_case_but_was_not() {
         let letter = 'd';
-        letter.should_be_equal_ignoring_case(&'E');
+        letter.should_be_equal_ignoring_case('E');
     }
 
     #[test]
     fn should_not_be_equal_ignoring_case() {
         let letter = 'd';
-        letter.should_not_be_equal_ignoring_case(&'E');
+        letter.should_not_be_equal_ignoring_case('E');
     }
 
     #[test]
     #[should_panic]
     fn should_not_be_equal_ignoring_case_but_was() {
         let letter = 'd';
-        letter.should_not_be_equal_ignoring_case(&'D');
+        letter.should_not_be_equal_ignoring_case('D');
     }
 }

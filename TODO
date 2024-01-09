@@ -23,8 +23,6 @@
 - Add support for eq                                        - done
 - Add support for ignore case eq in collections of String   - done
 
-- Should the test in matcher (or its implementation) work over Q, where T: Borrow<Q> for contains
-
 - See if assertions can have macros to generate the code
 - Check the parameter types of all
     - assertions and
