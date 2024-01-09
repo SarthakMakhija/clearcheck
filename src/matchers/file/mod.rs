@@ -97,15 +97,13 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for TreeMatcher<'_> {
     fn test(&self, value: &T) -> MatcherResult {
         match self {
             TreeMatcher::Contain(name) => {
-                for directory_entry in WalkDir::new(value) {
-                    if let Ok(entry) = directory_entry {
-                        if &entry.file_name() == name {
-                            return MatcherResult::formatted(
-                                true,
-                                format!("{:?} should contain a file name {:?}", value, name),
-                                format!("{:?} should not contain a file name {:?}", value, name),
-                            );
-                        }
+                for directory_entry in WalkDir::new(value).into_iter().flatten() {
+                    if &directory_entry.file_name() == name {
+                        return MatcherResult::formatted(
+                            true,
+                            format!("{:?} should contain a file name {:?}", value, name),
+                            format!("{:?} should not contain a file name {:?}", value, name),
+                        );
                     }
                 }
                 MatcherResult::formatted(
@@ -117,11 +115,9 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for TreeMatcher<'_> {
             TreeMatcher::ContainAll(names) => {
                 let mut unique_names = names.iter().map(OsStr::new).collect::<HashSet<_>>();
 
-                for directory_entry in WalkDir::new(value) {
-                    if let Ok(entry) = directory_entry {
-                        if unique_names.contains(entry.file_name()) {
-                            unique_names.remove(entry.file_name());
-                        }
+                for directory_entry in WalkDir::new(value).into_iter().flatten() {
+                    if unique_names.contains(directory_entry.file_name()) {
+                        unique_names.remove(directory_entry.file_name());
                     }
                 }
                 MatcherResult::formatted(
@@ -134,18 +130,13 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for TreeMatcher<'_> {
                 )
             }
             TreeMatcher::ContainAny(names) => {
-                let mut unique_names = names
-                    .iter()
-                    .map(|name| OsStr::new(name))
-                    .collect::<HashSet<_>>();
+                let mut unique_names = names.iter().map(OsStr::new).collect::<HashSet<_>>();
                 let input_names = unique_names.clone();
 
-                for directory_entry in WalkDir::new(value) {
-                    if let Ok(entry) = directory_entry {
-                        if unique_names.contains(entry.file_name()) {
-                            unique_names.remove(entry.file_name());
-                            break;
-                        }
+                for directory_entry in WalkDir::new(value).into_iter().flatten() {
+                    if unique_names.contains(directory_entry.file_name()) {
+                        unique_names.remove(directory_entry.file_name());
+                        break;
                     }
                 }
                 MatcherResult::formatted(
