@@ -14,22 +14,16 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    container:
+      image: xd009642/tarpaulin:develop-nightly
+      options: --security-opt seccomp=unconfined
+
     steps:
     - uses: actions/checkout@v3
-
-    - name: Install stable toolchain
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-        override: true
 
     - name: Build
       run: cargo build --verbose --all-features
 
-    - name: Run tests
-      run: cargo test --verbose --all-features
+    - name: Generate code coverage
+      run: cargo +nightly tarpaulin --verbose --all-features --workspace --timeout 120 --out xml
 
-    - name: Run cargo-tarpaulin
-      uses: actions-rs/tarpaulin@v0.1
-      with:
-        args: ' --all-features -- --test-threads 1'
