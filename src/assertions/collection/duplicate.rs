@@ -86,3 +86,34 @@ mod tests {
         collection.should_not_contain_duplicates();
     }
 }
+
+#[cfg(test)]
+mod array_tests {
+    use crate::assertions::collection::duplicate::DuplicateContentAssertion;
+
+    #[test]
+    fn should_contain_duplicates() {
+        let collection = ["junit", "testify", "assert4j", "testify"];
+        collection.should_contain_duplicates();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_duplicates_but_it_did_not() {
+        let collection = ["junit", "testify", "assert4j", ""];
+        collection.should_contain_duplicates();
+    }
+
+    #[test]
+    fn should_not_contain_duplicates() {
+        let collection = ["junit", "testify", "assert4j", "catch"];
+        collection.should_not_contain_duplicates();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_contain_duplicates_but_it_contained() {
+        let collection = ["junit", "testify", "assert4j", "testify"];
+        collection.should_not_contain_duplicates();
+    }
+}

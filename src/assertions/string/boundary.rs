@@ -108,3 +108,60 @@ mod tests {
         library.should_not_end_with("unit");
     }
 }
+
+#[cfg(test)]
+mod string_tests {
+    use crate::assertions::string::boundary::BoundaryAssertion;
+
+    #[test]
+    fn should_begin_with() {
+        let library = String::from("cacheD");
+        library.should_begin_with("cache");
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_begin_with_but_it_did_not() {
+        let library = String::from("junit");
+        library.should_begin_with("unit");
+    }
+
+    #[test]
+    fn should_not_begin_with() {
+        let library = String::from("junit");
+        library.should_not_begin_with("cache");
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_begin_with_but_it_did() {
+        let library = String::from("junit");
+        library.should_not_begin_with("jun");
+    }
+
+    #[test]
+    fn should_end_with() {
+        let library = String::from("goselect");
+        library.should_end_with("select");
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_end_with_but_it_did_not() {
+        let library = String::from("junit");
+        library.should_end_with("et");
+    }
+
+    #[test]
+    fn should_not_end_with() {
+        let library = String::from("junit");
+        library.should_not_end_with("cache");
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_end_with_but_it_did() {
+        let library = String::from("junit");
+        library.should_not_end_with("unit");
+    }
+}

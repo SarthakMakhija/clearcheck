@@ -67,3 +67,39 @@ mod tests {
         str.should_not_match(regex);
     }
 }
+
+#[cfg(all(test, feature = "regex"))]
+mod string_tests {
+    use crate::assertions::string::regex::RegularExpressionAssertion;
+    use regex::Regex;
+
+    #[test]
+    fn should_match_regular_expression() {
+        let regex = Regex::new(r"(\d{4})-(\d{2})-(\d{2})").unwrap();
+        let str = String::from("Started assert4rs on On 2024-01-02.");
+        str.should_match(regex);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_match_regular_expression_but_it_did_not() {
+        let regex = Regex::new(r"(\d{4})-(\d{2})-(\d{2})").unwrap();
+        let str = String::from("Started assert4rs on On 02nd January 2024");
+        str.should_match(regex);
+    }
+
+    #[test]
+    fn should_not_match_regular_expression() {
+        let regex = Regex::new(r"(\d{4})-(\d{2})-(\d{2})").unwrap();
+        let str = String::from("Started assert4rs on On 02nd January 2024");
+        str.should_not_match(regex);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_match_regular_expression_but_it_did() {
+        let regex = Regex::new(r"(\d{4})-(\d{2})-(\d{2})").unwrap();
+        let str = String::from("Started assert4rs on On 2024-01-02.");
+        str.should_not_match(regex);
+    }
+}

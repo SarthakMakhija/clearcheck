@@ -60,3 +60,34 @@ mod tests {
         name.should_not_be_equal_ignoring_case("JOHN");
     }
 }
+
+#[cfg(test)]
+mod string_tests {
+    use crate::assertions::string::equal::IgnoreCaseEqualityAssertion;
+
+    #[test]
+    fn should_be_equal() {
+        let name = String::from("john");
+        name.should_be_equal_ignoring_case("JOHN");
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_equal_but_was_not() {
+        let name = String::from("johnR");
+        name.should_be_equal_ignoring_case("JOHN");
+    }
+
+    #[test]
+    fn should_not_be_equal() {
+        let name = String::from("john");
+        name.should_not_be_equal_ignoring_case("JOHN-R");
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_be_equal_but_was() {
+        let name = String::from("john");
+        name.should_not_be_equal_ignoring_case("JOHN");
+    }
+}

@@ -211,3 +211,112 @@ mod tests {
         name.should_not_have_length_in_exclusive_range(3..9);
     }
 }
+
+#[cfg(test)]
+mod string_tests {
+    use crate::assertions::string::length::LengthAssertion;
+
+    #[test]
+    fn should_have_length_as_8() {
+        let name = String::from("assert4j");
+        name.should_have_length(8);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_have_length_as_8_but_was_not() {
+        let name = String::from("assert");
+        name.should_have_length(8);
+    }
+
+    #[test]
+    fn should_not_have_length_as_8() {
+        let name = String::from("assert");
+        name.should_not_have_length(8);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_have_length_as_8_but_was() {
+        let name = String::from("assert4j");
+        name.should_not_have_length(8);
+    }
+
+    #[test]
+    fn should_have_at_least_length_as_8() {
+        let name = String::from("assert4j");
+        name.should_have_at_least_length(8);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_have_at_least_length_as_8_but_was_not() {
+        let name = String::from("assert");
+        name.should_have_at_least_length(8);
+    }
+
+    #[test]
+    fn should_have_at_most_length_as_8() {
+        let name = String::from("assert4j");
+        name.should_have_at_most_length(8);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_have_at_most_length_as_6_but_was_not() {
+        let name = String::from("assert4j");
+        name.should_have_at_most_length(6);
+    }
+
+    #[test]
+    fn should_have_length_in_the_inclusive_range() {
+        let name = String::from("assert4j");
+        name.should_have_length_in_inclusive_range(3..=8);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_have_length_in_the_inclusive_range_but_was_not() {
+        let name = String::from("assert4j");
+        name.should_have_length_in_inclusive_range(1..=4);
+    }
+
+    #[test]
+    fn should_not_have_length_in_the_inclusive_range() {
+        let name = String::from("assert4j");
+        name.should_not_have_length_in_inclusive_range(1..=4);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_have_length_in_the_inclusive_range_but_was() {
+        let name = String::from("assert4j");
+        name.should_not_have_length_in_inclusive_range(3..=8);
+    }
+
+    #[test]
+    fn should_have_length_in_the_exclusive_range() {
+        let name = String::from("assert4j");
+        name.should_have_length_in_exclusive_range(3..9);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_have_length_in_the_range_but_was_not() {
+        let name = String::from("assert4j");
+        name.should_have_length_in_exclusive_range(1..8);
+    }
+
+    #[test]
+    fn should_not_have_length_in_the_exclusive_range() {
+        let name = String::from("assert4j");
+        name.should_not_have_length_in_exclusive_range(1..4);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_have_length_in_the_exclusive_range_but_was() {
+        let name = String::from("assert4j");
+        name.should_not_have_length_in_exclusive_range(3..9);
+    }
+}

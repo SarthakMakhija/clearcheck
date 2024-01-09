@@ -84,3 +84,34 @@ mod tests {
         collection.should_be_sorted_descending();
     }
 }
+
+#[cfg(test)]
+mod array_tests {
+    use crate::assertions::collection::sort::SortAssertion;
+
+    #[test]
+    fn should_be_sorted_in_ascending_order() {
+        let collection = ["actual", "assert", "catch", "testify"];
+        collection.should_be_sorted_ascending();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_sorted_in_ascending_order_but_was_not() {
+        let collection = ["actual", "testify", "catch"];
+        collection.should_be_sorted_ascending();
+    }
+
+    #[test]
+    fn should_be_sorted_in_descending_order() {
+        let collection = ["testify", "catch", "assert", "actual"];
+        collection.should_be_sorted_descending();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_sorted_in_descending_order_but_was_not() {
+        let collection = ["actual", "testify", "catch"];
+        collection.should_be_sorted_descending();
+    }
+}

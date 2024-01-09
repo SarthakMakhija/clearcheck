@@ -148,3 +148,60 @@ mod tests {
         collection.should_be_strictly_decreasing();
     }
 }
+
+#[cfg(test)]
+mod array_tests {
+    use crate::assertions::collection::increasing_decreasing::IncreasingDecreasingAssertion;
+
+    #[test]
+    fn should_be_monotonically_increasing() {
+        let collection = [1, 2, 3, 4, 4, 5, 5, 6];
+        collection.should_be_monotonically_increasing();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_monotonically_increasing_but_was_not() {
+        let collection = [1, 2, 3, 4, 4, 2, 5, 6];
+        collection.should_be_monotonically_increasing();
+    }
+
+    #[test]
+    fn should_be_monotonically_decreasing() {
+        let collection = [6, 6, 5, 5, 4, 4, 2];
+        collection.should_be_monotonically_decreasing();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_monotonically_decreasing_but_was_not() {
+        let collection = [6, 6, 5, 5, 4, 4, 5];
+        collection.should_be_monotonically_decreasing();
+    }
+
+    #[test]
+    fn should_be_strictly_increasing() {
+        let collection = [1, 3, 5, 7, 9];
+        collection.should_be_strictly_increasing();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_strictly_increasing_but_was_not() {
+        let collection = [1, 5, 7, 9, 9];
+        collection.should_be_strictly_increasing();
+    }
+
+    #[test]
+    fn should_be_strictly_decreasing() {
+        let collection = [9, 7, 5, 3, 1];
+        collection.should_be_strictly_decreasing();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_strictly_decreasing_but_was_not() {
+        let collection = [9, 7, 5, 3, 1, 1];
+        collection.should_be_strictly_decreasing();
+    }
+}

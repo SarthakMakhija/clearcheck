@@ -141,6 +141,77 @@ mod array_tests {
 }
 
 #[cfg(test)]
+mod array_string_tests {
+    use crate::assertions::collection::equal::IgnoreCaseEqualityAssertion;
+
+    #[test]
+    fn should_equal_ignoring_case() {
+        let collection = [
+            String::from("junit"),
+            String::from("Assert4rs"),
+            String::from("gotest"),
+        ];
+        let other = [
+            String::from("JUNIT"),
+            String::from("ASSERT4RS"),
+            String::from("GoTest"),
+        ];
+
+        collection.should_be_equal_ignoring_case(&other);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_equal_ignoring_case_but_was_not() {
+        let collection = [
+            String::from("junit"),
+            String::from("Assert4rs"),
+            String::from("gotest"),
+        ];
+        let other = [
+            String::from("JUNIT"),
+            String::from("ASSERT"),
+            String::from("GoTest"),
+        ];
+
+        collection.should_be_equal_ignoring_case(&other);
+    }
+
+    #[test]
+    fn should_not_equal_ignoring_case() {
+        let collection = [
+            String::from("junit"),
+            String::from("Assert4rs"),
+            String::from("gotest"),
+        ];
+        let other = [
+            String::from("JUNIT"),
+            String::from("ASSERT"),
+            String::from("GoTest"),
+        ];
+
+        collection.should_not_be_equal_ignoring_case(&other);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_equal_ignoring_case_but_was() {
+        let collection = [
+            String::from("junit"),
+            String::from("Assert4rs"),
+            String::from("gotest"),
+        ];
+        let other = [
+            String::from("JUNIT"),
+            String::from("ASSERT4RS"),
+            String::from("GoTest"),
+        ];
+
+        collection.should_not_be_equal_ignoring_case(&other);
+    }
+}
+
+#[cfg(test)]
 mod slice_tests {
     use crate::assertions::collection::equal::IgnoreCaseEqualityAssertion;
 

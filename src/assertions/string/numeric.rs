@@ -62,3 +62,34 @@ mod tests {
         value.should_not_be_numeric::<i32>();
     }
 }
+
+#[cfg(test)]
+mod string_tests {
+    use crate::assertions::string::numeric::NumericAssertion;
+
+    #[test]
+    fn should_be_numeric() {
+        let value = String::from("1234");
+        value.should_be_numeric::<i32>();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_numeric_but_was_not() {
+        let value = String::from("1234a");
+        value.should_be_numeric::<i32>();
+    }
+
+    #[test]
+    fn should_not_be_numeric() {
+        let value = String::from("1234a");
+        value.should_not_be_numeric::<i32>();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_be_numeric_but_was() {
+        let value = String::from("1234");
+        value.should_not_be_numeric::<i32>();
+    }
+}

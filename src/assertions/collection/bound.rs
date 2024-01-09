@@ -87,3 +87,34 @@ mod tests {
         collection.should_have_lower_bound(&3);
     }
 }
+
+#[cfg(test)]
+mod array_tests {
+    use crate::assertions::collection::bound::BoundAssertion;
+
+    #[test]
+    fn should_have_an_upper_bound() {
+        let collection = [1, 2, 3, 4];
+        collection.should_have_upper_bound(&4);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_have_an_upper_bound_but_was_not() {
+        let collection = [1, 2, 3, 4];
+        collection.should_have_upper_bound(&1);
+    }
+
+    #[test]
+    fn should_have_a_lower_bound() {
+        let collection = [1, 2, 3, 4];
+        collection.should_have_lower_bound(&1);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_have_a_lower_bound_but_was_not() {
+        let collection = [1, 2, 3, 4];
+        collection.should_have_lower_bound(&3);
+    }
+}

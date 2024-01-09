@@ -291,3 +291,125 @@ mod tests {
         collection.should_not_have_size_in_exclusive_range(1..9);
     }
 }
+
+#[cfg(test)]
+mod array_tests {
+    use crate::assertions::collection::size::SizeAssertion;
+
+    #[test]
+    fn should_have_size_as_2() {
+        let collection = ["junit", "testify"];
+        collection.should_have_size(2);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_have_size_as_3_but_was_not() {
+        let collection = ["junit", "testify"];
+        collection.should_have_size(3);
+    }
+
+    #[test]
+    fn should_not_have_size_as_3() {
+        let collection = ["junit", "testify"];
+        collection.should_not_have_size(3);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_have_size_as_2_but_was() {
+        let collection = ["junit", "testify"];
+        collection.should_not_have_size(2);
+    }
+
+    #[test]
+    fn should_have_at_least_size_3() {
+        let collection = ["junit", "testify", "catch2"];
+        collection.should_have_at_least_size(3);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_have_at_least_size_4_but_was_not() {
+        let collection = ["junit", "testify", "catch2"];
+        collection.should_have_at_least_size(4);
+    }
+
+    #[test]
+    fn should_have_at_most_size_3() {
+        let collection = ["junit", "testify", "catch2"];
+        collection.should_have_at_most_size(3);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_have_at_most_size_2_but_was_not() {
+        let collection = ["junit", "testify", "catch2"];
+        collection.should_have_at_most_size(2);
+    }
+
+    #[test]
+    fn should_be_same_size_as_other() {
+        let collection = ["junit", "testify", "catch2"];
+        collection.should_be_same_size_as(&[1, 2, 3]);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_same_size_as_other_but_was_not() {
+        let collection = ["junit", "testify"];
+        collection.should_be_same_size_as(&[1, 2, 3]);
+    }
+
+    #[test]
+    fn should_have_size_in_the_inclusive_range() {
+        let collection = ["junit", "testify"];
+        collection.should_have_size_in_inclusive_range(2..=8);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_have_size_in_the_inclusive_range_but_was_not() {
+        let collection = ["junit", "testify"];
+        collection.should_have_size_in_inclusive_range(3..=4);
+    }
+
+    #[test]
+    fn should_not_have_size_in_the_inclusive_range() {
+        let collection = ["junit", "testify"];
+        collection.should_not_have_size_in_inclusive_range(3..=4);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_have_size_in_the_inclusive_range_but_was() {
+        let collection = ["junit", "testify"];
+        collection.should_not_have_size_in_inclusive_range(1..=2);
+    }
+
+    #[test]
+    fn should_have_size_in_the_exclusive_range() {
+        let collection = ["junit", "testify"];
+        collection.should_have_size_in_exclusive_range(1..3);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_have_size_in_the_range_but_was_not() {
+        let collection = ["junit", "testify"];
+        collection.should_have_size_in_exclusive_range(3..8);
+    }
+
+    #[test]
+    fn should_not_have_size_in_the_exclusive_range() {
+        let collection = ["junit", "testify"];
+        collection.should_not_have_size_in_exclusive_range(3..4);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_have_size_in_the_exclusive_range_but_was() {
+        let collection = ["junit", "testify"];
+        collection.should_not_have_size_in_exclusive_range(1..9);
+    }
+}

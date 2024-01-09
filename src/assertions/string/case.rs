@@ -60,3 +60,34 @@ mod tests {
         name.should_be_upper_case();
     }
 }
+
+#[cfg(test)]
+mod string_tests {
+    use crate::assertions::string::case::CaseAssertion;
+
+    #[test]
+    fn should_be_lower_case() {
+        let name = String::from("assert4j");
+        name.should_be_lower_case();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_lower_case_but_was_not() {
+        let name = String::from("ASSERT4J");
+        name.should_be_lower_case();
+    }
+
+    #[test]
+    fn should_be_upper_case() {
+        let name = String::from("ASSERT4J");
+        name.should_be_upper_case();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_upper_case_but_was_not() {
+        let name = String::from("assert4J");
+        name.should_be_upper_case();
+    }
+}

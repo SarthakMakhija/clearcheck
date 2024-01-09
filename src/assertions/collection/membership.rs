@@ -376,3 +376,120 @@ mod tests {
         collection.should_not_contain_any(&to_be_contained);
     }
 }
+
+#[cfg(test)]
+mod array_tests {
+    use crate::assertions::collection::membership::MembershipAssertion;
+
+    #[test]
+    fn should_contain() {
+        let collection = ["junit", "assert4j", "catch2"];
+        collection.should_contain("assert4j");
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_but_was_not_contained() {
+        let collection = ["junit", "assert4j", "catch2"];
+        collection.should_contain("catch");
+    }
+
+    #[test]
+    fn should_not_contain() {
+        let collection = ["junit", "assert4j", "catch2"];
+        collection.should_not_contain("catch");
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_contain_but_was_contained() {
+        let collection = ["junit", "assert4j", "catch2"];
+        collection.should_not_contain("catch2");
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_empty_but_was_not() {
+        let collection = ["junit", "testify"];
+        collection.should_be_empty();
+    }
+
+    #[test]
+    fn should_be_empty() {
+        let collection: [i32; 0] = [];
+        collection.should_be_empty();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_be_empty_but_was() {
+        let collection: [i32; 0] = [];
+        collection.should_not_be_empty();
+    }
+
+    #[test]
+    fn should_not_be_empty() {
+        let collection = ["junit", "testify"];
+        collection.should_not_be_empty();
+    }
+
+    #[test]
+    fn should_contain_all() {
+        let collection = ["junit", "assert4j", "catch2"];
+        let to_be_contained = ["assert4j", "junit"];
+        collection.should_contain_all(&to_be_contained);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_all_but_was_not_contained() {
+        let collection = ["junit", "assert4j", "catch2"];
+        let to_be_contained = ["assert4j", "xunit"];
+        collection.should_contain_all(&to_be_contained);
+    }
+
+    #[test]
+    fn should_not_contain_all() {
+        let collection = ["junit", "assert4j", "catch2"];
+        let to_be_contained = ["assert4j", "junit", "catch"];
+        collection.should_not_contain_all(&to_be_contained);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_contain_all_but_it_did() {
+        let collection = ["junit", "assert4j", "catch2"];
+        let to_be_contained = ["assert4j", "junit"];
+        collection.should_not_contain_all(&to_be_contained);
+    }
+
+    #[test]
+    fn should_contain_any() {
+        let collection = ["junit", "assert4j", "catch2"];
+        let to_be_contained = ["assert4j", "xunit"];
+        collection.should_contain_any(&to_be_contained);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_any_but_was_not_contained() {
+        let collection = ["junit", "assert4j", "catch2"];
+        let to_be_contained = ["catch", "xunit"];
+        collection.should_contain_any(&to_be_contained);
+    }
+
+    #[test]
+    fn should_not_contain_any() {
+        let collection = ["junit", "assert4j", "catch2"];
+        let to_be_contained = ["assert", "xunit", "catch"];
+        collection.should_not_contain_any(&to_be_contained);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_contain_any_but_it_did() {
+        let collection = ["junit", "assert4j", "catch2"];
+        let to_be_contained = ["assert4j", "junit"];
+        collection.should_not_contain_any(&to_be_contained);
+    }
+}

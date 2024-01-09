@@ -280,3 +280,151 @@ mod tests {
         name.should_not_be_empty();
     }
 }
+
+#[cfg(test)]
+mod string_tests {
+    use crate::assertions::string::membership::MembershipAssertion;
+
+    #[test]
+    fn should_only_contain_digits() {
+        let str = String::from("12345");
+        str.should_only_contain_digits();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_only_contain_digits_but_it_did_not() {
+        let str = String::from("12345a");
+        str.should_only_contain_digits();
+    }
+
+    #[test]
+    fn should_contain_a_digit() {
+        let email = String::from("john1@gmail.com");
+        email.should_contain_a_digit();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_a_digit_but_it_did_not() {
+        let email = String::from("john@gmail.com");
+        email.should_contain_a_digit();
+    }
+
+    #[test]
+    fn should_not_contain_digits() {
+        let email = String::from("john@gmail.com");
+        email.should_not_contain_digits();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_contain_digits_but_it_did() {
+        let email = String::from("john1@gmail.com");
+        email.should_not_contain_digits();
+    }
+
+    #[test]
+    fn should_contain_the_character() {
+        let email = String::from("john@gmail.com");
+        email.should_contain_character('@');
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_the_character_but_it_did_not() {
+        let email = String::from("john1@gmail.com");
+        email.should_contain_character('#');
+    }
+
+    #[test]
+    fn should_not_contain_the_character() {
+        let email = String::from("john@gmail.com");
+        email.should_not_contain_character('#');
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_contain_the_character_but_it_did() {
+        let email = String::from("john1@gmail.com");
+        email.should_not_contain_character('@');
+    }
+
+    #[test]
+    fn should_contain_substring() {
+        let email = String::from("john@gmail.com");
+        email.should_contain("gmail");
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_substring_but_it_did_not() {
+        let email = String::from("john1@gmail.com");
+        email.should_contain("yahoo");
+    }
+
+    #[test]
+    fn should_not_contain_substring() {
+        let email = String::from("john@gmail.com");
+        email.should_not_contain("yahoo");
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_contain_substring_but_it_did() {
+        let email = String::from("john1@gmail.com");
+        email.should_not_contain("gmail");
+    }
+
+    #[test]
+    fn should_contain_substring_ignoring_case() {
+        let email = String::from("john@gmail.com");
+        email.should_contain_ignoring_case("GMAIL");
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_substring_ignoring_case_but_it_did_not() {
+        let email = String::from("john1@gmail.com");
+        email.should_contain_ignoring_case("YAHOO");
+    }
+
+    #[test]
+    fn should_not_contain_substring_ignoring_case() {
+        let email = String::from("john@gmail.com");
+        email.should_not_contain_ignoring_case("YAHOO");
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_contain_substring_ignoring_case_but_it_did() {
+        let email = String::from("john1@gmail.com");
+        email.should_not_contain_ignoring_case("GMAIL");
+    }
+
+    #[test]
+    fn should_be_empty() {
+        let name = String::from("");
+        name.should_be_empty();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_empty_but_was_not() {
+        let name = String::from("John");
+        name.should_be_empty();
+    }
+
+    #[test]
+    fn should_not_be_empty() {
+        let name = String::from("John");
+        name.should_not_be_empty();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_be_empty_but_was() {
+        let name = String::from("");
+        name.should_not_be_empty();
+    }
+}
