@@ -115,10 +115,7 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for TreeMatcher<'_> {
                 )
             }
             TreeMatcher::ContainAll(names) => {
-                let mut unique_names = names
-                    .iter()
-                    .map(|name| OsStr::new(name))
-                    .collect::<HashSet<_>>();
+                let mut unique_names = names.iter().map(OsStr::new).collect::<HashSet<_>>();
 
                 for directory_entry in WalkDir::new(value) {
                     if let Ok(entry) = directory_entry {
@@ -128,7 +125,7 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for TreeMatcher<'_> {
                     }
                 }
                 MatcherResult::formatted(
-                    unique_names.len() == 0,
+                    unique_names.is_empty(),
                     format!(
                         "{:?} should contain file names {:?} but was missing {:?}",
                         value, names, unique_names

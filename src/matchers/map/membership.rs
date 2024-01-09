@@ -48,7 +48,7 @@ where
                     .collect::<Vec<_>>();
 
                 MatcherResult::formatted(
-                    missing.len() == 0,
+                    missing.is_empty(),
                     format!(
                         "Keys {:?} in the map should contain all {:?} but was missing {:?}",
                         collection.keys(),
@@ -115,7 +115,7 @@ where
                     .collect::<Vec<_>>();
 
                 MatcherResult::formatted(
-                    missing.len() == 0,
+                    missing.is_empty(),
                     format!(
                         "Values {:?} in the map should contain all {:?} but was missing {:?}",
                         collection.values(),
@@ -188,7 +188,7 @@ where
                     .collect::<Vec<_>>();
 
                 MatcherResult::formatted(
-                    missing.len() == 0,
+                    missing.is_empty(),
                     format!(
                         "Map {:?} should contain all of key/value pairs {:?} but was missing {:?}",
                         collection, key_values, missing
