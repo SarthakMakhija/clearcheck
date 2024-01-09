@@ -193,7 +193,7 @@ where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
     {
-        map(&self).should(&contain(&element));
+        map(self).should(&contain(&element));
         self
     }
 
@@ -202,7 +202,7 @@ where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
     {
-        map(&self).should_not(&contain(&element));
+        map(self).should_not(&contain(&element));
         self
     }
 
@@ -211,7 +211,7 @@ where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
     {
-        map(&self).should(&contain_all(elements));
+        map(self).should(&contain_all(elements));
         self
     }
 
@@ -220,7 +220,7 @@ where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
     {
-        map(&self).should_not(&contain_all(elements));
+        map(self).should_not(&contain_all(elements));
         self
     }
 
@@ -229,7 +229,7 @@ where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
     {
-        map(&self).should(&contain_any(elements));
+        map(self).should(&contain_any(elements));
         self
     }
 
@@ -238,7 +238,7 @@ where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
     {
-        map(&self).should_not(&contain_any(elements));
+        map(self).should_not(&contain_any(elements));
         self
     }
 
