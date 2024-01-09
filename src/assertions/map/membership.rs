@@ -148,7 +148,7 @@ where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized,
     {
-        map_keys(&self).should(&contain_key(&key));
+        map_keys(self).should(&contain_key(&key));
         self
     }
 
@@ -157,7 +157,7 @@ where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized,
     {
-        map_keys(&self).should_not(&contain_key(&key));
+        map_keys(self).should_not(&contain_key(&key));
         self
     }
 
@@ -166,7 +166,7 @@ where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized,
     {
-        map_keys(&self).should(&contain_all_keys(keys));
+        map_keys(self).should(&contain_all_keys(keys));
         self
     }
 
@@ -175,7 +175,7 @@ where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized,
     {
-        map_keys(&self).should_not(&contain_all_keys(keys));
+        map_keys(self).should_not(&contain_all_keys(keys));
         self
     }
 
@@ -184,7 +184,7 @@ where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized,
     {
-        map_keys(&self).should(&contain_any_of_keys(keys));
+        map_keys(self).should(&contain_any_of_keys(keys));
         self
     }
 
@@ -193,7 +193,7 @@ where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized,
     {
-        map_keys(&self).should_not(&contain_any_of_keys(keys));
+        map_keys(self).should_not(&contain_any_of_keys(keys));
         self
     }
 }
@@ -208,7 +208,7 @@ where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq,
     {
-        map_values(&self).should(&contain_value(&value));
+        map_values(self).should(&contain_value(&value));
         self
     }
 
@@ -217,7 +217,7 @@ where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq,
     {
-        map_values(&self).should_not(&contain_value(&value));
+        map_values(self).should_not(&contain_value(&value));
         self
     }
 
@@ -226,7 +226,7 @@ where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq,
     {
-        map_values(&self).should(&contain_all_values(values));
+        map_values(self).should(&contain_all_values(values));
         self
     }
 
@@ -235,7 +235,7 @@ where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq,
     {
-        map_values(&self).should_not(&contain_all_values(values));
+        map_values(self).should_not(&contain_all_values(values));
         self
     }
 
@@ -244,7 +244,7 @@ where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq,
     {
-        map_values(&self).should(&contain_any_of_values(values));
+        map_values(self).should(&contain_any_of_values(values));
         self
     }
 
@@ -253,7 +253,7 @@ where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq,
     {
-        map_values(&self).should_not(&contain_any_of_values(values));
+        map_values(self).should_not(&contain_any_of_values(values));
         self
     }
 }
@@ -270,7 +270,7 @@ where
         Q: Debug + ?Sized + Hash + Eq,
         S: Debug + ?Sized + Eq,
     {
-        map_key_value(&self).should(&contain_key_value(&key, &value));
+        map_key_value(self).should(&contain_key_value(&key, &value));
         self
     }
 
@@ -281,7 +281,7 @@ where
         Q: Debug + ?Sized + Hash + Eq,
         S: Debug + ?Sized + Eq,
     {
-        map_key_value(&self).should_not(&contain_key_value(&key, &value));
+        map_key_value(self).should_not(&contain_key_value(&key, &value));
         self
     }
 
@@ -292,7 +292,7 @@ where
         Q: Debug + ?Sized + Hash + Eq,
         S: Debug + ?Sized + Eq,
     {
-        map_key_value(&self).should(&contain_all_key_values(entries));
+        map_key_value(self).should(&contain_all_key_values(entries));
         self
     }
 
@@ -303,7 +303,7 @@ where
         Q: Debug + ?Sized + Hash + Eq,
         S: Debug + ?Sized + Eq,
     {
-        map_key_value(&self).should_not(&contain_all_key_values(entries));
+        map_key_value(self).should_not(&contain_all_key_values(entries));
         self
     }
 
@@ -314,7 +314,7 @@ where
         Q: Debug + ?Sized + Hash + Eq,
         S: Debug + ?Sized + Eq,
     {
-        map_key_value(&self).should(&contain_any_of_key_values(entries));
+        map_key_value(self).should(&contain_any_of_key_values(entries));
         self
     }
 
@@ -325,7 +325,7 @@ where
         Q: Debug + ?Sized + Hash + Eq,
         S: Debug + ?Sized + Eq,
     {
-        map_key_value(&self).should_not(&contain_any_of_key_values(entries));
+        map_key_value(self).should_not(&contain_any_of_key_values(entries));
         self
     }
 }
