@@ -114,4 +114,17 @@ mod tests {
         let value = -10;
         value.should_be_zero();
     }
+
+    #[test]
+    fn should_not_be_zero() {
+        let value = 1;
+        value.should_not_be_zero();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_be_zero_but_was() {
+        let value = 0;
+        value.should_not_be_zero();
+    }
 }

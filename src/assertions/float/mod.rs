@@ -176,6 +176,19 @@ mod tests {
     }
 
     #[test]
+    fn should_not_be_in_inclusive_range_with_tolerance() {
+        let value: f64 = 8.123;
+        value.should_not_be_in_inclusive_range_with_tolerance(6.10..=7.10, 0.123);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_be_in_inclusive_range_with_tolerance_but_was() {
+        let value: f64 = 8.123;
+        value.should_not_be_in_inclusive_range_with_tolerance(6.10..=8.10, 0.123);
+    }
+
+    #[test]
     fn should_be_in_exclusive_range_with_tolerance() {
         let value: f64 = 8.123;
         value.should_be_in_exclusive_range_with_tolerance(6.10..8.10, 0.123);
@@ -186,5 +199,18 @@ mod tests {
     fn should_be_in_exclusive_range_with_tolerance_but_was_not() {
         let value: f64 = 8.423;
         value.should_be_in_exclusive_range_with_tolerance(6.10..8.10, 0.123);
+    }
+
+    #[test]
+    fn should_not_be_in_exclusive_range_with_tolerance() {
+        let value: f64 = 8.423;
+        value.should_not_be_in_exclusive_range_with_tolerance(6.10..8.10, 0.123);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_be_in_exclusive_range_with_tolerance_but_was_not() {
+        let value: f64 = 8.123;
+        value.should_not_be_in_exclusive_range_with_tolerance(6.10..8.20, 0.123);
     }
 }
