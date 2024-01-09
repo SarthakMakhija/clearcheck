@@ -43,5 +43,6 @@ fn should_match_all_books() {
         .should_not_be_empty()
         .should_contain_key(&Book::new(20, "Patterns of Distributed Systems"))
         .should_not_contain_key(&Book::new(25, "Rust in action"))
-        .should_have_size_in_inclusive_range(1..=5);
+        .should_have_size_in_inclusive_range(1..=5)
+        .should_contain_any_of_values(&[&1, &3, &4]);
 }
