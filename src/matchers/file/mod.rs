@@ -378,10 +378,10 @@ mod walk_tree_tests {
         let temporary_directory = TempDir::new(".").unwrap();
         let file_path = temporary_directory.path().join("junit.txt");
 
-        let _ = File::create(file_path.clone()).unwrap();
+        let _ = File::create(file_path).unwrap();
 
         let directory_path = temporary_directory.path();
-        let matcher = contain_file_name(&"junit.txt");
+        let matcher = contain_file_name("junit.txt");
         matcher.test(&directory_path).passed.should_be_true();
     }
 
@@ -391,8 +391,8 @@ mod walk_tree_tests {
         let file_path1 = temporary_directory.path().join("junit.txt");
         let file_path2 = temporary_directory.path().join("assert4rs.txt");
 
-        let _ = File::create(file_path1.clone()).unwrap();
-        let _ = File::create(file_path2.clone()).unwrap();
+        let _ = File::create(file_path1).unwrap();
+        let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
         let matcher = contain_all_file_names(&["junit.txt", "assert4rs.txt"]);
@@ -404,7 +404,7 @@ mod walk_tree_tests {
         let temporary_directory = TempDir::new(".").unwrap();
         let file_path = temporary_directory.path().join("junit.txt");
 
-        let _ = File::create(file_path.clone()).unwrap();
+        let _ = File::create(file_path).unwrap();
 
         let directory_path = temporary_directory.path();
         let matcher = contain_any_file_names(&["junit.txt", "assert4rs.txt"]);
@@ -417,7 +417,7 @@ mod walk_tree_tests {
         let temporary_directory = TempDir::new(".").unwrap();
         let file_path = temporary_directory.path().join("junit.txt");
 
-        let _ = File::create(file_path.clone()).unwrap();
+        let _ = File::create(file_path).unwrap();
 
         let directory_path = temporary_directory.path();
         let matcher = contain_any_file_names(&["assert.txt", "assert.txt"]);

@@ -30,7 +30,7 @@ pub trait ShouldNot<T> {
 
 impl<T> Should<T> for T {
     fn should(&self, matcher: &dyn Matcher<T>) {
-        let matcher_result = matcher.test(&self);
+        let matcher_result = matcher.test(self);
         if !matcher_result.passed {
             panic!("assertion failed: {}", matcher_result.failure_message);
         }
