@@ -2,7 +2,7 @@
 
 ### assert4rs
 
-**assert4rs** offers powerful and elegant assertions for rust.
+**assert4rs** offers elegant and extensible assertions for rust.
 
 ### Example
 
