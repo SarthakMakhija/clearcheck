@@ -3,8 +3,30 @@ use std::fmt::Debug;
 use crate::matchers::option::{be_none, be_some};
 use crate::matchers::Should;
 
+/// SomeNoneAssertion enables assertions about whether an Option evaluates to Some or None.
 pub trait SomeNoneAssertion {
+    /// - Asserts that the Option evaluates to Some.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::option::SomeNoneAssertion;
+    ///
+    /// let value = Some(32);
+    /// value.should_be_some();
+    /// ```
     fn should_be_some(&self) -> &Self;
+
+    /// - Asserts that the Option evaluates to None.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::option::SomeNoneAssertion;
+    ///
+    /// let value: Option<i32> = None;
+    /// value.should_be_none();
+    /// ```
     fn should_be_none(&self) -> &Self;
 }
 
