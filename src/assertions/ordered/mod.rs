@@ -8,53 +8,186 @@ use crate::matchers::ordered::{
 use crate::matchers::range::{be_in_exclusive_range, be_in_inclusive_range};
 use crate::matchers::{Should, ShouldNot};
 
+/// OrderedAssertion enables assertions about the relative ordering of values that implement the PartialOrd trait.
+///
+/// # Example
+/// ```
+/// use clearcheck::assertions::ordered::OrderedAssertion;
+///
+/// let value = 12.56;
+/// value
+///     .should_be_greater_than(&10.90)
+///     .should_be_less_than(&15.98)
+///     .should_be_in_inclusive_range(10.90..=13.10);
+/// ```
 pub trait OrderedAssertion<T: PartialOrd> {
+
+    /// - Asserts that the self value is greater than the provided value (other) according to the PartialOrd implementation.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::ordered::OrderedAssertion;
+    ///
+    /// let value = 12.5;
+    /// value.should_be_greater_than(&10.98);
+    /// ```
     fn should_be_greater_than<Q>(&self, other: &Q) -> &Self
     where
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized;
 
+    /// - Asserts that the self value is greater than or equal to the provided value (other) according to the PartialOrd implementation.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::ordered::OrderedAssertion;
+    ///
+    /// let value = 12.5;
+    /// value.should_be_greater_than_equal_to(&10.98);
+    /// ```
     fn should_be_greater_than_equal_to<Q>(&self, other: &Q) -> &Self
     where
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized;
 
+    /// - Asserts that the self value is less than the provided value (other) according to the PartialOrd implementation.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::ordered::OrderedAssertion;
+    ///
+    /// let value = 10.5;
+    /// value.should_be_less_than(&10.98);
+    /// ```
     fn should_be_less_than<Q>(&self, other: &Q) -> &Self
     where
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized;
 
+    /// - Asserts that the self value is less than or equal to the provided value (other) according to the PartialOrd implementation.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::ordered::OrderedAssertion;
+    ///
+    /// let value = 10.5;
+    /// value.should_be_less_than_equal_to(&10.98);
+    /// ```
     fn should_be_less_than_equal_to<Q>(&self, other: &Q) -> &Self
     where
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized;
 
+    /// - Asserts that the self value is not greater than the provided value (other) according to the PartialOrd implementation.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::ordered::OrderedAssertion;
+    ///
+    /// let value = 10.5;
+    /// value.should_not_be_greater_than(&10.98);
+    /// ```
     fn should_not_be_greater_than<Q>(&self, other: &Q) -> &Self
     where
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized;
 
+    /// - Asserts that the self value is not greater than or equal to the provided value (other) according to the PartialOrd implementation.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::ordered::OrderedAssertion;
+    ///
+    /// let value = 10.5;
+    /// value.should_not_be_greater_than_equal_to(&10.98);
+    /// ```
     fn should_not_be_greater_than_equal_to<Q>(&self, other: &Q) -> &Self
     where
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized;
 
+    /// - Asserts that the self value is not less than the provided value (other) according to the PartialOrd implementation.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::ordered::OrderedAssertion;
+    ///
+    /// let value = 11.5;
+    /// value.should_not_be_less_than(&10.98);
+    /// ```
     fn should_not_be_less_than<Q>(&self, other: &Q) -> &Self
     where
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized;
 
+    /// - Asserts that the self value is not less than or equal to the provided value (other) according to the PartialOrd implementation.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::ordered::OrderedAssertion;
+    ///
+    /// let value = 11.5;
+    /// value.should_not_be_less_than_equal_to(&10.98);
+    /// ```
     fn should_not_be_less_than_equal_to<Q>(&self, other: &Q) -> &Self
     where
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized;
 
+    /// - Asserts that the self value falls within the given inclusive range.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::ordered::OrderedAssertion;
+    ///
+    /// let name = "junit";
+    /// name.should_be_in_inclusive_range("clearcheck"..="scalatest");
+    /// ```
     fn should_be_in_inclusive_range(&self, range: RangeInclusive<T>) -> &Self;
 
+    /// - Asserts that the self value does not fall within the given inclusive range.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::ordered::OrderedAssertion;
+    ///
+    /// let name = "junit";
+    /// name.should_not_be_in_inclusive_range("clearcheck"..="gotest");
+    /// ```
     fn should_not_be_in_inclusive_range(&self, range: RangeInclusive<T>) -> &Self;
 
+    /// - Asserts that the self value falls within the given exclusive range.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::ordered::OrderedAssertion;
+    ///
+    /// let name = "junit";
+    /// name.should_be_in_exclusive_range("clearcheck".."scalatest");
+    /// ```
     fn should_be_in_exclusive_range(&self, range: Range<T>) -> &Self;
 
+    /// - Asserts that the self value falls within the given exclusive range.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::ordered::OrderedAssertion;
+    ///
+    /// let name = "junit";
+    /// name.should_not_be_in_exclusive_range("clearcheck".."gotest");
+    /// ```
     fn should_not_be_in_exclusive_range(&self, range: Range<T>) -> &Self;
 }
 
