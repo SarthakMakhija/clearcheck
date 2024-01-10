@@ -40,7 +40,7 @@ mod tests {
     #[test]
     fn should_match_regular_expression() {
         let regex = Regex::new(r"(\d{4})-(\d{2})-(\d{2})").unwrap();
-        let str = "Started assert4rs on On 2024-01-02.";
+        let str = "Started clearcheck on On 2024-01-02.";
         str.should_match(regex);
     }
 
@@ -48,14 +48,14 @@ mod tests {
     #[should_panic]
     fn should_match_regular_expression_but_it_did_not() {
         let regex = Regex::new(r"(\d{4})-(\d{2})-(\d{2})").unwrap();
-        let str = "Started assert4rs on On 02nd January 2024";
+        let str = "Started clearcheck on On 02nd January 2024";
         str.should_match(regex);
     }
 
     #[test]
     fn should_not_match_regular_expression() {
         let regex = Regex::new(r"(\d{4})-(\d{2})-(\d{2})").unwrap();
-        let str = "Started assert4rs on On 02nd January 2024";
+        let str = "Started clearcheck on On 02nd January 2024";
         str.should_not_match(regex);
     }
 
@@ -63,7 +63,7 @@ mod tests {
     #[should_panic]
     fn should_not_match_regular_expression_but_it_did() {
         let regex = Regex::new(r"(\d{4})-(\d{2})-(\d{2})").unwrap();
-        let str = "Started assert4rs on On 2024-01-02.";
+        let str = "Started clearcheck on On 2024-01-02.";
         str.should_not_match(regex);
     }
 }
@@ -76,7 +76,7 @@ mod string_tests {
     #[test]
     fn should_match_regular_expression() {
         let regex = Regex::new(r"(\d{4})-(\d{2})-(\d{2})").unwrap();
-        let str = String::from("Started assert4rs on On 2024-01-02.");
+        let str = String::from("Started clearcheck on On 2024-01-02.");
         str.should_match(regex);
     }
 
@@ -84,14 +84,14 @@ mod string_tests {
     #[should_panic]
     fn should_match_regular_expression_but_it_did_not() {
         let regex = Regex::new(r"(\d{4})-(\d{2})-(\d{2})").unwrap();
-        let str = String::from("Started assert4rs on On 02nd January 2024");
+        let str = String::from("Started clearcheck on On 02nd January 2024");
         str.should_match(regex);
     }
 
     #[test]
     fn should_not_match_regular_expression() {
         let regex = Regex::new(r"(\d{4})-(\d{2})-(\d{2})").unwrap();
-        let str = String::from("Started assert4rs on On 02nd January 2024");
+        let str = String::from("Started clearcheck on On 02nd January 2024");
         str.should_not_match(regex);
     }
 
@@ -99,7 +99,7 @@ mod string_tests {
     #[should_panic]
     fn should_not_match_regular_expression_but_it_did() {
         let regex = Regex::new(r"(\d{4})-(\d{2})-(\d{2})").unwrap();
-        let str = String::from("Started assert4rs on On 2024-01-02.");
+        let str = String::from("Started clearcheck on On 2024-01-02.");
         str.should_not_match(regex);
     }
 }

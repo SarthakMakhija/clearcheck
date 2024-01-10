@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
-use assert4rs::assertions::collection::size::SizeAssertion;
-use assert4rs::assertions::map::membership::{
+use clearcheck::assertions::collection::size::SizeAssertion;
+use clearcheck::assertions::map::membership::{
     KeyMembershipAssertion, KeyValueMembershipAssertion, NoMembershipAssertion,
     ValueMembershipAssertion,
 };

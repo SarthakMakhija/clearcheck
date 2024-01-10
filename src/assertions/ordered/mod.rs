@@ -326,18 +326,18 @@ mod string_tests {
     #[test]
     fn should_not_be_less_than() {
         let name = "junit";
-        name.should_not_be_less_than("assert4rs");
+        name.should_not_be_less_than("clearcheck");
     }
 
     #[test]
     fn should_be_in_inclusive_range() {
         let name = "junit";
-        name.should_be_in_inclusive_range("assert4rs"..="scalatest");
+        name.should_be_in_inclusive_range("clearcheck"..="scalatest");
     }
 
     #[test]
     fn should_be_in_exclusive_range() {
         let name = "junit";
-        name.should_be_in_exclusive_range("assert4rs".."scalatest");
+        name.should_be_in_exclusive_range("clearcheck".."scalatest");
     }
 }

@@ -98,8 +98,8 @@ mod vector_tests {
 
     #[test]
     fn should_equal_ignoring_case() {
-        let collection = vec!["junit", "Assert4rs", "gotest"];
-        let other = vec!["JUNIT", "ASSERT4RS", "GoTest"];
+        let collection = vec!["junit", "clearcheck", "gotest"];
+        let other = vec!["JUNIT", "clearcheck", "GoTest"];
 
         let matcher = be_equal_ignoring_case(&other);
         matcher.test(&collection).passed.should_be_true();
@@ -108,7 +108,7 @@ mod vector_tests {
     #[test]
     #[should_panic]
     fn should_equal_ignoring_case_but_was_not() {
-        let collection = vec!["junit", "Assert4rs", "gotest"];
+        let collection = vec!["junit", "clearcheck", "gotest"];
         let other = vec!["JUNIT", "ASSERT", "GoTest"];
 
         let matcher = be_equal_ignoring_case(&other);
@@ -124,8 +124,8 @@ mod array_tests {
 
     #[test]
     fn should_equal_ignoring_case() {
-        let collection = ["junit", "Assert4rs", "gotest"];
-        let other = ["JUNIT", "ASSERT4RS", "GoTest"];
+        let collection = ["junit", "clearcheck", "gotest"];
+        let other = ["JUNIT", "clearcheck", "GoTest"];
 
         let matcher = be_equal_ignoring_case(&other);
         matcher.test(&collection).passed.should_be_true();
@@ -134,7 +134,7 @@ mod array_tests {
     #[test]
     #[should_panic]
     fn should_equal_ignoring_case_but_was_not() {
-        let collection = ["junit", "Assert4rs", "gotest"];
+        let collection = ["junit", "clearcheck", "gotest"];
         let other = ["JUNIT", "ASSERT", "GoTest"];
 
         let matcher = be_equal_ignoring_case(&other);
@@ -150,8 +150,8 @@ mod slice_tests {
 
     #[test]
     fn should_equal_ignoring_case() {
-        let collection: &[&str] = &["junit", "Assert4rs", "gotest"];
-        let other: &[&str] = &["JUNIT", "ASSERT4RS", "GoTest"];
+        let collection: &[&str] = &["junit", "clearcheck", "gotest"];
+        let other: &[&str] = &["JUNIT", "clearcheck", "GoTest"];
 
         let matcher = be_equal_ignoring_case(&other);
         matcher.test(&collection).passed.should_be_true();
@@ -160,7 +160,7 @@ mod slice_tests {
     #[test]
     #[should_panic]
     fn should_equal_ignoring_case_but_was_not() {
-        let collection: &[&str] = &["junit", "Assert4rs", "gotest"];
+        let collection: &[&str] = &["junit", "clearcheck", "gotest"];
         let other: &[&str] = &["JUNIT", "ASSERT", "GoTest"];
 
         let matcher = be_equal_ignoring_case(&other);

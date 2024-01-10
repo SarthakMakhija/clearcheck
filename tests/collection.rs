@@ -1,8 +1,8 @@
-use assert4rs::assertions::collection::duplicate::DuplicateContentAssertion;
-use assert4rs::assertions::collection::membership::MembershipAssertion;
-use assert4rs::assertions::collection::size::SizeAssertion;
-use assert4rs::assertions::collection::sort::SortAssertion;
-use assert4rs::assertions::ordered::OrderedAssertion;
+use clearcheck::assertions::collection::duplicate::DuplicateContentAssertion;
+use clearcheck::assertions::collection::membership::MembershipAssertion;
+use clearcheck::assertions::collection::size::SizeAssertion;
+use clearcheck::assertions::collection::sort::SortAssertion;
+use clearcheck::assertions::ordered::OrderedAssertion;
 
 #[derive(Eq, Debug, PartialEq)]
 struct Book {
@@ -57,14 +57,14 @@ fn should_not_match_all_book() {
 
 #[test]
 fn should_match_all_strings() {
-    let libraries = vec!["assert4rs", "gotest", "junit", "scalatest"];
+    let libraries = vec!["clearcheck", "gotest", "junit", "scalatest"];
     libraries
         .should_not_be_empty()
         .should_not_contain_duplicates()
-        .should_contain("assert4rs")
+        .should_contain("clearcheck")
         .should_be_sorted_ascending()
         .should_be_less_than(&vec![
-            "assert4rs",
+            "clearcheck",
             "gotest",
             "junit",
             "scalatest",

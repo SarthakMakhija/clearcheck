@@ -68,8 +68,8 @@ mod vector_tests {
 
     #[test]
     fn should_equal_ignoring_case() {
-        let collection = vec!["junit", "Assert4rs", "gotest"];
-        let other = vec!["JUNIT", "ASSERT4RS", "GoTest"];
+        let collection = vec!["junit", "clearcheck", "gotest"];
+        let other = vec!["JUNIT", "clearcheck", "GoTest"];
 
         collection.should_be_equal_ignoring_case(&other);
     }
@@ -77,7 +77,7 @@ mod vector_tests {
     #[test]
     #[should_panic]
     fn should_equal_ignoring_case_but_was_not() {
-        let collection = vec!["junit", "Assert4rs", "gotest"];
+        let collection = vec!["junit", "clearcheck", "gotest"];
         let other = vec!["JUNIT", "ASSERT", "GoTest"];
 
         collection.should_be_equal_ignoring_case(&other);
@@ -85,7 +85,7 @@ mod vector_tests {
 
     #[test]
     fn should_not_equal_ignoring_case() {
-        let collection = vec!["junit", "Assert4rs", "gotest"];
+        let collection = vec!["junit", "clearcheck", "gotest"];
         let other = vec!["JUNIT", "ASSERT", "GoTest"];
 
         collection.should_not_be_equal_ignoring_case(&other);
@@ -94,8 +94,8 @@ mod vector_tests {
     #[test]
     #[should_panic]
     fn should_not_equal_ignoring_case_but_was() {
-        let collection = vec!["junit", "Assert4rs", "gotest"];
-        let other = vec!["JUNIT", "Assert4rs", "GoTest"];
+        let collection = vec!["junit", "clearcheck", "gotest"];
+        let other = vec!["JUNIT", "clearcheck", "GoTest"];
 
         collection.should_not_be_equal_ignoring_case(&other);
     }
@@ -107,8 +107,8 @@ mod array_tests {
 
     #[test]
     fn should_equal_ignoring_case() {
-        let collection = ["junit", "Assert4rs", "gotest"];
-        let other = ["JUNIT", "ASSERT4RS", "GoTest"];
+        let collection = ["junit", "clearcheck", "gotest"];
+        let other = ["JUNIT", "clearcheck", "GoTest"];
 
         collection.should_be_equal_ignoring_case(&other);
     }
@@ -116,7 +116,7 @@ mod array_tests {
     #[test]
     #[should_panic]
     fn should_equal_ignoring_case_but_was_not() {
-        let collection = ["junit", "Assert4rs", "gotest"];
+        let collection = ["junit", "clearcheck", "gotest"];
         let other = ["JUNIT", "ASSERT", "GoTest"];
 
         collection.should_be_equal_ignoring_case(&other);
@@ -124,7 +124,7 @@ mod array_tests {
 
     #[test]
     fn should_not_equal_ignoring_case() {
-        let collection = ["junit", "Assert4rs", "gotest"];
+        let collection = ["junit", "clearcheck", "gotest"];
         let other = ["JUNIT", "ASSERT", "GoTest"];
 
         collection.should_not_be_equal_ignoring_case(&other);
@@ -133,8 +133,8 @@ mod array_tests {
     #[test]
     #[should_panic]
     fn should_not_equal_ignoring_case_but_was() {
-        let collection = ["junit", "Assert4rs", "gotest"];
-        let other = ["JUNIT", "Assert4rs", "GoTest"];
+        let collection = ["junit", "clearcheck", "gotest"];
+        let other = ["JUNIT", "clearcheck", "GoTest"];
 
         collection.should_not_be_equal_ignoring_case(&other);
     }
@@ -148,12 +148,12 @@ mod array_string_tests {
     fn should_equal_ignoring_case() {
         let collection = [
             String::from("junit"),
-            String::from("Assert4rs"),
+            String::from("clearcheck"),
             String::from("gotest"),
         ];
         let other = [
             String::from("JUNIT"),
-            String::from("ASSERT4RS"),
+            String::from("clearcheck"),
             String::from("GoTest"),
         ];
 
@@ -165,7 +165,7 @@ mod array_string_tests {
     fn should_equal_ignoring_case_but_was_not() {
         let collection = [
             String::from("junit"),
-            String::from("Assert4rs"),
+            String::from("clearcheck"),
             String::from("gotest"),
         ];
         let other = [
@@ -181,7 +181,7 @@ mod array_string_tests {
     fn should_not_equal_ignoring_case() {
         let collection = [
             String::from("junit"),
-            String::from("Assert4rs"),
+            String::from("clearcheck"),
             String::from("gotest"),
         ];
         let other = [
@@ -198,12 +198,12 @@ mod array_string_tests {
     fn should_not_equal_ignoring_case_but_was() {
         let collection = [
             String::from("junit"),
-            String::from("Assert4rs"),
+            String::from("clearcheck"),
             String::from("gotest"),
         ];
         let other = [
             String::from("JUNIT"),
-            String::from("ASSERT4RS"),
+            String::from("clearcheck"),
             String::from("GoTest"),
         ];
 
@@ -217,8 +217,8 @@ mod slice_tests {
 
     #[test]
     fn should_equal_ignoring_case() {
-        let collection: &[&str] = &["junit", "Assert4rs", "gotest"];
-        let other: &[&str] = &["JUNIT", "ASSERT4RS", "GoTest"];
+        let collection: &[&str] = &["junit", "clearcheck", "gotest"];
+        let other: &[&str] = &["JUNIT", "clearcheck", "GoTest"];
 
         collection.should_be_equal_ignoring_case(&other);
     }
@@ -226,7 +226,7 @@ mod slice_tests {
     #[test]
     #[should_panic]
     fn should_equal_ignoring_case_but_was_not() {
-        let collection: &[&str] = &["junit", "Assert4rs", "gotest"];
+        let collection: &[&str] = &["junit", "clearcheck", "gotest"];
         let other: &[&str] = &["JUNIT", "ASSERT", "GoTest"];
 
         collection.should_be_equal_ignoring_case(&other);
@@ -234,7 +234,7 @@ mod slice_tests {
 
     #[test]
     fn should_not_equal_ignoring_case() {
-        let collection: &[&str] = &["junit", "Assert4rs", "gotest"];
+        let collection: &[&str] = &["junit", "clearcheck", "gotest"];
         let other: &[&str] = &["JUNIT", "ASSERT", "GoTest"];
 
         collection.should_not_be_equal_ignoring_case(&other);
@@ -243,8 +243,8 @@ mod slice_tests {
     #[test]
     #[should_panic]
     fn should_not_equal_ignoring_case_but_was() {
-        let collection: &[&str] = &["junit", "Assert4rs", "gotest"];
-        let other: &[&str] = &["JUNIT", "Assert4rs", "GoTest"];
+        let collection: &[&str] = &["junit", "clearcheck", "gotest"];
+        let other: &[&str] = &["JUNIT", "clearcheck", "GoTest"];
 
         collection.should_not_be_equal_ignoring_case(&other);
     }

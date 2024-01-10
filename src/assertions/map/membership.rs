@@ -724,7 +724,7 @@ mod key_value_contains_tests {
         key_value.insert("java", "junit");
 
         let mut to_contain = HashMap::new();
-        to_contain.insert("rust", "assert4rs");
+        to_contain.insert("rust", "clearcheck");
         to_contain.insert("java", "xunit");
 
         key_value.should_contain_any(&to_contain);
@@ -737,7 +737,7 @@ mod key_value_contains_tests {
         key_value.insert("java", "junit");
 
         let mut to_contain = HashMap::new();
-        to_contain.insert("rust", "assert4rs");
+        to_contain.insert("rust", "clearcheck");
         to_contain.insert("java", "xunit");
 
         key_value.should_not_contain_any(&to_contain);

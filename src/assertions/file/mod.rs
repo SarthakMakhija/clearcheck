@@ -325,7 +325,7 @@ mod tests {
         let _ = File::create(file_path).unwrap();
 
         let directory_path = temporary_directory.path();
-        directory_path.should_contain_file_name("assert4rs.txt");
+        directory_path.should_contain_file_name("clearcheck.txt");
     }
 
     #[test]
@@ -352,13 +352,13 @@ mod tests {
     fn should_contain_all_files() {
         let temporary_directory = TempDir::new(".").unwrap();
         let file_path1 = temporary_directory.path().join("junit.txt");
-        let file_path2 = temporary_directory.path().join("assert4rs.txt");
+        let file_path2 = temporary_directory.path().join("clearcheck.txt");
 
         let _ = File::create(file_path1).unwrap();
         let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
-        directory_path.should_contain_all_file_names(&["junit.txt", "assert4rs.txt"]);
+        directory_path.should_contain_all_file_names(&["junit.txt", "clearcheck.txt"]);
     }
 
     #[test]
@@ -366,7 +366,7 @@ mod tests {
     fn should_contain_all_files_but_did_not() {
         let temporary_directory = TempDir::new(".").unwrap();
         let file_path1 = temporary_directory.path().join("junit.txt");
-        let file_path2 = temporary_directory.path().join("assert4rs.txt");
+        let file_path2 = temporary_directory.path().join("clearcheck.txt");
 
         let _ = File::create(file_path1).unwrap();
         let _ = File::create(file_path2).unwrap();
@@ -379,7 +379,7 @@ mod tests {
     fn should_not_contain_all_files() {
         let temporary_directory = TempDir::new(".").unwrap();
         let file_path1 = temporary_directory.path().join("junit.txt");
-        let file_path2 = temporary_directory.path().join("assert4rs.txt");
+        let file_path2 = temporary_directory.path().join("clearcheck.txt");
 
         let _ = File::create(file_path1).unwrap();
         let _ = File::create(file_path2).unwrap();
@@ -393,20 +393,20 @@ mod tests {
     fn should_not_contain_all_files_but_did() {
         let temporary_directory = TempDir::new(".").unwrap();
         let file_path1 = temporary_directory.path().join("junit.txt");
-        let file_path2 = temporary_directory.path().join("assert4rs.txt");
+        let file_path2 = temporary_directory.path().join("clearcheck.txt");
 
         let _ = File::create(file_path1).unwrap();
         let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
-        directory_path.should_not_contain_all_file_names(&["junit.txt", "assert4rs.txt"]);
+        directory_path.should_not_contain_all_file_names(&["junit.txt", "clearcheck.txt"]);
     }
 
     #[test]
     fn should_contain_any_of_files() {
         let temporary_directory = TempDir::new(".").unwrap();
         let file_path1 = temporary_directory.path().join("junit.txt");
-        let file_path2 = temporary_directory.path().join("assert4rs.txt");
+        let file_path2 = temporary_directory.path().join("clearcheck.txt");
 
         let _ = File::create(file_path1).unwrap();
         let _ = File::create(file_path2).unwrap();
@@ -420,7 +420,7 @@ mod tests {
     fn should_contain_any_of_files_but_did_not() {
         let temporary_directory = TempDir::new(".").unwrap();
         let file_path1 = temporary_directory.path().join("junit.txt");
-        let file_path2 = temporary_directory.path().join("assert4rs.txt");
+        let file_path2 = temporary_directory.path().join("clearcheck.txt");
 
         let _ = File::create(file_path1).unwrap();
         let _ = File::create(file_path2).unwrap();
@@ -433,7 +433,7 @@ mod tests {
     fn should_not_contain_any_of_files() {
         let temporary_directory = TempDir::new(".").unwrap();
         let file_path1 = temporary_directory.path().join("junit.txt");
-        let file_path2 = temporary_directory.path().join("assert4rs.txt");
+        let file_path2 = temporary_directory.path().join("clearcheck.txt");
 
         let _ = File::create(file_path1).unwrap();
         let _ = File::create(file_path2).unwrap();
@@ -447,7 +447,7 @@ mod tests {
     fn should_not_contain_any_of_files_but_did() {
         let temporary_directory = TempDir::new(".").unwrap();
         let file_path1 = temporary_directory.path().join("junit.txt");
-        let file_path2 = temporary_directory.path().join("assert4rs.txt");
+        let file_path2 = temporary_directory.path().join("clearcheck.txt");
 
         let _ = File::create(file_path1).unwrap();
         let _ = File::create(file_path2).unwrap();

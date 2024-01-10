@@ -1,4 +1,4 @@
-name: assert4rs
+name: clearcheck
 
 on:
   push:

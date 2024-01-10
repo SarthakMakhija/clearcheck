@@ -1,23 +1,23 @@
-[![assert4rs](https://github.com/SarthakMakhija/assert4rs/actions/workflows/build.yml/badge.svg)](https://github.com/SarthakMakhija/assert4rs/actions/workflows/build.yml) 
+[![clearcheck](https://github.com/SarthakMakhija/clearcheck/actions/workflows/build.yml/badge.svg)](https://github.com/SarthakMakhija/clearcheck/actions/workflows/build.yml) 
 
-### assert4rs
+### clearcheck
 
-**assert4rs** offers elegant and extensible assertions for rust.
+**clearcheck** offers elegant and extensible assertions for rust.
 
 ### Example
 
 ```rust
-let libraries = vec!["assert4rs", "gotest", "junit", "scalatest"];
+let libraries = vec!["clearcheck", "gotest", "junit", "scalatest"];
 libraries
     .should_not_be_empty()
     .should_not_contain_duplicates()
-    .should_contain("assert4rs")
+    .should_contain("clearcheck")
     .should_be_sorted_ascending();
 ```
 
-### Why assert4rs?
+### Why clearcheck?
 
-### Adding assert4rs as a dependency in Cargo.toml 
+### Adding clearcheck as a dependency in Cargo.toml 
 
 ### Assertions vs Matchers
 
