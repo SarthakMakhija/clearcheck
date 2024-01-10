@@ -5,12 +5,72 @@ use num::Integer;
 use crate::matchers::int::{be_even, be_negative, be_odd, be_positive, be_zero};
 use crate::matchers::{Should, ShouldNot};
 
+/// IntAssertion enables assertions about various properties of integer numbers.
 pub trait IntAssertion<T: Integer + Debug + PartialEq + Default> {
+    /// - Asserts that the integer value is positive.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::int::IntAssertion;
+    /// let value = 10;
+    /// value.should_be_positive();
+    /// ```
     fn should_be_positive(&self) -> &Self;
+
+    /// - Asserts that the integer value is negative.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::int::IntAssertion;
+    /// let value = -10;
+    /// value.should_be_negative();
+    /// ```
     fn should_be_negative(&self) -> &Self;
+
+    /// - Asserts that the integer value is even.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::int::IntAssertion;
+    /// let value = 14;
+    /// value.should_be_even();
+    /// ```
     fn should_be_even(&self) -> &Self;
+
+    /// - Asserts that the integer value is odd.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::int::IntAssertion;
+    /// let value = 5;
+    /// value.should_be_odd();
+    /// ```
     fn should_be_odd(&self) -> &Self;
+
+    /// - Asserts that the integer value is zero.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::int::IntAssertion;
+    /// let value = 0;
+    /// value.should_be_zero();
+    /// ```
     fn should_be_zero(&self) -> &Self;
+
+    /// - Asserts that the integer value is not zero.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::int::IntAssertion;
+    /// let value = 5;
+    /// value.should_not_be_zero();
+    /// ```
     fn should_not_be_zero(&self) -> &Self;
 }
 
