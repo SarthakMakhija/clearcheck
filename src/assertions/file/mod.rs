@@ -8,30 +8,114 @@ use crate::matchers::file::{
 };
 use crate::matchers::{Should, ShouldNot};
 
+/// FileAssertion enables assertions about various properties of file or path.
+///
+///
+/// It offers a fluent interface for chaining multiple assertions.
+///
+/// # Example
+/// ```
+/// use std::fs::File;
+/// use tempdir::TempDir;
+/// use clearcheck::assertions::file::FileAssertion;
+///
+/// let temporary_directory = TempDir::new(".").unwrap();
+/// let file_path_junit = temporary_directory.path().join("junit.txt");
+/// let file_path_clearcheck = temporary_directory.path().join("clearcheck.txt");
+///
+/// let _ = File::create(file_path_junit).unwrap();
+/// let _ = File::create(file_path_clearcheck).unwrap();
+///
+/// let directory_path = temporary_directory.path();
+/// directory_path
+///     .should_be_a_directory()
+///     .should_contain_any_of_file_names(&["junit.txt", "clearcheck.txt"]);
+/// ```
 pub trait FileAssertion {
+
+    /// - Asserts that the path is a directory.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_be_a_directory(&self) -> &Self;
+
+    /// - Asserts that the path is a file.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_be_a_file(&self) -> &Self;
+
+    /// - Asserts that the path is a symbolic link.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_be_a_symbolic_link(&self) -> &Self;
 
+    /// - Asserts that the path corresponds to a zero sized file.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_be_zero_sized(&self) -> &Self;
+
+    /// - Asserts that the path corresponds to a non-zero sized file.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_not_be_zero_sized(&self) -> &Self;
 
+    /// - Asserts that the path corresponds to a readonly file.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_be_readonly(&self) -> &Self;
+
+    /// - Asserts that the path corresponds to a writable file.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_be_writable(&self) -> &Self;
 
+    /// - Asserts that the path is absolute.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_be_absolute(&self) -> &Self;
+
+    /// - Asserts that the path is relative.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_be_relative(&self) -> &Self;
 
+    /// - Asserts that the path corresponds to a file with the specified extension.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_have_extension(&self, extension: &str) -> &Self;
+
+    /// - Asserts that the path corresponds to a file that does not have the specified extension.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_not_have_extension(&self, extension: &str) -> &Self;
 
+    /// - Asserts that the path corresponds to a directory that contains the specified file name.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_contain_file_name(&self, name: &str) -> &Self;
+
+    /// - Asserts that the path corresponds to a directory that does not contain the specified file name.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_not_contain_file_name(&self, name: &str) -> &Self;
 
+    /// - Asserts that the path corresponds to a directory that contains all the specified file names.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_contain_all_file_names(&self, names: &[&str]) -> &Self;
+
+    /// - Asserts that the path corresponds to a directory that does not contain all the specified file names.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_not_contain_all_file_names(&self, names: &[&str]) -> &Self;
 
+    /// - Asserts that the path corresponds to a directory that contains any of the specified file names.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_contain_any_of_file_names(&self, names: &[&str]) -> &Self;
+
+    /// - Asserts that the path corresponds to a directory that does not contain any of the specified file names.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_not_contain_any_of_file_names(&self, names: &[&str]) -> &Self;
 }
 
