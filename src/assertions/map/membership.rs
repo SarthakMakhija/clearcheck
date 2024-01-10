@@ -48,7 +48,7 @@ pub trait KeyMembershipAssertion<K> {
         Q: Hash + Eq + Debug + ?Sized;
 }
 
-pub trait ValueMembershipAssertion<K, V> {
+pub trait ValueMembershipAssertion<V> {
     fn should_contain_value<S>(&self, value: &S) -> &Self
     where
         V: Eq + Borrow<S>,
@@ -198,7 +198,7 @@ where
     }
 }
 
-impl<K, V> ValueMembershipAssertion<K, V> for HashMap<K, V>
+impl<K, V> ValueMembershipAssertion<V> for HashMap<K, V>
 where
     K: Hash + Eq + Debug,
     V: Debug,
