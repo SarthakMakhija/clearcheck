@@ -6,6 +6,18 @@ use crate::matchers::int::{be_even, be_negative, be_odd, be_positive, be_zero};
 use crate::matchers::{Should, ShouldNot};
 
 /// IntAssertion enables assertions about various properties of integer numbers.
+///
+/// # Example
+/// ```
+/// use clearcheck::assertions::int::IntAssertion;
+/// use clearcheck::assertions::ordered::OrderedAssertion;
+///
+/// let value = 24;
+/// value
+///     .should_be_positive()
+///     .should_be_even()
+///     .should_be_in_inclusive_range(10..=40); // from clearcheck::assertions::ordered::OrderedAssertion;
+/// ```
 pub trait IntAssertion<T: Integer + Debug + PartialEq + Default> {
     /// - Asserts that the integer value is positive.
     /// - Returns a reference to self for fluent chaining.
@@ -13,6 +25,7 @@ pub trait IntAssertion<T: Integer + Debug + PartialEq + Default> {
     /// # Example
     /// ```
     /// use clearcheck::assertions::int::IntAssertion;
+    ///
     /// let value = 10;
     /// value.should_be_positive();
     /// ```
@@ -24,6 +37,7 @@ pub trait IntAssertion<T: Integer + Debug + PartialEq + Default> {
     /// # Example
     /// ```
     /// use clearcheck::assertions::int::IntAssertion;
+    ///
     /// let value = -10;
     /// value.should_be_negative();
     /// ```
@@ -35,6 +49,7 @@ pub trait IntAssertion<T: Integer + Debug + PartialEq + Default> {
     /// # Example
     /// ```
     /// use clearcheck::assertions::int::IntAssertion;
+    ///
     /// let value = 14;
     /// value.should_be_even();
     /// ```
@@ -46,6 +61,7 @@ pub trait IntAssertion<T: Integer + Debug + PartialEq + Default> {
     /// # Example
     /// ```
     /// use clearcheck::assertions::int::IntAssertion;
+    ///
     /// let value = 5;
     /// value.should_be_odd();
     /// ```
@@ -57,6 +73,7 @@ pub trait IntAssertion<T: Integer + Debug + PartialEq + Default> {
     /// # Example
     /// ```
     /// use clearcheck::assertions::int::IntAssertion;
+    ///
     /// let value = 0;
     /// value.should_be_zero();
     /// ```
@@ -68,6 +85,7 @@ pub trait IntAssertion<T: Integer + Debug + PartialEq + Default> {
     /// # Example
     /// ```
     /// use clearcheck::assertions::int::IntAssertion;
+    ///
     /// let value = 5;
     /// value.should_not_be_zero();
     /// ```

@@ -9,6 +9,7 @@ pub trait TrueFalseAssertion {
     /// # Example
     /// ```
     /// use clearcheck::assertions::bool::TrueFalseAssertion;
+    ///
     /// let value = true;
     /// value.should_be_true();
     /// ```
@@ -20,6 +21,7 @@ pub trait TrueFalseAssertion {
     /// # Example
     /// ```
     /// use clearcheck::assertions::bool::TrueFalseAssertion;
+    ///
     /// let value = false;
     /// value.should_be_false();
     /// ```

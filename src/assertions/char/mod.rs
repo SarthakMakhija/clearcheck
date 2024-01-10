@@ -12,6 +12,7 @@ pub trait RangeAssertion {
     /// # Example
     /// ```
     /// use clearcheck::assertions::char::RangeAssertion;
+    ///
     /// let letter = 'd';
     /// letter.should_be_in_inclusive_range('a'..='d');
     /// ```
@@ -23,6 +24,7 @@ pub trait RangeAssertion {
     /// # Example
     /// ```
     /// use clearcheck::assertions::char::RangeAssertion;
+    ///
     /// let letter = 'd';
     /// letter.should_not_be_in_inclusive_range('a'..='c');
     /// ```
@@ -34,6 +36,7 @@ pub trait RangeAssertion {
     /// # Example
     /// ```
     /// use clearcheck::assertions::char::RangeAssertion;
+    ///
     /// let letter = 'd';
     /// letter.should_be_in_exclusive_range('a'..'e');
     /// ```
@@ -45,6 +48,7 @@ pub trait RangeAssertion {
     /// # Example
     /// ```
     /// use clearcheck::assertions::char::RangeAssertion;
+    ///
     /// let letter = 'd';
     /// letter.should_not_be_in_exclusive_range('a'..'d');
     /// ```

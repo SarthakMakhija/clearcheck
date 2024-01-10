@@ -6,6 +6,19 @@ use crate::matchers::range::{be_in_exclusive_range, be_in_inclusive_range};
 use crate::matchers::{Should, ShouldNot};
 
 /// FloatAssertion enables assertions about various properties of floating-point numbers, considering their inherent imprecision.
+///
+/// It offers a fluent interface for chaining multiple assertions.
+///
+/// # Example
+/// ```
+/// use clearcheck::assertions::float::FloatAssertion;
+///
+/// let value: f64 = 1.34589;
+/// value
+///     .should_not_be_nan()
+///     .should_be_positive()
+///     .should_be_in_inclusive_range_with_tolerance(1.11..=1.3458, 0.23);
+/// ```
 pub trait FloatAssertion<T: num::Float + Debug + Default + PartialEq> {
     /// - Asserts that the floating-point value is NaN (Not a Number).
     /// - Returns a reference to self for fluent chaining.
@@ -13,6 +26,7 @@ pub trait FloatAssertion<T: num::Float + Debug + Default + PartialEq> {
     /// # Example
     /// ```
     /// use clearcheck::assertions::float::FloatAssertion;
+    ///
     /// let value: f64 = num::Float::nan();
     /// value.should_be_nan();
     /// ```
@@ -24,6 +38,7 @@ pub trait FloatAssertion<T: num::Float + Debug + Default + PartialEq> {
     /// # Example
     /// ```
     /// use clearcheck::assertions::float::FloatAssertion;
+    ///
     /// let value: f64 = 1.23;
     /// value.should_not_be_nan();
     /// ```
@@ -35,6 +50,7 @@ pub trait FloatAssertion<T: num::Float + Debug + Default + PartialEq> {
     /// # Example
     /// ```
     /// use clearcheck::assertions::float::FloatAssertion;
+    ///
     /// let value: f64 = 0.0;
     /// value.should_be_zero();
     /// ```
@@ -46,6 +62,7 @@ pub trait FloatAssertion<T: num::Float + Debug + Default + PartialEq> {
     /// # Example
     /// ```
     /// use clearcheck::assertions::float::FloatAssertion;
+    ///
     /// let value: f64 = 1.23;
     /// value.should_not_be_zero();
     /// ```
@@ -57,6 +74,7 @@ pub trait FloatAssertion<T: num::Float + Debug + Default + PartialEq> {
     /// # Example
     /// ```
     /// use clearcheck::assertions::float::FloatAssertion;
+    ///
     /// let value: f64 = 1.24;
     /// value.should_be_positive();
     /// ```
@@ -68,6 +86,7 @@ pub trait FloatAssertion<T: num::Float + Debug + Default + PartialEq> {
     /// # Example
     /// ```
     /// use clearcheck::assertions::float::FloatAssertion;
+    ///
     /// let value: f64 = -1.23;
     /// value.should_be_negative();
     /// ```
@@ -79,6 +98,7 @@ pub trait FloatAssertion<T: num::Float + Debug + Default + PartialEq> {
     /// # Example
     /// ```
     /// use clearcheck::assertions::float::FloatAssertion;
+    ///
     /// let value: f64 = 1.34589;
     /// value.should_be_in_inclusive_range_with_tolerance(1.11..=1.3458, 0.23);
     /// ```
@@ -94,6 +114,7 @@ pub trait FloatAssertion<T: num::Float + Debug + Default + PartialEq> {
     /// # Example
     /// ```
     /// use clearcheck::assertions::float::FloatAssertion;
+    ///
     /// let value: f64 = 1.34589;
     /// value.should_not_be_in_inclusive_range_with_tolerance(1.11..=1.12, 0.12);
     /// ```
@@ -109,6 +130,7 @@ pub trait FloatAssertion<T: num::Float + Debug + Default + PartialEq> {
     /// # Example
     /// ```
     /// use clearcheck::assertions::float::FloatAssertion;
+    ///
     /// let value: f64 = 1.34589;
     /// value.should_be_in_exclusive_range_with_tolerance(1.11..1.3458, 0.23);
     /// ```
@@ -120,6 +142,7 @@ pub trait FloatAssertion<T: num::Float + Debug + Default + PartialEq> {
     /// # Example
     /// ```
     /// use clearcheck::assertions::float::FloatAssertion;
+    ///
     /// let value: f64 = 1.34589;
     /// value.should_not_be_in_exclusive_range_with_tolerance(1.11..1.12, 0.10);
     /// ```
