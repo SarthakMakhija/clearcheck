@@ -1,8 +1,28 @@
 use crate::matchers::bool::{be_false, be_true};
 use crate::matchers::Should;
 
+/// TrueFalseAssertion enables assertions about whether a boolean evaluates to true or false.
 pub trait TrueFalseAssertion {
+    /// - Asserts that the boolean evaluates to true.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::bool::TrueFalseAssertion;
+    /// let value = true;
+    /// value.should_be_true();
+    /// ```
     fn should_be_true(&self) -> &Self;
+
+    /// - Asserts that the boolean evaluates to false.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::bool::TrueFalseAssertion;
+    /// let value = false;
+    /// value.should_be_false();
+    /// ```
     fn should_be_false(&self) -> &Self;
 }
 
