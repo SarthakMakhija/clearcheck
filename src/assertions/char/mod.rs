@@ -6,7 +6,7 @@ use crate::matchers::{Should, ShouldNot};
 
 /// RangeAssertion enables assertions about whether a character falls within a specified range.
 pub trait RangeAssertion {
-    /// - Asserts that the character belongs to the given inclusive range.
+    /// - Asserts that the character falls within the given inclusive range.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -17,7 +17,7 @@ pub trait RangeAssertion {
     /// ```
     fn should_be_in_inclusive_range(&self, range: RangeInclusive<char>) -> &Self;
 
-    /// - Asserts that the character does not belong to the given inclusive range.
+    /// - Asserts that the character does not falls within the given inclusive range.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -28,7 +28,7 @@ pub trait RangeAssertion {
     /// ```
     fn should_not_be_in_inclusive_range(&self, range: RangeInclusive<char>) -> &Self;
 
-    /// - Asserts that the character belongs to the given exclusive range.
+    /// - Asserts that the character falls within the given exclusive range.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -39,7 +39,7 @@ pub trait RangeAssertion {
     /// ```
     fn should_be_in_exclusive_range(&self, range: Range<char>) -> &Self;
 
-    /// - Asserts that the character does not belong to the given exclusive range.
+    /// - Asserts that the character falls within the given exclusive range.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example

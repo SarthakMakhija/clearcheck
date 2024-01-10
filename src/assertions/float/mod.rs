@@ -5,29 +5,124 @@ use crate::matchers::float::{be_nan, be_negative, be_positive, be_zero};
 use crate::matchers::range::{be_in_exclusive_range, be_in_inclusive_range};
 use crate::matchers::{Should, ShouldNot};
 
+/// FloatAssertion enables assertions about various properties of floating-point numbers, considering their inherent imprecision.
 pub trait FloatAssertion<T: num::Float + Debug + Default + PartialEq> {
+    /// - Asserts that the floating-point value is NaN (Not a Number).
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::float::FloatAssertion;
+    /// let value: f64 = num::Float::nan();
+    /// value.should_be_nan();
+    /// ```
     fn should_be_nan(&self) -> &Self;
+
+    /// - Asserts that the floating-point value is not NaN (Not a Number).
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::float::FloatAssertion;
+    /// let value: f64 = 1.23;
+    /// value.should_not_be_nan();
+    /// ```
     fn should_not_be_nan(&self) -> &Self;
+
+    /// - Asserts that the floating-point value is zero.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::float::FloatAssertion;
+    /// let value: f64 = 0.0;
+    /// value.should_be_zero();
+    /// ```
     fn should_be_zero(&self) -> &Self;
+
+    /// - Asserts that the floating-point value is not zero.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::float::FloatAssertion;
+    /// let value: f64 = 1.23;
+    /// value.should_not_be_zero();
+    /// ```
     fn should_not_be_zero(&self) -> &Self;
 
+    /// - Asserts that the floating-point value is positive.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::float::FloatAssertion;
+    /// let value: f64 = 1.24;
+    /// value.should_be_positive();
+    /// ```
     fn should_be_positive(&self) -> &Self;
+
+    /// - Asserts that the floating-point value is negative.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::float::FloatAssertion;
+    /// let value: f64 = -1.23;
+    /// value.should_be_negative();
+    /// ```
     fn should_be_negative(&self) -> &Self;
 
+    /// - Asserts that the floating-point value falls within the given inclusive range with tolerance.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::float::FloatAssertion;
+    /// let value: f64 = 1.34589;
+    /// value.should_be_in_inclusive_range_with_tolerance(1.11..=1.3458, 0.23);
+    /// ```
     fn should_be_in_inclusive_range_with_tolerance(
         &self,
         range: RangeInclusive<T>,
         tolerance: T,
     ) -> &Self;
 
+    /// - Asserts that the floating-point value does not fall within the given inclusive range with tolerance.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::float::FloatAssertion;
+    /// let value: f64 = 1.34589;
+    /// value.should_not_be_in_inclusive_range_with_tolerance(1.11..=1.12, 0.12);
+    /// ```
     fn should_not_be_in_inclusive_range_with_tolerance(
         &self,
         range: RangeInclusive<T>,
         tolerance: T,
     ) -> &Self;
 
+    /// - Asserts that the floating-point value falls within the given exclusive range with tolerance.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::float::FloatAssertion;
+    /// let value: f64 = 1.34589;
+    /// value.should_be_in_exclusive_range_with_tolerance(1.11..1.3458, 0.23);
+    /// ```
     fn should_be_in_exclusive_range_with_tolerance(&self, range: Range<T>, tolerance: T) -> &Self;
 
+    /// - Asserts that the floating-point value does not fall within the given exclusive range with tolerance.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::float::FloatAssertion;
+    /// let value: f64 = 1.34589;
+    /// value.should_not_be_in_exclusive_range_with_tolerance(1.11..1.12, 0.10);
+    /// ```
     fn should_not_be_in_exclusive_range_with_tolerance(
         &self,
         range: Range<T>,
