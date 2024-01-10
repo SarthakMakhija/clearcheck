@@ -3,8 +3,30 @@ use std::str::FromStr;
 use crate::matchers::string::numeric::be_numeric;
 use crate::matchers::{Should, ShouldNot};
 
+/// NumericAssertion enables assertions about whether a string (or str) is numeric.
 pub trait NumericAssertion {
+    /// - Asserts that the string is numeric.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::string::numeric::NumericAssertion;
+    ///
+    /// let name = "12345";
+    /// name.should_be_numeric::<i32>();
+    /// ```
     fn should_be_numeric<T: FromStr>(&self) -> &Self;
+
+    /// - Asserts that the string is not numeric.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::string::numeric::NumericAssertion;
+    ///
+    /// let name = "assert4j";
+    /// name.should_not_be_numeric::<i32>();
+    /// ```
     fn should_not_be_numeric<T: FromStr>(&self) -> &Self;
 }
 

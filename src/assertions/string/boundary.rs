@@ -1,10 +1,36 @@
 use crate::matchers::string::boundary::{begin_with, end_with};
 use crate::matchers::{Should, ShouldNot};
 
+/// BoundaryAssertion enables assertions about the beginning and ending boundaries of string (or str) values.
+///
+/// # Example
+/// ```
+/// use clearcheck::assertions::string::boundary::BoundaryAssertion;
+///
+/// let value = "clearcheck";
+/// value
+///     .should_begin_with("clear")
+///     .should_end_with("check");
+/// ```
 pub trait BoundaryAssertion {
+    /// - Asserts that the string begins with the specified prefix.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_begin_with(&self, prefix: &str) -> &Self;
+
+    /// - Asserts that the string does not begin with the specified prefix
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_not_begin_with(&self, prefix: &str) -> &Self;
+
+    /// - Asserts that the string ends with the specified suffix.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_end_with(&self, suffix: &str) -> &Self;
+
+    /// - Asserts that the string does not end with the specified suffix.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_not_end_with(&self, suffix: &str) -> &Self;
 }
 

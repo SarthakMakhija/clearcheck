@@ -1,8 +1,30 @@
 use crate::matchers::string::case::{be_lowercase, be_uppercase};
 use crate::matchers::Should;
 
+/// CaseAssertion enables assertions about whether a string (or str) is lowercase or uppercase.
 pub trait CaseAssertion {
+    /// - Asserts that the string is lowercase.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::string::case::CaseAssertion;
+    ///
+    /// let name = "clearcheck";
+    /// name.should_be_lower_case();
+    /// ```
     fn should_be_lower_case(&self) -> &Self;
+
+    /// - Asserts that the string is uppercase.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::string::case::CaseAssertion;
+    ///
+    /// let name = "CLEARCHECK";
+    /// name.should_be_upper_case();
+    /// ```
     fn should_be_upper_case(&self) -> &Self;
 }
 

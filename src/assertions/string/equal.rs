@@ -1,8 +1,29 @@
 use crate::matchers::equal::be_equal_ignoring_case;
 use crate::matchers::{Should, ShouldNot};
 
+/// IgnoreCaseEqualityAssertion enables assertions about whether a string (or str) equals other string, with case ignored.
 pub trait IgnoreCaseEqualityAssertion {
+
+    /// - Asserts that the string equals other string, with case ignored.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::string::equal::IgnoreCaseEqualityAssertion;
+    /// let name = "clearcheck";
+    /// name.should_be_equal_ignoring_case("CLearCheck");
+    /// ```
     fn should_be_equal_ignoring_case(&self, other: &str) -> &Self;
+
+    /// - Asserts that the string does not equal other string, with case ignored.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::string::equal::IgnoreCaseEqualityAssertion;
+    /// let name = "clearcheck";
+    /// name.should_not_be_equal_ignoring_case("CLEARCHECK-001");
+    /// ```
     fn should_not_be_equal_ignoring_case(&self, other: &str) -> &Self;
 }
 

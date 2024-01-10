@@ -5,17 +5,74 @@ use crate::matchers::string::membership::{
 };
 use crate::matchers::{Should, ShouldNot};
 
+/// MembershipAssertion enables assertions about the presence or absence of characters, substrings, or digits within string (or str) values.
+///
+/// # Example
+/// ```
+/// use clearcheck::assertions::string::membership::MembershipAssertion;
+///
+/// let pass_phrase = "P@ssw0rd123 phrase alpha";
+/// pass_phrase
+///     .should_contain_a_digit()
+///     .should_not_be_empty()
+///     .should_contain_character('@')
+///     .should_contain_ignoring_case("ALPHA");
+/// ```
 pub trait MembershipAssertion {
+
+    /// - Asserts that the string contains only digits.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_only_contain_digits(&self) -> &Self;
+
+    /// - Asserts that the string contains a digit.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_contain_a_digit(&self) -> &Self;
+
+    /// - Asserts that the string does not contain any digits.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_not_contain_digits(&self) -> &Self;
+
+    /// - Asserts that the string contains the specified character.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_contain_character(&self, ch: char) -> &Self;
+
+    /// - Asserts that the string does not contain the specified character.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_not_contain_character(&self, ch: char) -> &Self;
+
+    /// - Asserts that the string contains the specified substring.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_contain(&self, substr: &str) -> &Self;
+
+    /// - Asserts that the string does not contain the specified substring.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_not_contain(&self, substr: &str) -> &Self;
+
+    /// - Asserts that the string contains the substring, ignoring case differences.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_contain_ignoring_case(&self, substr: &str) -> &Self;
+
+    /// - Asserts that the string does not contain the substring, ignoring case differences.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_not_contain_ignoring_case(&self, substr: &str) -> &Self;
+
+    /// - Asserts that the string is empty (has zero characters).
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_be_empty(&self) -> &Self;
+
+    /// - Asserts that the string is not empty.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_not_be_empty(&self) -> &Self;
 }
 

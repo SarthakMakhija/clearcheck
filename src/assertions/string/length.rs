@@ -6,14 +6,63 @@ use crate::matchers::length::{
 use crate::matchers::range::{have_length_in_exclusive_range, have_length_in_inclusive_range};
 use crate::matchers::{Should, ShouldNot};
 
+/// LengthAssertion enables assertions about the length of string (or str) values.
+///
+/// # Example
+/// ```
+/// use clearcheck::assertions::string::length::LengthAssertion;
+///
+/// let name = "clearcheck";
+/// name
+///     .should_have_at_least_length(5)
+///     .should_have_length_in_inclusive_range(5..=10);
+///
+/// let name = "assert";
+/// name
+///     .should_have_at_most_length(6)
+///     .should_not_have_length_in_exclusive_range(7..10);
+
+/// ```
 pub trait LengthAssertion {
+
+    /// - Asserts that the string's length is exactly the specified length.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_have_length(&self, length: usize) -> &Self;
+
+    /// - Asserts that the string's length is not the specified length.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_not_have_length(&self, length: usize) -> &Self;
+
+    /// - Asserts that the string's length is greater than or equal to the specified length.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_have_at_least_length(&self, length: usize) -> &Self;
+
+    /// - Asserts that the string's length is less than or equal to the specified length.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_have_at_most_length(&self, length: usize) -> &Self;
+
+    /// - Asserts that the string's length falls within the specified inclusive range.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_have_length_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self;
+
+    /// - Asserts that the string's length does not fall within the specified inclusive range.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_not_have_length_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self;
+
+    /// - Asserts that the string's length falls within the specified exclusive range.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_have_length_in_exclusive_range(&self, range: Range<usize>) -> &Self;
+
+    /// - Asserts that the string's length does not fall within the specified exclusive range.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
     fn should_not_have_length_in_exclusive_range(&self, range: Range<usize>) -> &Self;
 }
 
