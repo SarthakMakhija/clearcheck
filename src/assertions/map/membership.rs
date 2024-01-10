@@ -16,7 +16,7 @@ pub trait NoMembershipAssertion<K, V> {
     fn should_not_be_empty(&self) -> &Self;
 }
 
-pub trait KeyMembershipAssertion<K, V> {
+pub trait KeyMembershipAssertion<K> {
     fn should_contain_key<Q>(&self, key: &Q) -> &Self
     where
         K: Borrow<Q>,
@@ -139,7 +139,7 @@ where
     }
 }
 
-impl<K, V> KeyMembershipAssertion<K, V> for HashMap<K, V>
+impl<K, V> KeyMembershipAssertion<K> for HashMap<K, V>
 where
     K: Hash + Eq + Debug,
 {
