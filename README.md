@@ -32,3 +32,6 @@ libraries
 ### Writing custom assertions and matchers
 
 ### Features
+
+### Example project
+[clearcheck examples](https://github.com/SarthakMakhija/clearcheck-examples)
