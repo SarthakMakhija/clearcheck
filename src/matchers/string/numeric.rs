@@ -3,22 +3,22 @@ use std::str::FromStr;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub struct NumericMatcher<T: FromStr> {
-    _inner: PhantomData<T>,
+pub struct NumericMatcher<M: FromStr> {
+    _inner: PhantomData<M>,
 }
 
-impl<T: FromStr> Matcher<&str> for NumericMatcher<T> {
-    fn test(&self, value: &&str) -> MatcherResult {
-        let parse_result = value.parse::<T>();
+impl<T: AsRef<str>, M: FromStr> Matcher<T> for NumericMatcher<M> {
+    fn test(&self, value: &T) -> MatcherResult {
+        let parse_result = value.as_ref().parse::<M>();
         MatcherResult::formatted(
             parse_result.is_ok(),
-            format!("{:?} should be numeric", value),
-            format!("{:?} should not be numeric", value),
+            format!("{:?} should be numeric", value.as_ref()),
+            format!("{:?} should not be numeric", value.as_ref()),
         )
     }
 }
 
-pub fn be_numeric<T: FromStr>() -> NumericMatcher<T> {
+pub fn be_numeric<M: FromStr>() -> NumericMatcher<M> {
     NumericMatcher {
         _inner: PhantomData,
     }
@@ -27,8 +27,8 @@ pub fn be_numeric<T: FromStr>() -> NumericMatcher<T> {
 #[cfg(test)]
 mod tests {
     use crate::assertions::bool::TrueFalseAssertion;
-    use crate::matchers::string::numeric::be_numeric;
     use crate::matchers::Matcher;
+    use crate::matchers::string::numeric::be_numeric;
 
     #[test]
     fn should_be_numeric_i32() {

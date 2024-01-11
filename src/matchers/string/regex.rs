@@ -6,17 +6,17 @@ pub struct RegexMatcher<'a> {
     regexp: &'a Regex,
 }
 
-impl Matcher<&str> for RegexMatcher<'_> {
-    fn test(&self, value: &&str) -> MatcherResult {
+impl<T: AsRef<str>> Matcher<T> for RegexMatcher<'_> {
+    fn test(&self, value: &T) -> MatcherResult {
         MatcherResult::formatted(
-            self.regexp.is_match(value),
+            self.regexp.is_match(value.as_ref()),
             format!(
                 "{:?} should match the regular expression {:?}",
-                value, self.regexp
+                value.as_ref(), self.regexp
             ),
             format!(
                 "{:?} should not match the regular expression {:?}",
-                value, self.regexp
+                value.as_ref(), self.regexp
             ),
         )
     }

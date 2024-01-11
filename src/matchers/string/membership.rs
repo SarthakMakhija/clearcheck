@@ -11,53 +11,55 @@ pub enum MembershipMatcher<'a> {
     SubstrIgnoringCase(&'a str),
 }
 
-impl<'a> Matcher<&str> for MembershipMatcher<'a> {
-    fn test(&self, value: &&str) -> MatcherResult {
+impl<'a, T> Matcher<T> for MembershipMatcher<'a>
+where T: AsRef<str>
+{
+    fn test(&self, value: &T) -> MatcherResult {
         match self {
             MembershipMatcher::OnlyDigits => MatcherResult::formatted(
-                value.chars().all(|ch| ch.is_numeric()),
-                format!("{:?} should contain only digits", value),
-                format!("{:?} should not contain only digits", value),
+                value.as_ref().chars().all(|ch| ch.is_numeric()),
+                format!("{:?} should contain only digits", value.as_ref()),
+                format!("{:?} should not contain only digits", value.as_ref()),
             ),
             MembershipMatcher::ADigit => MatcherResult::formatted(
-                value.chars().any(|ch| ch.is_numeric()),
-                format!("{:?} should contain a digit", value),
-                format!("{:?} should not contain a digit", value),
+                value.as_ref().chars().any(|ch| ch.is_numeric()),
+                format!("{:?} should contain a digit", value.as_ref()),
+                format!("{:?} should not contain a digit", value.as_ref()),
             ),
             MembershipMatcher::NoDigits => MatcherResult::formatted(
-                !value.chars().any(|ch| ch.is_numeric()),
-                format!("{:?} should contain no digits", value),
-                format!("{:?} should contain digits", value),
+                !value.as_ref().chars().any(|ch| ch.is_numeric()),
+                format!("{:?} should contain no digits", value.as_ref()),
+                format!("{:?} should contain digits", value.as_ref()),
             ),
             MembershipMatcher::Char(ch) => MatcherResult::formatted(
-                value.chars().any(|source| &source == ch),
-                format!("{:?} should contain the character {:?}", value, ch),
-                format!("{:?} should not contain the character {:?}", value, ch),
+                value.as_ref().chars().any(|source| &source == ch),
+                format!("{:?} should contain the character {:?}", value.as_ref(), ch),
+                format!("{:?} should not contain the character {:?}", value.as_ref(), ch),
             ),
             MembershipMatcher::AllChars(chars) => MatcherResult::formatted(
-                chars.iter().all(|ch| value.contains(*ch)),
-                format!("{:?} should contain all characters {:?}", value, chars),
-                format!("{:?} should not contain all characters {:?}", value, chars),
+                chars.iter().all(|ch| value.as_ref().contains(*ch)),
+                format!("{:?} should contain all characters {:?}", value.as_ref(), chars),
+                format!("{:?} should not contain all characters {:?}", value.as_ref(), chars),
             ),
             MembershipMatcher::AnyChars(chars) => MatcherResult::formatted(
-                chars.iter().any(|ch| value.contains(*ch)),
-                format!("{:?} should contain any of the characters {:?}", value, chars),
-                format!("{:?} should not contain any of the characters {:?}", value, chars),
+                chars.iter().any(|ch| value.as_ref().contains(*ch)),
+                format!("{:?} should contain any of the characters {:?}", value.as_ref(), chars),
+                format!("{:?} should not contain any of the characters {:?}", value.as_ref(), chars),
             ),
             MembershipMatcher::Substr(substr) => MatcherResult::formatted(
-                value.contains(substr),
-                format!("{:?} should contain the substring {:?}", value, substr),
-                format!("{:?} should not contain the substring {:?}", value, substr),
+                value.as_ref().contains(substr),
+                format!("{:?} should contain the substring {:?}", value.as_ref(), substr),
+                format!("{:?} should not contain the substring {:?}", value.as_ref(), substr),
             ),
             MembershipMatcher::SubstrIgnoringCase(substr) => MatcherResult::formatted(
-                value.to_lowercase().contains(&substr.to_lowercase()),
+                value.as_ref().to_lowercase().contains(&substr.to_lowercase()),
                 format!(
                     "{:?} should contain the substring ignoring case {:?}",
-                    value, substr
+                    value.as_ref(), substr
                 ),
                 format!(
                     "{:?} should not contain the substring ignoring case {:?}",
-                    value, substr
+                    value.as_ref(), substr
                 ),
             ),
         }

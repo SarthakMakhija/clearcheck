@@ -5,18 +5,20 @@ pub enum CaseMatcher {
     Upper,
 }
 
-impl Matcher<&str> for CaseMatcher {
-    fn test(&self, value: &&str) -> MatcherResult {
+impl<T> Matcher<T> for CaseMatcher
+where T: AsRef<str> + PartialEq
+{
+    fn test(&self, value: &T) -> MatcherResult {
         match self {
             CaseMatcher::Lower => MatcherResult::formatted(
-                value == &value.to_lowercase(),
-                format!("{:?} should be lowercase", value),
-                format!("{:?} should not be lowercase", value),
+                value.as_ref() == value.as_ref().to_lowercase(),
+                format!("{:?} should be lowercase", value.as_ref()),
+                format!("{:?} should not be lowercase", value.as_ref()),
             ),
             CaseMatcher::Upper => MatcherResult::formatted(
-                value == &value.to_uppercase(),
-                format!("{:?} should be uppercase", value),
-                format!("{:?} should not be uppercase", value),
+                value.as_ref() == value.as_ref().to_uppercase(),
+                format!("{:?} should be uppercase", value.as_ref()),
+                format!("{:?} should not be uppercase", value.as_ref()),
             ),
         }
     }

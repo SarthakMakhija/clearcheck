@@ -1,12 +1,14 @@
 use crate::matchers::equal::IgnoreCaseEqualityMatcher;
 use crate::matchers::{Matcher, MatcherResult};
 
-impl Matcher<&str> for IgnoreCaseEqualityMatcher<'_, &str> {
-    fn test(&self, value: &&str) -> MatcherResult {
+impl<T> Matcher<T> for IgnoreCaseEqualityMatcher<'_, &str>
+where T: AsRef<str>
+{
+    fn test(&self, value: &T) -> MatcherResult {
         MatcherResult::formatted(
-            value.eq_ignore_ascii_case(self.other),
-            format!("{:?} should equal {:?}", value, self.other),
-            format!("{:?} should not equal {:?}", value, self.other),
+            value.as_ref().eq_ignore_ascii_case(self.other),
+            format!("{:?} should equal {:?}", value.as_ref(), self.other),
+            format!("{:?} should not equal {:?}", value.as_ref(), self.other),
         )
     }
 }

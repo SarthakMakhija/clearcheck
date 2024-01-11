@@ -5,18 +5,20 @@ pub enum BoundaryMatcher<'a> {
     End(&'a str),
 }
 
-impl<'a> Matcher<&str> for BoundaryMatcher<'a> {
-    fn test(&self, value: &&str) -> MatcherResult {
+impl<'a, T> Matcher<T> for BoundaryMatcher<'a>
+    where T: AsRef<str>
+{
+    fn test(&self, value: &T) -> MatcherResult {
         match self {
             BoundaryMatcher::Begin(prefix) => MatcherResult::formatted(
-                value.starts_with(prefix),
-                format!("{:?} should begin with {:?}", value, prefix),
-                format!("{:?} should not begin with {:?}", value, prefix),
+                value.as_ref().starts_with(prefix),
+                format!("{:?} should begin with {:?}", value.as_ref(), prefix),
+                format!("{:?} should not begin with {:?}", value.as_ref(), prefix),
             ),
             BoundaryMatcher::End(suffix) => MatcherResult::formatted(
-                value.ends_with(suffix),
-                format!("{:?} should end with {:?}", value, suffix),
-                format!("{:?} should not end with {:?}", value, suffix),
+                value.as_ref().ends_with(suffix),
+                format!("{:?} should end with {:?}", value.as_ref(), suffix),
+                format!("{:?} should not end with {:?}", value.as_ref(), suffix),
             ),
         }
     }
@@ -33,8 +35,8 @@ pub fn end_with(suffix: &str) -> BoundaryMatcher<'_> {
 #[cfg(test)]
 mod tests {
     use crate::assertions::bool::TrueFalseAssertion;
-    use crate::matchers::string::boundary::{begin_with, end_with};
     use crate::matchers::Matcher;
+    use crate::matchers::string::boundary::{begin_with, end_with};
 
     #[test]
     fn should_begin_with() {
