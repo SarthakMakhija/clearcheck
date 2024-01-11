@@ -12,7 +12,6 @@ pub mod file;
 pub mod float;
 #[cfg(feature = "num")]
 pub mod int;
-pub mod length;
 pub mod map;
 pub mod option;
 pub mod ordered;

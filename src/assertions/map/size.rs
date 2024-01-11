@@ -4,7 +4,7 @@ use std::hash::Hash;
 use std::ops::{Range, RangeInclusive};
 
 use crate::assertions::collection::size::SizeAssertion;
-use crate::matchers::length::{
+use crate::matchers::map::length::{
     have_atleast_same_length, have_atmost_same_length, have_same_length,
 };
 use crate::matchers::range::{have_length_in_exclusive_range, have_length_in_inclusive_range};
