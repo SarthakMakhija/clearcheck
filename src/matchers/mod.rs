@@ -4,7 +4,6 @@ pub mod collection;
 pub mod compose;
 #[cfg(feature = "date")]
 pub mod date;
-pub mod empty;
 pub mod equal;
 #[cfg(feature = "file")]
 pub mod file;

@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::fmt::Debug;
 use std::hash::Hash;
 
-use crate::matchers::empty::be_empty;
+use crate::matchers::map::empty::be_empty;
 use crate::matchers::map::membership::{
     contain_all_key_values, contain_all_keys, contain_all_values, contain_any_of_key_values,
     contain_any_of_keys, contain_any_of_values, contain_key, contain_key_value, contain_value,

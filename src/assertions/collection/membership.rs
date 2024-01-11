@@ -2,7 +2,7 @@ use std::borrow::Borrow;
 use std::fmt::Debug;
 
 use crate::matchers::collection::membership::{contain, contain_all, contain_any};
-use crate::matchers::empty::be_empty;
+use crate::matchers::collection::empty::be_empty;
 use crate::matchers::{Should, ShouldNot};
 
 pub trait MembershipAssertion<T>

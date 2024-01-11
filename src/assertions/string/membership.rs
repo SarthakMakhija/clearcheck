@@ -1,5 +1,5 @@
 use crate::matchers::{Should, ShouldNot};
-use crate::matchers::empty::be_empty;
+use crate::matchers::string::empty::be_empty;
 use crate::matchers::string::membership::{contain, contain_a_digit, contain_all_characters, contain_any_of_characters, contain_character, contain_ignoring_case, contain_only_digits, not_contain_digits};
 
 /// MembershipAssertion enables assertions about the presence or absence of characters, substrings, or digits within string (or str) values.

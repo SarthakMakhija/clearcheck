@@ -80,7 +80,7 @@ where
 mod string_matchers {
     use crate::assertions::bool::TrueFalseAssertion;
     use crate::matchers::compose::Matchers;
-    use crate::matchers::empty::be_empty;
+    use crate::matchers::string::empty::be_empty;
     use crate::matchers::string::length::have_atleast_same_length;
     use crate::matchers::string::boundary::{begin_with, end_with};
     use crate::matchers::{BoxWrap, Invert, Matcher};
