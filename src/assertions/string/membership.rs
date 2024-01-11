@@ -1,9 +1,6 @@
-use crate::matchers::empty::be_empty;
-use crate::matchers::string::membership::{
-    contain, contain_a_digit, contain_character, contain_ignoring_case, contain_only_digits,
-    not_contain_digits,
-};
 use crate::matchers::{Should, ShouldNot};
+use crate::matchers::empty::be_empty;
+use crate::matchers::string::membership::{contain, contain_a_digit, contain_all_characters, contain_any_of_characters, contain_character, contain_ignoring_case, contain_only_digits, not_contain_digits};
 
 /// MembershipAssertion enables assertions about the presence or absence of characters, substrings, or digits within string (or str) values.
 ///
@@ -19,7 +16,6 @@ use crate::matchers::{Should, ShouldNot};
 ///     .should_contain_ignoring_case("ALPHA");
 /// ```
 pub trait MembershipAssertion {
-
     /// - Asserts that the string contains only digits.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
@@ -44,6 +40,12 @@ pub trait MembershipAssertion {
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     fn should_not_contain_character(&self, ch: char) -> &Self;
+
+    fn should_contain_all_characters(&self, chars: &[char]) -> &Self;
+    fn should_not_contain_all_characters(&self, chars: &[char]) -> &Self;
+
+    fn should_contain_any_characters(&self, chars: &[char]) -> &Self;
+    fn should_not_contain_any_characters(&self, chars: &[char]) -> &Self;
 
     /// - Asserts that the string contains the specified substring.
     /// - Returns a reference to self for fluent chaining.
@@ -102,6 +104,26 @@ impl MembershipAssertion for String {
         self
     }
 
+    fn should_contain_all_characters(&self, chars: &[char]) -> &Self {
+        (self as &str).should_contain_all_characters(chars);
+        self
+    }
+
+    fn should_not_contain_all_characters(&self, chars: &[char]) -> &Self {
+        (self as &str).should_not_contain_all_characters(chars);
+        self
+    }
+
+    fn should_contain_any_characters(&self, chars: &[char]) -> &Self {
+        (self as &str).should_contain_any_characters(chars);
+        self
+    }
+
+    fn should_not_contain_any_characters(&self, chars: &[char]) -> &Self {
+        (self as &str).should_not_contain_any_characters(chars);
+        self
+    }
+
     fn should_contain(&self, substr: &str) -> &Self {
         (self as &str).should_contain(substr);
         self
@@ -156,6 +178,26 @@ impl MembershipAssertion for &str {
 
     fn should_not_contain_character(&self, ch: char) -> &Self {
         self.should_not(&contain_character(ch));
+        self
+    }
+
+    fn should_contain_all_characters(&self, chars: &[char]) -> &Self {
+        self.should(&contain_all_characters(chars));
+        self
+    }
+
+    fn should_not_contain_all_characters(&self, chars: &[char]) -> &Self {
+        self.should_not(&contain_all_characters(chars));
+        self
+    }
+
+    fn should_contain_any_characters(&self, chars: &[char]) -> &Self {
+        self.should(&contain_any_of_characters(chars));
+        self
+    }
+
+    fn should_not_contain_any_characters(&self, chars: &[char]) -> &Self {
+        self.should_not(&contain_any_of_characters(chars));
         self
     }
 
@@ -257,6 +299,58 @@ mod tests {
     fn should_not_contain_the_character_but_it_did() {
         let email = "john1@gmail.com";
         email.should_not_contain_character('@');
+    }
+
+    #[test]
+    fn should_contain_all_characters() {
+        let email = "john@gmail.com";
+        email.should_contain_all_characters(&['@', '.']);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_all_characters_but_it_did_not() {
+        let email = "john1@gmail.com";
+        email.should_contain_all_characters(&['@', '.', '#']);
+    }
+
+    #[test]
+    fn should_not_contain_all_characters() {
+        let email = "john@gmail.com";
+        email.should_not_contain_all_characters(&['@', '.', '#']);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_contain_all_characters_but_it_did() {
+        let email = "john1@gmail.com";
+        email.should_not_contain_all_characters(&['@', '.']);
+    }
+
+    #[test]
+    fn should_contain_any_characters() {
+        let email = "john@gmail.com";
+        email.should_contain_any_characters(&['@', '#']);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_any_characters_but_it_did_not() {
+        let email = "john1@gmail.com";
+        email.should_contain_any_characters(&['%', '^', '#']);
+    }
+
+    #[test]
+    fn should_not_contain_any_characters() {
+        let email = "john@gmail.com";
+        email.should_not_contain_any_characters(&['#', '%', '&']);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_contain_any_characters_but_it_did() {
+        let email = "john1@gmail.com";
+        email.should_not_contain_any_characters(&['@', '#']);
     }
 
     #[test]
@@ -405,6 +499,58 @@ mod string_tests {
     fn should_not_contain_the_character_but_it_did() {
         let email = String::from("john1@gmail.com");
         email.should_not_contain_character('@');
+    }
+
+    #[test]
+    fn should_contain_all_characters() {
+        let email = String::from("john@gmail.com");
+        email.should_contain_all_characters(&['@', '.']);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_all_characters_but_it_did_not() {
+        let email = String::from("john1@gmail.com");
+        email.should_contain_all_characters(&['@', '.', '#']);
+    }
+
+    #[test]
+    fn should_not_contain_all_characters() {
+        let email = String::from("john@gmail.com");
+        email.should_not_contain_all_characters(&['@', '.', '#']);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_contain_all_characters_but_it_did() {
+        let email = String::from("john1@gmail.com");
+        email.should_not_contain_all_characters(&['@', '.']);
+    }
+
+    #[test]
+    fn should_contain_any_characters() {
+        let email = String::from("john@gmail.com");
+        email.should_contain_any_characters(&['@', '#']);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_any_characters_but_it_did_not() {
+        let email = String::from("john1@gmail.com");
+        email.should_contain_any_characters(&['%', '^', '#']);
+    }
+
+    #[test]
+    fn should_not_contain_any_characters() {
+        let email = String::from("john@gmail.com");
+        email.should_not_contain_any_characters(&['#', '%', '&']);
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_not_contain_any_characters_but_it_did() {
+        let email = String::from("john1@gmail.com");
+        email.should_not_contain_any_characters(&['@', '#']);
     }
 
     #[test]

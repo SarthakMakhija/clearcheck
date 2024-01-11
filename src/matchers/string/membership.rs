@@ -5,6 +5,8 @@ pub enum MembershipMatcher<'a> {
     ADigit,
     NoDigits,
     Char(char),
+    AllChars(&'a [char]),
+    AnyChars(&'a [char]),
     Substr(&'a str),
     SubstrIgnoringCase(&'a str),
 }
@@ -31,6 +33,16 @@ impl<'a> Matcher<&str> for MembershipMatcher<'a> {
                 value.chars().any(|source| &source == ch),
                 format!("{:?} should contain the character {:?}", value, ch),
                 format!("{:?} should not contain the character {:?}", value, ch),
+            ),
+            MembershipMatcher::AllChars(chars) => MatcherResult::formatted(
+                chars.iter().all(|ch| value.contains(*ch)),
+                format!("{:?} should contain all characters {:?}", value, chars),
+                format!("{:?} should not contain all characters {:?}", value, chars),
+            ),
+            MembershipMatcher::AnyChars(chars) => MatcherResult::formatted(
+                chars.iter().any(|ch| value.contains(*ch)),
+                format!("{:?} should contain any of the characters {:?}", value, chars),
+                format!("{:?} should not contain any of the characters {:?}", value, chars),
             ),
             MembershipMatcher::Substr(substr) => MatcherResult::formatted(
                 value.contains(substr),
@@ -68,6 +80,14 @@ pub fn contain_character(ch: char) -> MembershipMatcher<'static> {
     MembershipMatcher::Char(ch)
 }
 
+pub fn contain_all_characters(chars: &[char]) -> MembershipMatcher {
+    MembershipMatcher::AllChars(chars)
+}
+
+pub fn contain_any_of_characters(chars: &[char]) -> MembershipMatcher {
+    MembershipMatcher::AnyChars(chars)
+}
+
 pub fn contain(substr: &str) -> MembershipMatcher {
     MembershipMatcher::Substr(substr)
 }
@@ -79,10 +99,8 @@ pub fn contain_ignoring_case(substr: &str) -> MembershipMatcher {
 #[cfg(test)]
 mod tests {
     use crate::assertions::bool::TrueFalseAssertion;
-    use crate::matchers::string::membership::{
-        contain, contain_character, contain_ignoring_case, contain_only_digits, not_contain_digits,
-    };
     use crate::matchers::Matcher;
+    use crate::matchers::string::membership::{contain, contain_all_characters, contain_any_of_characters, contain_character, contain_ignoring_case, contain_only_digits, not_contain_digits};
 
     #[test]
     fn should_contains_only_digits() {
@@ -134,6 +152,32 @@ mod tests {
     fn should_contain_a_char_but_it_did() {
         let matcher = contain_character('$');
         matcher.test(&"goselect").passed.should_be_true();
+    }
+
+    #[test]
+    fn should_contain_all_chars() {
+        let matcher = contain_all_characters(&['@', '#']);
+        matcher.test(&"p@@sword#123").passed.should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_all_chars_but_it_did_not() {
+        let matcher = contain_all_characters(&['@', '#']);
+        matcher.test(&"p@@sword").passed.should_be_true();
+    }
+
+    #[test]
+    fn should_contain_any_of_chars() {
+        let matcher = contain_any_of_characters(&['@', '%']);
+        matcher.test(&"p@@sword#123").passed.should_be_true();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_contain_any_of_chars_but_it_did_not() {
+        let matcher = contain_any_of_characters(&['^', '%']);
+        matcher.test(&"p@@sword").passed.should_be_true();
     }
 
     #[test]
