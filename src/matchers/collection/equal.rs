@@ -4,7 +4,7 @@ use std::fmt::Debug;
 use crate::matchers::equal::IgnoreCaseEqualityMatcher;
 use crate::matchers::{Matcher, MatcherResult};
 
-impl<const N: usize> Matcher<[String; N]> for IgnoreCaseEqualityMatcher<'_, [String; N]> {
+impl<const N: usize> Matcher<[String; N]> for IgnoreCaseEqualityMatcher<[String; N]> {
     fn test(&self, collection: &[String; N]) -> MatcherResult {
         let one: HashSet<_> = collection
             .iter()
@@ -24,7 +24,7 @@ impl<const N: usize> Matcher<[String; N]> for IgnoreCaseEqualityMatcher<'_, [Str
     }
 }
 
-impl<const N: usize> Matcher<[&str; N]> for IgnoreCaseEqualityMatcher<'_, [&str; N]> {
+impl<const N: usize> Matcher<[&str; N]> for IgnoreCaseEqualityMatcher<[&str; N]> {
     fn test(&self, collection: &[&str; N]) -> MatcherResult {
         let one: HashSet<_> = collection
             .iter()
@@ -44,7 +44,7 @@ impl<const N: usize> Matcher<[&str; N]> for IgnoreCaseEqualityMatcher<'_, [&str;
     }
 }
 
-impl<T> Matcher<Vec<T>> for IgnoreCaseEqualityMatcher<'_, Vec<T>>
+impl<T> Matcher<Vec<T>> for IgnoreCaseEqualityMatcher<Vec<T>>
 where
     T: AsRef<str> + Debug + Eq,
 {
@@ -67,7 +67,7 @@ where
     }
 }
 
-impl<T> Matcher<&[T]> for IgnoreCaseEqualityMatcher<'_, &[T]>
+impl<T> Matcher<&[T]> for IgnoreCaseEqualityMatcher<&[T]>
 where
     T: AsRef<str> + Debug + Eq,
 {
@@ -101,7 +101,7 @@ mod vector_tests {
         let collection = vec!["junit", "clearcheck", "gotest"];
         let other = vec!["JUNIT", "clearcheck", "GoTest"];
 
-        let matcher = be_equal_ignoring_case(&other);
+        let matcher = be_equal_ignoring_case(other);
         matcher.test(&collection).passed.should_be_true();
     }
 
@@ -111,7 +111,7 @@ mod vector_tests {
         let collection = vec!["junit", "clearcheck", "gotest"];
         let other = vec!["JUNIT", "ASSERT", "GoTest"];
 
-        let matcher = be_equal_ignoring_case(&other);
+        let matcher = be_equal_ignoring_case(other);
         matcher.test(&collection).passed.should_be_true();
     }
 }
@@ -127,7 +127,7 @@ mod array_tests {
         let collection = ["junit", "clearcheck", "gotest"];
         let other = ["JUNIT", "clearcheck", "GoTest"];
 
-        let matcher = be_equal_ignoring_case(&other);
+        let matcher = be_equal_ignoring_case(other);
         matcher.test(&collection).passed.should_be_true();
     }
 
@@ -137,7 +137,7 @@ mod array_tests {
         let collection = ["junit", "clearcheck", "gotest"];
         let other = ["JUNIT", "ASSERT", "GoTest"];
 
-        let matcher = be_equal_ignoring_case(&other);
+        let matcher = be_equal_ignoring_case(other);
         matcher.test(&collection).passed.should_be_true();
     }
 }
@@ -153,7 +153,7 @@ mod slice_tests {
         let collection: &[&str] = &["junit", "clearcheck", "gotest"];
         let other: &[&str] = &["JUNIT", "clearcheck", "GoTest"];
 
-        let matcher = be_equal_ignoring_case(&other);
+        let matcher = be_equal_ignoring_case(other);
         matcher.test(&collection).passed.should_be_true();
     }
 
@@ -163,7 +163,7 @@ mod slice_tests {
         let collection: &[&str] = &["junit", "clearcheck", "gotest"];
         let other: &[&str] = &["JUNIT", "ASSERT", "GoTest"];
 
-        let matcher = be_equal_ignoring_case(&other);
+        let matcher = be_equal_ignoring_case(other);
         matcher.test(&collection).passed.should_be_true();
     }
 }

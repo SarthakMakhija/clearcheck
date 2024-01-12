@@ -1,7 +1,7 @@
 use crate::matchers::equal::IgnoreCaseEqualityMatcher;
 use crate::matchers::{Matcher, MatcherResult};
 
-impl<T> Matcher<T> for IgnoreCaseEqualityMatcher<'_, &str>
+impl<T> Matcher<T> for IgnoreCaseEqualityMatcher<&str>
 where T: AsRef<str>
 {
     fn test(&self, value: &T) -> MatcherResult {
@@ -21,14 +21,14 @@ mod tests {
 
     #[test]
     fn should_equal() {
-        let matcher = be_equal_ignoring_case(&"ASSERT");
+        let matcher = be_equal_ignoring_case("ASSERT");
         matcher.test(&"assert").passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
     fn should_equal_but_was_not() {
-        let matcher = be_equal_ignoring_case(&"assert");
+        let matcher = be_equal_ignoring_case("assert");
         matcher.test(&"assert4J").passed.should_be_true();
     }
 }

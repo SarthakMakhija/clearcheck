@@ -104,12 +104,12 @@ impl RangeAssertion for char {
 
 impl IgnoreCaseEqualityAssertion for char {
     fn should_be_equal_ignoring_case(&self, other: char) -> &Self {
-        self.should(&be_equal_ignoring_case(&other));
+        self.should(&be_equal_ignoring_case(other));
         self
     }
 
     fn should_not_be_equal_ignoring_case(&self, other: char) -> &Self {
-        self.should_not(&be_equal_ignoring_case(&other));
+        self.should_not(&be_equal_ignoring_case(other));
         self
     }
 }

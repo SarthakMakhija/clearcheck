@@ -22,7 +22,7 @@ impl<T: Eq + Debug> EqualityAssertion<T> for T {
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
     {
-        self.borrow().should(&equal(&other));
+        self.borrow().should(&equal(other));
         self
     }
 
@@ -31,7 +31,7 @@ impl<T: Eq + Debug> EqualityAssertion<T> for T {
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
     {
-        self.borrow().should_not(&equal(&other));
+        self.borrow().should_not(&equal(other));
         self
     }
 }

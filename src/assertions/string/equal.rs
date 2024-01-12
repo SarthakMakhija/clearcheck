@@ -41,12 +41,12 @@ impl IgnoreCaseEqualityAssertion for String {
 
 impl IgnoreCaseEqualityAssertion for &str {
     fn should_be_equal_ignoring_case(&self, other: &str) -> &Self {
-        self.should(&be_equal_ignoring_case(&other));
+        self.should(&be_equal_ignoring_case(other));
         self
     }
 
     fn should_not_be_equal_ignoring_case(&self, other: &str) -> &Self {
-        self.should_not(&be_equal_ignoring_case(&other));
+        self.should_not(&be_equal_ignoring_case(other));
         self
     }
 }
