@@ -1,22 +1,23 @@
 use std::collections::HashMap;
 use std::hash::Hash;
+use std::marker::PhantomData;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum MapEmptyMatcher {
-    Empty,
-    NotEmpty,
+pub enum MapEmptyMatcher<T> {
+    Empty(PhantomData<T>),
+    NotEmpty(PhantomData<T>),
 }
 
-impl<K: Hash + Eq, V> Matcher<HashMap<K, V>> for MapEmptyMatcher {
+impl<K: Hash + Eq, V> Matcher<HashMap<K, V>> for MapEmptyMatcher<K> {
     fn test(&self, collection: &HashMap<K, V>) -> MatcherResult {
         match self {
-            MapEmptyMatcher::Empty => MatcherResult::new(
+            MapEmptyMatcher::Empty(_) => MatcherResult::new(
                 collection.is_empty(),
                 "Map should be empty",
                 "Map should not be empty",
             ),
-            MapEmptyMatcher::NotEmpty => MatcherResult::new(
+            MapEmptyMatcher::NotEmpty(_) => MatcherResult::new(
                 !collection.is_empty(),
                 "Map should not be empty",
                 "Map should be empty",
@@ -26,12 +27,12 @@ impl<K: Hash + Eq, V> Matcher<HashMap<K, V>> for MapEmptyMatcher {
 }
 
 
-pub fn be_empty() -> MapEmptyMatcher {
-    MapEmptyMatcher::Empty
+pub fn be_empty<T>() -> MapEmptyMatcher<T> {
+    MapEmptyMatcher::Empty(PhantomData)
 }
 
-pub fn not_be_empty() -> MapEmptyMatcher {
-    MapEmptyMatcher::NotEmpty
+pub fn not_be_empty<T>() -> MapEmptyMatcher<T> {
+    MapEmptyMatcher::NotEmpty(PhantomData)
 }
 
 #[cfg(test)]

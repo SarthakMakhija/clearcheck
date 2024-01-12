@@ -3,7 +3,7 @@ use std::ops::{Range, RangeInclusive};
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum RangeMatcher<'a, T: Debug> {
+pub enum RangeMatcher<'a, T: Debug + PartialOrd> {
     Closed(&'static str, &'a RangeInclusive<T>),
     HalfOpen(&'static str, &'a Range<T>),
 }
