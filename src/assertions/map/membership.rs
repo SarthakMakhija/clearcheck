@@ -27,22 +27,22 @@ pub trait KeyMembershipAssertion<K> {
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized;
 
-    fn should_contain_all_keys<Q>(&self, keys: &[&Q]) -> &Self
+    fn should_contain_all_keys<Q>(&self, keys: Vec<&Q>) -> &Self
     where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized;
 
-    fn should_not_contain_all_keys<Q>(&self, keys: &[&Q]) -> &Self
+    fn should_not_contain_all_keys<Q>(&self, keys: Vec<&Q>) -> &Self
     where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized;
 
-    fn should_contain_any_of_keys<Q>(&self, keys: &[&Q]) -> &Self
+    fn should_contain_any_of_keys<Q>(&self, keys: Vec<&Q>) -> &Self
     where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized;
 
-    fn should_not_contain_any_of_keys<Q>(&self, keys: &[&Q]) -> &Self
+    fn should_not_contain_any_of_keys<Q>(&self, keys: Vec<&Q>) -> &Self
     where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized;
@@ -59,22 +59,22 @@ pub trait ValueMembershipAssertion<V> {
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq;
 
-    fn should_contain_all_values<S>(&self, values: &[&S]) -> &Self
+    fn should_contain_all_values<S>(&self, values: Vec<&S>) -> &Self
     where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq;
 
-    fn should_not_contain_all_values<S>(&self, values: &[&S]) -> &Self
+    fn should_not_contain_all_values<S>(&self, values: Vec<&S>) -> &Self
     where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq;
 
-    fn should_contain_any_of_values<S>(&self, values: &[&S]) -> &Self
+    fn should_contain_any_of_values<S>(&self, values: Vec<&S>) -> &Self
     where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq;
 
-    fn should_not_contain_any_of_values<S>(&self, values: &[&S]) -> &Self
+    fn should_not_contain_any_of_values<S>(&self, values: Vec<&S>) -> &Self
     where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq;
@@ -95,28 +95,28 @@ pub trait KeyValueMembershipAssertion<K, V> {
         Q: Debug + ?Sized + Hash + Eq,
         S: Debug + ?Sized + Eq;
 
-    fn should_contain_all<Q, S>(&self, entries: &HashMap<&Q, &S>) -> &Self
+    fn should_contain_all<Q, S>(&self, entries: HashMap<&Q, &S>) -> &Self
     where
         K: Borrow<Q>,
         V: Borrow<S>,
         Q: Debug + ?Sized + Hash + Eq,
         S: Debug + ?Sized + Eq;
 
-    fn should_not_contain_all<Q, S>(&self, entries: &HashMap<&Q, &S>) -> &Self
+    fn should_not_contain_all<Q, S>(&self, entries: HashMap<&Q, &S>) -> &Self
     where
         K: Borrow<Q>,
         V: Borrow<S>,
         Q: Debug + ?Sized + Hash + Eq,
         S: Debug + ?Sized + Eq;
 
-    fn should_contain_any<Q, S>(&self, entries: &HashMap<&Q, &S>) -> &Self
+    fn should_contain_any<Q, S>(&self, entries: HashMap<&Q, &S>) -> &Self
     where
         K: Borrow<Q>,
         V: Borrow<S>,
         Q: Debug + ?Sized + Hash + Eq,
         S: Debug + ?Sized + Eq;
 
-    fn should_not_contain_any<Q, S>(&self, entries: &HashMap<&Q, &S>) -> &Self
+    fn should_not_contain_any<Q, S>(&self, entries: HashMap<&Q, &S>) -> &Self
     where
         K: Borrow<Q>,
         V: Borrow<S>,
@@ -148,7 +148,7 @@ where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized,
     {
-        map_keys(self).should(&contain_key(&key));
+        map_keys(self).should(&contain_key(key));
         self
     }
 
@@ -157,11 +157,11 @@ where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized,
     {
-        map_keys(self).should_not(&contain_key(&key));
+        map_keys(self).should_not(&contain_key(key));
         self
     }
 
-    fn should_contain_all_keys<Q>(&self, keys: &[&Q]) -> &Self
+    fn should_contain_all_keys<Q>(&self, keys: Vec<&Q>) -> &Self
     where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized,
@@ -170,7 +170,7 @@ where
         self
     }
 
-    fn should_not_contain_all_keys<Q>(&self, keys: &[&Q]) -> &Self
+    fn should_not_contain_all_keys<Q>(&self, keys: Vec<&Q>) -> &Self
     where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized,
@@ -179,7 +179,7 @@ where
         self
     }
 
-    fn should_contain_any_of_keys<Q>(&self, keys: &[&Q]) -> &Self
+    fn should_contain_any_of_keys<Q>(&self, keys: Vec<&Q>) -> &Self
     where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized,
@@ -188,7 +188,7 @@ where
         self
     }
 
-    fn should_not_contain_any_of_keys<Q>(&self, keys: &[&Q]) -> &Self
+    fn should_not_contain_any_of_keys<Q>(&self, keys: Vec<&Q>) -> &Self
     where
         K: Borrow<Q>,
         Q: Hash + Eq + Debug + ?Sized,
@@ -208,7 +208,7 @@ where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq,
     {
-        map_values(self).should(&contain_value(&value));
+        map_values(self).should(&contain_value(value));
         self
     }
 
@@ -217,11 +217,11 @@ where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq,
     {
-        map_values(self).should_not(&contain_value(&value));
+        map_values(self).should_not(&contain_value(value));
         self
     }
 
-    fn should_contain_all_values<S>(&self, values: &[&S]) -> &Self
+    fn should_contain_all_values<S>(&self, values: Vec<&S>) -> &Self
     where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq,
@@ -230,7 +230,7 @@ where
         self
     }
 
-    fn should_not_contain_all_values<S>(&self, values: &[&S]) -> &Self
+    fn should_not_contain_all_values<S>(&self, values: Vec<&S>) -> &Self
     where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq,
@@ -239,7 +239,7 @@ where
         self
     }
 
-    fn should_contain_any_of_values<S>(&self, values: &[&S]) -> &Self
+    fn should_contain_any_of_values<S>(&self, values: Vec<&S>) -> &Self
     where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq,
@@ -248,7 +248,7 @@ where
         self
     }
 
-    fn should_not_contain_any_of_values<S>(&self, values: &[&S]) -> &Self
+    fn should_not_contain_any_of_values<S>(&self, values: Vec<&S>) -> &Self
     where
         V: Eq + Borrow<S>,
         S: Debug + ?Sized + Eq,
@@ -270,7 +270,7 @@ where
         Q: Debug + ?Sized + Hash + Eq,
         S: Debug + ?Sized + Eq,
     {
-        map_key_value(self).should(&contain_key_value(&key, &value));
+        map_key_value(self).should(&contain_key_value(key, value));
         self
     }
 
@@ -281,11 +281,11 @@ where
         Q: Debug + ?Sized + Hash + Eq,
         S: Debug + ?Sized + Eq,
     {
-        map_key_value(self).should_not(&contain_key_value(&key, &value));
+        map_key_value(self).should_not(&contain_key_value(key, value));
         self
     }
 
-    fn should_contain_all<Q, S>(&self, entries: &HashMap<&Q, &S>) -> &Self
+    fn should_contain_all<Q, S>(&self, entries: HashMap<&Q, &S>) -> &Self
     where
         K: Borrow<Q>,
         V: Borrow<S>,
@@ -296,7 +296,7 @@ where
         self
     }
 
-    fn should_not_contain_all<Q, S>(&self, entries: &HashMap<&Q, &S>) -> &Self
+    fn should_not_contain_all<Q, S>(&self, entries: HashMap<&Q, &S>) -> &Self
     where
         K: Borrow<Q>,
         V: Borrow<S>,
@@ -307,7 +307,7 @@ where
         self
     }
 
-    fn should_contain_any<Q, S>(&self, entries: &HashMap<&Q, &S>) -> &Self
+    fn should_contain_any<Q, S>(&self, entries: HashMap<&Q, &S>) -> &Self
     where
         K: Borrow<Q>,
         V: Borrow<S>,
@@ -318,7 +318,7 @@ where
         self
     }
 
-    fn should_not_contain_any<Q, S>(&self, entries: &HashMap<&Q, &S>) -> &Self
+    fn should_not_contain_any<Q, S>(&self, entries: HashMap<&Q, &S>) -> &Self
     where
         K: Borrow<Q>,
         V: Borrow<S>,
@@ -444,7 +444,7 @@ mod key_contains_tests {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.insert("java", "junit");
-        key_value.should_contain_all_keys(&["rust", "java"]);
+        key_value.should_contain_all_keys(vec!["rust", "java"]);
     }
 
     #[test]
@@ -452,14 +452,14 @@ mod key_contains_tests {
     fn should_contain_all_keys_but_it_did_not() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_contain_all_keys(&["rust", "java"]);
+        key_value.should_contain_all_keys(vec!["rust", "java"]);
     }
 
     #[test]
     fn should_not_contain_all_keys() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_not_contain_all_keys(&["rust", "java"]);
+        key_value.should_not_contain_all_keys(vec!["rust", "java"]);
     }
 
     #[test]
@@ -468,7 +468,7 @@ mod key_contains_tests {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.insert("java", "junit");
-        key_value.should_not_contain_all_keys(&["rust", "java"]);
+        key_value.should_not_contain_all_keys(vec!["rust", "java"]);
     }
 
     #[test]
@@ -476,7 +476,7 @@ mod key_contains_tests {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.insert("java", "junit");
-        key_value.should_contain_any_of_keys(&["rust", "scala"]);
+        key_value.should_contain_any_of_keys(vec!["rust", "scala"]);
     }
 
     #[test]
@@ -484,14 +484,14 @@ mod key_contains_tests {
     fn should_contain_any_of_keys_but_it_did_not() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_contain_any_of_keys(&["golang", "scala"]);
+        key_value.should_contain_any_of_keys(vec!["golang", "scala"]);
     }
 
     #[test]
     fn should_not_contain_any_of_keys() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_not_contain_any_of_keys(&["scala", "golang"]);
+        key_value.should_not_contain_any_of_keys(vec!["scala", "golang"]);
     }
 
     #[test]
@@ -500,7 +500,7 @@ mod key_contains_tests {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.insert("java", "junit");
-        key_value.should_not_contain_any_of_keys(&["rust", "scala"]);
+        key_value.should_not_contain_any_of_keys(vec!["rust", "scala"]);
     }
 }
 
@@ -545,7 +545,7 @@ mod value_contains_tests {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.insert("java", "junit");
-        key_value.should_contain_all_values(&["assert", "junit"]);
+        key_value.should_contain_all_values(vec!["assert", "junit"]);
     }
 
     #[test]
@@ -553,7 +553,7 @@ mod value_contains_tests {
     fn should_contain_all_values_but_it_did_not() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_contain_all_values(&["java", "xunit"]);
+        key_value.should_contain_all_values(vec!["java", "xunit"]);
     }
 
     #[test]
@@ -561,7 +561,7 @@ mod value_contains_tests {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.insert("java", "junit");
-        key_value.should_not_contain_all_values(&["catch", "junit"]);
+        key_value.should_not_contain_all_values(vec!["catch", "junit"]);
     }
 
     #[test]
@@ -569,7 +569,7 @@ mod value_contains_tests {
     fn should_not_contain_all_values_but_it_contained() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_not_contain_all_values(&["assert", "assert"]);
+        key_value.should_not_contain_all_values(vec!["assert", "assert"]);
     }
 
     #[test]
@@ -577,7 +577,7 @@ mod value_contains_tests {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.insert("java", "junit");
-        key_value.should_contain_any_of_values(&["assert", "xunit"]);
+        key_value.should_contain_any_of_values(vec!["assert", "xunit"]);
     }
 
     #[test]
@@ -585,7 +585,7 @@ mod value_contains_tests {
     fn should_contain_any_of_values_but_it_did_not() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_contain_any_of_values(&["catch", "xunit"]);
+        key_value.should_contain_any_of_values(vec!["catch", "xunit"]);
     }
 
     #[test]
@@ -593,7 +593,7 @@ mod value_contains_tests {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
         key_value.insert("java", "junit");
-        key_value.should_not_contain_any_of_values(&["catch", "xunit"]);
+        key_value.should_not_contain_any_of_values(vec!["catch", "xunit"]);
     }
 
     #[test]
@@ -601,7 +601,7 @@ mod value_contains_tests {
     fn should_not_contain_any_of_values_but_it_contained() {
         let mut key_value = HashMap::new();
         key_value.insert("rust", "assert");
-        key_value.should_not_contain_any_of_values(&["assert", "junit"]);
+        key_value.should_not_contain_any_of_values(vec!["assert", "junit"]);
     }
 }
 
@@ -659,7 +659,7 @@ mod key_value_contains_tests {
         to_contain.insert("rust", "assert");
         to_contain.insert("java", "junit");
 
-        key_value.should_contain_all(&to_contain);
+        key_value.should_contain_all(to_contain);
     }
 
     #[test]
@@ -673,7 +673,7 @@ mod key_value_contains_tests {
         to_contain.insert("rust", "assert");
         to_contain.insert("java", "xunit");
 
-        key_value.should_contain_all(&to_contain);
+        key_value.should_contain_all(to_contain);
     }
 
     #[test]
@@ -686,7 +686,7 @@ mod key_value_contains_tests {
         to_contain.insert("rust", "assert");
         to_contain.insert("java", "xunit");
 
-        key_value.should_not_contain_all(&to_contain);
+        key_value.should_not_contain_all(to_contain);
     }
 
     #[test]
@@ -700,7 +700,7 @@ mod key_value_contains_tests {
         to_contain.insert("rust", "assert");
         to_contain.insert("java", "junit");
 
-        key_value.should_not_contain_all(&to_contain);
+        key_value.should_not_contain_all(to_contain);
     }
 
     #[test]
@@ -713,7 +713,7 @@ mod key_value_contains_tests {
         to_contain.insert("rust", "assert");
         to_contain.insert("golang", "gotest");
 
-        key_value.should_contain_any(&to_contain);
+        key_value.should_contain_any(to_contain);
     }
 
     #[test]
@@ -727,7 +727,7 @@ mod key_value_contains_tests {
         to_contain.insert("rust", "clearcheck");
         to_contain.insert("java", "xunit");
 
-        key_value.should_contain_any(&to_contain);
+        key_value.should_contain_any(to_contain);
     }
 
     #[test]
@@ -740,7 +740,7 @@ mod key_value_contains_tests {
         to_contain.insert("rust", "clearcheck");
         to_contain.insert("java", "xunit");
 
-        key_value.should_not_contain_any(&to_contain);
+        key_value.should_not_contain_any(to_contain);
     }
 
     #[test]
@@ -754,6 +754,6 @@ mod key_value_contains_tests {
         to_contain.insert("rust", "assert");
         to_contain.insert("java", "junit");
 
-        key_value.should_not_contain_any(&to_contain);
+        key_value.should_not_contain_any(to_contain);
     }
 }
