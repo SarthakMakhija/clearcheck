@@ -215,7 +215,7 @@ mod string_matchers {
     }
 }
 
-/*
+
 #[cfg(test)]
 mod slice_matchers {
     use crate::assertions::bool::TrueFalseAssertion;
@@ -227,7 +227,7 @@ mod slice_matchers {
 
     #[test]
     fn should_run_all_matchers_successfully() {
-        let contain = contain(&"assert4j").boxed();
+        let contain = contain("assert4j").boxed();
         let atmost_length = have_atmost_same_length(4).boxed();
         let duplicates = contain_duplicates().boxed();
 
@@ -239,7 +239,7 @@ mod slice_matchers {
 
     #[test]
     fn should_fail_one_matcher() {
-        let contain = contain(&"assert4j").boxed();
+        let contain = contain("assert4j").boxed();
         let atmost_length = have_atmost_same_length(1).boxed();
         let duplicates = contain_duplicates().boxed();
 
@@ -251,7 +251,7 @@ mod slice_matchers {
 
     #[test]
     fn should_run_any_of_the_matchers_successfully() {
-        let contain = contain(&"assert4j").boxed();
+        let contain = contain("assert4j").boxed();
         let atleast_length = have_atleast_same_length(4).boxed();
         let duplicates = contain_duplicates().boxed();
 
@@ -263,7 +263,7 @@ mod slice_matchers {
 
     #[test]
     fn should_fail_all_matchers() {
-        let contain = contain(&"assert4j").boxed();
+        let contain = contain("assert4j").boxed();
         let atleast_length = have_atleast_same_length(4).boxed();
         let duplicates = contain_duplicates().boxed();
 
@@ -275,7 +275,7 @@ mod slice_matchers {
 
     #[test]
     fn should_run_all_inverted_matchers_successfully() {
-        let contain = contain(&"assert4j").boxed();
+        let contain = contain("assert4j").boxed();
         let atmost_length = have_atmost_same_length(4).boxed();
         let duplicates = contain_duplicates().boxed();
 
@@ -285,4 +285,3 @@ mod slice_matchers {
         matchers.test(&collection).passed.should_be_true();
     }
 }
- */
