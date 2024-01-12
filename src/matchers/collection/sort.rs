@@ -1,20 +1,21 @@
 use crate::matchers::{Matcher, MatcherResult};
 use std::fmt::Debug;
+use std::marker::PhantomData;
 
-pub enum SortMatcher {
-    Ascending,
-    Descending,
+pub enum SortMatcher<T: PartialOrd + Debug> {
+    Ascending(PhantomData<T>),
+    Descending(PhantomData<T>),
 }
 
-impl SortMatcher {
-    fn test<T: PartialOrd + Debug>(&self, collection: &[T]) -> MatcherResult {
+impl<T: PartialOrd + Debug> SortMatcher<T> {
+    fn test(&self, collection: &[T]) -> MatcherResult {
         match self {
-            SortMatcher::Ascending => MatcherResult::formatted(
+            SortMatcher::Ascending(_) => MatcherResult::formatted(
                 (0..collection.len() - 1).all(|index| collection[index] <= collection[index + 1]),
                 format!("{:?} should be sorted ascending", collection),
                 format!("{:?} should not be sorted ascending", collection),
             ),
-            SortMatcher::Descending => MatcherResult::formatted(
+            SortMatcher::Descending(_) => MatcherResult::formatted(
                 (0..collection.len() - 1).all(|index| collection[index] >= collection[index + 1]),
                 format!("{:?} should be sorted descending", collection),
                 format!("{:?} should not be sorted descending", collection),
@@ -23,30 +24,30 @@ impl SortMatcher {
     }
 }
 
-impl<T: PartialOrd + Debug> Matcher<Vec<T>> for SortMatcher {
+impl<T: PartialOrd + Debug> Matcher<Vec<T>> for SortMatcher<T> {
     fn test(&self, collection: &Vec<T>) -> MatcherResult {
         self.test(collection)
     }
 }
 
-impl<T: PartialOrd + Debug, const N: usize> Matcher<[T; N]> for SortMatcher {
+impl<T: PartialOrd + Debug, const N: usize> Matcher<[T; N]> for SortMatcher<T> {
     fn test(&self, collection: &[T; N]) -> MatcherResult {
         self.test(collection as &[T])
     }
 }
 
-impl<T: PartialOrd + Debug> Matcher<&[T]> for SortMatcher {
+impl<T: PartialOrd + Debug> Matcher<&[T]> for SortMatcher<T> {
     fn test(&self, collection: &&[T]) -> MatcherResult {
         self.test(collection)
     }
 }
 
-pub fn be_sorted_ascending() -> SortMatcher {
-    SortMatcher::Ascending
+pub fn be_sorted_ascending<T: PartialOrd + Debug>() -> SortMatcher<T> {
+    SortMatcher::Ascending(PhantomData)
 }
 
-pub fn be_sorted_descending() -> SortMatcher {
-    SortMatcher::Descending
+pub fn be_sorted_descending<T: PartialOrd + Debug>() -> SortMatcher<T> {
+    SortMatcher::Descending(PhantomData)
 }
 
 #[cfg(test)]
