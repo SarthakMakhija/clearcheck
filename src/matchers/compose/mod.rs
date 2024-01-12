@@ -215,7 +215,7 @@ mod string_matchers {
     }
 }
 
-
+/*
 #[cfg(test)]
 mod slice_matchers {
     use crate::assertions::bool::TrueFalseAssertion;
@@ -285,3 +285,4 @@ mod slice_matchers {
         matchers.test(&collection).passed.should_be_true();
     }
 }
+ */

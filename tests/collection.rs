@@ -29,7 +29,7 @@ fn should_match_all_books() {
         .should_not_be_empty()
         .should_not_contain_duplicates()
         .should_have_at_least_size(3)
-        .should_contain_all(&[
+        .should_contain_all(vec![
             &Book::new(3, "Learning rust"),
             &Book::new(4, "Rust in action"),
         ]);
@@ -49,7 +49,7 @@ fn should_not_match_all_book() {
         .should_not_be_empty()
         .should_have_at_least_size(3)
         .should_not_contain_duplicates()
-        .should_contain_all(&[
+        .should_contain_all(vec![
             &Book::new(3, "Learning rust"),
             &Book::new(4, "Designing a KV storage engine"),
         ]);

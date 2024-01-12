@@ -19,22 +19,22 @@ where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized;
 
-    fn should_contain_all<Q>(&self, elements: &[&Q]) -> &Self
+    fn should_contain_all<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized;
 
-    fn should_not_contain_all<Q>(&self, elements: &[&Q]) -> &Self
+    fn should_not_contain_all<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized;
 
-    fn should_contain_any<Q>(&self, elements: &[&Q]) -> &Self
+    fn should_contain_any<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized;
 
-    fn should_not_contain_any<Q>(&self, elements: &[&Q]) -> &Self
+    fn should_not_contain_any<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized;
@@ -66,7 +66,7 @@ where
         self
     }
 
-    fn should_contain_all<Q>(&self, elements: &[&Q]) -> &Self
+    fn should_contain_all<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
@@ -75,7 +75,7 @@ where
         self
     }
 
-    fn should_not_contain_all<Q>(&self, elements: &[&Q]) -> &Self
+    fn should_not_contain_all<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
@@ -84,7 +84,7 @@ where
         self
     }
 
-    fn should_contain_any<Q>(&self, elements: &[&Q]) -> &Self
+    fn should_contain_any<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
@@ -93,7 +93,7 @@ where
         self
     }
 
-    fn should_not_contain_any<Q>(&self, elements: &[&Q]) -> &Self
+    fn should_not_contain_any<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
@@ -136,7 +136,7 @@ where
         self
     }
 
-    fn should_contain_all<Q>(&self, elements: &[&Q]) -> &Self
+    fn should_contain_all<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
@@ -145,7 +145,7 @@ where
         self
     }
 
-    fn should_not_contain_all<Q>(&self, elements: &[&Q]) -> &Self
+    fn should_not_contain_all<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
@@ -154,7 +154,7 @@ where
         self
     }
 
-    fn should_contain_any<Q>(&self, elements: &[&Q]) -> &Self
+    fn should_contain_any<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
@@ -163,7 +163,7 @@ where
         self
     }
 
-    fn should_not_contain_any<Q>(&self, elements: &[&Q]) -> &Self
+    fn should_not_contain_any<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
@@ -193,7 +193,7 @@ where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
     {
-        map(self).should(&contain(&element));
+        map(self).should(&contain(element));
         self
     }
 
@@ -202,11 +202,11 @@ where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
     {
-        map(self).should_not(&contain(&element));
+        map(self).should_not(&contain(element));
         self
     }
 
-    fn should_contain_all<Q>(&self, elements: &[&Q]) -> &Self
+    fn should_contain_all<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
@@ -215,7 +215,7 @@ where
         self
     }
 
-    fn should_not_contain_all<Q>(&self, elements: &[&Q]) -> &Self
+    fn should_not_contain_all<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
@@ -224,7 +224,7 @@ where
         self
     }
 
-    fn should_contain_any<Q>(&self, elements: &[&Q]) -> &Self
+    fn should_contain_any<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
@@ -233,7 +233,7 @@ where
         self
     }
 
-    fn should_not_contain_any<Q>(&self, elements: &[&Q]) -> &Self
+    fn should_not_contain_any<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized,
@@ -320,7 +320,7 @@ mod tests {
     fn should_contain_all() {
         let collection = vec!["junit", "assert4j", "catch2"];
         let to_be_contained = vec!["assert4j", "junit"];
-        collection.should_contain_all(&to_be_contained);
+        collection.should_contain_all(to_be_contained);
     }
 
     #[test]
@@ -328,14 +328,14 @@ mod tests {
     fn should_contain_all_but_was_not_contained() {
         let collection = vec!["junit", "assert4j", "catch2"];
         let to_be_contained = vec!["assert4j", "xunit"];
-        collection.should_contain_all(&to_be_contained);
+        collection.should_contain_all(to_be_contained);
     }
 
     #[test]
     fn should_not_contain_all() {
         let collection = vec!["junit", "assert4j", "catch2"];
         let to_be_contained = vec!["assert4j", "junit", "catch"];
-        collection.should_not_contain_all(&to_be_contained);
+        collection.should_not_contain_all(to_be_contained);
     }
 
     #[test]
@@ -343,14 +343,14 @@ mod tests {
     fn should_not_contain_all_but_it_did() {
         let collection = vec!["junit", "assert4j", "catch2"];
         let to_be_contained = vec!["assert4j", "junit"];
-        collection.should_not_contain_all(&to_be_contained);
+        collection.should_not_contain_all(to_be_contained);
     }
 
     #[test]
     fn should_contain_any() {
         let collection = vec!["junit", "assert4j", "catch2"];
         let to_be_contained = vec!["assert4j", "xunit"];
-        collection.should_contain_any(&to_be_contained);
+        collection.should_contain_any(to_be_contained);
     }
 
     #[test]
@@ -358,14 +358,14 @@ mod tests {
     fn should_contain_any_but_was_not_contained() {
         let collection = vec!["junit", "assert4j", "catch2"];
         let to_be_contained = vec!["catch", "xunit"];
-        collection.should_contain_any(&to_be_contained);
+        collection.should_contain_any(to_be_contained);
     }
 
     #[test]
     fn should_not_contain_any() {
         let collection = vec!["junit", "assert4j", "catch2"];
         let to_be_contained = vec!["assert", "xunit", "catch"];
-        collection.should_not_contain_any(&to_be_contained);
+        collection.should_not_contain_any(to_be_contained);
     }
 
     #[test]
@@ -373,7 +373,7 @@ mod tests {
     fn should_not_contain_any_but_it_did() {
         let collection = vec!["junit", "assert4j", "catch2"];
         let to_be_contained = vec!["assert4j", "junit"];
-        collection.should_not_contain_any(&to_be_contained);
+        collection.should_not_contain_any(to_be_contained);
     }
 }
 
@@ -436,60 +436,60 @@ mod array_tests {
     #[test]
     fn should_contain_all() {
         let collection = ["junit", "assert4j", "catch2"];
-        let to_be_contained = ["assert4j", "junit"];
-        collection.should_contain_all(&to_be_contained);
+        let to_be_contained = vec!["assert4j", "junit"];
+        collection.should_contain_all(to_be_contained);
     }
 
     #[test]
     #[should_panic]
     fn should_contain_all_but_was_not_contained() {
         let collection = ["junit", "assert4j", "catch2"];
-        let to_be_contained = ["assert4j", "xunit"];
-        collection.should_contain_all(&to_be_contained);
+        let to_be_contained = vec!["assert4j", "xunit"];
+        collection.should_contain_all(to_be_contained);
     }
 
     #[test]
     fn should_not_contain_all() {
         let collection = ["junit", "assert4j", "catch2"];
-        let to_be_contained = ["assert4j", "junit", "catch"];
-        collection.should_not_contain_all(&to_be_contained);
+        let to_be_contained = vec!["assert4j", "junit", "catch"];
+        collection.should_not_contain_all(to_be_contained);
     }
 
     #[test]
     #[should_panic]
     fn should_not_contain_all_but_it_did() {
         let collection = ["junit", "assert4j", "catch2"];
-        let to_be_contained = ["assert4j", "junit"];
-        collection.should_not_contain_all(&to_be_contained);
+        let to_be_contained = vec!["assert4j", "junit"];
+        collection.should_not_contain_all(to_be_contained);
     }
 
     #[test]
     fn should_contain_any() {
         let collection = ["junit", "assert4j", "catch2"];
-        let to_be_contained = ["assert4j", "xunit"];
-        collection.should_contain_any(&to_be_contained);
+        let to_be_contained = vec!["assert4j", "xunit"];
+        collection.should_contain_any(to_be_contained);
     }
 
     #[test]
     #[should_panic]
     fn should_contain_any_but_was_not_contained() {
         let collection = ["junit", "assert4j", "catch2"];
-        let to_be_contained = ["catch", "xunit"];
-        collection.should_contain_any(&to_be_contained);
+        let to_be_contained = vec!["catch", "xunit"];
+        collection.should_contain_any(to_be_contained);
     }
 
     #[test]
     fn should_not_contain_any() {
         let collection = ["junit", "assert4j", "catch2"];
-        let to_be_contained = ["assert", "xunit", "catch"];
-        collection.should_not_contain_any(&to_be_contained);
+        let to_be_contained = vec!["assert", "xunit", "catch"];
+        collection.should_not_contain_any(to_be_contained);
     }
 
     #[test]
     #[should_panic]
     fn should_not_contain_any_but_it_did() {
         let collection = ["junit", "assert4j", "catch2"];
-        let to_be_contained = ["assert4j", "junit"];
-        collection.should_not_contain_any(&to_be_contained);
+        let to_be_contained = vec!["assert4j", "junit"];
+        collection.should_not_contain_any(to_be_contained);
     }
 }
