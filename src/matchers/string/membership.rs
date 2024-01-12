@@ -1,18 +1,21 @@
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum MembershipMatcher<'a> {
+pub enum MembershipMatcher {
     OnlyDigits,
     ADigit,
     NoDigits,
     Char(char),
-    AllChars(&'a [char]),
-    AnyChars(&'a [char]),
-    Substr(&'a str),
-    SubstrIgnoringCase(&'a str),
+    AllChars(Vec<char>),
+    AnyChars(Vec<char>),
 }
 
-impl<'a, T> Matcher<T> for MembershipMatcher<'a>
-where T: AsRef<str>
+pub enum SubstringMatcher<T: AsRef<str>> {
+    Substr(T),
+    SubstrIgnoringCase(T),
+}
+
+impl<T> Matcher<T> for MembershipMatcher
+    where T: AsRef<str>
 {
     fn test(&self, value: &T) -> MatcherResult {
         match self {
@@ -46,56 +49,66 @@ where T: AsRef<str>
                 format!("{:?} should contain any of the characters {:?}", value.as_ref(), chars),
                 format!("{:?} should not contain any of the characters {:?}", value.as_ref(), chars),
             ),
-            MembershipMatcher::Substr(substr) => MatcherResult::formatted(
-                value.as_ref().contains(substr),
-                format!("{:?} should contain the substring {:?}", value.as_ref(), substr),
-                format!("{:?} should not contain the substring {:?}", value.as_ref(), substr),
-            ),
-            MembershipMatcher::SubstrIgnoringCase(substr) => MatcherResult::formatted(
-                value.as_ref().to_lowercase().contains(&substr.to_lowercase()),
-                format!(
-                    "{:?} should contain the substring ignoring case {:?}",
-                    value.as_ref(), substr
-                ),
-                format!(
-                    "{:?} should not contain the substring ignoring case {:?}",
-                    value.as_ref(), substr
-                ),
-            ),
         }
     }
 }
 
-pub fn contain_only_digits() -> MembershipMatcher<'static> {
+impl<T> Matcher<T> for SubstringMatcher<T>
+    where T: AsRef<str>
+{
+    fn test(&self, value: &T) -> MatcherResult {
+        match self {
+            SubstringMatcher::Substr(substr) => MatcherResult::formatted(
+                value.as_ref().contains(substr.as_ref()),
+                format!("{:?} should contain the substring {:?}", value.as_ref(), substr.as_ref()),
+                format!("{:?} should not contain the substring {:?}", value.as_ref(), substr.as_ref()),
+            ),
+            SubstringMatcher::SubstrIgnoringCase(substr) => MatcherResult::formatted(
+                value.as_ref().to_lowercase().contains(&substr.as_ref().to_lowercase()),
+                format!(
+                    "{:?} should contain the substring ignoring case {:?}",
+                    value.as_ref(), substr.as_ref()
+                ),
+                format!(
+                    "{:?} should not contain the substring ignoring case {:?}",
+                    value.as_ref(), substr.as_ref()
+                ),
+            )
+        }
+    }
+}
+
+
+pub fn contain_only_digits() -> MembershipMatcher {
     MembershipMatcher::OnlyDigits
 }
 
-pub fn contain_a_digit() -> MembershipMatcher<'static> {
+pub fn contain_a_digit() -> MembershipMatcher {
     MembershipMatcher::ADigit
 }
 
-pub fn not_contain_digits() -> MembershipMatcher<'static> {
+pub fn not_contain_digits() -> MembershipMatcher {
     MembershipMatcher::NoDigits
 }
 
-pub fn contain_character(ch: char) -> MembershipMatcher<'static> {
+pub fn contain_character(ch: char) -> MembershipMatcher {
     MembershipMatcher::Char(ch)
 }
 
-pub fn contain_all_characters(chars: &[char]) -> MembershipMatcher {
+pub fn contain_all_characters(chars: Vec<char>) -> MembershipMatcher {
     MembershipMatcher::AllChars(chars)
 }
 
-pub fn contain_any_of_characters(chars: &[char]) -> MembershipMatcher {
+pub fn contain_any_of_characters(chars: Vec<char>) -> MembershipMatcher {
     MembershipMatcher::AnyChars(chars)
 }
 
-pub fn contain(substr: &str) -> MembershipMatcher {
-    MembershipMatcher::Substr(substr)
+pub fn contain<T: AsRef<str>>(substr: T) -> SubstringMatcher<T> {
+    SubstringMatcher::Substr(substr)
 }
 
-pub fn contain_ignoring_case(substr: &str) -> MembershipMatcher {
-    MembershipMatcher::SubstrIgnoringCase(substr)
+pub fn contain_ignoring_case<T: AsRef<str>>(substr: T) -> SubstringMatcher<T> {
+    SubstringMatcher::SubstrIgnoringCase(substr)
 }
 
 #[cfg(test)]
@@ -158,27 +171,27 @@ mod tests {
 
     #[test]
     fn should_contain_all_chars() {
-        let matcher = contain_all_characters(&['@', '#']);
+        let matcher = contain_all_characters(vec!['@', '#']);
         matcher.test(&"p@@sword#123").passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
     fn should_contain_all_chars_but_it_did_not() {
-        let matcher = contain_all_characters(&['@', '#']);
+        let matcher = contain_all_characters(vec!['@', '#']);
         matcher.test(&"p@@sword").passed.should_be_true();
     }
 
     #[test]
     fn should_contain_any_of_chars() {
-        let matcher = contain_any_of_characters(&['@', '%']);
+        let matcher = contain_any_of_characters(vec!['@', '%']);
         matcher.test(&"p@@sword#123").passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
     fn should_contain_any_of_chars_but_it_did_not() {
-        let matcher = contain_any_of_characters(&['^', '%']);
+        let matcher = contain_any_of_characters(vec!['^', '%']);
         matcher.test(&"p@@sword").passed.should_be_true();
     }
 

@@ -8,7 +8,7 @@ pub enum RangeMatcher<T: Debug + PartialOrd> {
     HalfOpen(&'static str, Range<T>),
 }
 
-impl<'a, T> Matcher<T> for RangeMatcher<T>
+impl<T> Matcher<T> for RangeMatcher<T>
 where
     T: PartialOrd<T> + Debug,
 {
