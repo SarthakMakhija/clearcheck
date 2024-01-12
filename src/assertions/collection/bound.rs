@@ -5,8 +5,8 @@ pub trait BoundAssertion<T>
 where
     T: PartialOrd + std::fmt::Debug,
 {
-    fn should_have_upper_bound(&self, element: &T) -> &Self;
-    fn should_have_lower_bound(&self, element: &T) -> &Self;
+    fn should_have_upper_bound(&self, element: T) -> &Self;
+    fn should_have_lower_bound(&self, element: T) -> &Self;
 }
 
 impl<T> BoundAssertion<T> for Vec<T>
@@ -14,12 +14,12 @@ where
     T: std::fmt::Debug,
     T: PartialOrd,
 {
-    fn should_have_upper_bound(&self, element: &T) -> &Self {
+    fn should_have_upper_bound(&self, element: T) -> &Self {
         (self as &[T]).should_have_upper_bound(element);
         self
     }
 
-    fn should_have_lower_bound(&self, element: &T) -> &Self {
+    fn should_have_lower_bound(&self, element: T) -> &Self {
         (self as &[T]).should_have_lower_bound(element);
         self
     }
@@ -30,12 +30,12 @@ where
     T: std::fmt::Debug,
     T: PartialOrd,
 {
-    fn should_have_upper_bound(&self, element: &T) -> &Self {
+    fn should_have_upper_bound(&self, element: T) -> &Self {
         (self as &[T]).should_have_upper_bound(element);
         self
     }
 
-    fn should_have_lower_bound(&self, element: &T) -> &Self {
+    fn should_have_lower_bound(&self, element: T) -> &Self {
         (self as &[T]).should_have_lower_bound(element);
         self
     }
@@ -46,12 +46,12 @@ where
     T: std::fmt::Debug,
     T: PartialOrd,
 {
-    fn should_have_upper_bound(&self, element: &T) -> &Self {
+    fn should_have_upper_bound(&self, element: T) -> &Self {
         self.should(&have_upper_bound(element));
         self
     }
 
-    fn should_have_lower_bound(&self, element: &T) -> &Self {
+    fn should_have_lower_bound(&self, element: T) -> &Self {
         self.should(&have_lower_bound(element));
         self
     }
@@ -64,27 +64,27 @@ mod tests {
     #[test]
     fn should_have_an_upper_bound() {
         let collection = vec![1, 2, 3, 4];
-        collection.should_have_upper_bound(&4);
+        collection.should_have_upper_bound(4);
     }
 
     #[test]
     #[should_panic]
     fn should_have_an_upper_bound_but_was_not() {
         let collection = vec![1, 2, 3, 4];
-        collection.should_have_upper_bound(&1);
+        collection.should_have_upper_bound(1);
     }
 
     #[test]
     fn should_have_a_lower_bound() {
         let collection = vec![1, 2, 3, 4];
-        collection.should_have_lower_bound(&1);
+        collection.should_have_lower_bound(1);
     }
 
     #[test]
     #[should_panic]
     fn should_have_a_lower_bound_but_was_not() {
         let collection = vec![1, 2, 3, 4];
-        collection.should_have_lower_bound(&3);
+        collection.should_have_lower_bound(3);
     }
 }
 
@@ -95,26 +95,26 @@ mod array_tests {
     #[test]
     fn should_have_an_upper_bound() {
         let collection = [1, 2, 3, 4];
-        collection.should_have_upper_bound(&4);
+        collection.should_have_upper_bound(4);
     }
 
     #[test]
     #[should_panic]
     fn should_have_an_upper_bound_but_was_not() {
         let collection = [1, 2, 3, 4];
-        collection.should_have_upper_bound(&1);
+        collection.should_have_upper_bound(1);
     }
 
     #[test]
     fn should_have_a_lower_bound() {
         let collection = [1, 2, 3, 4];
-        collection.should_have_lower_bound(&1);
+        collection.should_have_lower_bound(1);
     }
 
     #[test]
     #[should_panic]
     fn should_have_a_lower_bound_but_was_not() {
         let collection = [1, 2, 3, 4];
-        collection.should_have_lower_bound(&3);
+        collection.should_have_lower_bound(3);
     }
 }
