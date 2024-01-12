@@ -292,6 +292,7 @@ mod custom_string_matchers_tests {
 
     use crate::matchers::{BoxWrap, Should};
     use crate::matchers::compose::{Matchers, MatchersBuilder};
+    use crate::matchers::string::boundary::begin_with;
     use crate::matchers::string::empty::be_empty;
     use crate::matchers::string::length::have_atleast_same_length;
     use crate::matchers::string::membership::{contain_a_digit, contain_any_of_characters, contain_ignoring_case};
@@ -301,6 +302,7 @@ mod custom_string_matchers_tests {
             .push(have_atleast_same_length(10).boxed())
             .push(contain_a_digit().boxed())
             .push(contain_any_of_characters(vec!['@', '#']).boxed())
+            .push_inverted(begin_with("pass").boxed())
             .push_inverted(contain_ignoring_case("pass").boxed())
             .push_inverted(contain_ignoring_case("word").boxed())
             .combine_as_and()
