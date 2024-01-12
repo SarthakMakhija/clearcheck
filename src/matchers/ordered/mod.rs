@@ -2,14 +2,14 @@ use std::fmt::Debug;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum OrderedMatcher<'a, T: PartialOrd> {
-    Gt(&'a T),
-    Gte(&'a T),
-    Lt(&'a T),
-    Lte(&'a T),
+pub enum OrderedMatcher<T: PartialOrd> {
+    Gt(T),
+    Gte(T),
+    Lt(T),
+    Lte(T),
 }
 
-impl<T: Debug + PartialOrd> Matcher<T> for OrderedMatcher<'_, T> {
+impl<T: Debug + PartialOrd> Matcher<T> for OrderedMatcher<T> {
     fn test(&self, value: &T) -> MatcherResult {
         match self {
             OrderedMatcher::Gt(other) => MatcherResult::formatted(
@@ -39,19 +39,19 @@ impl<T: Debug + PartialOrd> Matcher<T> for OrderedMatcher<'_, T> {
     }
 }
 
-pub fn be_greater_than<T: PartialOrd>(other: &T) -> OrderedMatcher<'_, T> {
+pub fn be_greater_than<T: PartialOrd>(other: T) -> OrderedMatcher<T> {
     OrderedMatcher::Gt(other)
 }
 
-pub fn be_greater_than_equal_to<T: PartialOrd>(other: &T) -> OrderedMatcher<'_, T> {
+pub fn be_greater_than_equal_to<T: PartialOrd>(other: T) -> OrderedMatcher<T> {
     OrderedMatcher::Gte(other)
 }
 
-pub fn be_less_than<T: PartialOrd>(other: &T) -> OrderedMatcher<'_, T> {
+pub fn be_less_than<T: PartialOrd>(other: T) -> OrderedMatcher<T> {
     OrderedMatcher::Lt(other)
 }
 
-pub fn be_less_than_equal_to<T: PartialOrd>(other: &T) -> OrderedMatcher<'_, T> {
+pub fn be_less_than_equal_to<T: PartialOrd>(other: T) -> OrderedMatcher<T> {
     OrderedMatcher::Lte(other)
 }
 
@@ -66,7 +66,7 @@ mod tests {
     #[test]
     fn should_be_greater_than() {
         let value = 100;
-        let matcher = be_greater_than(&90);
+        let matcher = be_greater_than(90);
         matcher.test(&value).passed.should_be_true();
     }
 
@@ -74,14 +74,14 @@ mod tests {
     #[should_panic]
     fn should_be_greater_than_but_was_not() {
         let value = 80;
-        let matcher = be_greater_than(&90);
+        let matcher = be_greater_than(90);
         matcher.test(&value).passed.should_be_true();
     }
 
     #[test]
     fn should_be_greater_than_equal_to() {
         let value = 100;
-        let matcher = be_greater_than_equal_to(&100);
+        let matcher = be_greater_than_equal_to(100);
         matcher.test(&value).passed.should_be_true();
     }
 
@@ -89,14 +89,14 @@ mod tests {
     #[should_panic]
     fn should_be_greater_than_equal_to_but_was_not() {
         let value = 80;
-        let matcher = be_greater_than_equal_to(&90);
+        let matcher = be_greater_than_equal_to(90);
         matcher.test(&value).passed.should_be_true();
     }
 
     #[test]
     fn should_be_less_than() {
         let value = 80;
-        let matcher = be_less_than(&90);
+        let matcher = be_less_than(90);
         matcher.test(&value).passed.should_be_true();
     }
 
@@ -104,14 +104,14 @@ mod tests {
     #[should_panic]
     fn should_be_less_than_but_was_not() {
         let value = 100;
-        let matcher = be_less_than(&90);
+        let matcher = be_less_than(90);
         matcher.test(&value).passed.should_be_true();
     }
 
     #[test]
     fn should_be_less_than_equal_to() {
         let value = 100;
-        let matcher = be_less_than_equal_to(&100);
+        let matcher = be_less_than_equal_to(100);
         matcher.test(&value).passed.should_be_true();
     }
 
@@ -119,7 +119,7 @@ mod tests {
     #[should_panic]
     fn should_be_less_than_equal_to_but_was_not() {
         let value = 100;
-        let matcher = be_less_than_equal_to(&90);
+        let matcher = be_less_than_equal_to(90);
         matcher.test(&value).passed.should_be_true();
     }
 }

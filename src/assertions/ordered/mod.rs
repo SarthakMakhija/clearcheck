@@ -197,7 +197,7 @@ impl<T: PartialOrd + Debug> OrderedAssertion<T> for T {
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized,
     {
-        self.borrow().should(&be_greater_than(&other));
+        self.borrow().should(&be_greater_than(other));
         self
     }
 
@@ -206,7 +206,7 @@ impl<T: PartialOrd + Debug> OrderedAssertion<T> for T {
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized,
     {
-        self.borrow().should(&be_greater_than_equal_to(&other));
+        self.borrow().should(&be_greater_than_equal_to(other));
         self
     }
 
@@ -215,7 +215,7 @@ impl<T: PartialOrd + Debug> OrderedAssertion<T> for T {
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized,
     {
-        self.borrow().should(&be_less_than(&other));
+        self.borrow().should(&be_less_than(other));
         self
     }
 
@@ -224,7 +224,7 @@ impl<T: PartialOrd + Debug> OrderedAssertion<T> for T {
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized,
     {
-        self.borrow().should(&be_less_than_equal_to(&other));
+        self.borrow().should(&be_less_than_equal_to(other));
         self
     }
 
@@ -233,7 +233,7 @@ impl<T: PartialOrd + Debug> OrderedAssertion<T> for T {
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized,
     {
-        self.borrow().should_not(&be_greater_than(&other));
+        self.borrow().should_not(&be_greater_than(other));
         self
     }
 
@@ -242,7 +242,7 @@ impl<T: PartialOrd + Debug> OrderedAssertion<T> for T {
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized,
     {
-        self.borrow().should_not(&be_greater_than_equal_to(&other));
+        self.borrow().should_not(&be_greater_than_equal_to(other));
         self
     }
 
@@ -251,7 +251,7 @@ impl<T: PartialOrd + Debug> OrderedAssertion<T> for T {
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized,
     {
-        self.borrow().should_not(&be_less_than(&other));
+        self.borrow().should_not(&be_less_than(other));
         self
     }
 
@@ -260,7 +260,7 @@ impl<T: PartialOrd + Debug> OrderedAssertion<T> for T {
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized,
     {
-        self.borrow().should_not(&be_less_than_equal_to(&other));
+        self.borrow().should_not(&be_less_than_equal_to(other));
         self
     }
 
