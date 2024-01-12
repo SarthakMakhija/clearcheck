@@ -2,11 +2,11 @@ use regex::Regex;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub struct RegexMatcher<'a> {
-    regexp: &'a Regex,
+pub struct RegexMatcher {
+    regexp: Regex,
 }
 
-impl<T: AsRef<str>> Matcher<T> for RegexMatcher<'_> {
+impl<T: AsRef<str>> Matcher<T> for RegexMatcher {
     fn test(&self, value: &T) -> MatcherResult {
         MatcherResult::formatted(
             self.regexp.is_match(value.as_ref()),
@@ -22,7 +22,7 @@ impl<T: AsRef<str>> Matcher<T> for RegexMatcher<'_> {
     }
 }
 
-pub fn match_with(regular_expression: &Regex) -> RegexMatcher {
+pub fn match_with(regular_expression: Regex) -> RegexMatcher {
     RegexMatcher {
         regexp: regular_expression,
     }
@@ -40,7 +40,7 @@ mod tests {
         let regex = Regex::new(r"(\d{4})-(\d{2})-(\d{2})").unwrap();
         let str = "Started clearcheck on On 2024-01-02.";
 
-        let matcher = match_with(&regex);
+        let matcher = match_with(regex);
         matcher.test(&str).passed.should_be_true();
     }
 
@@ -50,7 +50,7 @@ mod tests {
         let regex = Regex::new(r"(\d{4})-(\d{2})-(\d{2})").unwrap();
         let str = "Started clearcheck on On 02nd January 2024";
 
-        let matcher = match_with(&regex);
+        let matcher = match_with(regex);
         matcher.test(&str).passed.should_be_true();
     }
 }

@@ -49,12 +49,12 @@ impl RegularExpressionAssertion for String {
 
 impl RegularExpressionAssertion for &str {
     fn should_match(&self, regex: Regex) -> &Self {
-        self.should(&match_with(&regex));
+        self.should(&match_with(regex));
         self
     }
 
     fn should_not_match(&self, regex: Regex) -> &Self {
-        self.should_not(&match_with(&regex));
+        self.should_not(&match_with(regex));
         self
     }
 }
