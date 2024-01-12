@@ -189,7 +189,7 @@ impl<T: num::Float + Debug + Default + PartialEq> FloatAssertion<T> for T {
         range: RangeInclusive<T>,
         tolerance: T,
     ) -> &Self {
-        self.should(&be_in_inclusive_range(&RangeInclusive::new(
+        self.should(&be_in_inclusive_range(RangeInclusive::new(
             range.start().add(tolerance),
             range.end().add(tolerance),
         )));
@@ -201,7 +201,7 @@ impl<T: num::Float + Debug + Default + PartialEq> FloatAssertion<T> for T {
         range: RangeInclusive<T>,
         tolerance: T,
     ) -> &Self {
-        self.should_not(&be_in_inclusive_range(&RangeInclusive::new(
+        self.should_not(&be_in_inclusive_range(RangeInclusive::new(
             range.start().add(tolerance),
             range.end().add(tolerance),
         )));
@@ -210,7 +210,7 @@ impl<T: num::Float + Debug + Default + PartialEq> FloatAssertion<T> for T {
 
     fn should_be_in_exclusive_range_with_tolerance(&self, range: Range<T>, tolerance: T) -> &Self {
         let range_with_tolerance = range.start.add(tolerance)..range.end.add(tolerance);
-        self.should(&be_in_exclusive_range(&range_with_tolerance));
+        self.should(&be_in_exclusive_range(range_with_tolerance));
         self
     }
 
@@ -220,7 +220,7 @@ impl<T: num::Float + Debug + Default + PartialEq> FloatAssertion<T> for T {
         tolerance: T,
     ) -> &Self {
         let range_with_tolerance = range.start.add(tolerance)..range.end.add(tolerance);
-        self.should_not(&be_in_exclusive_range(&range_with_tolerance));
+        self.should_not(&be_in_exclusive_range(range_with_tolerance));
         self
     }
 }

@@ -148,24 +148,24 @@ where
     }
 
     fn should_have_size_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
-        self.len().should(&have_length_in_inclusive_range(&range));
+        self.len().should(&have_length_in_inclusive_range(range));
         self
     }
 
     fn should_not_have_size_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
         self.len()
-            .should_not(&have_length_in_inclusive_range(&range));
+            .should_not(&have_length_in_inclusive_range(range));
         self
     }
 
     fn should_have_size_in_exclusive_range(&self, range: Range<usize>) -> &Self {
-        self.len().should(&have_length_in_exclusive_range(&range));
+        self.len().should(&have_length_in_exclusive_range(range));
         self
     }
 
     fn should_not_have_size_in_exclusive_range(&self, range: Range<usize>) -> &Self {
         self.len()
-            .should_not(&have_length_in_exclusive_range(&range));
+            .should_not(&have_length_in_exclusive_range(range));
         self
     }
 }

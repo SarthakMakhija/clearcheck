@@ -265,22 +265,22 @@ impl<T: PartialOrd + Debug> OrderedAssertion<T> for T {
     }
 
     fn should_be_in_inclusive_range(&self, range: RangeInclusive<T>) -> &Self {
-        self.should(&be_in_inclusive_range(&range));
+        self.should(&be_in_inclusive_range(range));
         self
     }
 
     fn should_not_be_in_inclusive_range(&self, range: RangeInclusive<T>) -> &Self {
-        self.should_not(&be_in_inclusive_range(&range));
+        self.should_not(&be_in_inclusive_range(range));
         self
     }
 
     fn should_be_in_exclusive_range(&self, range: Range<T>) -> &Self {
-        self.should(&be_in_exclusive_range(&range));
+        self.should(&be_in_exclusive_range(range));
         self
     }
 
     fn should_not_be_in_exclusive_range(&self, range: Range<T>) -> &Self {
-        self.should_not(&be_in_exclusive_range(&range));
+        self.should_not(&be_in_exclusive_range(range));
         self
     }
 }

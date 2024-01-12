@@ -82,22 +82,22 @@ pub trait IgnoreCaseEqualityAssertion {
 
 impl RangeAssertion for char {
     fn should_be_in_inclusive_range(&self, range: RangeInclusive<char>) -> &Self {
-        self.should(&be_in_inclusive_range(&range));
+        self.should(&be_in_inclusive_range(range));
         self
     }
 
     fn should_not_be_in_inclusive_range(&self, range: RangeInclusive<char>) -> &Self {
-        self.should_not(&be_in_inclusive_range(&range));
+        self.should_not(&be_in_inclusive_range(range));
         self
     }
 
     fn should_be_in_exclusive_range(&self, range: Range<char>) -> &Self {
-        self.should(&be_in_exclusive_range(&range));
+        self.should(&be_in_exclusive_range(range));
         self
     }
 
     fn should_not_be_in_exclusive_range(&self, range: Range<char>) -> &Self {
-        self.should_not(&be_in_exclusive_range(&range));
+        self.should_not(&be_in_exclusive_range(range));
         self
     }
 }

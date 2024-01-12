@@ -3,12 +3,12 @@ use std::ops::{Range, RangeInclusive};
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum RangeMatcher<'a, T: Debug + PartialOrd> {
-    Closed(&'static str, &'a RangeInclusive<T>),
-    HalfOpen(&'static str, &'a Range<T>),
+pub enum RangeMatcher<T: Debug + PartialOrd> {
+    Closed(&'static str, RangeInclusive<T>),
+    HalfOpen(&'static str, Range<T>),
 }
 
-impl<'a, T> Matcher<T> for RangeMatcher<'a, T>
+impl<'a, T> Matcher<T> for RangeMatcher<T>
 where
     T: PartialOrd<T> + Debug,
 {
@@ -40,19 +40,19 @@ where
     }
 }
 
-pub fn be_in_inclusive_range<T: PartialOrd + Debug>(range: &RangeInclusive<T>) -> RangeMatcher<T> {
+pub fn be_in_inclusive_range<T: PartialOrd + Debug>(range: RangeInclusive<T>) -> RangeMatcher<T> {
     RangeMatcher::Closed("Value", range)
 }
 
-pub fn be_in_exclusive_range<T: PartialOrd + Debug>(range: &Range<T>) -> RangeMatcher<T> {
+pub fn be_in_exclusive_range<T: PartialOrd + Debug>(range: Range<T>) -> RangeMatcher<T> {
     RangeMatcher::HalfOpen("Value", range)
 }
 
-pub fn have_length_in_inclusive_range(range: &RangeInclusive<usize>) -> RangeMatcher<usize> {
+pub fn have_length_in_inclusive_range(range: RangeInclusive<usize>) -> RangeMatcher<usize> {
     RangeMatcher::Closed("Length", range)
 }
 
-pub fn have_length_in_exclusive_range(range: &Range<usize>) -> RangeMatcher<usize> {
+pub fn have_length_in_exclusive_range(range: Range<usize>) -> RangeMatcher<usize> {
     RangeMatcher::HalfOpen("Length", range)
 }
 
@@ -64,27 +64,27 @@ mod tests {
 
     #[test]
     fn should_be_in_inclusive_range() {
-        let matcher = be_in_inclusive_range(&(1..=4));
+        let matcher = be_in_inclusive_range(1..=4);
         matcher.test(&2).passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
     fn should_be_in_inclusive_range_but_was_not() {
-        let matcher = be_in_inclusive_range(&(1..=4));
+        let matcher = be_in_inclusive_range(1..=4);
         matcher.test(&5).passed.should_be_true();
     }
 
     #[test]
     fn should_be_in_exclusive_range() {
-        let matcher = be_in_exclusive_range(&(1..4));
+        let matcher = be_in_exclusive_range(1..4);
         matcher.test(&2).passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
     fn should_be_in_exclusive_range_but_was_not() {
-        let matcher = be_in_exclusive_range(&(1..4));
+        let matcher = be_in_exclusive_range(1..4);
         matcher.test(&4).passed.should_be_true();
     }
 }
