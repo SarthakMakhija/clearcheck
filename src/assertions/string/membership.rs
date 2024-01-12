@@ -50,22 +50,22 @@ pub trait MembershipAssertion {
     /// - Asserts that the string contains the specified substring.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
-    fn should_contain(&self, substr: &str) -> &Self;
+    fn should_contain(&self, substr: &'static str) -> &Self;
 
     /// - Asserts that the string does not contain the specified substring.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
-    fn should_not_contain(&self, substr: &str) -> &Self;
+    fn should_not_contain(&self, substr: &'static str) -> &Self;
 
     /// - Asserts that the string contains the substring, ignoring case differences.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
-    fn should_contain_ignoring_case(&self, substr: &str) -> &Self;
+    fn should_contain_ignoring_case(&self, substr: &'static str) -> &Self;
 
     /// - Asserts that the string does not contain the substring, ignoring case differences.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
-    fn should_not_contain_ignoring_case(&self, substr: &str) -> &Self;
+    fn should_not_contain_ignoring_case(&self, substr: &'static str) -> &Self;
 
     /// - Asserts that the string is empty (has zero characters).
     /// - Returns a reference to self for fluent chaining.
@@ -124,22 +124,22 @@ impl MembershipAssertion for String {
         self
     }
 
-    fn should_contain(&self, substr: &str) -> &Self {
+    fn should_contain(&self, substr: &'static str) -> &Self {
         (self as &str).should_contain(substr);
         self
     }
 
-    fn should_not_contain(&self, substr: &str) -> &Self {
+    fn should_not_contain(&self, substr: &'static str) -> &Self {
         (self as &str).should_not_contain(substr);
         self
     }
 
-    fn should_contain_ignoring_case(&self, substr: &str) -> &Self {
+    fn should_contain_ignoring_case(&self, substr: &'static str) -> &Self {
         (self as &str).should_contain_ignoring_case(substr);
         self
     }
 
-    fn should_not_contain_ignoring_case(&self, substr: &str) -> &Self {
+    fn should_not_contain_ignoring_case(&self, substr: &'static str) -> &Self {
         (self as &str).should_not_contain_ignoring_case(substr);
         self
     }
@@ -201,22 +201,22 @@ impl MembershipAssertion for &str {
         self
     }
 
-    fn should_contain(&self, substr: &str) -> &Self {
+    fn should_contain(&self, substr: &'static str) -> &Self {
         self.should(&contain(substr));
         self
     }
 
-    fn should_not_contain(&self, substr: &str) -> &Self {
+    fn should_not_contain(&self, substr: &'static str) -> &Self {
         self.should_not(&contain(substr));
         self
     }
 
-    fn should_contain_ignoring_case(&self, substr: &str) -> &Self {
+    fn should_contain_ignoring_case(&self, substr: &'static str) -> &Self {
         self.should(&contain_ignoring_case(substr));
         self
     }
 
-    fn should_not_contain_ignoring_case(&self, substr: &str) -> &Self {
+    fn should_not_contain_ignoring_case(&self, substr: &'static str) -> &Self {
         self.should_not(&contain_ignoring_case(substr));
         self
     }

@@ -16,63 +16,63 @@ pub trait BoundaryAssertion {
     /// - Asserts that the string begins with the specified prefix.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
-    fn should_begin_with(&self, prefix: &str) -> &Self;
+    fn should_begin_with(&self, prefix: &'static str) -> &Self;
 
     /// - Asserts that the string does not begin with the specified prefix
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
-    fn should_not_begin_with(&self, prefix: &str) -> &Self;
+    fn should_not_begin_with(&self, prefix: &'static str) -> &Self;
 
     /// - Asserts that the string ends with the specified suffix.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
-    fn should_end_with(&self, suffix: &str) -> &Self;
+    fn should_end_with(&self, suffix: &'static str) -> &Self;
 
     /// - Asserts that the string does not end with the specified suffix.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
-    fn should_not_end_with(&self, suffix: &str) -> &Self;
+    fn should_not_end_with(&self, suffix: &'static str) -> &Self;
 }
 
 impl BoundaryAssertion for String {
-    fn should_begin_with(&self, prefix: &str) -> &Self {
+    fn should_begin_with(&self, prefix: &'static str) -> &Self {
         (self as &str).should_begin_with(prefix);
         self
     }
 
-    fn should_not_begin_with(&self, prefix: &str) -> &Self {
+    fn should_not_begin_with(&self, prefix: &'static str) -> &Self {
         (self as &str).should_not_begin_with(prefix);
         self
     }
 
-    fn should_end_with(&self, suffix: &str) -> &Self {
+    fn should_end_with(&self, suffix: &'static str) -> &Self {
         (self as &str).should_end_with(suffix);
         self
     }
 
-    fn should_not_end_with(&self, suffix: &str) -> &Self {
+    fn should_not_end_with(&self, suffix: &'static str) -> &Self {
         (self as &str).should_not_end_with(suffix);
         self
     }
 }
 
 impl BoundaryAssertion for &str {
-    fn should_begin_with(&self, prefix: &str) -> &Self {
+    fn should_begin_with(&self, prefix: &'static str) -> &Self {
         self.should(&begin_with(prefix));
         self
     }
 
-    fn should_not_begin_with(&self, prefix: &str) -> &Self {
+    fn should_not_begin_with(&self, prefix: &'static str) -> &Self {
         self.should_not(&begin_with(prefix));
         self
     }
 
-    fn should_end_with(&self, suffix: &str) -> &Self {
+    fn should_end_with(&self, suffix: &'static str) -> &Self {
         self.should(&end_with(suffix));
         self
     }
 
-    fn should_not_end_with(&self, suffix: &str) -> &Self {
+    fn should_not_end_with(&self, suffix: &'static str) -> &Self {
         self.should_not(&end_with(suffix));
         self
     }

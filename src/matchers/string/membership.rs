@@ -9,9 +9,9 @@ pub enum MembershipMatcher {
     AnyChars(Vec<char>),
 }
 
-pub enum SubstringMatcher<T: AsRef<str>> {
-    Substr(T),
-    SubstrIgnoringCase(T),
+pub enum SubstringMatcher {
+    Substr(&'static str),
+    SubstrIgnoringCase(&'static str),
 }
 
 impl<T> Matcher<T> for MembershipMatcher
@@ -53,25 +53,25 @@ impl<T> Matcher<T> for MembershipMatcher
     }
 }
 
-impl<T> Matcher<T> for SubstringMatcher<T>
+impl<T> Matcher<T> for SubstringMatcher
     where T: AsRef<str>
 {
     fn test(&self, value: &T) -> MatcherResult {
         match self {
             SubstringMatcher::Substr(substr) => MatcherResult::formatted(
-                value.as_ref().contains(substr.as_ref()),
-                format!("{:?} should contain the substring {:?}", value.as_ref(), substr.as_ref()),
-                format!("{:?} should not contain the substring {:?}", value.as_ref(), substr.as_ref()),
+                value.as_ref().contains(substr),
+                format!("{:?} should contain the substring {:?}", value.as_ref(), substr),
+                format!("{:?} should not contain the substring {:?}", value.as_ref(), substr),
             ),
             SubstringMatcher::SubstrIgnoringCase(substr) => MatcherResult::formatted(
-                value.as_ref().to_lowercase().contains(&substr.as_ref().to_lowercase()),
+                value.as_ref().to_lowercase().contains(&substr.to_lowercase()),
                 format!(
                     "{:?} should contain the substring ignoring case {:?}",
-                    value.as_ref(), substr.as_ref()
+                    value.as_ref(), substr
                 ),
                 format!(
                     "{:?} should not contain the substring ignoring case {:?}",
-                    value.as_ref(), substr.as_ref()
+                    value.as_ref(), substr
                 ),
             )
         }
@@ -103,11 +103,11 @@ pub fn contain_any_of_characters(chars: Vec<char>) -> MembershipMatcher {
     MembershipMatcher::AnyChars(chars)
 }
 
-pub fn contain<T: AsRef<str>>(substr: T) -> SubstringMatcher<T> {
+pub fn contain(substr: &'static str) -> SubstringMatcher {
     SubstringMatcher::Substr(substr)
 }
 
-pub fn contain_ignoring_case<T: AsRef<str>>(substr: T) -> SubstringMatcher<T> {
+pub fn contain_ignoring_case(substr: &'static str) -> SubstringMatcher {
     SubstringMatcher::SubstrIgnoringCase(substr)
 }
 
