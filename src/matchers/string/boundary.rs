@@ -1,34 +1,34 @@
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum BoundaryMatcher<'a> {
-    Begin(&'a str),
-    End(&'a str),
+pub enum BoundaryMatcher<T: AsRef<str>> {
+    Begin(T),
+    End(T),
 }
 
-impl<'a, T> Matcher<T> for BoundaryMatcher<'a>
+impl<T> Matcher<T> for BoundaryMatcher<T>
     where T: AsRef<str>
 {
     fn test(&self, value: &T) -> MatcherResult {
         match self {
             BoundaryMatcher::Begin(prefix) => MatcherResult::formatted(
-                value.as_ref().starts_with(prefix),
-                format!("{:?} should begin with {:?}", value.as_ref(), prefix),
-                format!("{:?} should not begin with {:?}", value.as_ref(), prefix),
+                value.as_ref().starts_with(prefix.as_ref()),
+                format!("{:?} should begin with {:?}", value.as_ref(), prefix.as_ref()),
+                format!("{:?} should not begin with {:?}", value.as_ref(), prefix.as_ref()),
             ),
             BoundaryMatcher::End(suffix) => MatcherResult::formatted(
-                value.as_ref().ends_with(suffix),
-                format!("{:?} should end with {:?}", value.as_ref(), suffix),
-                format!("{:?} should not end with {:?}", value.as_ref(), suffix),
+                value.as_ref().ends_with(suffix.as_ref()),
+                format!("{:?} should end with {:?}", value.as_ref(), suffix.as_ref()),
+                format!("{:?} should not end with {:?}", value.as_ref(), suffix.as_ref()),
             ),
         }
     }
 }
 
-pub fn begin_with(prefix: &str) -> BoundaryMatcher<'_> {
+pub fn begin_with<T: AsRef<str>>(prefix: T) -> BoundaryMatcher<T> {
     BoundaryMatcher::Begin(prefix)
 }
 
-pub fn end_with(suffix: &str) -> BoundaryMatcher<'_> {
+pub fn end_with<T: AsRef<str>>(suffix: T) -> BoundaryMatcher<T> {
     BoundaryMatcher::End(suffix)
 }
 
