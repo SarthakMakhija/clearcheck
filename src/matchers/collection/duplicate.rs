@@ -1,12 +1,11 @@
 use std::fmt::Debug;
-use std::marker::PhantomData;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub struct DuplicateContentMatcher<T: Eq + Debug>(PhantomData<T>);
+pub struct DuplicateContentMatcher;
 
-impl<T: Eq + Debug> DuplicateContentMatcher<T> {
-    fn test(&self, collection: &[T]) -> MatcherResult {
+impl DuplicateContentMatcher {
+    fn test<T: Eq + Debug>(&self, collection: &[T]) -> MatcherResult {
         let mut unique = Vec::new();
         collection.iter().for_each(|source| {
             if !unique.contains(&source) {
@@ -22,26 +21,26 @@ impl<T: Eq + Debug> DuplicateContentMatcher<T> {
     }
 }
 
-impl<T: Eq + Debug> Matcher<Vec<T>> for DuplicateContentMatcher<T> {
+impl<T: Eq + Debug> Matcher<Vec<T>> for DuplicateContentMatcher {
     fn test(&self, collection: &Vec<T>) -> MatcherResult {
         self.test(collection)
     }
 }
 
-impl<T: Eq + Debug, const N: usize> Matcher<[T; N]> for DuplicateContentMatcher<T> {
+impl<T: Eq + Debug, const N: usize> Matcher<[T; N]> for DuplicateContentMatcher {
     fn test(&self, collection: &[T; N]) -> MatcherResult {
         self.test(collection as &[T])
     }
 }
 
-impl<T: Eq + Debug> Matcher<&[T]> for DuplicateContentMatcher<T> {
+impl<T: Eq + Debug> Matcher<&[T]> for DuplicateContentMatcher {
     fn test(&self, collection: &&[T]) -> MatcherResult {
         self.test(collection)
     }
 }
 
-pub fn contain_duplicates<T: Eq + Debug>() -> DuplicateContentMatcher<T> {
-    DuplicateContentMatcher(PhantomData)
+pub fn contain_duplicates() -> DuplicateContentMatcher {
+    DuplicateContentMatcher
 }
 
 #[cfg(test)]

@@ -1,38 +1,37 @@
-use std::marker::PhantomData;
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum CollectionEmptyMatcher<T> {
-    Empty(PhantomData<T>),
-    NotEmpty(PhantomData<T>),
+pub enum CollectionEmptyMatcher{
+    Empty,
+    NotEmpty,
 }
 
-impl<T> Matcher<Vec<T>> for CollectionEmptyMatcher<T> {
+impl<T> Matcher<Vec<T>> for CollectionEmptyMatcher {
     fn test(&self, collection: &Vec<T>) -> MatcherResult {
         self.test_length(collection)
     }
 }
 
-impl<T, const N: usize> Matcher<[T; N]> for CollectionEmptyMatcher<T> {
+impl<T, const N: usize> Matcher<[T; N]> for CollectionEmptyMatcher {
     fn test(&self, collection: &[T; N]) -> MatcherResult {
         self.test_length(collection as &[T])
     }
 }
 
-impl<T> Matcher<&[T]> for CollectionEmptyMatcher<T> {
+impl<T> Matcher<&[T]> for CollectionEmptyMatcher {
     fn test(&self, collection: &&[T]) -> MatcherResult {
         self.test_length(collection)
     }
 }
 
-impl<T> CollectionEmptyMatcher<T> {
-    pub fn test_length(&self, collection: &[T]) -> MatcherResult {
+impl CollectionEmptyMatcher {
+    pub fn test_length<T>(&self, collection: &[T]) -> MatcherResult {
         match self {
-            CollectionEmptyMatcher::Empty(_) => MatcherResult::new(
+            CollectionEmptyMatcher::Empty => MatcherResult::new(
                 collection.is_empty(),
                 "Collection should be empty",
                 "Collection should not be empty",
             ),
-            CollectionEmptyMatcher::NotEmpty(_) => MatcherResult::new(
+            CollectionEmptyMatcher::NotEmpty => MatcherResult::new(
                 !collection.is_empty(),
                 "Collection should not be empty",
                 "Collection should be empty",
@@ -41,12 +40,12 @@ impl<T> CollectionEmptyMatcher<T> {
     }
 }
 
-pub fn be_empty<T>() -> CollectionEmptyMatcher<T> {
-    CollectionEmptyMatcher::Empty(PhantomData)
+pub fn be_empty() -> CollectionEmptyMatcher {
+    CollectionEmptyMatcher::Empty
 }
 
-pub fn not_be_empty<T>() -> CollectionEmptyMatcher<T> {
-    CollectionEmptyMatcher::NotEmpty(PhantomData)
+pub fn not_be_empty() -> CollectionEmptyMatcher {
+    CollectionEmptyMatcher::NotEmpty
 }
 
 #[cfg(test)]

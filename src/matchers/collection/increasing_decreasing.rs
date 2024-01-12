@@ -1,34 +1,33 @@
 use std::fmt::Debug;
-use std::marker::PhantomData;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum IncreasingDecreasingMatcher<T: PartialOrd + Debug> {
-    MonotonicallyIncreasing(PhantomData<T>),
-    MonotonicallyDecreasing(PhantomData<T>),
-    StrictlyIncreasing(PhantomData<T>),
-    StrictlyDecreasing(PhantomData<T>),
+pub enum IncreasingDecreasingMatcher {
+    MonotonicallyIncreasing,
+    MonotonicallyDecreasing,
+    StrictlyIncreasing,
+    StrictlyDecreasing,
 }
 
-impl<T: PartialOrd + Debug> IncreasingDecreasingMatcher<T> {
-    fn test(&self, collection: &[T]) -> MatcherResult {
+impl IncreasingDecreasingMatcher {
+    fn test<T: PartialOrd + Debug>(&self, collection: &[T]) -> MatcherResult {
         match self {
-            IncreasingDecreasingMatcher::MonotonicallyIncreasing(_) => MatcherResult::formatted(
+            IncreasingDecreasingMatcher::MonotonicallyIncreasing => MatcherResult::formatted(
                 collection.windows(2).all(|window| window[0] <= window[1]),
                 format!("{:?} should be monotonically increasing", collection),
                 format!("{:?} should not be monotonically increasing", collection),
             ),
-            IncreasingDecreasingMatcher::MonotonicallyDecreasing(_) => MatcherResult::formatted(
+            IncreasingDecreasingMatcher::MonotonicallyDecreasing => MatcherResult::formatted(
                 collection.windows(2).all(|window| window[0] >= window[1]),
                 format!("{:?} should be monotonically decreasing", collection),
                 format!("{:?} should not be monotonically decreasing", collection),
             ),
-            IncreasingDecreasingMatcher::StrictlyIncreasing(_) => MatcherResult::formatted(
+            IncreasingDecreasingMatcher::StrictlyIncreasing => MatcherResult::formatted(
                 collection.windows(2).all(|window| window[0] < window[1]),
                 format!("{:?} should be strictly increasing", collection),
                 format!("{:?} should not be strictly increasing", collection),
             ),
-            IncreasingDecreasingMatcher::StrictlyDecreasing(_) => MatcherResult::formatted(
+            IncreasingDecreasingMatcher::StrictlyDecreasing => MatcherResult::formatted(
                 collection.windows(2).all(|window| window[0] > window[1]),
                 format!("{:?} should be strictly decreasing", collection),
                 format!("{:?} should not be strictly decreasing", collection),
@@ -37,38 +36,38 @@ impl<T: PartialOrd + Debug> IncreasingDecreasingMatcher<T> {
     }
 }
 
-impl<T: PartialOrd + Debug> Matcher<Vec<T>> for IncreasingDecreasingMatcher<T> {
+impl<T: PartialOrd + Debug> Matcher<Vec<T>> for IncreasingDecreasingMatcher {
     fn test(&self, collection: &Vec<T>) -> MatcherResult {
         self.test(collection)
     }
 }
 
-impl<T: PartialOrd + Debug, const N: usize> Matcher<[T; N]> for IncreasingDecreasingMatcher<T> {
+impl<T: PartialOrd + Debug, const N: usize> Matcher<[T; N]> for IncreasingDecreasingMatcher {
     fn test(&self, collection: &[T; N]) -> MatcherResult {
         self.test(collection as &[T])
     }
 }
 
-impl<T: PartialOrd + Debug> Matcher<&[T]> for IncreasingDecreasingMatcher<T> {
+impl<T: PartialOrd + Debug> Matcher<&[T]> for IncreasingDecreasingMatcher {
     fn test(&self, collection: &&[T]) -> MatcherResult {
         self.test(collection)
     }
 }
 
-pub fn be_monotonically_increasing<T: PartialOrd + Debug>() -> IncreasingDecreasingMatcher<T> {
-    IncreasingDecreasingMatcher::MonotonicallyIncreasing(PhantomData)
+pub fn be_monotonically_increasing() -> IncreasingDecreasingMatcher {
+    IncreasingDecreasingMatcher::MonotonicallyIncreasing
 }
 
-pub fn be_monotonically_decreasing<T: PartialOrd + Debug>() -> IncreasingDecreasingMatcher<T> {
-    IncreasingDecreasingMatcher::MonotonicallyDecreasing(PhantomData)
+pub fn be_monotonically_decreasing() -> IncreasingDecreasingMatcher {
+    IncreasingDecreasingMatcher::MonotonicallyDecreasing
 }
 
-pub fn be_strictly_increasing<T: PartialOrd + Debug>() -> IncreasingDecreasingMatcher<T> {
-    IncreasingDecreasingMatcher::StrictlyIncreasing(PhantomData)
+pub fn be_strictly_increasing() -> IncreasingDecreasingMatcher {
+    IncreasingDecreasingMatcher::StrictlyIncreasing
 }
 
-pub fn be_strictly_decreasing<T: PartialOrd + Debug>() -> IncreasingDecreasingMatcher<T> {
-    IncreasingDecreasingMatcher::StrictlyDecreasing(PhantomData)
+pub fn be_strictly_decreasing() -> IncreasingDecreasingMatcher {
+    IncreasingDecreasingMatcher::StrictlyDecreasing
 }
 
 #[cfg(test)]

@@ -1,35 +1,34 @@
-use std::marker::PhantomData;
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum CollectionLengthMatcher<T> {
-    Same(usize, PhantomData<T>),
-    Atleast(usize, PhantomData<T>),
-    Atmost(usize, PhantomData<T>),
+pub enum CollectionLengthMatcher {
+    Same(usize),
+    Atleast(usize),
+    Atmost(usize),
 }
 
-impl<T> Matcher<Vec<T>> for CollectionLengthMatcher<T> {
+impl<T> Matcher<Vec<T>> for CollectionLengthMatcher {
     fn test(&self, collection: &Vec<T>) -> MatcherResult {
         self.test_length(collection.len())
     }
 }
 
-impl<T, const N: usize> Matcher<[T; N]> for CollectionLengthMatcher<T> {
+impl<T, const N: usize> Matcher<[T; N]> for CollectionLengthMatcher {
     fn test(&self, collection: &[T; N]) -> MatcherResult {
         self.test_length(collection.len())
     }
 }
 
-impl<T> Matcher<&[T]> for CollectionLengthMatcher<T> {
+impl<T> Matcher<&[T]> for CollectionLengthMatcher {
     fn test(&self, collection: &&[T]) -> MatcherResult {
         self.test_length(collection.len())
     }
 }
 
-impl<T> CollectionLengthMatcher<T> {
+impl CollectionLengthMatcher {
     fn test_length(&self, input_length: usize) -> MatcherResult {
         let message_prefix = "Collection";
         match self {
-            CollectionLengthMatcher::Same(length, _) => MatcherResult::formatted(
+            CollectionLengthMatcher::Same(length) => MatcherResult::formatted(
                 input_length == *length,
                 format!(
                     "{:?} length {:?} should be {:?}",
@@ -40,7 +39,7 @@ impl<T> CollectionLengthMatcher<T> {
                     message_prefix, input_length, length
                 ),
             ),
-            CollectionLengthMatcher::Atleast(length, _) => MatcherResult::formatted(
+            CollectionLengthMatcher::Atleast(length) => MatcherResult::formatted(
                 input_length >= *length,
                 format!(
                     "{:?} length {:?} should be atleast {:?}",
@@ -51,7 +50,7 @@ impl<T> CollectionLengthMatcher<T> {
                     message_prefix, input_length, length
                 ),
             ),
-            CollectionLengthMatcher::Atmost(length, _) => MatcherResult::formatted(
+            CollectionLengthMatcher::Atmost(length) => MatcherResult::formatted(
                 input_length <= *length,
                 format!(
                     "{:?} length {:?} should be atmost {:?}",
@@ -66,16 +65,16 @@ impl<T> CollectionLengthMatcher<T> {
     }
 }
 
-pub fn have_same_length<T>(length: usize) -> CollectionLengthMatcher<T> {
-    CollectionLengthMatcher::Same(length, PhantomData)
+pub fn have_same_length(length: usize) -> CollectionLengthMatcher {
+    CollectionLengthMatcher::Same(length)
 }
 
-pub fn have_atleast_same_length<T>(length: usize) -> CollectionLengthMatcher<T> {
-    CollectionLengthMatcher::Atleast(length, PhantomData)
+pub fn have_atleast_same_length(length: usize) -> CollectionLengthMatcher {
+    CollectionLengthMatcher::Atleast(length)
 }
 
-pub fn have_atmost_same_length<T>(length: usize) -> CollectionLengthMatcher<T> {
-    CollectionLengthMatcher::Atmost(length, PhantomData)
+pub fn have_atmost_same_length(length: usize) -> CollectionLengthMatcher {
+    CollectionLengthMatcher::Atmost(length)
 }
 
 #[cfg(test)]
