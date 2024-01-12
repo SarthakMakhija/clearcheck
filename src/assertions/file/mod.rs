@@ -1,12 +1,12 @@
 use std::fmt::Debug;
 use std::path::Path;
 
+use crate::matchers::{Should, ShouldNot};
 use crate::matchers::file::{
     be_a_directory, be_a_file, be_a_symbolic_link, be_absolute, be_readonly, be_relative,
     be_writable, be_zero_sized, contain_all_file_names, contain_any_file_names, contain_file_name,
     have_extension,
 };
-use crate::matchers::{Should, ShouldNot};
 
 /// FileAssertion enables assertions about various properties of file or path.
 ///
@@ -29,10 +29,9 @@ use crate::matchers::{Should, ShouldNot};
 /// let directory_path = temporary_directory.path();
 /// directory_path
 ///     .should_be_a_directory()
-///     .should_contain_any_of_file_names(&["junit.txt", "clearcheck.txt"]);
+///     .should_contain_any_of_file_names(vec!["junit.txt", "clearcheck.txt"]);
 /// ```
 pub trait FileAssertion {
-
     /// - Asserts that the path is a directory.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
@@ -81,42 +80,42 @@ pub trait FileAssertion {
     /// - Asserts that the path corresponds to a file with the specified extension.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
-    fn should_have_extension(&self, extension: &str) -> &Self;
+    fn should_have_extension(&self, extension: &'static str) -> &Self;
 
     /// - Asserts that the path corresponds to a file that does not have the specified extension.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
-    fn should_not_have_extension(&self, extension: &str) -> &Self;
+    fn should_not_have_extension(&self, extension: &'static str) -> &Self;
 
     /// - Asserts that the path corresponds to a directory that contains the specified file name.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
-    fn should_contain_file_name(&self, name: &str) -> &Self;
+    fn should_contain_file_name(&self, name: &'static str) -> &Self;
 
     /// - Asserts that the path corresponds to a directory that does not contain the specified file name.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
-    fn should_not_contain_file_name(&self, name: &str) -> &Self;
+    fn should_not_contain_file_name(&self, name: &'static str) -> &Self;
 
     /// - Asserts that the path corresponds to a directory that contains all the specified file names.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
-    fn should_contain_all_file_names(&self, names: &[&str]) -> &Self;
+    fn should_contain_all_file_names(&self, names: Vec<&'static str>) -> &Self;
 
     /// - Asserts that the path corresponds to a directory that does not contain all the specified file names.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
-    fn should_not_contain_all_file_names(&self, names: &[&str]) -> &Self;
+    fn should_not_contain_all_file_names(&self, names: Vec<&'static str>) -> &Self;
 
     /// - Asserts that the path corresponds to a directory that contains any of the specified file names.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
-    fn should_contain_any_of_file_names(&self, names: &[&str]) -> &Self;
+    fn should_contain_any_of_file_names(&self, names: Vec<&'static str>) -> &Self;
 
     /// - Asserts that the path corresponds to a directory that does not contain any of the specified file names.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
-    fn should_not_contain_any_of_file_names(&self, names: &[&str]) -> &Self;
+    fn should_not_contain_any_of_file_names(&self, names: Vec<&'static str>) -> &Self;
 }
 
 impl<T: AsRef<Path> + Debug> FileAssertion for T {
@@ -165,42 +164,42 @@ impl<T: AsRef<Path> + Debug> FileAssertion for T {
         self
     }
 
-    fn should_have_extension(&self, extension: &str) -> &Self {
+    fn should_have_extension(&self, extension: &'static str) -> &Self {
         self.should(&have_extension(extension));
         self
     }
 
-    fn should_not_have_extension(&self, extension: &str) -> &Self {
+    fn should_not_have_extension(&self, extension: &'static str) -> &Self {
         self.should_not(&have_extension(extension));
         self
     }
 
-    fn should_contain_file_name(&self, name: &str) -> &Self {
+    fn should_contain_file_name(&self, name: &'static str) -> &Self {
         self.should(&contain_file_name(name));
         self
     }
 
-    fn should_not_contain_file_name(&self, name: &str) -> &Self {
+    fn should_not_contain_file_name(&self, name: &'static str) -> &Self {
         self.should_not(&contain_file_name(name));
         self
     }
 
-    fn should_contain_all_file_names(&self, names: &[&str]) -> &Self {
+    fn should_contain_all_file_names(&self, names: Vec<&'static str>) -> &Self {
         self.should(&contain_all_file_names(names));
         self
     }
 
-    fn should_not_contain_all_file_names(&self, names: &[&str]) -> &Self {
+    fn should_not_contain_all_file_names(&self, names: Vec<&'static str>) -> &Self {
         self.should_not(&contain_all_file_names(names));
         self
     }
 
-    fn should_contain_any_of_file_names(&self, names: &[&str]) -> &Self {
+    fn should_contain_any_of_file_names(&self, names: Vec<&'static str>) -> &Self {
         self.should(&contain_any_file_names(names));
         self
     }
 
-    fn should_not_contain_any_of_file_names(&self, names: &[&str]) -> &Self {
+    fn should_not_contain_any_of_file_names(&self, names: Vec<&'static str>) -> &Self {
         self.should_not(&contain_any_file_names(names));
         self
     }
@@ -442,7 +441,7 @@ mod tests {
         let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
-        directory_path.should_contain_all_file_names(&["junit.txt", "clearcheck.txt"]);
+        directory_path.should_contain_all_file_names(vec!["junit.txt", "clearcheck.txt"]);
     }
 
     #[test]
@@ -456,7 +455,7 @@ mod tests {
         let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
-        directory_path.should_contain_all_file_names(&["junit.txt", "gotest.txt"]);
+        directory_path.should_contain_all_file_names(vec!["junit.txt", "gotest.txt"]);
     }
 
     #[test]
@@ -469,7 +468,7 @@ mod tests {
         let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
-        directory_path.should_not_contain_all_file_names(&["scalaunit.txt", "gotest.txt"]);
+        directory_path.should_not_contain_all_file_names(vec!["scalaunit.txt", "gotest.txt"]);
     }
 
     #[test]
@@ -483,7 +482,7 @@ mod tests {
         let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
-        directory_path.should_not_contain_all_file_names(&["junit.txt", "clearcheck.txt"]);
+        directory_path.should_not_contain_all_file_names(vec!["junit.txt", "clearcheck.txt"]);
     }
 
     #[test]
@@ -496,7 +495,7 @@ mod tests {
         let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
-        directory_path.should_contain_any_of_file_names(&["junit.txt", "gotest.txt"]);
+        directory_path.should_contain_any_of_file_names(vec!["junit.txt", "gotest.txt"]);
     }
 
     #[test]
@@ -510,7 +509,7 @@ mod tests {
         let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
-        directory_path.should_contain_any_of_file_names(&["scalaunit.txt", "gotest.txt"]);
+        directory_path.should_contain_any_of_file_names(vec!["scalaunit.txt", "gotest.txt"]);
     }
 
     #[test]
@@ -523,7 +522,7 @@ mod tests {
         let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
-        directory_path.should_not_contain_any_of_file_names(&["scalaunit.txt", "gotest.txt"]);
+        directory_path.should_not_contain_any_of_file_names(vec!["scalaunit.txt", "gotest.txt"]);
     }
 
     #[test]
@@ -537,6 +536,6 @@ mod tests {
         let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
-        directory_path.should_not_contain_any_of_file_names(&["junit.txt", "gotest.txt"]);
+        directory_path.should_not_contain_any_of_file_names(vec!["junit.txt", "gotest.txt"]);
     }
 }

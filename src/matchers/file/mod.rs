@@ -17,16 +17,16 @@ pub enum FileTypeMatcher {
     Writable,
 }
 
-pub enum FilePathMatcher<'a> {
+pub enum FilePathMatcher {
     Absolute,
     Relative,
-    Extension(&'a str),
+    Extension(&'static str),
 }
 
-pub enum TreeMatcher<'a> {
-    Contain(&'a str),
-    ContainAll(&'a [&'a str]),
-    ContainAny(&'a [&'a str]),
+pub enum TreeMatcher {
+    Contain(&'static str),
+    ContainAll(Vec<&'static str>),
+    ContainAny(Vec<&'static str>),
 }
 
 impl<T: AsRef<Path> + Debug> Matcher<T> for FileTypeMatcher {
@@ -67,7 +67,7 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for FileTypeMatcher {
     }
 }
 
-impl<T: AsRef<Path> + Debug> Matcher<T> for FilePathMatcher<'_> {
+impl<T: AsRef<Path> + Debug> Matcher<T> for FilePathMatcher {
     fn test(&self, value: &T) -> MatcherResult {
         match self {
             FilePathMatcher::Absolute => MatcherResult::formatted(
@@ -93,7 +93,7 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for FilePathMatcher<'_> {
     }
 }
 
-impl<T: AsRef<Path> + Debug> Matcher<T> for TreeMatcher<'_> {
+impl<T: AsRef<Path> + Debug> Matcher<T> for TreeMatcher {
     fn test(&self, value: &T) -> MatcherResult {
         match self {
             TreeMatcher::Contain(name) => {
@@ -176,27 +176,27 @@ pub fn be_writable() -> FileTypeMatcher {
     FileTypeMatcher::Writable
 }
 
-pub fn be_absolute() -> FilePathMatcher<'static> {
+pub fn be_absolute() -> FilePathMatcher {
     FilePathMatcher::Absolute
 }
 
-pub fn be_relative() -> FilePathMatcher<'static> {
+pub fn be_relative() -> FilePathMatcher {
     FilePathMatcher::Relative
 }
 
-pub fn have_extension(extension: &str) -> FilePathMatcher {
+pub fn have_extension(extension: &'static str) -> FilePathMatcher {
     FilePathMatcher::Extension(extension)
 }
 
-pub fn contain_file_name(name: &str) -> TreeMatcher {
+pub fn contain_file_name(name: &'static str) -> TreeMatcher {
     TreeMatcher::Contain(name)
 }
 
-pub fn contain_all_file_names<'a>(names: &'a [&'a str]) -> TreeMatcher<'a> {
+pub fn contain_all_file_names(names: Vec<&'static str>) -> TreeMatcher {
     TreeMatcher::ContainAll(names)
 }
 
-pub fn contain_any_file_names<'a>(names: &'a [&'a str]) -> TreeMatcher<'a> {
+pub fn contain_any_file_names(names: Vec<&'static str>) -> TreeMatcher {
     TreeMatcher::ContainAny(names)
 }
 
@@ -383,7 +383,7 @@ mod walk_tree_tests {
         let _ = File::create(file_path2).unwrap();
 
         let directory_path = temporary_directory.path();
-        let matcher = contain_all_file_names(&["junit.txt", "clearcheck.txt"]);
+        let matcher = contain_all_file_names(vec!["junit.txt", "clearcheck.txt"]);
         matcher.test(&directory_path).passed.should_be_true();
     }
 
@@ -395,7 +395,7 @@ mod walk_tree_tests {
         let _ = File::create(file_path).unwrap();
 
         let directory_path = temporary_directory.path();
-        let matcher = contain_any_file_names(&["junit.txt", "clearcheck.txt"]);
+        let matcher = contain_any_file_names(vec!["junit.txt", "clearcheck.txt"]);
         matcher.test(&directory_path).passed.should_be_true();
     }
 
@@ -408,7 +408,7 @@ mod walk_tree_tests {
         let _ = File::create(file_path).unwrap();
 
         let directory_path = temporary_directory.path();
-        let matcher = contain_any_file_names(&["assert.txt", "assert.txt"]);
+        let matcher = contain_any_file_names(vec!["assert.txt", "assert.txt"]);
         matcher.test(&directory_path).passed.should_be_true();
     }
 }
