@@ -3,7 +3,6 @@ use crate::matchers::{Should, ShouldNot};
 
 /// IgnoreCaseEqualityAssertion enables assertions about whether a string (or str) equals other string, with case ignored.
 pub trait IgnoreCaseEqualityAssertion {
-
     /// - Asserts that the string equals other string, with case ignored.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
