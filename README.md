@@ -226,9 +226,9 @@ directory_path
 ```rust
 let value: f64 = 1.34589;
 value
- .should_not_be_nan()
- .should_be_positive()
- .should_be_in_inclusive_range_with_tolerance(1.11..=1.3458, 0.23);
+   .should_not_be_nan()
+   .should_be_positive()
+   .should_be_in_inclusive_range_with_tolerance(1.11..=1.3458, 0.23);
 ```
 
 #### Integer assertions (Enabled by 'num' feature, depends on [num](https://docs.rs/num/latest/num/))
