@@ -77,8 +77,8 @@ pass_phrase.should_not_be_empty()
 - **Fluent API**: Chain assertions for a natural and readable experience.
 - **Extensive assertions**: Variety of assertions covering common validation needs.
 - **Customizable**: Extend with your own assertions for specific domain requirements.
-- **Type-Safe**: Built with Rust's type system for reliable and expressive assertions.
-- **Custom Matchers**: Craft assertions tailored to your exact needs, ensuring comprehensive validation for unique data structures and logic.
+- **Type-safe**: Built with Rust's type system for reliable and expressive assertions.
+- **Custom assertions**: Craft assertions tailored to your exact needs, ensuring comprehensive validation for unique data structures and logic.
 
 ### Usage
 
@@ -533,9 +533,9 @@ While this crate comes loaded with a plethora of ready-made assertions, sometime
 **clearcheck** allows crafting your own custom matchers and assertions!
 
 The possibilities are endless:
-- **Domain-Specific Validation**: Craft assertions that understand the nuances of your business logic.
-- **Enhanced Readability**: Write clear and concise matchers that mirror your domain vocabulary, making your tests self-documenting and understandable.
-- **Reduced Redundancy**: Eliminate repetitive code by encapsulating complex validation logic within reusable matchers.
+- **Domain-specific validation**: Craft assertions that understand the nuances of your business logic.
+- **Enhanced readability**: Write clear and concise matchers that mirror your domain vocabulary, making your tests self-documenting and understandable.
+- **Reduced redundancy**: Eliminate repetitive code by encapsulating complex validation logic within reusable matchers.
 
 Let's craft a custom password matcher with specific criteria like length, digits, and banned patterns.
 
