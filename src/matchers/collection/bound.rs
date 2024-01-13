@@ -14,12 +14,12 @@ impl<T> BoundMatcher<T>
     fn test(&self, collection: &[T]) -> MatcherResult {
         match self {
             BoundMatcher::Upper(bound) => MatcherResult::formatted(
-                collection.iter().all(|source| bound >= source),
+                collection.iter().all(|source| source <= bound),
                 format!("{:?} should have upper bound {:?}", collection, bound),
                 format!("{:?} should not have upper bound {:?}", collection, bound),
             ),
             BoundMatcher::Lower(bound) => MatcherResult::formatted(
-                collection.iter().all(|source| bound <= source),
+                collection.iter().all(|source| source >= bound),
                 format!("{:?} should have lower bound {:?}", collection, bound),
                 format!("{:?} should not have lower bound {:?}", collection, bound),
             ),

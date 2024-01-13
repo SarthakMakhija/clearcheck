@@ -1,11 +1,33 @@
 use crate::matchers::collection::bound::{have_lower_bound, have_upper_bound};
 use crate::matchers::Should;
 
+//BoundAssertion enables assertions about the expected bounds on elements within a collection.
 pub trait BoundAssertion<T>
 where
     T: PartialOrd + std::fmt::Debug,
 {
+    /// - Asserts that all elements in the collection are less than or equal to the given element.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::bound::BoundAssertion;
+    ///
+    /// let collection = vec![1, 2, 3, 4];
+    /// collection.should_have_upper_bound(4);
+    /// ```
     fn should_have_upper_bound(&self, element: T) -> &Self;
+
+    /// - Asserts that all elements in the collection are greater than or equal to the given element.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::bound::BoundAssertion;
+    ///
+    /// let collection = vec![1, 2, 3, 4];
+    /// collection.should_have_lower_bound(1);
+    /// ```
     fn should_have_lower_bound(&self, element: T) -> &Self;
 }
 
