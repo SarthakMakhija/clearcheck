@@ -12,8 +12,8 @@ pub trait NumericAssertion {
     /// ```
     /// use clearcheck::assertions::string::numeric::NumericAssertion;
     ///
-    /// let name = "12345";
-    /// name.should_be_numeric::<i32>();
+    /// let value = "12345";
+    /// value.should_be_numeric::<i32>();
     /// ```
     fn should_be_numeric<T: FromStr>(&self) -> &Self;
 
