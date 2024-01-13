@@ -443,9 +443,63 @@ pass_phrase.should_not_be_empty()
     .should_not_contain_ignoring_case("word");
 ```
 
-### Writing custom assertions and matchers
+### Beyond the Built-in: Unleashing the Power of Custom Matchers
 
-### Composing matchers
+While this crate comes loaded with a plethora of ready-made assertions, sometimes your testing needs demand a bespoke touch.
+**clearcheck** allows crafting your own custom matchers!
+
+The possibilities are endless:
+- **Domain-Specific Validation**: Craft assertions that understand the nuances of your business logic.
+- **Enhanced Readability**: Write clear and concise matchers that mirror your domain vocabulary, making your tests self-documenting and understandable.
+- **Reduced Redundancy**: Eliminate repetitive code by encapsulating complex validation logic within reusable matchers.
+
+Let's create custom assertion for password validation. Let's start by writing a custom matcher.
+
+```rust
+fn be_a_valid_password<T: AsRef<str> + Debug>() -> Matchers<T> {
+    MatchersBuilder::start_building_with_negated(be_empty().boxed())
+      .push(have_atleast_same_length(10).boxed())
+      .push(contain_a_digit().boxed())
+      .push(contain_any_of_characters(vec!['@', '#']).boxed())
+      .push_inverted(begin_with("pass").boxed())
+      .push_inverted(contain_ignoring_case("pass").boxed())
+      .push_inverted(contain_ignoring_case("word").boxed())
+      .combine_as_and()
+}
+```
+
+The matcher enforces the following:
+- Must not be empty.
+- Must have a minimum length of 10 characters.
+- Must contain at least one digit.
+- Must contain any of the following characters: '@', '#'.
+- Must not begin with the string "pass" (case-insensitive).
+- Must not contain the strings "pass" or "word" (case-insensitive).
+                     
+Let's write an assertion trait.
+
+```rust
+trait PasswordAssertion {
+    fn should_be_a_valid_password(&self) -> &Self;
+}
+
+impl PasswordAssertion for &str {
+    fn should_be_a_valid_password(&self) -> &Self {
+        self.should(&be_a_valid_password());
+        self
+    }
+}
+```
+
+The end result is a domain specific password assertion.
+
+```rust
+#[test]
+fn should_be_a_valid_password() {
+    let password = "P@@sw0rd9082";
+    password.should_be_a_valid_password();
+}
+```
 
 ### Rust features
 
