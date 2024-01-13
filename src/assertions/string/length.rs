@@ -8,6 +8,8 @@ use crate::matchers::{Should, ShouldNot};
 
 /// LengthAssertion enables assertions about the length of string (or str) values.
 ///
+/// It offers a fluent interface for chaining multiple assertions.
+///
 /// # Example
 /// ```
 /// use clearcheck::assertions::string::length::LengthAssertion;

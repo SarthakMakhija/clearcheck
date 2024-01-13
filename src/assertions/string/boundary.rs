@@ -3,6 +3,8 @@ use crate::matchers::{Should, ShouldNot};
 
 /// BoundaryAssertion enables assertions about the beginning and the ending boundaries of string (or str) values.
 ///
+/// It offers a fluent interface for chaining multiple assertions.
+///
 /// # Example
 /// ```
 /// use clearcheck::assertions::string::boundary::BoundaryAssertion;
