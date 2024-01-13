@@ -21,7 +21,25 @@ libraries
 
 ### Why clearcheck?
 
-### Adding clearcheck as a dependency in Cargo.toml 
+### Usage
+
+Add this to your `Cargo.toml` without any features:
+
+```toml
+[dev-dependencies]
+clearcheck = { version = "0.0.1" }
+```
+
+Add this to your `Cargo.toml` with all the features:
+
+```toml
+[dev-dependencies]
+clearcheck = { version = "0.0.1", features = ["num", "date", "regex", "file"] }
+chrono = { version = "0.4.31" }
+num = { version = "0.4.1" }
+regex = { version = "1.10.2" }
+walkdir = { version = "2.4.0", features = [] }
+```
 
 ### Assertions vs Matchers
 
