@@ -203,6 +203,31 @@ directory_path
     .should_contain_any_of_file_names(vec!["junit.txt", "clearcheck.txt"]);
 ```
 
+#### Float assertions (Enabled by 'num' feature, depends on [num](https://docs.rs/num/latest/num/))
+
+| **Assertion**     | **Description**                              |
+|-------------------|----------------------------------------------|
+| should_be_nan  | Asserts that the floating-point value is NaN (Not a Number). |
+| should_not_be_nan | Asserts that the floating-point value is not NaN (Not a Number). |
+| should_be_zero | Asserts that the floating-point value is zero. |
+| should_not_be_zero | Asserts that the floating-point value is not zero. |
+| should_be_positive | Asserts that the floating-point value is positive. |
+| should_be_negative | Asserts that the floating-point value is negative. |
+| should_be_in_inclusive_range_with_tolerance | Asserts that the floating-point value falls within the given inclusive range with tolerance. |
+| should_not_be_in_inclusive_range_with_tolerance | Asserts that the floating-point value does not fall within the given inclusive range with tolerance. |
+| should_be_in_exclusive_range_with_tolerance | Asserts that the floating-point value falls within the given exclusive range with tolerance. |
+| should_not_be_in_exclusive_range_with_tolerance | Asserts that the floating-point value does not fall within the given exclusive range with tolerance. |
+
+#### Usage
+
+```rust
+let value: f64 = 1.34589;
+value
+ .should_not_be_nan()
+ .should_be_positive()
+ .should_be_in_inclusive_range_with_tolerance(1.11..=1.3458, 0.23);
+```
+
 
 ### Composing matchers 
 
