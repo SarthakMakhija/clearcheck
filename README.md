@@ -30,14 +30,14 @@ pass_phrase.should_not_be_empty()
 
 ### Usage
 
-Add this to your `Cargo.toml` without any features:
+Add this to your `Cargo.toml` (no features):
 
 ```toml
 [dev-dependencies]
 clearcheck = { version = "0.0.1" }
 ```
 
-Add this to your `Cargo.toml` with all the features:
+Add this to your `Cargo.toml` (all features):
 
 ```toml
 [dev-dependencies]
