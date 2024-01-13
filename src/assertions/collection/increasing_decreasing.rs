@@ -4,13 +4,61 @@ use crate::matchers::collection::increasing_decreasing::{
 };
 use crate::matchers::Should;
 
+///IncreasingDecreasingAssertion enables assertions about the order of elements within a collection.
 pub trait IncreasingDecreasingAssertion<T>
 where
     T: PartialOrd + std::fmt::Debug,
 {
+    /// - Asserts that the elements in the collection are in non-decreasing order (allowing consecutive equal elements).
+    /// - An empty collection is considered monotonically increasing.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::increasing_decreasing::IncreasingDecreasingAssertion;
+    ///
+    /// let collection = vec![1, 2, 3, 4, 4, 5, 5, 6];
+    /// collection.should_be_monotonically_increasing();
+    /// ```
     fn should_be_monotonically_increasing(&self) -> &Self;
+
+    /// - Asserts that the elements in the collection are in non-increasing order (allowing consecutive equal elements).
+    /// - An empty collection is considered monotonically decreasing.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::increasing_decreasing::IncreasingDecreasingAssertion;
+    ///
+    /// let collection = vec![6, 6, 5, 5, 4, 4, 2];
+    /// collection.should_be_monotonically_decreasing();
+    /// ```
     fn should_be_monotonically_decreasing(&self) -> &Self;
+
+    /// - Asserts that the elements in the collection are in strictly increasing order (no consecutive elements can be equal).
+    /// - An empty collection is considered monotonically increasing.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::increasing_decreasing::IncreasingDecreasingAssertion;
+    ///
+    /// let collection = vec![1, 3, 5, 7, 9];
+    /// collection.should_be_strictly_increasing();
+    /// ```
     fn should_be_strictly_increasing(&self) -> &Self;
+
+    /// - Asserts that the elements in the collection are in strictly decreasing order (no consecutive elements can be equal).
+    /// - An empty collection is considered monotonically increasing.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::increasing_decreasing::IncreasingDecreasingAssertion;
+    ///
+    /// let collection = vec![9, 7, 5, 3, 1];
+    /// collection.should_be_strictly_decreasing();
+    /// ```
     fn should_be_strictly_decreasing(&self) -> &Self;
 }
 
@@ -95,6 +143,30 @@ where
 #[cfg(test)]
 mod tests {
     use crate::assertions::collection::increasing_decreasing::IncreasingDecreasingAssertion;
+
+    #[test]
+    fn empty_should_be_monotonically_increasing() {
+        let collection: Vec<i32> = vec![];
+        collection.should_be_monotonically_increasing();
+    }
+
+    #[test]
+    fn empty_should_be_monotonically_decreasing() {
+        let collection: Vec<i32> = vec![];
+        collection.should_be_monotonically_decreasing();
+    }
+
+    #[test]
+    fn empty_should_be_strictly_increasing() {
+        let collection: Vec<i32> = vec![];
+        collection.should_be_strictly_increasing();
+    }
+
+    #[test]
+    fn empty_should_be_strictly_decreasing() {
+        let collection: Vec<i32> = vec![];
+        collection.should_be_strictly_decreasing();
+    }
 
     #[test]
     fn should_be_monotonically_increasing() {
