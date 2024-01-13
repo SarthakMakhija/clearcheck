@@ -5,7 +5,6 @@ use crate::matchers::{Should, ShouldNot};
 
 /// DateAssertion enables assertions about various properties of NaiveDate.
 ///
-///
 /// It offers a fluent interface for chaining multiple assertions.
 ///
 /// # Example
@@ -21,7 +20,6 @@ use crate::matchers::{Should, ShouldNot};
 ///     .should_be_greater_than(&NaiveDate::from_ymd_opt(2023, 1, 10).unwrap());
 /// ```
 pub trait DateAssertion {
-
     /// - Asserts that the date has the same year as the other date.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
@@ -152,7 +150,7 @@ pub trait DateAssertion {
     /// ```
     fn should_not_have_same_day_as(&self, other: &NaiveDate) -> &Self;
 
-    /// - Asserts that the date has the same day as the other day.
+    /// - Asserts that the date has the same day as the given day.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -165,7 +163,7 @@ pub trait DateAssertion {
     /// ```
     fn should_have_day(&self, day: u32) -> &Self;
 
-    /// - Asserts that the date does not have the same day as the other day.
+    /// - Asserts that the date does not have the same day as the given day.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
