@@ -7,7 +7,7 @@
 ### Table of content
 
 - [Introducing clearcheck](#introducing-clearcheck)
-- [Key Features:](#key-features)
+- [Key Features](#key-features)
 - [Usage](#usage)
 - [Assertions vs Matchers](#assertions-vs-matchers)
 - [Supported assertions ](#supported-assertions)
