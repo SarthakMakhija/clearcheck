@@ -6,15 +6,126 @@ use crate::matchers::collection::length::{
 use crate::matchers::range::{have_length_in_exclusive_range, have_length_in_inclusive_range};
 use crate::matchers::{Should, ShouldNot};
 
+/// SizeAssertion enables assertions about the size of the underlying collection.
+///
+/// It offers a fluent interface for chaining multiple assertions.
+///
+/// # Example
+/// ```
+/// use clearcheck::assertions::collection::size::SizeAssertion;
+///
+/// let collection = vec!["clearcheck", "testify"];
+/// collection
+///     .should_have_at_least_size(1)
+///     .should_have_size_in_inclusive_range(1..=5);
+/// ```
 pub trait SizeAssertion {
+    /// - Asserts that the size of the underlying collection is exactly the given size.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::size::SizeAssertion;
+    ///
+    /// let collection = vec!["clearcheck", "testify"];
+    /// collection.should_have_size(2);
+    /// ```
     fn should_have_size(&self, size: usize) -> &Self;
+
+    /// - Asserts that the size of the underlying collection is not the given size.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::size::SizeAssertion;
+    ///
+    /// let collection = vec!["clearcheck", "testify"];
+    /// collection.should_not_have_size(3);
+    /// ```
     fn should_not_have_size(&self, size: usize) -> &Self;
+
+    /// - Asserts that the size of the underlying collection is greater than or equal to the given size.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::size::SizeAssertion;
+    ///
+    /// let collection = vec!["clearcheck", "testify"];
+    /// collection.should_have_at_least_size(2);
+    /// ```
     fn should_have_at_least_size(&self, size: usize) -> &Self;
+
+    /// - Asserts that the size of the underlying collection is less than or equal to the given size.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::size::SizeAssertion;
+    ///
+    /// let collection = vec!["clearcheck", "testify"];
+    /// collection.should_have_at_most_size(2);
+    /// ```
     fn should_have_at_most_size(&self, size: usize) -> &Self;
+
+    /// - Asserts that the size of the underlying collection is same as that of the given collection.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::size::SizeAssertion;
+    ///
+    /// let collection = vec!["clearcheck", "testify"];
+    /// collection.should_be_same_size_as(&[1, 2]);
+    /// ```
     fn should_be_same_size_as<U>(&self, other: &[U]) -> &Self;
+
+    /// - Asserts that the size of the underlying collection falls within the given inclusive range.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::size::SizeAssertion;
+    ///
+    /// let collection = vec!["clearcheck", "testify"];
+    /// collection.should_have_size_in_inclusive_range(2..=5);
+    /// ```
     fn should_have_size_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self;
+
+    /// - Asserts that the size of the underlying collection does not fall within the given inclusive range.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::size::SizeAssertion;
+    ///
+    /// let collection = vec!["clearcheck", "testify"];
+    /// collection.should_not_have_size_in_inclusive_range(3..=5);
+    /// ```
     fn should_not_have_size_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self;
+
+    /// - Asserts that the size of the underlying collection falls within the given exclusive range.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::size::SizeAssertion;
+    ///
+    /// let collection = vec!["clearcheck", "testify"];
+    /// collection.should_have_size_in_exclusive_range(1..3);
+    /// ```
     fn should_have_size_in_exclusive_range(&self, range: Range<usize>) -> &Self;
+
+    /// - Asserts that the size of the underlying collection does not fall within the given exclusive range.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::size::SizeAssertion;
+    ///
+    /// let collection = vec!["clearcheck", "testify"];
+    /// collection.should_not_have_size_in_exclusive_range(3..5);
+    /// ```
     fn should_not_have_size_in_exclusive_range(&self, range: Range<usize>) -> &Self;
 }
 
