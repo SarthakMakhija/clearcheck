@@ -1,7 +1,7 @@
 use crate::matchers::string::boundary::{begin_with, end_with};
 use crate::matchers::{Should, ShouldNot};
 
-/// BoundaryAssertion enables assertions about the beginning and ending boundaries of string (or str) values.
+/// BoundaryAssertion enables assertions about the beginning and the ending boundaries of string (or str) values.
 ///
 /// # Example
 /// ```
@@ -13,24 +13,56 @@ use crate::matchers::{Should, ShouldNot};
 ///     .should_end_with("check");
 /// ```
 pub trait BoundaryAssertion {
-    /// - Asserts that the string begins with the specified prefix.
+    /// - Asserts that the string begins with the given prefix.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::string::boundary::BoundaryAssertion;
+    ///
+    /// let value = "clearcheck";
+    /// value
+    ///     .should_begin_with("clear");
+    /// ```
     fn should_begin_with(&self, prefix: &'static str) -> &Self;
 
-    /// - Asserts that the string does not begin with the specified prefix
+    /// - Asserts that the string does not begin with the given prefix
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::string::boundary::BoundaryAssertion;
+    ///
+    /// let value = "clearcheck";
+    /// value
+    ///     .should_not_begin_with("rust");
+    /// ```
     fn should_not_begin_with(&self, prefix: &'static str) -> &Self;
 
-    /// - Asserts that the string ends with the specified suffix.
+    /// - Asserts that the string ends with the given suffix.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::string::boundary::BoundaryAssertion;
+    ///
+    /// let value = "clearcheck";
+    /// value
+    ///     .should_end_with("check");
+    /// ```
     fn should_end_with(&self, suffix: &'static str) -> &Self;
 
-    /// - Asserts that the string does not end with the specified suffix.
+    /// - Asserts that the string does not end with the given suffix.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::string::boundary::BoundaryAssertion;
+    ///
+    /// let value = "clearcheck";
+    /// value
+    ///     .should_not_end_with("test");
+    /// ```
     fn should_not_end_with(&self, suffix: &'static str) -> &Self;
 }
 
