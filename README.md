@@ -78,7 +78,7 @@ pass_phrase.should_not_be_empty()
 - **Extensive assertions**: Variety of assertions covering common validation needs.
 - **Customizable**: Extend with your own assertions for specific domain requirements.
 - **Type-safe**: Built with Rust's type system for reliable and expressive assertions.
-- **Custom assertions**: Craft assertions tailored to your exact needs, ensuring comprehensive validation for unique data structures and logic.
+- **Custom assertions**: Craft assertions tailored to your exact needs, ensuring comprehensive validations for various data structures.
 
 ### Usage
 
