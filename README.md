@@ -52,7 +52,7 @@ walkdir = { version = "2.4.0", features = [] }
 
 ### Supported assertions 
 
-#### Boolean assertions
+#### Assertions on bool
 
 | **Assertion**   | **Description**                              |
 |-----------------|----------------------------------------------|
@@ -66,7 +66,7 @@ let value = true;
 value.should_be_true();
 ```
 
-#### Char assertions
+#### Assertions on char
 
 | **Assertion**                     | **Description**                                                               |
 |-----------------------------------|-------------------------------------------------------------------------------|
@@ -87,7 +87,7 @@ let letter = 'D';
 letter.should_be_equal_ignoring_case('d');
 ```
 
-#### Collection assertions (Vector, Arrays, Slices)
+#### Assertions on collection (Vector, Arrays, Slices)
 
 | **Assertion**                           | **Description**                                                                                                                                                           |
 |-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -135,7 +135,7 @@ keywords.should_not_be_empty()
     .should_not_contain_any(vec!["scalatest", "gotest"]);
 ```
 
-#### Date assertions (Enabled by 'date' feature, depends on [chrono](https://docs.rs/chrono/latest/chrono/))
+#### Assertions on date (enabled by 'date' feature, depends on [chrono](https://docs.rs/chrono/latest/chrono/))
 
 | **Assertion**                 | **Description**                                                        |
 |-------------------------------|------------------------------------------------------------------------|
@@ -166,7 +166,7 @@ date
      .should_be_greater_than(&NaiveDate::from_ymd_opt(2023, 1, 10).unwrap());
 ```
 
-#### Filepath assertions (Enabled by 'file' feature, depends on [walkdir](https://docs.rs/walkdir/latest/walkdir/))
+#### Assertions on filepath (enabled by 'file' feature, depends on [walkdir](https://docs.rs/walkdir/latest/walkdir/))
 
 | **Assertion**                        | **Description**                                                                                     |
 |--------------------------------------|-----------------------------------------------------------------------------------------------------|
@@ -206,7 +206,7 @@ directory_path
     .should_contain_any_of_file_names(vec!["junit.txt", "clearcheck.txt"]);
 ```
 
-#### Float assertions (Enabled by 'num' feature, depends on [num](https://docs.rs/num/latest/num/))
+#### Assertions on float (enabled by 'num' feature, depends on [num](https://docs.rs/num/latest/num/))
 
 | **Assertion**                                   | **Description**                                                                                      |
 |-------------------------------------------------|------------------------------------------------------------------------------------------------------|
@@ -231,7 +231,7 @@ value
    .should_be_in_inclusive_range_with_tolerance(1.11..=1.3458, 0.23);
 ```
 
-#### Integer assertions (Enabled by 'num' feature, depends on [num](https://docs.rs/num/latest/num/))
+#### Assertions on integer (enabled by 'num' feature, depends on [num](https://docs.rs/num/latest/num/))
 
 | **Assertion**      | **Description**                             |
 |--------------------|---------------------------------------------|
@@ -252,7 +252,7 @@ value
     .should_be_in_inclusive_range(10..=40);
 ```
 
-#### HashMap assertions
+#### Assertions on HashMap
 
 | **Assertion**                    | **Description**                                                                      |
 |----------------------------------|--------------------------------------------------------------------------------------|
@@ -305,7 +305,7 @@ book_id_by_name
     .should_contain("Database internals", &1);
 ```
 
-#### Option assertions
+#### Assertions on Option
 
 | **Assertion**  | **Description**                            |
 |----------------|--------------------------------------------|
@@ -319,7 +319,7 @@ let option = Some("clearcheck");
 option.should_be_some();
 ```
 
-#### Result assertions
+#### Assertions on Result
 
 | **Assertion** | **Description**                          |
 |---------------|------------------------------------------|
@@ -333,7 +333,7 @@ let value: Result<i32, &str> = Ok(32);
 value.should_be_ok();
 ```
 
-#### PartialOrd assertions
+#### Assertions on T: PartialOrd
 
 | **Assertion**                       | **Description**                                                                                                                 |
 |-------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
@@ -360,7 +360,33 @@ value
     .should_be_in_inclusive_range(10.90..=13.10);
 ```
 
-#### String assertions
+#### Assertions on T: Eq
+
+| **Assertion**    | **Description**                                            |
+|------------------|------------------------------------------------------------|
+| should_equal     | Asserts that the value held by self is equal to other.     |
+| should_not_equal | Asserts that the value held by self is not equal to other. |
+
+#### Usage
+
+```rust
+#[derive(Debug, Eq, PartialEq)]
+struct Book { name: &'static str }
+
+let books = vec![
+  Book {name: "Database internals"},
+  Book {name: "Rust in action"}
+];
+
+let other = vec![
+  Book {name: "Database internals"},
+  Book {name: "Rust in action"}
+];
+
+books.should_equal(&other);
+```
+
+#### Assertions on String
 
 | **Assertion**                     | **Description**                                                                                                                                               |
 |-----------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -389,8 +415,8 @@ value
 | should_not_be_empty               | Asserts that the string is not empty.                                                                                                                         |
 | should_be_numeric                 | Asserts that the string is numeric.                                                                                                                           |
 | should_not_be_numeric             | Asserts that the string is not numeric.                                                                                                                       |
-| should_match                      | Asserts that the string matches the given regular expression.           (Enabled by 'regex' feature, depends on [regex](https://docs.rs/regex/latest/regex/)) |
-| should_not_match                  | Asserts that the string does not match the given regular expression.    (Enabled by 'regex' feature, depends on [regex](https://docs.rs/regex/latest/regex/)) |
+| should_match                      | Asserts that the string matches the given regular expression.           (enabled by 'regex' feature, depends on [regex](https://docs.rs/regex/latest/regex/)) |
+| should_not_match                  | Asserts that the string does not match the given regular expression.    (enabled by 'regex' feature, depends on [regex](https://docs.rs/regex/latest/regex/)) |
 
 ##### Length based assertions
 
@@ -416,7 +442,6 @@ pass_phrase.should_not_be_empty()
     .should_not_contain_ignoring_case("pass")
     .should_not_contain_ignoring_case("word");
 ```
-
 
 ### Writing custom assertions and matchers
 
