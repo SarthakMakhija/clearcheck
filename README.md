@@ -447,7 +447,13 @@ pass_phrase.should_not_be_empty()
 
 ### Composing matchers
 
-### Features
+### Rust features
+
+**clearcheck** crate supports the following features:
+- date enables [Assertions on date](#assertions-on-date-enabled-by-date-feature-depends-on-chrono)
+- file enables [Assertions on file](#assertions-on-filepath-enabled-by-file-feature-depends-on-walkdir)
+- num enables  [Assertions on float](#assertions-on-float-enabled-by-num-feature-depends-on-num) and [Assertions on integer](#assertions-on-integer-enabled-by-num-feature-depends-on-num)
+- regex enables [Assertions on string](#assertions-on-string)
 
 ### Example project
 
