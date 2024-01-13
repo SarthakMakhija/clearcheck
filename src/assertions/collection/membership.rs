@@ -1,45 +1,133 @@
 use std::borrow::Borrow;
 use std::fmt::Debug;
 
-use crate::matchers::collection::membership::{contain, contain_all, contain_any};
-use crate::matchers::collection::empty::be_empty;
 use crate::matchers::{Should, ShouldNot};
+use crate::matchers::collection::empty::be_empty;
+use crate::matchers::collection::membership::{contain, contain_all, contain_any};
 
+/// MembershipAssertion enables assertions about the presence or the absence of elements in a collection.
 pub trait MembershipAssertion<T>
 where
     T: Eq + Debug,
 {
+    /// - Asserts that the collection contains the given element.
+    /// - Supports flexible comparison through the Borrow<Q> trait bound.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::membership::MembershipAssertion;
+    ///
+    /// let collection = vec!["junit", "assert4j", "clearcheck"];
+    /// collection.should_contain("clearcheck");
+    /// ```
     fn should_contain<Q>(&self, element: &Q) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized;
 
+    /// - Asserts that the collection does not contain the given element.
+    /// - Supports flexible comparison through the Borrow<Q> trait bound.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::membership::MembershipAssertion;
+    ///
+    /// let collection = vec!["junit", "assert4j", "clearcheck"];
+    /// collection.should_not_contain("assert");
+    /// ```
     fn should_not_contain<Q>(&self, element: &Q) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized;
 
+    /// - Asserts that the collection contains all the given elements.
+    /// - Supports flexible comparison through the Borrow<Q> trait bound.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::membership::MembershipAssertion;
+    ///
+    /// let collection = vec!["junit", "assert4j", "clearcheck"];
+    /// collection.should_contain_all(vec!["clearcheck", "assert4j"]);
+    /// ```
     fn should_contain_all<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized;
 
+    /// - Asserts that the collection does not contain all the given elements.
+    /// - Supports flexible comparison through the Borrow<Q> trait bound.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::membership::MembershipAssertion;
+    ///
+    /// let collection = vec!["junit", "assert4j", "clearcheck"];
+    /// collection.should_not_contain_all(vec!["clearcheck", "assert"]);
+    /// ```
     fn should_not_contain_all<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized;
 
+    /// - Asserts that the collection contains any of the given elements.
+    /// - Supports flexible comparison through the Borrow<Q> trait bound.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::membership::MembershipAssertion;
+    ///
+    /// let collection = vec!["junit", "assert4j", "clearcheck"];
+    /// collection.should_contain_any(vec!["clearcheck", "assert", "gotest"]);
+    /// ```
     fn should_contain_any<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized;
 
+    /// - Asserts that the collection does not contain any of the given elements.
+    /// - Supports flexible comparison through the Borrow<Q> trait bound.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::membership::MembershipAssertion;
+    ///
+    /// let collection = vec!["junit", "assert4j", "clearcheck"];
+    /// collection.should_not_contain_any(vec!["catch2", "assert"]);
+    /// ```
     fn should_not_contain_any<Q>(&self, elements: Vec<&Q>) -> &Self
     where
         T: Borrow<Q>,
         Q: Eq + Debug + ?Sized;
 
+    /// - Asserts that the collection is empty.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::membership::MembershipAssertion;
+    ///
+    /// let collection: Vec<&str> = vec![];
+    /// collection.should_be_empty();
+    /// ```
     fn should_be_empty(&self) -> &Self;
+
+    /// - Asserts that the collection is not empty.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::membership::MembershipAssertion;
+    ///
+    /// let collection = vec!["junit", "assert4j", "clearcheck"];
+    /// collection.should_not_be_empty();
+    /// ```
     fn should_not_be_empty(&self) -> &Self;
 }
 
