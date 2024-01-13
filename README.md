@@ -443,17 +443,17 @@ pass_phrase.should_not_be_empty()
     .should_not_contain_ignoring_case("word");
 ```
 
-### Beyond the Built-in: Unleashing the Power of Custom Matchers
+### Beyond the built-in: Unleashing the power of custom matchers and assertions 
 
 While this crate comes loaded with a plethora of ready-made assertions, sometimes your testing needs demand a bespoke touch.
-**clearcheck** allows crafting your own custom matchers!
+**clearcheck** allows crafting your own custom matchers and assertions!
 
 The possibilities are endless:
 - **Domain-Specific Validation**: Craft assertions that understand the nuances of your business logic.
 - **Enhanced Readability**: Write clear and concise matchers that mirror your domain vocabulary, making your tests self-documenting and understandable.
 - **Reduced Redundancy**: Eliminate repetitive code by encapsulating complex validation logic within reusable matchers.
 
-Let's create custom assertion for password validation. Let's start by writing a custom matcher.
+Let's craft a custom password matcher with specific criteria like length, digits, and banned patterns.
 
 ```rust
 fn be_a_valid_password<T: AsRef<str> + Debug>() -> Matchers<T> {
@@ -475,8 +475,8 @@ The matcher enforces the following:
 - Must contain any of the following characters: '@', '#'.
 - Must not begin with the string "pass" (case-insensitive).
 - Must not contain the strings "pass" or "word" (case-insensitive).
-                     
-Let's write an assertion trait.
+
+Let's combine it into a powerful assertion for valid passwords.
 
 ```rust
 trait PasswordAssertion {
@@ -491,7 +491,7 @@ impl PasswordAssertion for &str {
 }
 ```
 
-The end result is a domain specific password assertion.
+Time to put our password assertion to use.
 
 ```rust
 #[test]
