@@ -95,8 +95,8 @@ letter.should_be_equal_ignoring_case('d');
 | should_have_lower_bound | Asserts that all elements in the collection are greater than or equal to the given element. |
 | should_contain_duplicates | Asserts that the collection contains atleast one duplicate element. |
 | should_not_contain_duplicates | Asserts that the collection does not contain any duplicate element. |
-| should_be_equal_ignoring_case | Asserts that the elements in the collection are equal to those in other, ignoring case differences. (*Only apply where elements can be represted as strings). |
-| should_not_be_equal_ignoring_case | Asserts that the elements in the collection are not equal to those in other, ignoring case differences. (*Only apply where elements can be represted as strings). |
+| should_be_equal_ignoring_case | Asserts that the elements in the collection are equal to those in other, ignoring case differences. (_Only applicable where elements can be represented as strings_). |
+| should_not_be_equal_ignoring_case | Asserts that the elements in the collection are not equal to those in other, ignoring case differences. (_Only applicable where elements can be represented as strings_). |
 | should_be_monotonically_increasing | Asserts that the elements in the collection are in non-decreasing order (allowing consecutive equal elements). | 
 | should_be_monotonically_decreasing | Asserts that the elements in the collection are in non-increasing order (allowing consecutive equal elements). |
 | should_be_strictly_increasing | Asserts that the elements in the collection are in strictly increasing order (no consecutive elements can be equal). | 
