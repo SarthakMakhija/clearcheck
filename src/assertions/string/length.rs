@@ -23,7 +23,6 @@ use crate::matchers::{Should, ShouldNot};
 /// name
 ///     .should_have_at_most_length(6)
 ///     .should_not_have_length_in_exclusive_range(7..10);
-
 /// ```
 pub trait LengthAssertion {
     /// - Asserts that the string's length is exactly the given length.
@@ -34,8 +33,7 @@ pub trait LengthAssertion {
     /// use clearcheck::assertions::string::length::LengthAssertion;
     ///
     /// let value = "clearcheck";
-    /// value
-    ///     .should_have_length(10);
+    /// value.should_have_length(10);
     /// ```
     fn should_have_length(&self, length: usize) -> &Self;
 
@@ -47,8 +45,7 @@ pub trait LengthAssertion {
     /// use clearcheck::assertions::string::length::LengthAssertion;
     ///
     /// let value = "clearcheck";
-    /// value
-    ///     .should_not_have_length(6);
+    /// value.should_not_have_length(6);
     /// ```
     fn should_not_have_length(&self, length: usize) -> &Self;
 
@@ -60,8 +57,7 @@ pub trait LengthAssertion {
     /// use clearcheck::assertions::string::length::LengthAssertion;
     ///
     /// let value = "clearcheck";
-    /// value
-    ///     .should_have_at_least_length(7);
+    /// value.should_have_at_least_length(7);
     /// ```
     fn should_have_at_least_length(&self, length: usize) -> &Self;
 
@@ -73,8 +69,7 @@ pub trait LengthAssertion {
     /// use clearcheck::assertions::string::length::LengthAssertion;
     ///
     /// let value = "clearcheck";
-    /// value
-    ///     .should_have_at_most_length(10);
+    /// value.should_have_at_most_length(10);
     /// ```
     fn should_have_at_most_length(&self, length: usize) -> &Self;
 
@@ -86,8 +81,7 @@ pub trait LengthAssertion {
     /// use clearcheck::assertions::string::length::LengthAssertion;
     ///
     /// let value = "clearcheck";
-    /// value
-    ///     .should_have_length_in_inclusive_range(7..=10);
+    /// value.should_have_length_in_inclusive_range(7..=10);
     /// ```
     fn should_have_length_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self;
 
@@ -99,8 +93,7 @@ pub trait LengthAssertion {
     /// use clearcheck::assertions::string::length::LengthAssertion;
     ///
     /// let value = "clearcheck";
-    /// value
-    ///     .should_not_have_length_in_inclusive_range(11..=15);
+    /// value.should_not_have_length_in_inclusive_range(11..=15);
     /// ```
     fn should_not_have_length_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self;
 
@@ -112,8 +105,7 @@ pub trait LengthAssertion {
     /// use clearcheck::assertions::string::length::LengthAssertion;
     ///
     /// let value = "clearcheck";
-    /// value
-    ///     .should_have_length_in_exclusive_range(8..11);
+    /// value.should_have_length_in_exclusive_range(8..11);
     /// ```
     fn should_have_length_in_exclusive_range(&self, range: Range<usize>) -> &Self;
 
@@ -125,8 +117,7 @@ pub trait LengthAssertion {
     /// use clearcheck::assertions::string::length::LengthAssertion;
     ///
     /// let value = "clearcheck";
-    /// value
-    ///     .should_not_have_length_in_exclusive_range(11..15);
+    /// value.should_not_have_length_in_exclusive_range(11..15);
     /// ```
     fn should_not_have_length_in_exclusive_range(&self, range: Range<usize>) -> &Self;
 }
