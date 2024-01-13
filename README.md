@@ -228,6 +228,26 @@ value
  .should_be_in_inclusive_range_with_tolerance(1.11..=1.3458, 0.23);
 ```
 
+#### Integer assertions (Enabled by 'num' feature, depends on [num](https://docs.rs/num/latest/num/))
+
+| **Assertion**      | **Description**                             |
+|--------------------|---------------------------------------------|
+| should_be_positive | Asserts that the integer value is positive. |
+| should_be_negative | Asserts that the integer value is negative. |
+| should_be_even     | Asserts that the integer value is even.     |
+| should_be_odd      | Asserts that the integer value is odd.      |
+| should_be_zero     | Asserts that the integer value is zero.     |
+| should_not_be_zero | Asserts that the integer value is not zero. |
+
+#### Usage
+
+```rust
+let value = 24;
+value
+    .should_be_positive()
+    .should_be_even()
+    .should_be_in_inclusive_range(10..=40);
+```
 
 ### Composing matchers 
 
