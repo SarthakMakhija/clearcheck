@@ -276,7 +276,7 @@ value
 | should_not_contain_any           | Asserts that the HashMap does not contain any of the entries from the given HashMap. |
 | should_be_empty                  | Asserts that the HashMap is empty.                                                   |
 | should_not_be_empty              | Asserts that the HashMap is not empty.                                               |
-| + + + + + + + + + +              | [Size based assertions](#size-based-assertions).                                     |
+| +                                | [Size based assertions](#size-based-assertions).                                     |
 
 #### Usage
 
