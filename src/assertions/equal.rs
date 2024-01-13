@@ -1,35 +1,79 @@
 use std::borrow::Borrow;
 use std::fmt::Debug;
 
-use crate::matchers::equal::equal;
 use crate::matchers::{Should, ShouldNot};
+use crate::matchers::equal::equal;
 
+/// IgnoreCaseEqualityAssertion enables assertions about the equality of two values of type T: Eq.
 pub trait EqualityAssertion<T: Eq> {
+    /// - Asserts that the value held by self is equal to other.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::equal::EqualityAssertion;
+    ///
+    /// #[derive(Debug, Eq, PartialEq)]
+    /// struct Book {
+    ///  name: &'static str,
+    /// }
+    ///
+    /// let books = vec![
+    ///     Book {name: "Database internals"},
+    ///     Book {name: "Rust in action"}
+    /// ];
+    /// let other = vec![
+    ///     Book {name: "Database internals"},
+    ///     Book {name: "Rust in action"}
+    /// ];
+    /// books.should_equal(&other);
+    /// ```
     fn should_equal<Q>(&self, other: &Q) -> &Self
-    where
-        T: Borrow<Q>,
-        Q: Eq + Debug + ?Sized;
+        where
+            T: Borrow<Q>,
+            Q: Eq + Debug + ?Sized;
 
+    /// - Asserts that the value held by self is not equal to other.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::equal::EqualityAssertion;
+    ///
+    /// #[derive(Debug, Eq, PartialEq)]
+    /// struct Book {
+    ///  name: &'static str,
+    /// }
+    ///
+    /// let books = vec![
+    ///     Book {name: "Database internals"},
+    /// ];
+    /// let other = vec![
+    ///     Book {name: "Database internals"},
+    ///     Book {name: "Rust in action"},
+    /// ];
+    /// books.should_not_equal(&other);
+    /// ```
     fn should_not_equal<Q>(&self, other: &Q) -> &Self
-    where
-        T: Borrow<Q>,
-        Q: Eq + Debug + ?Sized;
+        where
+            T: Borrow<Q>,
+            Q: Eq + Debug + ?Sized;
 }
 
 impl<T: Eq + Debug> EqualityAssertion<T> for T {
     fn should_equal<Q>(&self, other: &Q) -> &Self
-    where
-        T: Borrow<Q>,
-        Q: Eq + Debug + ?Sized,
+        where
+            T: Borrow<Q>,
+            Q: Eq + Debug + ?Sized,
     {
         self.borrow().should(&equal(other));
         self
     }
 
     fn should_not_equal<Q>(&self, other: &Q) -> &Self
-    where
-        T: Borrow<Q>,
-        Q: Eq + Debug + ?Sized,
+        where
+            T: Borrow<Q>,
+            Q: Eq + Debug + ?Sized,
     {
         self.borrow().should_not(&equal(other));
         self
