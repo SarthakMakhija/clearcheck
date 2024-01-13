@@ -1,11 +1,33 @@
 use crate::matchers::collection::sort::{be_sorted_ascending, be_sorted_descending};
 use crate::matchers::Should;
 
+/// SortAssertion enables assertions about whether a collection's elements are sorted in a specific order.
 pub trait SortAssertion<T>
 where
     T: PartialOrd,
 {
+    /// - Asserts that the elements of the collection are in ascending order (non-decreasing, allowing duplicates).
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::sort::SortAssertion;
+    ///
+    /// let collection = vec![1, 2, 3, 3, 5];
+    /// collection.should_be_sorted_ascending();
+    /// ```
     fn should_be_sorted_ascending(&self) -> &Self;
+
+    /// - Asserts that the elements of the collection are in descending order (non-increasing, allowing duplicates).
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::sort::SortAssertion;
+    ///
+    /// let collection = vec![5, 4, 3, 3, 2, 1];
+    /// collection.should_be_sorted_descending();
+    /// ```
     fn should_be_sorted_descending(&self) -> &Self;
 }
 
