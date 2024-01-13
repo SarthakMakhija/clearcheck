@@ -163,6 +163,46 @@ date
      .should_be_greater_than(&NaiveDate::from_ymd_opt(2023, 1, 10).unwrap());
 ```
 
+#### Filepath assertions (Enabled by 'file' feature, depends on [walkdir](https://docs.rs/walkdir/latest/walkdir/))
+
+| **Assertion**     | **Description**                              |
+|-------------------|----------------------------------------------|
+| should_be_a_directory  | Asserts that the path is a directory. |
+| should_be_a_file | Asserts that the path is a file. |
+| should_be_a_symbolic_link | Asserts that the path is a symbolic link. |
+| should_be_zero_sized | Asserts that the path corresponds to a zero sized file. |
+| should_not_be_zero_sized | Asserts that the path corresponds to a non-zero sized file. |
+| should_be_readonly | Asserts that the path corresponds to a readonly file. |
+| should_be_writable | Asserts that the path corresponds to a writable file. |
+| should_be_absolute | Asserts that the path is absolute. |
+| should_be_relative | Asserts that the path is relative. |
+| should_have_extension | Asserts that the path corresponds to a file with the given extension. |
+| should_not_have_extension | Asserts that the path corresponds to a file that does not have the given extension. |
+| should_contain_file_name | Asserts that the path corresponds to a directory that contains the given file name. |
+| should_not_contain_file_name | Asserts that the path corresponds to a directory that does not contain the given file name. |
+| should_contain_all_file_names | Asserts that the path corresponds to a directory that contains all the given file names. |
+| should_not_contain_all_file_names | Asserts that the path corresponds to a directory that does not contain all the given file names. |
+| should_contain_any_of_file_names | Asserts that the path corresponds to a directory that contains any of the given file names. |
+| should_not_contain_any_of_file_names | Asserts that the path corresponds to a directory that does not contain any of the given file names. |
+
+#### Usage
+
+```rust
+use tempdir::TempDir;
+
+let temporary_directory = TempDir::new(".").unwrap();
+let file_path_junit = temporary_directory.path().join("junit.txt");
+let file_path_clearcheck = temporary_directory.path().join("clearcheck.txt");
+
+let _ = File::create(file_path_junit).unwrap();
+let _ = File::create(file_path_clearcheck).unwrap();
+
+let directory_path = temporary_directory.path();
+directory_path
+    .should_be_a_directory()
+    .should_contain_any_of_file_names(vec!["junit.txt", "clearcheck.txt"]);
+```
+
 
 ### Composing matchers 
 
