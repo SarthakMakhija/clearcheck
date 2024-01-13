@@ -249,6 +249,59 @@ value
     .should_be_in_inclusive_range(10..=40);
 ```
 
+#### HashMap assertions
+
+| **Assertion**                    | **Description**                                                                      |
+|----------------------------------|--------------------------------------------------------------------------------------|
+| should_contain_key               | Asserts that the HashMap contains the given key.                                     |
+| should_not_contain_key           | Asserts that the HashMap does not contain the given key.                             |
+| should_contain_all_keys          | Asserts that the HashMap contains all the given keys.                                |
+| should_not_contain_all_keys      | Asserts that the HashMap does not contain all the given keys.                        |
+| should_contain_any_of_keys       | Asserts that the HashMap contains any of the given keys.                             |
+| should_not_contain_any_of_keys   | Asserts that the HashMap does not contain any of the given keys.                     |
+| should_contain_value             | Asserts that the HashMap contains the given value.                                   |
+| should_not_contain_value         | Asserts that the HashMap does not contain the given value.                           |
+| should_contain_all_values        | Asserts that the HashMap contains all the given values.                              |
+| should_not_contain_all_values    | Asserts that the HashMap does not contain all the given values.                      |
+| should_contain_any_of_values     | Asserts that the HashMap contains any of the given values.                           |
+| should_not_contain_any_of_values | Asserts that the HashMap does not contain any of the given values.                   |
+| should_contain                   | Asserts that the HashMap contains the given key and the value.                       |
+| should_not_contain               | Asserts that the HashMap does not contain the given key and the value.               |
+| should_contain_all               | Asserts that the HashMap contains all the entries from the given HashMap.            |
+| should_not_contain_all           | Asserts that the HashMap does not contain all the entries from the given HashMap.    |
+| should_contain_any               | Asserts that the HashMap contains any of the entries from the given HashMap.         |
+| should_not_contain_any           | Asserts that the HashMap does not contain any of the entries from the given HashMap. |
+| should_be_empty                  | Asserts that the HashMap is empty.                                                   |
+| should_not_be_empty              | Asserts that the HashMap is not empty.                                               |
+
+
+#### Usage
+
+```rust
+#[derive(Eq, Debug, PartialEq, Hash)]
+struct Book {
+    id: usize,
+    title: &'static str,
+}
+
+impl Book {
+    fn new(id: usize, title: &'static str) -> Self {
+        Book { id, title }
+    }
+}
+
+let mut book_id_by_name = HashMap::new();
+book_id_by_name.insert("Database internals", 1);
+book_id_by_name.insert("Designing data intensive applications", 2);
+
+book_id_by_name
+    .should_not_be_empty()
+    .should_contain_key("Database internals")
+    .should_contain_value(&1)
+    .should_have_at_least_size(2)
+    .should_contain("Database internals", &1);
+```
+
 ### Composing matchers 
 
 ### Writing custom assertions and matchers
