@@ -358,10 +358,53 @@ value
     .should_be_in_inclusive_range(10.90..=13.10);
 ```
 
+#### String assertions
 
-### Composing matchers 
+| **Assertion**                     | **Description**                                                                                                                                               |
+|-----------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| should_begin_with                 | Asserts that the string begins with the given prefix.                                                                                                         |
+| should_not_begin_with             | Asserts that the string does not begin with the given prefix                                                                                                  |
+| should_end_with                   | Asserts that the string ends with the given suffix.                                                                                                           |
+| should_not_end_with               | Asserts that the string does not end with the given suffix.                                                                                                   |
+| should_be_lower_case              | Asserts that the string is lowercase.                                                                                                                         |
+| should_be_upper_case              | Asserts that the string is uppercase.                                                                                                                         |
+| should_be_equal_ignoring_case     | Asserts that the string equals other string, with case ignored.                                                                                               | 
+| should_not_be_equal_ignoring_case | Asserts that the string does not equal other string, with case ignored.                                                                                       |
+| should_only_contain_digits        | Asserts that the string contains only digits.                                                                                                                 | 
+| should_contain_a_digit            | Asserts that the string contains a digit.                                                                                                                     | 
+| should_not_contain_digits         | Asserts that the string does not contain any digits.                                                                                                          |
+| should_contain_character          | Asserts that the string contains the given character.                                                                                                         |
+| should_not_contain_character      | Asserts that the string does not contain the given character.                                                                                                 |
+| should_contain_all_characters     | Asserts that the string contains all the given characters.                                                                                                    |
+| should_not_contain_all_characters | Asserts that the string does not contain all the given characters.                                                                                            |
+| should_contain_any_characters     | Asserts that the string contains any of the given characters.                                                                                                 |
+| should_not_contain_any_characters | Asserts that the string does not contain any of the given characters.                                                                                         |
+| should_contain                    | Asserts that the string contains the given substring.                                                                                                         |
+| should_not_contain                | Asserts that the string does not contain the given substring.                                                                                                 | 
+| should_contain_ignoring_case      | Asserts that the string contains the substring, ignoring case differences.                                                                                    |
+| should_not_contain_ignoring_case  | Asserts that the string does not contain the substring, ignoring case differences.                                                                            |
+| should_be_empty                   | Asserts that the string is empty (has zero characters).                                                                                                       |
+| should_not_be_empty               | Asserts that the string is not empty.                                                                                                                         |
+| should_be_numeric                 | Asserts that the string is numeric.                                                                                                                           |
+| should_not_be_numeric             | Asserts that the string is not numeric.                                                                                                                       |
+| should_match                      | Asserts that the string matches the given regular expression.           (Enabled by 'regex' feature, depends on [regex](https://docs.rs/regex/latest/regex/)) |
+| should_not_match                  | Asserts that the string does not match the given regular expression.    (Enabled by 'regex' feature, depends on [regex](https://docs.rs/regex/latest/regex/)) |
+
+#### Usage
+
+```rust
+let pass_phrase = "P@@sw0rd1 zebra alpha";
+pass_phrase.should_not_be_empty()
+    .should_have_at_least_length(10)
+    .should_contain_all_characters(vec!['@', ' '])
+    .should_contain_a_digit()
+    .should_not_contain_ignoring_case("pass")
+    .should_not_contain_ignoring_case("word");
+```
 
 ### Writing custom assertions and matchers
+
+### Composing matchers
 
 ### Features
 
