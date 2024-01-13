@@ -5,8 +5,7 @@ use crate::matchers::{Should, ShouldNot};
 
 /// RegularExpressionAssertion enables assertions about whether a string (or str) matches a regular expression.
 pub trait RegularExpressionAssertion {
-
-    /// - Asserts that the string matches the specified regular expression.
+    /// - Asserts that the string matches the given regular expression.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -20,7 +19,7 @@ pub trait RegularExpressionAssertion {
     /// ```
     fn should_match(&self, regex: Regex) -> &Self;
 
-    /// - Asserts that the string does not match the specified regular expression.
+    /// - Asserts that the string does not match the given regular expression.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
