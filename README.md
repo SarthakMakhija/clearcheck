@@ -109,7 +109,12 @@ letter.should_be_equal_ignoring_case('d');
 | should_not_contain_any                  | Asserts that the collection does not contain any of the given elements.                                                                                                   |
 | should_be_empty                         | Asserts that the collection is empty.                                                                                                                                     |
 | should_not_be_empty                     | Asserts that the collection is not empty.                                                                                                                                 |
-| should_have_size                        | Asserts that the size of the underlying collection is exactly the given size.                                                                                             | 
+
+##### Size based assertions
+
+| **Assertion**                           | **Description**                                                                                                                                                           |
+|-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| should_have_size                        | Asserts that the size of the underlying collection is exactly the given size.                                                                                             |
 | should_not_have_size                    | Asserts that the size of the underlying collection is not the given size.                                                                                                 |
 | should_have_at_least_size               | Asserts that the size of the underlying collection is greater than or equal to the given size.                                                                            |
 | should_have_at_most_size                | Asserts that the size of the underlying collection is less than or equal to the given size.                                                                               |
@@ -118,8 +123,6 @@ letter.should_be_equal_ignoring_case('d');
 | should_not_have_size_in_inclusive_range | Asserts that the size of the underlying collection does not fall within the given inclusive range.                                                                        |
 | should_have_size_in_exclusive_range     | Asserts that the size of the underlying collection falls within the given exclusive range.                                                                                |
 | should_not_have_size_in_exclusive_range | Asserts that the size of the underlying collection does not fall within the given exclusive range.                                                                        |
-| should_be_sorted_ascending              | Asserts that the elements of the collection are in ascending order (non-decreasing, allowing duplicates).                                                                 | 
-| should_be_sorted_descending             | Asserts that the elements of the collection are in descending order (non-increasing, allowing duplicates).                                                                |
 
 #### Usage
 
@@ -273,6 +276,7 @@ value
 | should_not_contain_any           | Asserts that the HashMap does not contain any of the entries from the given HashMap. |
 | should_be_empty                  | Asserts that the HashMap is empty.                                                   |
 | should_not_be_empty              | Asserts that the HashMap is not empty.                                               |
+| + + + + + + + + + +              | [Size based assertions](#size-based-assertions).                                     |
 
 #### Usage
 
@@ -300,8 +304,6 @@ book_id_by_name
     .should_have_at_least_size(2)
     .should_contain("Database internals", &1);
 ```
-
-++++++ Size assertions
 
 #### Option assertions
 
@@ -390,6 +392,19 @@ value
 | should_match                      | Asserts that the string matches the given regular expression.           (Enabled by 'regex' feature, depends on [regex](https://docs.rs/regex/latest/regex/)) |
 | should_not_match                  | Asserts that the string does not match the given regular expression.    (Enabled by 'regex' feature, depends on [regex](https://docs.rs/regex/latest/regex/)) |
 
+##### Length based assertions
+
+| **Assertion**                             | **Description**                                                                       |
+|-------------------------------------------|---------------------------------------------------------------------------------------|
+| should_have_length                        | Asserts that the length of the string is exactly the given length.                    |
+| should_not_have_length                    | Asserts that the length of the string is not the given length.                        |
+| should_have_at_least_length               | Asserts that the length of the string is greater than or equal to the given length.   |
+| should_have_at_most_length                | Asserts that the length of the string is less than or equal to the given length.      |
+| should_have_length_in_inclusive_range     | Asserts that the length of the string falls within the given inclusive range.         |
+| should_not_have_length_in_inclusive_range | Asserts that the length of the string does not fall within the given inclusive range. |
+| should_have_length_in_exclusive_range     | Asserts that the length of the string falls within the given exclusive range.         |
+| should_not_have_length_in_exclusive_range | Asserts that the length of the string does not fall within the given exclusive range. |
+
 #### Usage
 
 ```rust
@@ -401,6 +416,7 @@ pass_phrase.should_not_be_empty()
     .should_not_contain_ignoring_case("pass")
     .should_not_contain_ignoring_case("word");
 ```
+
 
 ### Writing custom assertions and matchers
 
