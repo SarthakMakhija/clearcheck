@@ -3,8 +3,34 @@ use std::fmt::Debug;
 use crate::matchers::equal::be_equal_ignoring_case;
 use crate::matchers::{Should, ShouldNot};
 
-pub trait IgnoreCaseEqualityAssertion<T> {
+/// IgnoreCaseEqualityAssertion enables assertions about whether a collection of elements that can be represented as strings equals other collection, with case ignored.
+pub trait IgnoreCaseEqualityAssertion<T: Eq> {
+    /// - Asserts that the elements in the collection are equal to those in other, ignoring case differences.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::equal::IgnoreCaseEqualityAssertion;
+    ///
+    /// let collection = vec!["junit", "clearcheck", "gotest"];
+    /// let other = vec!["JUNIT", "CLEARCHECK", "GoTest"];
+    ///
+    /// collection.should_be_equal_ignoring_case(other);
+    /// ```
     fn should_be_equal_ignoring_case(&self, other: T) -> &Self;
+
+    /// - Asserts that the elements in the collection are not equal to those in other, ignoring case differences.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::equal::IgnoreCaseEqualityAssertion;
+    ///
+    /// let collection = vec!["junit", "clearcheck", "gotest"];
+    /// let other = vec!["JUNIT", "ASSERT"];
+    ///
+    /// collection.should_not_be_equal_ignoring_case(other);
+    /// ```
     fn should_not_be_equal_ignoring_case(&self, other: T) -> &Self;
 }
 
