@@ -20,7 +20,7 @@ pass_phrase.should_not_be_empty()
     .should_not_contain_ignoring_case("word");
 ```
 
-#### Key Features:
+### Key Features:
 
 - **Fluent API**: Chain assertions for a natural and readable experience.
 - **Extensive assertions**: Variety of assertions covering common validation needs.
@@ -52,21 +52,25 @@ walkdir = { version = "2.4.0", features = [] }
 
 ### Supported assertions 
 
-#### Assertions on bool
+#### Bool
+
+##### Assertions
 
 | **Assertion**   | **Description**                              |
 |-----------------|----------------------------------------------|
 | should_be_true  | Asserts that the boolean evaluates to true.  |
 | should_be_false | Asserts that the boolean evaluates to false. |
 
-#### Usage
+##### Usage
 
 ```rust
 let value = true;
 value.should_be_true();
 ```
 
-#### Assertions on char
+#### Char
+
+##### Assertions
 
 | **Assertion**                     | **Description**                                                               |
 |-----------------------------------|-------------------------------------------------------------------------------|
@@ -77,7 +81,7 @@ value.should_be_true();
 | should_be_equal_ignoring_case     | Asserts that the character equals other character, with case ignored.         |
 | should_not_be_equal_ignoring_case | Asserts that the character does not equal other character, with case ignored. |
 
-#### Usage
+##### Usage
 
 ```rust
 let letter = 'd';
@@ -87,7 +91,9 @@ let letter = 'D';
 letter.should_be_equal_ignoring_case('d');
 ```
 
-#### Assertions on collection (Vector, Arrays, Slices)
+#### Collections (Vector, Arrays, Slices)
+
+##### Assertions
 
 | **Assertion**                           | **Description**                                                                                                                                                           |
 |-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -124,7 +130,7 @@ letter.should_be_equal_ignoring_case('d');
 | should_have_size_in_exclusive_range     | Asserts that the size of the underlying collection falls within the given exclusive range.                                                                                |
 | should_not_have_size_in_exclusive_range | Asserts that the size of the underlying collection does not fall within the given exclusive range.                                                                        |
 
-#### Usage
+##### Usage
 
 ```rust
 let keywords = ["testing", "automation", "clearcheck", "junit"];
@@ -135,7 +141,9 @@ keywords.should_not_be_empty()
     .should_not_contain_any(vec!["scalatest", "gotest"]);
 ```
 
-#### Assertions on date (enabled by 'date' feature, depends on [chrono](https://docs.rs/chrono/latest/chrono/))
+#### Date (enabled by 'date' feature, depends on [chrono](https://docs.rs/chrono/latest/chrono/))
+
+##### Assertions
 
 | **Assertion**                 | **Description**                                                        |
 |-------------------------------|------------------------------------------------------------------------|
@@ -154,7 +162,7 @@ keywords.should_not_be_empty()
 | should_be_a_leap_year         | Asserts that the date falls in a leap year.                            | 
 | should_not_be_a_leap_year     | Asserts that the date does not fall in a leap year.                    |
 
-#### Usage
+##### Usage
 
 ```rust
 use chrono::NaiveDate;
@@ -166,7 +174,9 @@ date
      .should_be_greater_than(&NaiveDate::from_ymd_opt(2023, 1, 10).unwrap());
 ```
 
-#### Assertions on filepath (enabled by 'file' feature, depends on [walkdir](https://docs.rs/walkdir/latest/walkdir/))
+#### Filepath (enabled by 'file' feature, depends on [walkdir](https://docs.rs/walkdir/latest/walkdir/))
+
+##### Assertions
 
 | **Assertion**                        | **Description**                                                                                     |
 |--------------------------------------|-----------------------------------------------------------------------------------------------------|
@@ -188,7 +198,7 @@ date
 | should_contain_any_of_file_names     | Asserts that the path corresponds to a directory that contains any of the given file names.         |
 | should_not_contain_any_of_file_names | Asserts that the path corresponds to a directory that does not contain any of the given file names. |
 
-#### Usage
+##### Usage
 
 ```rust
 use tempdir::TempDir;
@@ -206,7 +216,9 @@ directory_path
     .should_contain_any_of_file_names(vec!["junit.txt", "clearcheck.txt"]);
 ```
 
-#### Assertions on float (enabled by 'num' feature, depends on [num](https://docs.rs/num/latest/num/))
+#### Float (enabled by 'num' feature, depends on [num](https://docs.rs/num/latest/num/))
+
+##### Assertions
 
 | **Assertion**                                   | **Description**                                                                                      |
 |-------------------------------------------------|------------------------------------------------------------------------------------------------------|
@@ -221,7 +233,7 @@ directory_path
 | should_be_in_exclusive_range_with_tolerance     | Asserts that the floating-point value falls within the given exclusive range with tolerance.         |
 | should_not_be_in_exclusive_range_with_tolerance | Asserts that the floating-point value does not fall within the given exclusive range with tolerance. |
 
-#### Usage
+##### Usage
 
 ```rust
 let value: f64 = 1.34589;
@@ -231,7 +243,9 @@ value
    .should_be_in_inclusive_range_with_tolerance(1.11..=1.3458, 0.23);
 ```
 
-#### Assertions on integer (enabled by 'num' feature, depends on [num](https://docs.rs/num/latest/num/))
+#### Integer (enabled by 'num' feature, depends on [num](https://docs.rs/num/latest/num/))
+
+##### Assertions
 
 | **Assertion**      | **Description**                             |
 |--------------------|---------------------------------------------|
@@ -242,7 +256,7 @@ value
 | should_be_zero     | Asserts that the integer value is zero.     |
 | should_not_be_zero | Asserts that the integer value is not zero. |
 
-#### Usage
+##### Usage
 
 ```rust
 let value = 24;
@@ -252,7 +266,9 @@ value
     .should_be_in_inclusive_range(10..=40);
 ```
 
-#### Assertions on HashMap
+#### HashMap
+
+##### Assertions
 
 | **Assertion**                    | **Description**                                                                      |
 |----------------------------------|--------------------------------------------------------------------------------------|
@@ -278,7 +294,7 @@ value
 | should_not_be_empty              | Asserts that the HashMap is not empty.                                               |
 | +                                | [Size based assertions](#size-based-assertions).                                     |
 
-#### Usage
+##### Usage
 
 ```rust
 #[derive(Eq, Debug, PartialEq, Hash)]
@@ -305,35 +321,41 @@ book_id_by_name
     .should_contain("Database internals", &1);
 ```
 
-#### Assertions on Option
+#### Option
+
+##### Assertions
 
 | **Assertion**  | **Description**                            |
 |----------------|--------------------------------------------|
 | should_be_some | Asserts that the Option evaluates to Some. |
 | should_be_none | Asserts that the Option evaluates to None. |
 
-#### Usage
+##### Usage
 
 ```rust
 let option = Some("clearcheck");
 option.should_be_some();
 ```
 
-#### Assertions on Result
+#### Result
+
+##### Assertions
 
 | **Assertion** | **Description**                          |
 |---------------|------------------------------------------|
 | should_be_ok  | Asserts that the Result evaluates to Ok. |
 | should_be_err | Result evaluates to Err.                 |
 
-#### Usage
+##### Usage
 
 ```rust
 let value: Result<i32, &str> = Ok(32);
 value.should_be_ok();
 ```
 
-#### Assertions on T: PartialOrd
+#### T: PartialOrd
+
+##### Assertions
 
 | **Assertion**                       | **Description**                                                                                                                 |
 |-------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
@@ -350,7 +372,7 @@ value.should_be_ok();
 | should_be_in_exclusive_range        | Asserts that the self value falls within the given exclusive range.                                                             |
 | should_not_be_in_exclusive_range    | Asserts that the self value does not fall within the given exclusive range.                                                     |
 
-#### Usage
+##### Usage
 
 ```rust
 let value = 12.56;
@@ -360,14 +382,16 @@ value
     .should_be_in_inclusive_range(10.90..=13.10);
 ```
 
-#### Assertions on T: Eq
+#### T: Eq
+
+##### Assertions
 
 | **Assertion**    | **Description**                                            |
 |------------------|------------------------------------------------------------|
 | should_equal     | Asserts that the value held by self is equal to other.     |
 | should_not_equal | Asserts that the value held by self is not equal to other. |
 
-#### Usage
+##### Usage
 
 ```rust
 #[derive(Debug, Eq, PartialEq)]
@@ -386,7 +410,9 @@ let other = vec![
 books.should_equal(&other);
 ```
 
-#### Assertions on String
+#### String
+
+##### Assertions
 
 | **Assertion**                     | **Description**                                                                                                                                               |
 |-----------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -431,7 +457,7 @@ books.should_equal(&other);
 | should_have_length_in_exclusive_range     | Asserts that the length of the string falls within the given exclusive range.         |
 | should_not_have_length_in_exclusive_range | Asserts that the length of the string does not fall within the given exclusive range. |
 
-#### Usage
+##### Usage
 
 ```rust
 let pass_phrase = "P@@sw0rd1 zebra alpha";
@@ -504,10 +530,10 @@ fn should_be_a_valid_password() {
 ### Rust features
 
 **clearcheck** crate supports the following features:
-- **date**  enables [Assertions on date](#assertions-on-date-enabled-by-date-feature-depends-on-chrono)
-- **file**  enables [Assertions on file](#assertions-on-filepath-enabled-by-file-feature-depends-on-walkdir)
-- **num**   enables [Assertions on float](#assertions-on-float-enabled-by-num-feature-depends-on-num) and [Assertions on integer](#assertions-on-integer-enabled-by-num-feature-depends-on-num)
-- **regex** enables [Assertions on string](#assertions-on-string)
+- **date**  enables [Assertions on date](#date-enabled-by-date-feature-depends-on-chrono)
+- **file**  enables [Assertions on file](#filepath-enabled-by-file-feature-depends-on-walkdir)
+- **num**   enables [Assertions on float](#float-enabled-by-num-feature-depends-on-num) and [Assertions on integer](#integer-enabled-by-num-feature-depends-on-num)
+- **regex** enables [Assertions on string](#string)
 
 ### Example project
 
