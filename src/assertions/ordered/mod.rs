@@ -8,7 +8,7 @@ use crate::matchers::ordered::{
 use crate::matchers::range::{be_in_exclusive_range, be_in_inclusive_range};
 use crate::matchers::{Should, ShouldNot};
 
-/// OrderedAssertion enables assertions about the relative ordering of values that implement the PartialOrd trait.
+/// OrderedAssertion enables assertions about the relative ordering of values that implement the [`PartialOrd`] trait.
 ///
 /// # Example
 /// ```
@@ -21,8 +21,7 @@ use crate::matchers::{Should, ShouldNot};
 ///     .should_be_in_inclusive_range(10.90..=13.10);
 /// ```
 pub trait OrderedAssertion<T: PartialOrd> {
-
-    /// - Asserts that the self value is greater than the provided value (other) according to the PartialOrd implementation.
+    /// - Asserts that the self value is greater than the given value (other) according to the PartialOrd implementation.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -37,7 +36,7 @@ pub trait OrderedAssertion<T: PartialOrd> {
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized;
 
-    /// - Asserts that the self value is greater than or equal to the provided value (other) according to the PartialOrd implementation.
+    /// - Asserts that the self value is greater than or equal to the given value (other) according to the PartialOrd implementation.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -52,7 +51,7 @@ pub trait OrderedAssertion<T: PartialOrd> {
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized;
 
-    /// - Asserts that the self value is less than the provided value (other) according to the PartialOrd implementation.
+    /// - Asserts that the self value is less than the given value (other) according to the PartialOrd implementation.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -67,7 +66,7 @@ pub trait OrderedAssertion<T: PartialOrd> {
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized;
 
-    /// - Asserts that the self value is less than or equal to the provided value (other) according to the PartialOrd implementation.
+    /// - Asserts that the self value is less than or equal to the given value (other) according to the PartialOrd implementation.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -82,7 +81,7 @@ pub trait OrderedAssertion<T: PartialOrd> {
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized;
 
-    /// - Asserts that the self value is not greater than the provided value (other) according to the PartialOrd implementation.
+    /// - Asserts that the self value is not greater than the given value (other) according to the PartialOrd implementation.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -97,7 +96,7 @@ pub trait OrderedAssertion<T: PartialOrd> {
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized;
 
-    /// - Asserts that the self value is not greater than or equal to the provided value (other) according to the PartialOrd implementation.
+    /// - Asserts that the self value is not greater than or equal to the given value (other) according to the PartialOrd implementation.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -112,7 +111,7 @@ pub trait OrderedAssertion<T: PartialOrd> {
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized;
 
-    /// - Asserts that the self value is not less than the provided value (other) according to the PartialOrd implementation.
+    /// - Asserts that the self value is not less than the given value (other) according to the PartialOrd implementation.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -127,7 +126,7 @@ pub trait OrderedAssertion<T: PartialOrd> {
         T: Borrow<Q>,
         Q: PartialOrd + Debug + ?Sized;
 
-    /// - Asserts that the self value is not less than or equal to the provided value (other) according to the PartialOrd implementation.
+    /// - Asserts that the self value is not less than or equal to the given value (other) according to the PartialOrd implementation.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -178,7 +177,7 @@ pub trait OrderedAssertion<T: PartialOrd> {
     /// ```
     fn should_be_in_exclusive_range(&self, range: Range<T>) -> &Self;
 
-    /// - Asserts that the self value falls within the given exclusive range.
+    /// - Asserts that the self value does not fall within the given exclusive range.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
