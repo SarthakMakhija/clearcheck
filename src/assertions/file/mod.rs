@@ -10,7 +10,6 @@ use crate::matchers::file::{
 
 /// FileAssertion enables assertions about various properties of file or path.
 ///
-///
 /// It offers a fluent interface for chaining multiple assertions.
 ///
 /// # Example
@@ -77,42 +76,42 @@ pub trait FileAssertion {
     /// - Panics if the assertion fails.
     fn should_be_relative(&self) -> &Self;
 
-    /// - Asserts that the path corresponds to a file with the specified extension.
+    /// - Asserts that the path corresponds to a file with the given extension.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     fn should_have_extension(&self, extension: &'static str) -> &Self;
 
-    /// - Asserts that the path corresponds to a file that does not have the specified extension.
+    /// - Asserts that the path corresponds to a file that does not have the given extension.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     fn should_not_have_extension(&self, extension: &'static str) -> &Self;
 
-    /// - Asserts that the path corresponds to a directory that contains the specified file name.
+    /// - Asserts that the path corresponds to a directory that contains the given file name.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     fn should_contain_file_name(&self, name: &'static str) -> &Self;
 
-    /// - Asserts that the path corresponds to a directory that does not contain the specified file name.
+    /// - Asserts that the path corresponds to a directory that does not contain the given file name.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     fn should_not_contain_file_name(&self, name: &'static str) -> &Self;
 
-    /// - Asserts that the path corresponds to a directory that contains all the specified file names.
+    /// - Asserts that the path corresponds to a directory that contains all the given file names.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     fn should_contain_all_file_names(&self, names: Vec<&'static str>) -> &Self;
 
-    /// - Asserts that the path corresponds to a directory that does not contain all the specified file names.
+    /// - Asserts that the path corresponds to a directory that does not contain all the given file names.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     fn should_not_contain_all_file_names(&self, names: Vec<&'static str>) -> &Self;
 
-    /// - Asserts that the path corresponds to a directory that contains any of the specified file names.
+    /// - Asserts that the path corresponds to a directory that contains any of the given file names.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     fn should_contain_any_of_file_names(&self, names: Vec<&'static str>) -> &Self;
 
-    /// - Asserts that the path corresponds to a directory that does not contain any of the specified file names.
+    /// - Asserts that the path corresponds to a directory that does not contain any of the given file names.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     fn should_not_contain_any_of_file_names(&self, names: Vec<&'static str>) -> &Self;
