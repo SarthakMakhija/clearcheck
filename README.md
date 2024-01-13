@@ -102,6 +102,12 @@ walkdir = { version = "2.4.0", features = [] }
 
 ### Assertions vs Matchers
 
+Assertions serve as the cornerstone of the test cases, **defining the exact expectations the code must fulfill**. They act as a contract, ensuring that each data type (/data structure) adheres to its intended behavior.
+
+Matchers, on the other hand, **provide the granular tools for carrying out these assertions**. They examine data and verify that the data conforms to specific criteria.
+
+In essence, assertions orchestrate the high-level validation logic, while matchers act as the code-level inspectors, ensuring every detail aligns with the expectations.
+
 ### Supported assertions 
 
 #### Bool
