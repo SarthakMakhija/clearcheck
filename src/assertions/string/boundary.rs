@@ -23,8 +23,7 @@ pub trait BoundaryAssertion {
     /// use clearcheck::assertions::string::boundary::BoundaryAssertion;
     ///
     /// let value = "clearcheck";
-    /// value
-    ///     .should_begin_with("clear");
+    /// value.should_begin_with("clear");
     /// ```
     fn should_begin_with(&self, prefix: &'static str) -> &Self;
 
@@ -36,8 +35,7 @@ pub trait BoundaryAssertion {
     /// use clearcheck::assertions::string::boundary::BoundaryAssertion;
     ///
     /// let value = "clearcheck";
-    /// value
-    ///     .should_not_begin_with("rust");
+    /// value.should_not_begin_with("rust");
     /// ```
     fn should_not_begin_with(&self, prefix: &'static str) -> &Self;
 
@@ -49,8 +47,7 @@ pub trait BoundaryAssertion {
     /// use clearcheck::assertions::string::boundary::BoundaryAssertion;
     ///
     /// let value = "clearcheck";
-    /// value
-    ///     .should_end_with("check");
+    /// value.should_end_with("check");
     /// ```
     fn should_end_with(&self, suffix: &'static str) -> &Self;
 
@@ -62,8 +59,7 @@ pub trait BoundaryAssertion {
     /// use clearcheck::assertions::string::boundary::BoundaryAssertion;
     ///
     /// let value = "clearcheck";
-    /// value
-    ///     .should_not_end_with("test");
+    /// value.should_not_end_with("test");
     /// ```
     fn should_not_end_with(&self, suffix: &'static str) -> &Self;
 }

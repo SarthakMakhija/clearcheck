@@ -84,7 +84,7 @@ pub trait MembershipAssertion {
     /// # Example
     /// ```
     /// use clearcheck::assertions::string::membership::MembershipAssertion;
-    /// 
+    ///
     /// let email = "john@gmail.com";
     /// email.should_contain_all_characters(vec!['@', '.']);
     /// ```
