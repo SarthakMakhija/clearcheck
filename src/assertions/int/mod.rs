@@ -5,7 +5,9 @@ use num::Integer;
 use crate::matchers::int::{be_even, be_negative, be_odd, be_positive, be_zero};
 use crate::matchers::{Should, ShouldNot};
 
-/// IntAssertion enables assertions about various properties of integer numbers.
+/// IntAssertion enables assertions about various properties of integers.
+///
+/// It offers a fluent interface for chaining multiple assertions.
 ///
 /// # Example
 /// ```
@@ -16,7 +18,7 @@ use crate::matchers::{Should, ShouldNot};
 /// value
 ///     .should_be_positive()
 ///     .should_be_even()
-///     .should_be_in_inclusive_range(10..=40); // from clearcheck::assertions::ordered::OrderedAssertion;
+///     .should_be_in_inclusive_range(10..=40);
 /// ```
 pub trait IntAssertion<T: Integer + Debug + PartialEq + Default> {
     /// - Asserts that the integer value is positive.
