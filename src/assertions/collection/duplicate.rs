@@ -3,8 +3,30 @@ use std::fmt::Debug;
 use crate::matchers::collection::duplicate::contain_duplicates;
 use crate::matchers::{Should, ShouldNot};
 
+//DuplicateContentAssertion enables assertions about whether a collection contains duplicate elements.
 pub trait DuplicateContentAssertion {
+    /// - Asserts that the collection contains atleast one duplicate element.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::duplicate::DuplicateContentAssertion;
+    ///
+    /// let collection = ["junit", "testify", "clearcheck", "testify"];
+    /// collection.should_contain_duplicates();
+    /// ```
     fn should_contain_duplicates(&self) -> &Self;
+
+    /// - Asserts that the collection does not contain any duplicate element.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::duplicate::DuplicateContentAssertion;
+    ///
+    /// let collection = ["junit", "testify", "clearcheck"];
+    /// collection.should_not_contain_duplicates();
+    /// ```
     fn should_not_contain_duplicates(&self) -> &Self;
 }
 
