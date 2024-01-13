@@ -9,6 +9,7 @@ pub trait IgnoreCaseEqualityAssertion {
     /// # Example
     /// ```
     /// use clearcheck::assertions::string::equal::IgnoreCaseEqualityAssertion;
+    ///
     /// let name = "clearcheck";
     /// name.should_be_equal_ignoring_case("CLearCheck");
     /// ```
@@ -20,6 +21,7 @@ pub trait IgnoreCaseEqualityAssertion {
     /// # Example
     /// ```
     /// use clearcheck::assertions::string::equal::IgnoreCaseEqualityAssertion;
+    ///
     /// let name = "clearcheck";
     /// name.should_not_be_equal_ignoring_case("CLEARCHECK-001");
     /// ```
