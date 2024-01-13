@@ -274,7 +274,6 @@ value
 | should_be_empty                  | Asserts that the HashMap is empty.                                                   |
 | should_not_be_empty              | Asserts that the HashMap is not empty.                                               |
 
-
 #### Usage
 
 ```rust
@@ -300,6 +299,36 @@ book_id_by_name
     .should_contain_value(&1)
     .should_have_at_least_size(2)
     .should_contain("Database internals", &1);
+```
+
+++++++ Size assertions
+
+#### Option assertions
+
+| **Assertion**  | **Description**                            |
+|----------------|--------------------------------------------|
+| should_be_some | Asserts that the Option evaluates to Some. |
+| should_be_none | Asserts that the Option evaluates to None. |
+
+#### Usage
+
+```rust
+let option = Some("clearcheck");
+option.should_be_some();
+```
+
+#### Result assertions
+
+| **Assertion** | **Description**                          |
+|---------------|------------------------------------------|
+| should_be_ok  | Asserts that the Result evaluates to Ok. |
+| should_be_err | Result evaluates to Err.                 |
+
+#### Usage
+
+```rust
+let value: Result<i32, &str> = Ok(32);
+value.should_be_ok();
 ```
 
 ### Composing matchers 
