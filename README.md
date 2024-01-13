@@ -50,7 +50,42 @@ walkdir = { version = "2.4.0", features = [] }
 
 ### Assertions vs Matchers
 
-### List of assertions 
+### Supported assertions 
+
+#### Boolean assertions
+
+| **Assertion**   | **Description**                              |
+|-----------------|----------------------------------------------|
+| should_be_true  | Asserts that the boolean evaluates to true.  |
+| should_be_false | Asserts that the boolean evaluates to false. |
+
+#### Usage
+
+```rust
+let value = true;
+value.should_be_true();
+```
+
+#### Char assertions
+
+| **Assertion**     | **Description**                              |
+|-------------------|----------------------------------------------|
+| should_be_in_inclusive_range  | Asserts that the character falls within the given inclusive range.  |
+| should_not_be_in_inclusive_range | Asserts that the character does not fall within the given inclusive range. |
+| should_be_in_exclusive_range | Asserts that the character falls within the given exclusive range. |
+| should_not_be_in_exclusive_range | Asserts that the character does not fall within the given exclusive range. |
+| should_be_equal_ignoring_case | Asserts that the character equals other character, with case ignored. |
+| should_not_be_equal_ignoring_case | Asserts that the character does not equal other character, with case ignored. |
+
+#### Usage
+
+```rust
+let letter = 'd';
+letter.should_be_in_inclusive_range('a'..='d');
+
+let letter = 'D';
+letter.should_be_equal_ignoring_case('d');
+```
 
 ### Composing matchers 
 
