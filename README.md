@@ -59,4 +59,5 @@ walkdir = { version = "2.4.0", features = [] }
 ### Features
 
 ### Example project
-[clearcheck examples](https://github.com/SarthakMakhija/clearcheck-examples)
+
+Head over to the [examples](https://github.com/SarthakMakhija/clearcheck-examples) project to understand the usage of this crate.
