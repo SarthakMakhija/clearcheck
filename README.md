@@ -7,7 +7,7 @@
 ### Table of content
 
 - [Introducing clearcheck](#introducing-clearcheck)
-- [Key Features](#key-features)
+- [Key features](#key-features)
 - [Usage](#usage)
 - [Assertions vs Matchers](#assertions-vs-matchers)
 - [Supported assertions ](#supported-assertions)
@@ -21,16 +21,16 @@
         + [Assertions](#assertions-2)
         + [Size based assertions](#size-based-assertions)
         + [Usage](#usage-3)
-    * [Date (enabled by 'date' feature, depends on chrono)](#date-enabled-by-date-feature-depends-on-chrono)
+    * [Date](#date-enabled-by-date-feature-depends-on-chrono)
         + [Assertions](#assertions-3)
         + [Usage](#usage-4)
-    * [Filepath (enabled by 'file' feature, depends on walkdir)](#filepath-enabled-by-file-feature-depends-on-walkdir)
+    * [Filepath](#filepath-enabled-by-file-feature-depends-on-walkdir)
         + [Assertions](#assertions-4)
         + [Usage](#usage-5)
-    * [Float (enabled by 'num' feature, depends on num)](#float-enabled-by-num-feature-depends-on-num)
+    * [Float](#float-enabled-by-num-feature-depends-on-num)
         + [Assertions](#assertions-5)
         + [Usage](#usage-6)
-    * [Integer (enabled by 'num' feature, depends on num)](#integer-enabled-by-num-feature-depends-on-num)
+    * [Integer](#integer-enabled-by-num-feature-depends-on-num)
         + [Assertions](#assertions-6)
         + [Usage](#usage-7)
     * [HashMap](#hashmap)
@@ -52,7 +52,7 @@
         + [Assertions](#assertions-12)
         + [Length based assertions](#length-based-assertions)
         + [Usage](#usage-13)
-- [Beyond the built-in: Unleashing the power of custom matchers and assertions ](#beyond-the-built-in-unleashing-the-power-of-custom-matchers-and-assertions)
+- [Unleashing the power of custom matchers and assertions](#unleashing-the-power-of-custom-matchers-and-assertions-)
 - [Rust features](#rust-features)
 - [Example project](#example-project)
 
@@ -72,7 +72,7 @@ pass_phrase.should_not_be_empty()
     .should_not_contain_ignoring_case("word");
 ```
 
-### Key Features:
+### Key features:
 
 - **Fluent API**: Chain assertions for a natural and readable experience.
 - **Extensive assertions**: Variety of assertions covering common validation needs.
@@ -108,7 +108,7 @@ Matchers, on the other hand, **provide the granular tools for carrying out these
 
 In essence, assertions orchestrate the high-level validation logic, while matchers act as the code-level inspectors, ensuring every detail aligns with the expectations.
 
-### Supported assertions 
+### Supported assertions
 
 #### Bool
 
@@ -527,7 +527,7 @@ pass_phrase.should_not_be_empty()
     .should_not_contain_ignoring_case("word");
 ```
 
-### Beyond the built-in: Unleashing the power of custom matchers and assertions 
+### Unleashing the power of custom matchers and assertions 
 
 While this crate comes loaded with a plethora of ready-made assertions, sometimes your testing needs demand a bespoke touch.
 **clearcheck** allows crafting your own custom matchers and assertions!
