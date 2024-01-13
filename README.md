@@ -124,13 +124,45 @@ letter.should_be_equal_ignoring_case('d');
 #### Usage
 
 ```rust
-    let keywords = ["testing", "automation", "clearcheck", "junit"];
-    keywords.should_not_be_empty()
-        .should_have_size_in_inclusive_range(4..=10)
-        .should_not_contain_duplicates()
-        .should_contain_any(vec!["junit", "clearcheck", "testing"])
-        .should_not_contain_any(vec!["scalatest", "gotest"]);
+let keywords = ["testing", "automation", "clearcheck", "junit"];
+keywords.should_not_be_empty()
+    .should_have_size_in_inclusive_range(4..=10)
+    .should_not_contain_duplicates()
+    .should_contain_any(vec!["junit", "clearcheck", "testing"])
+    .should_not_contain_any(vec!["scalatest", "gotest"]);
 ```
+
+#### Date assertions (Enabled by 'date' feature, depends on [chrono](https://docs.rs/chrono/latest/chrono/))
+
+| **Assertion**     | **Description**                              |
+|-------------------|----------------------------------------------|
+| should_have_same_year_as  | Asserts that the date has the same year as the other date.  |
+| should_not_have_same_year_as | Asserts that the date does not have the same year as the other date. |
+| should_have_year | Asserts that the date has the same year as the given year. |
+| should_not_have_year | Asserts that the date does not have the same year as the given year. |
+| should_have_same_month_as | Asserts that the date has the same month as the other date. |
+| should_not_have_same_month_as | Asserts that the date does not have the same month as the other date. |
+| should_have_month | Asserts that the date has the same month as the given month. |
+| should_not_have_month | Asserts that the date does not have the same month as the given month. |
+| should_have_same_day_as | Asserts that the date has the same day as the other date. |
+| should_not_have_same_day_as | Asserts that the date does not have the same day as the other date. |
+| should_have_day | Asserts that the date has the same day as the given day. |
+| should_not_have_day | Asserts that the date does not have the same day as the given day. |
+| should_be_a_leap_year | Asserts that the date falls in a leap year. | 
+| should_not_be_a_leap_year | Asserts that the date does not fall in a leap year. |
+
+#### Usage
+
+```rust
+use chrono::NaiveDate;
+
+let date = NaiveDate::from_ymd_opt(2024, 1, 10).unwrap();
+date
+     .should_be_a_leap_year()
+     .should_have_month(1)
+     .should_be_greater_than(&NaiveDate::from_ymd_opt(2023, 1, 10).unwrap());
+```
+
 
 ### Composing matchers 
 
