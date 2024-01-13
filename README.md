@@ -331,6 +331,34 @@ let value: Result<i32, &str> = Ok(32);
 value.should_be_ok();
 ```
 
+#### PartialOrd assertions
+
+| **Assertion**                       | **Description**                                                                                                                 |
+|-------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| should_be_greater_than              | Asserts that the self value is greater than the given value (other) according to the PartialOrd implementation.                 |
+| should_be_greater_than_equal_to     | Asserts that the self value is greater than or equal to the given value (other) according to the PartialOrd implementation.     |
+| should_be_less_than                 | Asserts that the self value is less than the given value (other) according to the PartialOrd implementation.                    |
+| should_be_less_than_equal_to        | Asserts that the self value is less than or equal to the given value (other) according to the PartialOrd implementation.        |
+| should_not_be_greater_than          | Asserts that the self value is not greater than the given value (other) according to the PartialOrd implementation.             |
+| should_not_be_greater_than_equal_to | Asserts that the self value is not greater than or equal to the given value (other) according to the PartialOrd implementation. |
+| should_not_be_less_than             | Asserts that the self value is not less than the given value (other) according to the PartialOrd implementation.                |
+| should_not_be_less_than_equal_to    | Asserts that the self value is not less than or equal to the given value (other) according to the PartialOrd implementation.    |
+| should_be_in_inclusive_range        | Asserts that the self value falls within the given inclusive range.                                                             |
+| should_not_be_in_inclusive_range    | Asserts that the self value does not fall within the given inclusive range.                                                     |
+| should_be_in_exclusive_range        | Asserts that the self value falls within the given exclusive range.                                                             |
+| should_not_be_in_exclusive_range    | Asserts that the self value does not fall within the given exclusive range.                                                     |
+
+#### Usage
+
+```rust
+let value = 12.56;
+value
+    .should_be_greater_than(&10.90)
+    .should_be_less_than(&15.98)
+    .should_be_in_inclusive_range(10.90..=13.10);
+```
+
+
 ### Composing matchers 
 
 ### Writing custom assertions and matchers
