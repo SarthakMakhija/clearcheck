@@ -2,18 +2,33 @@ use std::fmt::Debug;
 
 use crate::matchers::{Matcher, MatcherResult};
 
+/// EqualityMatcher offers a flexible way to assert the equality between two values of the same type.
+///
+/// Works with any data type that implements the Eq trait.
+///
+/// clearcheck implements EqualityMatcher for any T: Eq + Debug.
 pub struct EqualityMatcher<T: Eq> {
     pub other: T,
 }
 
+/// IgnoreCaseEqualityMatcher offers a flexible way to assert the equality between two values of same type, ignoring case differences.
+///
+/// clearcheck implements IgnoreCaseEqualityMatcher for the following:
+/// - char
+/// - &str
+/// - Vec<T> where T: AsRef<str> + Debug + Eq,
+/// - &[T]   where T: AsRef<str> + Debug + Eq,
+/// - [String; N] and [&str; N]
 pub struct IgnoreCaseEqualityMatcher<T: Eq> {
     pub other: T,
 }
 
+/// Creates an EqualityMatcher that asserts whether a value equals the given value.
 pub fn equal<T: Eq>(other: T) -> EqualityMatcher<T> {
     EqualityMatcher { other }
 }
 
+/// Creates an IgnoreCaseEqualityMatcher that asserts whether a value equals the given value, ignoring case differences.
 pub fn be_equal_ignoring_case<T: Eq>(other: T) -> IgnoreCaseEqualityMatcher<T> {
     IgnoreCaseEqualityMatcher { other }
 }
