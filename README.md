@@ -587,6 +587,46 @@ fn should_be_a_valid_password() {
 }
 ```
 
+Let's consider that a password is valid, if:
+
+- it satisfies the previous matcher conditions
+- it is greater than the string "pass"
+
+It might appear that we can combine an `OrderedMatcher` in the existing `be_a_valid_password` method.
+
+A key idea behind **matcher compatibility** is that the matchers can only be combined if they work with the same data types. 
+
+In this case, `OrderedMatcher` handles any partially ordered types `(T: PartialOrd)`, while other matchers in `be_a_valid_password` work with string slices (&str).
+
+To get around this, a separate matcher, `greater_than_pass`, can be created to handle the "greater than 'pass'" condition. This matcher works with String values, ensuring compatibility.
+
+```rust
+fn greater_than_pass() -> Matchers<String> {
+    MatchersBuilder::start_building(be_greater_than(String::from("pass")).boxed())
+        .push_inverted(be_empty().boxed())
+        .combine_as_and()
+}
+```
+
+It returns an instance of `Matchers<String>`, so `PasswordAssertion` is now implemented for `String`. The method `should_be_a_valid_password`
+now uses both the composed matchers to assert that the password is valid.
+
+```rust
+impl PasswordAssertion for String {
+    fn should_be_a_valid_password(&self) -> &Self {
+        self.should(&be_a_valid_password());
+        self.should(&greater_than_pass());
+        self
+    }
+}
+
+#[test]
+fn should_be_a_valid_password() {
+    let password = "P@@sw0rd9082".to_string();
+    password.should_be_a_valid_password();
+}
+```
+
 ### Rust features
 
 **clearcheck** crate supports the following features:
