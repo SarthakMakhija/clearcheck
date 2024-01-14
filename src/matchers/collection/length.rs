@@ -1,5 +1,19 @@
 use crate::matchers::{Matcher, MatcherResult};
 
+/// CollectionLengthMatcher offers a flexible way to assert various length properties of collections.
+///
+/// clearcheck implements CollectionLengthMatcher for collection types including vector, arrays and slices.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::collection::length::have_atleast_same_length;
+/// use clearcheck::matchers::Matcher;
+///
+/// let matcher = have_atleast_same_length(3);
+/// let collection = vec![1, 2, 3, 4];
+///
+/// assert!(matcher.test(&collection).passed());
+/// ```
 pub enum CollectionLengthMatcher {
     Same(usize),
     Atleast(usize),
@@ -65,14 +79,17 @@ impl CollectionLengthMatcher {
     }
 }
 
+/// Creates a CollectionLengthMatcher that asserts whether the length of a collection is same as the given length.
 pub fn have_same_length(length: usize) -> CollectionLengthMatcher {
     CollectionLengthMatcher::Same(length)
 }
 
+/// Creates a CollectionLengthMatcher that asserts whether the length of a collection is greater than or equal to the given length.
 pub fn have_atleast_same_length(length: usize) -> CollectionLengthMatcher {
     CollectionLengthMatcher::Atleast(length)
 }
 
+/// Creates a CollectionLengthMatcher that asserts whether the length of a collection is less than or equal to the given length.
 pub fn have_atmost_same_length(length: usize) -> CollectionLengthMatcher {
     CollectionLengthMatcher::Atmost(length)
 }

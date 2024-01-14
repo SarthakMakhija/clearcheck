@@ -2,6 +2,24 @@ use std::fmt::Debug;
 
 use crate::matchers::{Matcher, MatcherResult};
 
+/// MembershipMatcher offers a flexible way to assert the presence or absence of specific elements within collections.
+///
+/// Works with any data type that implements the Eq and Debug trait.
+///
+/// clearcheck implements MembershipMatcher for collection types including vector, arrays and slices.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::collection::membership::contain_all;
+/// use clearcheck::matchers::Matcher;
+///
+/// let collection = vec!["clearcheck", "testify", "assert4j", "xunit"];
+/// let all_to_be_contained = vec!["testify", "assert4j", "xunit"];
+///
+/// let matcher = contain_all(all_to_be_contained);
+///
+/// assert!(matcher.test(&collection).passed());
+/// ```
 pub enum MembershipMatcher<T: Eq + Debug> {
     Contain(T),
     ContainAll(Vec<T>),
@@ -67,6 +85,7 @@ impl<T> Matcher<&[T]> for MembershipMatcher<T>
     }
 }
 
+/// Creates a MembershipMatcher that asserts whether a collection contains the given element.
 pub fn contain<T>(element: T) -> MembershipMatcher<T>
     where
         T: Eq + Debug,
@@ -74,6 +93,7 @@ pub fn contain<T>(element: T) -> MembershipMatcher<T>
     MembershipMatcher::Contain(element)
 }
 
+/// Creates a MembershipMatcher that asserts whether a collection contains all the given elements.
 pub fn contain_all<T>(elements: Vec<T>) -> MembershipMatcher<T>
     where
         T: Eq + Debug,
@@ -81,6 +101,7 @@ pub fn contain_all<T>(elements: Vec<T>) -> MembershipMatcher<T>
     MembershipMatcher::ContainAll(elements)
 }
 
+/// Creates a MembershipMatcher that asserts whether a collection contains any of the given elements.
 pub fn contain_any<T>(elements: Vec<T>) -> MembershipMatcher<T>
     where
         T: Eq + Debug,

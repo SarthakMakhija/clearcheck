@@ -1,6 +1,20 @@
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum CollectionEmptyMatcher{
+/// CollectionEmptyMatcher offers a flexible way to assert whether a collection is empty.
+///
+/// clearcheck implements CollectionEmptyMatcher for collection types including vector, arrays and slices.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::collection::empty::be_empty;
+/// use clearcheck::matchers::Matcher;
+///
+/// let collection: Vec<i32> = vec![];
+/// let matcher = be_empty();
+///
+/// assert!(matcher.test(&collection).passed());
+/// ```
+pub enum CollectionEmptyMatcher {
     Empty,
     NotEmpty,
 }
@@ -40,10 +54,12 @@ impl CollectionEmptyMatcher {
     }
 }
 
+/// Creates a CollectionEmptyMatcher that asserts whether the underlying collection is empty.
 pub fn be_empty() -> CollectionEmptyMatcher {
     CollectionEmptyMatcher::Empty
 }
 
+/// Creates a CollectionEmptyMatcher that asserts whether the underlying collection is not empty.
 pub fn not_be_empty() -> CollectionEmptyMatcher {
     CollectionEmptyMatcher::NotEmpty
 }

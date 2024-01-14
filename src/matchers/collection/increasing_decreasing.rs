@@ -2,6 +2,20 @@ use std::fmt::Debug;
 
 use crate::matchers::{Matcher, MatcherResult};
 
+/// OrderedMatcher offers a flexible way to assert whether a sequence of values exhibits a specific pattern of increasing or decreasing behavior.
+///
+/// clearcheck implements OrderedMatcher for collection types including vector, arrays and slices.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::collection::increasing_decreasing::be_monotonically_increasing;
+/// use clearcheck::matchers::Matcher;
+///
+/// let matcher = be_monotonically_increasing();
+/// let collection = vec![1, 2, 3, 4, 4, 5, 5, 6];
+///
+/// assert!(matcher.test(&collection).passed());
+/// ```
 pub enum IncreasingDecreasingMatcher {
     MonotonicallyIncreasing,
     MonotonicallyDecreasing,
@@ -54,18 +68,22 @@ impl<T: PartialOrd + Debug> Matcher<&[T]> for IncreasingDecreasingMatcher {
     }
 }
 
+/// Creates an IncreasingDecreasingMatcher that asserts whether the elements in a collection are in non-decreasing order (allowing consecutive equal elements).
 pub fn be_monotonically_increasing() -> IncreasingDecreasingMatcher {
     IncreasingDecreasingMatcher::MonotonicallyIncreasing
 }
 
+/// Creates an IncreasingDecreasingMatcher that asserts that the elements in a collection are in non-increasing order (allowing consecutive equal elements).
 pub fn be_monotonically_decreasing() -> IncreasingDecreasingMatcher {
     IncreasingDecreasingMatcher::MonotonicallyDecreasing
 }
 
+/// Creates an IncreasingDecreasingMatcher that asserts that the elements in a collection are in strictly increasing order (no consecutive elements can be equal).
 pub fn be_strictly_increasing() -> IncreasingDecreasingMatcher {
     IncreasingDecreasingMatcher::StrictlyIncreasing
 }
 
+/// Creates an IncreasingDecreasingMatcher that asserts that the elements in a collection are in strictly decreasing order (no consecutive elements can be equal).
 pub fn be_strictly_decreasing() -> IncreasingDecreasingMatcher {
     IncreasingDecreasingMatcher::StrictlyDecreasing
 }

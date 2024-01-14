@@ -2,6 +2,20 @@ use std::fmt::Debug;
 
 use crate::matchers::{Matcher, MatcherResult};
 
+/// DuplicateContentMatcher offers a flexible way to assert whether a collection contains any duplicates.
+///
+/// clearcheck implements DuplicateContentMatcher for collection types including vector, arrays and slices.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::collection::duplicate::contain_duplicates;
+/// use clearcheck::matchers::Matcher;
+///
+/// let matcher = contain_duplicates();
+/// let collection = vec!["junit", "clearcheck", "junit"];
+///
+/// assert!(matcher.test(&collection).passed());
+/// ```
 pub struct DuplicateContentMatcher;
 
 impl DuplicateContentMatcher {
@@ -39,6 +53,7 @@ impl<T: Eq + Debug> Matcher<&[T]> for DuplicateContentMatcher {
     }
 }
 
+/// Creates a DuplicateContentMatcher that asserts whether the underlying collection contains any duplicates.
 pub fn contain_duplicates() -> DuplicateContentMatcher {
     DuplicateContentMatcher
 }

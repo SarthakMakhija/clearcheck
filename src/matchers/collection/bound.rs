@@ -2,7 +2,23 @@ use std::fmt::Debug;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum BoundMatcher<T: PartialOrd + Debug> {
+/// BoundMatcher offers a flexible way to assert whether a value is bounded by either an upper or lower bound.
+///
+/// Works with any data type that implements the PartialOrd trait.
+///
+/// clearcheck implements BoundMatcher for collection types including vector, arrays and slices.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::collection::bound::have_upper_bound;
+/// use clearcheck::matchers::Matcher;
+///
+/// let matcher = have_upper_bound(4);
+/// let collection = vec![1, 2, 3, 4];
+///
+/// assert!(matcher.test(&collection).passed());
+/// ```
+pub enum BoundMatcher<T: PartialOrd> {
     Upper(T),
     Lower(T),
 }
@@ -45,10 +61,12 @@ impl<T: PartialOrd + Debug> Matcher<&[T]> for BoundMatcher<T> {
     }
 }
 
+/// Creates a BoundMatcher that asserts whether a value has the given upper bound.
 pub fn have_upper_bound<T: PartialOrd + Debug>(bound: T) -> BoundMatcher<T> {
     BoundMatcher::Upper(bound)
 }
 
+/// Creates a BoundMatcher that asserts whether a value has the given lower bound.
 pub fn have_lower_bound<T: PartialOrd + Debug>(bound: T) -> BoundMatcher<T> {
     BoundMatcher::Lower(bound)
 }

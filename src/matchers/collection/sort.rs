@@ -2,6 +2,20 @@ use std::fmt::Debug;
 
 use crate::matchers::{Matcher, MatcherResult};
 
+/// SortMatcher offers a flexible way to assert whether a collection is sorted in ascending or descending order.
+///
+/// clearcheck implements SortMatcher for collection types including vector, arrays and slices.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::collection::sort::{be_sorted_ascending, SortMatcher};
+/// use clearcheck::matchers::Matcher;
+///
+/// let matcher = be_sorted_ascending();
+/// let collection = vec!["clearcheck", "junit"];
+///
+/// assert!(matcher.test(&collection).passed());
+/// ```
 pub enum SortMatcher {
     Ascending,
     Descending,
@@ -42,10 +56,12 @@ impl<T: PartialOrd + Debug> Matcher<&[T]> for SortMatcher {
     }
 }
 
+/// Creates an SortMatcher that asserts whether the elements in a collection are sorted in ascending order.
 pub fn be_sorted_ascending() -> SortMatcher {
     SortMatcher::Ascending
 }
 
+/// Creates an SortMatcher that asserts whether the elements in a collection are sorted in descending order.
 pub fn be_sorted_descending() -> SortMatcher {
     SortMatcher::Descending
 }
