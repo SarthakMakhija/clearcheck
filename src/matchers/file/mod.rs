@@ -8,6 +8,25 @@ use walkdir::WalkDir;
 
 use crate::matchers::{Matcher, MatcherResult};
 
+/// FileTypeMatcher offers a flexible way to make assertions about various file type properties like: regular file, directory, symbolic link etc.
+///
+/// # Example
+///```
+/// use std::fs::File;
+/// use tempdir::TempDir;
+/// use clearcheck::matchers::file::contain_file_name;
+/// use clearcheck::matchers::Matcher;
+///
+/// let temporary_directory = TempDir::new(".").unwrap();
+/// let file_path = temporary_directory.path().join("clearcheck.txt");
+///
+/// let _ = File::create(file_path).unwrap();
+///
+/// let directory_path = temporary_directory.path();
+/// let matcher = contain_file_name("clearcheck.txt");
+///
+/// assert!(matcher.test(&directory_path).passed());
+/// ```
 pub enum FileTypeMatcher {
     File,
     Directory,
@@ -17,12 +36,14 @@ pub enum FileTypeMatcher {
     Writable,
 }
 
+/// FilePathMatcher offers a flexible way to make assertions about various properties related to file paths.
 pub enum FilePathMatcher {
     Absolute,
     Relative,
     Extension(&'static str),
 }
 
+/// FilePathMatcher offers a flexible way to make assertions about presence or absence of files or directories within a tree structure.
 pub enum TreeMatcher {
     Contain(&'static str),
     ContainAll(Vec<&'static str>),
@@ -152,50 +173,62 @@ impl<T: AsRef<Path> + Debug> Matcher<T> for TreeMatcher {
     }
 }
 
+/// Creates a FileTypeMatcher that asserts whether the path corresponds to a directory.
 pub fn be_a_directory() -> FileTypeMatcher {
     FileTypeMatcher::Directory
 }
 
+/// Creates a FileTypeMatcher that asserts whether the path corresponds to a file.
 pub fn be_a_file() -> FileTypeMatcher {
     FileTypeMatcher::File
 }
 
+/// Creates a FileTypeMatcher that asserts whether the path corresponds to a symbolic link.
 pub fn be_a_symbolic_link() -> FileTypeMatcher {
     FileTypeMatcher::SymbolicLink
 }
 
+/// Creates a FileTypeMatcher that asserts whether the path corresponds to a zero sized file.
 pub fn be_zero_sized() -> FileTypeMatcher {
     FileTypeMatcher::ZeroSized
 }
 
+/// Creates a FileTypeMatcher that asserts whether the path corresponds to a readonly file.
 pub fn be_readonly() -> FileTypeMatcher {
     FileTypeMatcher::Readonly
 }
 
+/// Creates a FileTypeMatcher that asserts whether the path corresponds to writable file.
 pub fn be_writable() -> FileTypeMatcher {
     FileTypeMatcher::Writable
 }
 
+/// Creates a FilePathMatcher that asserts whether the path is absolute.
 pub fn be_absolute() -> FilePathMatcher {
     FilePathMatcher::Absolute
 }
 
+/// Creates a FilePathMatcher that asserts whether the path is relative.
 pub fn be_relative() -> FilePathMatcher {
     FilePathMatcher::Relative
 }
 
+/// Creates a FilePathMatcher that asserts whether the path has the given extension.
 pub fn have_extension(extension: &'static str) -> FilePathMatcher {
     FilePathMatcher::Extension(extension)
 }
 
+/// Creates a TreeMatcher that asserts whether the path contains the given file name.
 pub fn contain_file_name(name: &'static str) -> TreeMatcher {
     TreeMatcher::Contain(name)
 }
 
+/// Creates a TreeMatcher that asserts whether the path contains all the given file names.
 pub fn contain_all_file_names(names: Vec<&'static str>) -> TreeMatcher {
     TreeMatcher::ContainAll(names)
 }
 
+/// Creates a TreeMatcher that asserts whether the path contains any of the given file names.
 pub fn contain_any_file_names(names: Vec<&'static str>) -> TreeMatcher {
     TreeMatcher::ContainAny(names)
 }

@@ -48,17 +48,17 @@ impl Matcher<NaiveDate> for DateMatcher {
     }
 }
 
-/// Creates a DateMatcher that asserts whether a date has the same year as the specified year.
+/// Creates a DateMatcher that asserts whether a date has the same year as the given year.
 pub fn have_same_year(year: i32) -> DateMatcher {
     DateMatcher::SameYear(year)
 }
 
-/// Creates a DateMatcher that asserts whether a date has the same month as the specified month.
+/// Creates a DateMatcher that asserts whether a date has the same month as the given month.
 pub fn have_same_month(month: u32) -> DateMatcher {
     DateMatcher::SameMonth(month)
 }
 
-/// Creates a DateMatcher that asserts whether a date has the same day as the specified day.
+/// Creates a DateMatcher that asserts whether a date has the same day as the given day.
 pub fn have_same_day(day: u32) -> DateMatcher {
     DateMatcher::SameDay(day)
 }
