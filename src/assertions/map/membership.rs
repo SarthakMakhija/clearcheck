@@ -44,7 +44,7 @@ pub trait NoMembershipAssertion<K, V> {
 /// KeyMembershipAssertion enables assertions about the presence or the absence of keys in the [`HashMap`].
 pub trait KeyMembershipAssertion<K> {
     /// - Asserts that the HashMap contains the given key.
-    /// - Supports flexible key comparison through the Borrow<Q> trait bound, allowing for various key types and reference types.
+    /// - Supports flexible key comparison through the `Borrow<Q>` trait bound, allowing for various key types and reference types.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -63,7 +63,7 @@ pub trait KeyMembershipAssertion<K> {
             Q: Hash + Eq + Debug + ?Sized;
 
     /// - Asserts that the HashMap does not contain the given key.
-    /// - Supports flexible key comparison through the Borrow<Q> trait bound, allowing for various key types and reference types.
+    /// - Supports flexible key comparison through the `Borrow<Q>` trait bound, allowing for various key types and reference types.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -82,7 +82,7 @@ pub trait KeyMembershipAssertion<K> {
             Q: Hash + Eq + Debug + ?Sized;
 
     /// - Asserts that the HashMap contains all the given keys.
-    /// - Supports flexible key comparison through the Borrow<Q> trait bound, allowing for various key types and reference types.
+    /// - Supports flexible key comparison through the `Borrow<Q>` trait bound, allowing for various key types and reference types.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -102,7 +102,7 @@ pub trait KeyMembershipAssertion<K> {
             Q: Hash + Eq + Debug + ?Sized;
 
     /// - Asserts that the HashMap does not contain all the given keys.
-    /// - Supports flexible key comparison through the Borrow<Q> trait bound, allowing for various key types and reference types.
+    /// - Supports flexible key comparison through the `Borrow<Q>` trait bound, allowing for various key types and reference types.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -122,7 +122,7 @@ pub trait KeyMembershipAssertion<K> {
             Q: Hash + Eq + Debug + ?Sized;
 
     /// - Asserts that the HashMap contains any of the given keys.
-    /// - Supports flexible key comparison through the Borrow<Q> trait bound, allowing for various key types and reference types.
+    /// - Supports flexible key comparison through the `Borrow<Q>` trait bound, allowing for various key types and reference types.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -142,7 +142,7 @@ pub trait KeyMembershipAssertion<K> {
             Q: Hash + Eq + Debug + ?Sized;
 
     /// - Asserts that the HashMap does not contain any of the given keys.
-    /// - Supports flexible key comparison through the Borrow<Q> trait bound, allowing for various key types and reference types.
+    /// - Supports flexible key comparison through the `Borrow<Q>` trait bound, allowing for various key types and reference types.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -165,7 +165,7 @@ pub trait KeyMembershipAssertion<K> {
 /// ValueMembershipAssertion enables assertions about the presence or the absence of values in the [`HashMap`].
 pub trait ValueMembershipAssertion<V> {
     /// - Asserts that the HashMap contains the given value.
-    /// - Supports flexible value comparison through the Borrow<S> trait bound, allowing for various value types and reference types.
+    /// - Supports flexible value comparison through the `Borrow<S>` trait bound, allowing for various value types and reference types.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -184,7 +184,7 @@ pub trait ValueMembershipAssertion<V> {
             S: Debug + ?Sized + Eq;
 
     /// - Asserts that the HashMap does not contain the given value.
-    /// - Supports flexible value comparison through the Borrow<S> trait bound, allowing for various value types and reference types.
+    /// - Supports flexible value comparison through the `Borrow<S>` trait bound, allowing for various value types and reference types.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -203,7 +203,7 @@ pub trait ValueMembershipAssertion<V> {
             S: Debug + ?Sized + Eq;
 
     /// - Asserts that the HashMap contains all the given values.
-    /// - Supports flexible value comparison through the Borrow<S> trait bound, allowing for various value types and reference types.
+    /// - Supports flexible value comparison through the `Borrow<S>` trait bound, allowing for various value types and reference types.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -223,7 +223,7 @@ pub trait ValueMembershipAssertion<V> {
             S: Debug + ?Sized + Eq;
 
     /// - Asserts that the HashMap does not contain all the given values.
-    /// - Supports flexible value comparison through the Borrow<S> trait bound, allowing for various value types and reference types.
+    /// - Supports flexible value comparison through the `Borrow<S>` trait bound, allowing for various value types and reference types.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -243,7 +243,7 @@ pub trait ValueMembershipAssertion<V> {
             S: Debug + ?Sized + Eq;
 
     /// - Asserts that the HashMap contains any of the given values.
-    /// - Supports flexible value comparison through the Borrow<S> trait bound, allowing for various value types and reference types.
+    /// - Supports flexible value comparison through the `Borrow<S>` trait bound, allowing for various value types and reference types.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -263,7 +263,7 @@ pub trait ValueMembershipAssertion<V> {
             S: Debug + ?Sized + Eq;
 
     /// - Asserts that the HashMap does not contain any of the given values.
-    /// - Supports flexible value comparison through the Borrow<S> trait bound, allowing for various value types and reference types.
+    /// - Supports flexible value comparison through the `Borrow<S>` trait bound, allowing for various value types and reference types.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -286,7 +286,7 @@ pub trait ValueMembershipAssertion<V> {
 /// KeyValueMembershipAssertion enables assertions about the presence or the absence of keys and values in the [`HashMap`].
 pub trait KeyValueMembershipAssertion<K, V> {
     /// - Asserts that the HashMap contains the given key and the value.
-    /// - Supports flexible key and value comparison through the Borrow<Q> and Borrow<S> trait bound.
+    /// - Supports flexible key and value comparison through the `Borrow<Q>` and `Borrow<S>` trait bound.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -307,7 +307,7 @@ pub trait KeyValueMembershipAssertion<K, V> {
             S: Debug + ?Sized + Eq;
 
     /// - Asserts that the HashMap does not contain the given key and the value.
-    /// - Supports flexible key and value comparison through the Borrow<Q> and Borrow<S> trait bound.
+    /// - Supports flexible key and value comparison through the `Borrow<Q>` and `Borrow<S>` trait bound.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -328,7 +328,7 @@ pub trait KeyValueMembershipAssertion<K, V> {
             S: Debug + ?Sized + Eq;
 
     /// - Asserts that the HashMap contains all the entries from the given HashMap.
-    /// - Supports flexible key and value comparison through the Borrow<Q> and Borrow<S> trait bound.
+    /// - Supports flexible key and value comparison through the `Borrow<Q>` and `Borrow<S>` trait bound.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -354,7 +354,7 @@ pub trait KeyValueMembershipAssertion<K, V> {
             S: Debug + ?Sized + Eq;
 
     /// - Asserts that the HashMap does not contain all the entries from the given HashMap.
-    /// - Supports flexible key and value comparison through the Borrow<Q> and Borrow<S> trait bound.
+    /// - Supports flexible key and value comparison through the `Borrow<Q>` and `Borrow<S>` trait bound.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -379,7 +379,7 @@ pub trait KeyValueMembershipAssertion<K, V> {
             S: Debug + ?Sized + Eq;
 
     /// - Asserts that the HashMap contains any of the entries from the given HashMap.
-    /// - Supports flexible key and value comparison through the Borrow<Q> and Borrow<S> trait bound.
+    /// - Supports flexible key and value comparison through the `Borrow<Q>` and `Borrow<S>` trait bound.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -404,7 +404,7 @@ pub trait KeyValueMembershipAssertion<K, V> {
             S: Debug + ?Sized + Eq;
 
     /// - Asserts that the HashMap does not contain any of the entries from the given HashMap.
-    /// - Supports flexible key and value comparison through the Borrow<Q> and Borrow<S> trait bound.
+    /// - Supports flexible key and value comparison through the `Borrow<Q>` and `Borrow<S>` trait bound.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example

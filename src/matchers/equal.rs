@@ -16,8 +16,8 @@ pub struct EqualityMatcher<T: Eq> {
 /// clearcheck implements IgnoreCaseEqualityMatcher for the following:
 /// - char
 /// - &str
-/// - Vec<T> where T: AsRef<str> + Debug + Eq,
-/// - &[T]   where T: AsRef<str> + Debug + Eq,
+/// - `Vec<T>` where T: `AsRef<str>` + Debug + Eq,
+/// - &`\[`T`\]`   where T: `AsRef<str>` + Debug + Eq,
 /// - [String; N] and [&str; N]
 pub struct IgnoreCaseEqualityMatcher<T: Eq> {
     pub other: T,

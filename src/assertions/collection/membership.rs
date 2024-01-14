@@ -11,7 +11,7 @@ where
     T: Eq + Debug,
 {
     /// - Asserts that the collection contains the given element.
-    /// - Supports flexible comparison through the Borrow<Q> trait bound.
+    /// - Supports flexible comparison through the `Borrow<Q>` trait bound.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -27,7 +27,7 @@ where
         Q: Eq + Debug + ?Sized;
 
     /// - Asserts that the collection does not contain the given element.
-    /// - Supports flexible comparison through the Borrow<Q> trait bound.
+    /// - Supports flexible comparison through the `Borrow<Q>` trait bound.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -43,7 +43,7 @@ where
         Q: Eq + Debug + ?Sized;
 
     /// - Asserts that the collection contains all the given elements.
-    /// - Supports flexible comparison through the Borrow<Q> trait bound.
+    /// - Supports flexible comparison through the `Borrow<Q>` trait bound.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -59,7 +59,7 @@ where
         Q: Eq + Debug + ?Sized;
 
     /// - Asserts that the collection does not contain all the given elements.
-    /// - Supports flexible comparison through the Borrow<Q> trait bound.
+    /// - Supports flexible comparison through the `Borrow<Q>` trait bound.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -75,7 +75,7 @@ where
         Q: Eq + Debug + ?Sized;
 
     /// - Asserts that the collection contains any of the given elements.
-    /// - Supports flexible comparison through the Borrow<Q> trait bound.
+    /// - Supports flexible comparison through the `Borrow<Q>` trait bound.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -91,7 +91,7 @@ where
         Q: Eq + Debug + ?Sized;
 
     /// - Asserts that the collection does not contain any of the given elements.
-    /// - Supports flexible comparison through the Borrow<Q> trait bound.
+    /// - Supports flexible comparison through the `Borrow<Q>` trait bound.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example

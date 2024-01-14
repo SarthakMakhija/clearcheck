@@ -71,7 +71,7 @@ impl<T> ShouldNot<T> for T {
     }
 }
 
-/// Matcher defines the core functionality of matchers. All the matchers implement Matcher<T> trait.
+/// Matcher defines the core functionality of matchers. All the matchers implement `Matcher<T>` trait.
 pub trait Matcher<T> {
     fn test(&self, value: &T) -> MatcherResult;
 }
@@ -80,7 +80,7 @@ pub trait Matcher<T> {
 ///
 /// It is used to compose matchers in [`crate::matchers::compose::Matchers`].
 ///
-/// BoxWrap is implemented for any T: Matcher<M>.
+/// BoxWrap is implemented for any `T: Matcher<M>`.
 pub trait BoxWrap<W> {
     fn boxed(self) -> Box<dyn Matcher<W>>;
 }
