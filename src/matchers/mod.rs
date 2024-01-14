@@ -83,7 +83,7 @@ pub struct MatcherResult {
 }
 
 impl MatcherResult {
-    /// new creates a new instance of MatcherResult using failure_message and negated_failure_message of type &'static str.
+    /// Creates a new instance of MatcherResult using failure_message and negated_failure_message of type &'static str.
     pub fn new(
         passed: bool,
         failure_message: &'static str,
@@ -96,7 +96,7 @@ impl MatcherResult {
         )
     }
 
-    /// formatted creates a new instance of MatcherResult using failure_message and negated_failure_message of type String.
+    /// Creates a new instance of MatcherResult using failure_message and negated_failure_message of type String.
     pub fn formatted(
         passed: bool,
         failure_message: String,
@@ -109,7 +109,7 @@ impl MatcherResult {
         }
     }
 
-    /// passed returns true if the result of a matcher execution was successful, false otherwise.
+    /// Returns true if the result of a matcher execution was successful, false otherwise.
     pub fn passed(&self) -> bool {
         self.passed
     }

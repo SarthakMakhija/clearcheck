@@ -14,7 +14,7 @@ pub struct MatcherBehavior<T: Debug> {
 }
 
 impl<T: Debug> MatcherBehavior<T> {
-    /// new creates a new instance of MatcherBehavior encapsulating the given matcher.
+    /// Creates a new instance of MatcherBehavior encapsulating the given matcher.
     pub fn new(matcher: Box<dyn Matcher<T>>) -> Self {
         MatcherBehavior {
             matcher,
@@ -22,7 +22,7 @@ impl<T: Debug> MatcherBehavior<T> {
         }
     }
 
-    /// inverted creates a new instance of MatcherBehavior encapsulating the given matcher with an inversion flag.
+    /// Creates a new instance of MatcherBehavior encapsulating the given matcher with an inversion flag.
     pub fn inverted(matcher: Box<dyn Matcher<T>>) -> Self {
         MatcherBehavior {
             matcher,
@@ -30,7 +30,7 @@ impl<T: Debug> MatcherBehavior<T> {
         }
     }
 
-    /// run_matcher runs the underlying matcher.
+    /// Runs the underlying matcher.
     pub fn run_matcher(&self, value: &T) -> MatcherResult {
         let matcher_result = self.matcher.test(value);
         if self.inverted {
@@ -72,38 +72,40 @@ pub struct MatchersBuilder<T: Debug> {
 }
 
 impl<T: Debug> MatchersBuilder<T> {
-    /// start_building creates an instance of MatchersBuilder with the given matcher.
+    /// Creates an instance of MatchersBuilder with the given matcher.
     pub fn start_building(matcher: Box<dyn Matcher<T>>) -> Self {
         MatchersBuilder {
             matchers_behaviors: vec![MatcherBehavior::new(matcher)]
         }
     }
 
-    /// start_building creates an instance of MatchersBuilder with the given matcher inverted.
+    /// Creates an instance of MatchersBuilder with the given matcher inverted.
     pub fn start_building_with_negated(matcher: Box<dyn Matcher<T>>) -> Self {
         MatchersBuilder {
             matchers_behaviors: vec![MatcherBehavior::inverted(matcher)]
         }
     }
 
-    /// push pushes the instance of the given matcher to the MatchersBuilder.
+    /// Pushes the instance of the given matcher to the MatchersBuilder.
     pub fn push(mut self, matcher: Box<dyn Matcher<T>>) -> Self {
         self.matchers_behaviors.push(MatcherBehavior::new(matcher));
         self
     }
 
-    /// push_inverted pushes the instance of the given matcher inverted to the MatchersBuilder.
+    /// Pushes the instance of the given matcher inverted to the MatchersBuilder.
     pub fn push_inverted(mut self, matcher: Box<dyn Matcher<T>>) -> Self {
         self.matchers_behaviors.push(MatcherBehavior::inverted(matcher));
         self
     }
 
-    /// combine_as_and combines all the matchers using AND operator.
+    /// Combines all the matchers using AND operator.
+    /// All the matchers must pass for Matchers to pass.
     pub fn combine_as_and(self) -> Matchers<T> {
         Matchers::and(self.matchers_behaviors)
     }
 
-    /// combine_as_and combines all the matchers using OR operator.
+    /// Combines all the matchers using OR operator.
+    /// Any of the matchers must pass for Matchers to pass.
     pub fn combine_as_or(self) -> Matchers<T> {
         Matchers::or(self.matchers_behaviors)
     }
