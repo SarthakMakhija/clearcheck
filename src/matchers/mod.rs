@@ -1,3 +1,19 @@
+//! Matchers provide the granular tools for carrying out the assertions.
+//! They examine the data and verify that the data conforms to specific criteria.
+//!
+//! Let's take an example of a collection matcher.
+//!
+//! ```
+//! use clearcheck::matchers::collection::membership::contain_all;
+//! use clearcheck::matchers::Matcher;
+//!
+//! let collection = vec!["clearcheck", "testify", "assert4j", "xunit"];
+//! let all_to_be_contained = vec!["testify", "assert4j", "xunit"];
+//!
+//! let matcher = contain_all(all_to_be_contained);
+//! assert!(matcher.test(&collection).passed());
+//! ```
+
 pub mod bool;
 pub mod char;
 pub mod collection;
