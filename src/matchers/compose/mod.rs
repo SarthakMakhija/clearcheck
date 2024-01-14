@@ -7,27 +7,31 @@ enum Kind {
     Or,
 }
 
+/// MatcherBehavior encapsulates a matcher and an inversion flag, governing how it's applied in assertions.
 pub struct MatcherBehavior<T: Debug> {
     matcher: Box<dyn Matcher<T>>,
     inverted: bool,
 }
 
 impl<T: Debug> MatcherBehavior<T> {
-    fn new(matcher: Box<dyn Matcher<T>>) -> Self {
+    /// new creates a new instance of MatcherBehavior encapsulating the given matcher.
+    pub fn new(matcher: Box<dyn Matcher<T>>) -> Self {
         MatcherBehavior {
             matcher,
             inverted: false,
         }
     }
 
-    fn inverted(matcher: Box<dyn Matcher<T>>) -> Self {
+    /// inverted creates a new instance of MatcherBehavior encapsulating the given matcher with an inversion flag.
+    pub fn inverted(matcher: Box<dyn Matcher<T>>) -> Self {
         MatcherBehavior {
             matcher,
             inverted: true,
         }
     }
 
-    fn run_matcher(&self, value: &T) -> MatcherResult {
+    /// run_matcher runs the underlying matcher.
+    pub fn run_matcher(&self, value: &T) -> MatcherResult {
         let matcher_result = self.matcher.test(value);
         if self.inverted {
             return MatcherResult::formatted(
@@ -40,42 +44,74 @@ impl<T: Debug> MatcherBehavior<T> {
     }
 }
 
+/// MatchersBuilder provides an elegant way to compose various matchers.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::{BoxWrap, Matcher};
+/// use clearcheck::matchers::compose::MatchersBuilder;
+/// use clearcheck::matchers::string::boundary::begin_with;
+/// use clearcheck::matchers::string::empty::be_empty;
+/// use clearcheck::matchers::string::length::have_atleast_same_length;
+/// use clearcheck::matchers::string::membership::{contain_a_digit, contain_any_of_characters, contain_ignoring_case};
+///
+/// let matchers = MatchersBuilder::start_building_with_negated(be_empty().boxed())
+///    .push(have_atleast_same_length(10).boxed())
+///    .push(contain_a_digit().boxed())
+///    .push(contain_any_of_characters(vec!['@', '#']).boxed())
+///    .push_inverted(begin_with("pass").boxed())
+///    .push_inverted(contain_ignoring_case("pass").boxed())
+///    .push_inverted(contain_ignoring_case("word").boxed())
+///    .combine_as_and();
+///
+/// let password = "P@@sw0rd9082";
+/// assert!(matchers.test(&password).passed());
+/// ```
 pub struct MatchersBuilder<T: Debug> {
     matchers_behaviors: Vec<MatcherBehavior<T>>,
 }
 
 impl<T: Debug> MatchersBuilder<T> {
+    /// start_building creates an instance of MatchersBuilder with the given matcher.
     pub fn start_building(matcher: Box<dyn Matcher<T>>) -> Self {
         MatchersBuilder {
             matchers_behaviors: vec![MatcherBehavior::new(matcher)]
         }
     }
 
+    /// start_building creates an instance of MatchersBuilder with the given matcher inverted.
     pub fn start_building_with_negated(matcher: Box<dyn Matcher<T>>) -> Self {
         MatchersBuilder {
             matchers_behaviors: vec![MatcherBehavior::inverted(matcher)]
         }
     }
 
+    /// push pushes the instance of the given matcher to the MatchersBuilder.
     pub fn push(mut self, matcher: Box<dyn Matcher<T>>) -> Self {
         self.matchers_behaviors.push(MatcherBehavior::new(matcher));
         self
     }
 
+    /// push_inverted pushes the instance of the given matcher inverted to the MatchersBuilder.
     pub fn push_inverted(mut self, matcher: Box<dyn Matcher<T>>) -> Self {
         self.matchers_behaviors.push(MatcherBehavior::inverted(matcher));
         self
     }
 
+    /// combine_as_and combines all the matchers using AND operator.
     pub fn combine_as_and(self) -> Matchers<T> {
         Matchers::and(self.matchers_behaviors)
     }
 
+    /// combine_as_and combines all the matchers using OR operator.
     pub fn combine_as_or(self) -> Matchers<T> {
         Matchers::or(self.matchers_behaviors)
     }
 }
 
+/// Matchers provides a way to combine various matchers using AND or OR operators.
+/// If an instance of Matchers is created using AND operator, all the underlying matchers MUST pass for Matchers to pass.
+/// If an instance of Matchers is created using OR operator, any of the underlying matchers MUST pass for Matchers to pass.
 pub struct Matchers<T: Debug> {
     matcher_behaviors: Vec<MatcherBehavior<T>>,
     kind: Kind,
@@ -97,6 +133,7 @@ impl<T: Debug> Matchers<T> {
     }
 }
 
+/// Matchers implement the [`crate::matchers::Matcher`] trait.
 impl<T: Debug> Matcher<T> for Matchers<T> {
     fn test(&self, value: &T) -> MatcherResult {
         let results = self
