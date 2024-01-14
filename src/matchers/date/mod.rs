@@ -2,6 +2,18 @@ use chrono::{Datelike, NaiveDate};
 
 use crate::matchers::{Matcher, MatcherResult};
 
+/// DateMatcher offers a flexible way to make assertions about specific date attributes.
+///
+/// # Example
+///```
+/// use chrono::NaiveDate;
+/// use clearcheck::matchers::date::have_same_year;
+/// use clearcheck::matchers::Matcher;
+///
+/// let date = NaiveDate::from_ymd_opt(2024, 1, 10).unwrap();
+/// let matcher = have_same_year(2024);
+/// assert!(matcher.test(&date).passed());
+/// ```
 pub enum DateMatcher {
     SameYear(i32),
     SameMonth(u32),
@@ -36,18 +48,22 @@ impl Matcher<NaiveDate> for DateMatcher {
     }
 }
 
+/// Creates a DateMatcher that asserts whether a date has the same year as the specified year.
 pub fn have_same_year(year: i32) -> DateMatcher {
     DateMatcher::SameYear(year)
 }
 
+/// Creates a DateMatcher that asserts whether a date has the same month as the specified month.
 pub fn have_same_month(month: u32) -> DateMatcher {
     DateMatcher::SameMonth(month)
 }
 
+/// Creates a DateMatcher that asserts whether a date has the same day as the specified day.
 pub fn have_same_day(day: u32) -> DateMatcher {
     DateMatcher::SameDay(day)
 }
 
+/// Creates a DateMatcher that asserts whether a date falls in the leap year.
 pub fn be_a_leap_year() -> DateMatcher {
     DateMatcher::LeapYear
 }

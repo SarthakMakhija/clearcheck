@@ -1,5 +1,14 @@
 use crate::matchers::{Matcher, MatcherResult};
 
+/// TrueFalseMatcher provides a way to assert whether boolean values evaluate to true or false.
+/// # Example
+///```
+/// use clearcheck::matchers::bool::{be_true, TrueFalseMatcher};
+/// use clearcheck::matchers::Matcher;
+///
+/// let matcher = be_true();
+/// assert!(matcher.test(&true).passed());
+/// ```
 pub enum TrueFalseMatcher {
     True,
     False,
@@ -20,10 +29,12 @@ impl Matcher<bool> for TrueFalseMatcher {
     }
 }
 
+/// Creates a TrueFalseMatcher::True instance for asserting true.
 pub fn be_true() -> TrueFalseMatcher {
     TrueFalseMatcher::True
 }
 
+/// Creates a TrueFalseMatcher::False instance for asserting false.
 pub fn be_false() -> TrueFalseMatcher {
     TrueFalseMatcher::False
 }

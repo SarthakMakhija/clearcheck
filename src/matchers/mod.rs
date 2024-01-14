@@ -92,4 +92,8 @@ impl MatcherResult {
             negated_failure_message,
         }
     }
+
+    pub fn passed(&self) -> bool {
+        self.passed
+    }
 }
