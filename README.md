@@ -55,6 +55,8 @@
 - [Unleashing the power of custom matchers and assertions](#unleashing-the-power-of-custom-matchers-and-assertions-)
 - [Rust features](#rust-features)
 - [Example project](#example-project)
+- [Reference](#reference)
+- [Mention](#mention)
 
 ### Introducing clearcheck
 
@@ -596,3 +598,11 @@ fn should_be_a_valid_password() {
 ### Example project
 
 Head over to the [examples](https://github.com/SarthakMakhija/clearcheck-examples) project to understand the usage of this crate.
+
+### Reference
+
+- [kotest](https://github.com/kotest/kotest)
+
+### Mention
+
+- [Google bard](https://bard.google.com/chat) helped with the documentation and README :).
