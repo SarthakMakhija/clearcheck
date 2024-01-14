@@ -588,10 +588,10 @@ fn should_be_a_valid_password() {
 ### Rust features
 
 **clearcheck** crate supports the following features:
-- **date**  enables [Assertions on date](#date-enabled-by-date-feature-depends-on-chrono)
-- **file**  enables [Assertions on filepath](#filepath-enabled-by-file-feature-depends-on-walkdir)
-- **num**   enables [Assertions on float](#float-enabled-by-num-feature-depends-on-num) and [Assertions on integer](#integer-enabled-by-num-feature-depends-on-num)
-- **regex** enables [Assertions on string](#string)
+- **date**  enables [assertions on date](#date-enabled-by-date-feature-depends-on-chrono)
+- **file**  enables [assertions on filepath](#filepath-enabled-by-file-feature-depends-on-walkdir)
+- **num**   enables [assertions on float](#float-enabled-by-num-feature-depends-on-num) and [assertions on integer](#integer-enabled-by-num-feature-depends-on-num)
+- **regex** enables [regular expression assertions on string](#string)
 
 ### Example project
 

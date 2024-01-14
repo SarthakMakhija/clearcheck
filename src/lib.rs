@@ -25,6 +25,14 @@
 //! - **Type-safe**: Built with Rust's type system for reliable and expressive assertions.
 //! - **Custom assertions**: Craft assertions tailored to your exact needs, ensuring comprehensive validations for various data structures.
 //!
+//! # Rust features
+//!
+//! clearcheck crate supports the following features:
+//! - date enables [assertions on date](assertions::date::DateAssertion)
+//! - file enables [assertions on filepath](assertions::file::FileAssertion)
+//! - num enables [assertions on float](assertions::float::FloatAssertion) and [assertions on integer](assertions::int::IntAssertion)
+//! - regex enables [regular expression assertions on string](assertions::string::regex)
+//!
 //! # Assertions vs Matchers
 //!
 //! **Assertions** serve as the cornerstone of the test cases, defining the exact expectations the code must fulfill.
