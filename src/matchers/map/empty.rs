@@ -3,6 +3,19 @@ use std::hash::Hash;
 
 use crate::matchers::{Matcher, MatcherResult};
 
+/// MapEmptyMatcher offers a flexible way to assert whether a HashMap is empty.
+///
+/// # Example
+///```
+/// use std::collections::HashMap;
+/// use clearcheck::matchers::map::empty::be_empty;
+/// use clearcheck::matchers::Matcher;
+///
+/// let key_value: HashMap<i32, i32> = HashMap::new();
+/// let matcher = be_empty();
+///
+/// assert!(matcher.test(&key_value).passed());
+/// ```
 pub enum MapEmptyMatcher {
     Empty,
     NotEmpty,
@@ -25,11 +38,12 @@ impl<K: Hash + Eq, V> Matcher<HashMap<K, V>> for MapEmptyMatcher {
     }
 }
 
-
+/// Creates a MapEmptyMatcher that asserts whether a HashMap is empty.
 pub fn be_empty() -> MapEmptyMatcher {
     MapEmptyMatcher::Empty
 }
 
+/// Creates a MapEmptyMatcher that asserts whether a HashMap is not empty.
 pub fn not_be_empty() -> MapEmptyMatcher {
     MapEmptyMatcher::NotEmpty
 }

@@ -4,18 +4,74 @@ use std::hash::Hash;
 
 use crate::matchers::{Matcher, MatcherResult};
 
-pub enum KeyMembershipMatcher<T: Debug> {
+/// KeyMembershipMatcher offers a flexible way to assert the presence or absence of specific keys within a HashMap.
+///
+/// Works with any data type that implements the Eq and Debug trait.
+///
+/// # Example
+///```
+/// use std::collections::HashMap;
+/// use clearcheck::matchers::map::membership::contain_all_keys;
+/// use clearcheck::matchers::Matcher;
+///
+/// let mut key_value = HashMap::new();
+/// key_value.insert("rust", "clearcheck");
+/// key_value.insert("java", "junit");
+///
+/// let to_contain = vec!["rust", "java"];
+/// let matcher = contain_all_keys(to_contain);
+///
+/// assert!(matcher.test(&key_value).passed());
+/// ```
+pub enum KeyMembershipMatcher<T: Eq + Debug> {
     Key(T),
     AllKeys(Vec<T>),
     AnyOfKeys(Vec<T>),
 }
 
-pub enum ValueMembershipMatcher<T: Debug> {
+/// ValueMembershipMatcher offers a flexible way to assert the presence or absence of specific values within a HashMap.
+///
+/// Works with any data type that implements the Eq and Debug trait.
+///
+/// # Example
+///```
+/// use std::collections::HashMap;
+/// use clearcheck::matchers::map::membership::contain_all_values;
+/// use clearcheck::matchers::Matcher;
+///
+/// let mut key_value = HashMap::new();
+/// key_value.insert("rust", "clearcheck");
+/// key_value.insert("java", "junit");
+///
+/// let to_contain = vec!["clearcheck", "junit"];
+/// let matcher = contain_all_values(to_contain);
+///
+/// assert!(matcher.test(&key_value).passed());
+/// ```
+pub enum ValueMembershipMatcher<T: Eq + Debug> {
     Value(T),
     AllValues(Vec<T>),
     AnyOfValues(Vec<T>),
 }
 
+/// KeyValueMembershipMatcher offers a flexible way to assert the presence or absence of specific key/value pair(s) within a HashMap.
+///
+/// # Example
+///```
+/// use std::collections::HashMap;
+/// use clearcheck::matchers::map::membership::contain_all_key_values;
+/// use clearcheck::matchers::Matcher;
+///
+/// let mut collection = HashMap::new();
+/// collection.insert("rust", "clearcheck");
+///
+/// let mut should_contain = HashMap::new();
+/// should_contain.insert("rust", "clearcheck");
+///
+/// let matcher = contain_all_key_values(should_contain);
+///
+/// assert!(matcher.test(&collection).passed());
+/// ```
 pub enum KeyValueMembershipMatcher<K: Hash + Eq + Debug, V: Debug> {
     KeyValue(K, V),
     AllKeyValues(HashMap<K, V>),
@@ -216,6 +272,7 @@ impl<K, V> Matcher<HashMap<K, V>> for KeyValueMembershipMatcher<K, V>
     }
 }
 
+/// Creates a KeyMembershipMatcher that asserts whether a HashMap contains the given key.
 pub fn contain_key<Q>(key: Q) -> KeyMembershipMatcher<Q>
     where
         Q: Hash + Eq + Debug,
@@ -223,6 +280,7 @@ pub fn contain_key<Q>(key: Q) -> KeyMembershipMatcher<Q>
     KeyMembershipMatcher::Key(key)
 }
 
+/// Creates a KeyMembershipMatcher that asserts whether a HashMap contains all the given keys.
 pub fn contain_all_keys<Q>(keys: Vec<Q>) -> KeyMembershipMatcher<Q>
     where
         Q: Hash + Eq + Debug,
@@ -230,6 +288,7 @@ pub fn contain_all_keys<Q>(keys: Vec<Q>) -> KeyMembershipMatcher<Q>
     KeyMembershipMatcher::AllKeys(keys)
 }
 
+/// Creates a KeyMembershipMatcher that asserts whether a HashMap contains any of the given keys.
 pub fn contain_any_of_keys<Q>(keys: Vec<Q>) -> KeyMembershipMatcher<Q>
     where
         Q: Hash + Eq + Debug,
@@ -237,6 +296,7 @@ pub fn contain_any_of_keys<Q>(keys: Vec<Q>) -> KeyMembershipMatcher<Q>
     KeyMembershipMatcher::AnyOfKeys(keys)
 }
 
+/// Creates a ValueMembershipMatcher that asserts whether a HashMap contains the given value.
 pub fn contain_value<Q>(value: Q) -> ValueMembershipMatcher<Q>
     where
         Q: Eq + Debug,
@@ -244,6 +304,7 @@ pub fn contain_value<Q>(value: Q) -> ValueMembershipMatcher<Q>
     ValueMembershipMatcher::Value(value)
 }
 
+/// Creates a ValueMembershipMatcher that asserts whether a HashMap contains all the given values.
 pub fn contain_all_values<Q>(values: Vec<Q>) -> ValueMembershipMatcher<Q>
     where
         Q: Eq + Debug,
@@ -251,6 +312,7 @@ pub fn contain_all_values<Q>(values: Vec<Q>) -> ValueMembershipMatcher<Q>
     ValueMembershipMatcher::AllValues(values)
 }
 
+/// Creates a ValueMembershipMatcher that asserts whether a HashMap contains any of the given values.
 pub fn contain_any_of_values<Q>(values: Vec<Q>) -> ValueMembershipMatcher<Q>
     where
         Q: Eq + Debug,
@@ -258,6 +320,7 @@ pub fn contain_any_of_values<Q>(values: Vec<Q>) -> ValueMembershipMatcher<Q>
     ValueMembershipMatcher::AnyOfValues(values)
 }
 
+/// Creates a KeyValueMembershipMatcher that asserts whether a HashMap contains the given key/value pair.
 pub fn contain_key_value<K, V>(key: K, value: V) -> KeyValueMembershipMatcher<K, V>
     where
         K: Eq + Debug + Hash,
@@ -266,6 +329,7 @@ pub fn contain_key_value<K, V>(key: K, value: V) -> KeyValueMembershipMatcher<K,
     KeyValueMembershipMatcher::KeyValue(key, value)
 }
 
+/// Creates a KeyValueMembershipMatcher that asserts whether a HashMap contains all the given key/value pairs.
 pub fn contain_all_key_values<K, V>(key_values: HashMap<K, V>) -> KeyValueMembershipMatcher<K, V>
     where
         K: Eq + Debug + Hash,
@@ -274,6 +338,7 @@ pub fn contain_all_key_values<K, V>(key_values: HashMap<K, V>) -> KeyValueMember
     KeyValueMembershipMatcher::AllKeyValues(key_values)
 }
 
+/// Creates a KeyValueMembershipMatcher that asserts whether a HashMap contains any of the given key/value pairs.
 pub fn contain_any_of_key_values<K, V>(
     key_values: HashMap<K, V>,
 ) -> KeyValueMembershipMatcher<K, V>
