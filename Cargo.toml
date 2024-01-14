@@ -9,7 +9,7 @@ Elegant and extensible assertions for rust.
 readme = "README.md"
 repository = "https://github.com/SarthakMakhija/clearcheck"
 license = "MIT OR Apache-2.0"
-keywords = ["assert", "assertions", "elegant", "elegant-assertions"]
+keywords = ["clearcheck", "assert", "assertions", "elegant", "elegant-assertions"]
 categories = ["development-tools", "development-tools::testing"]
 include = ["src/", "LICENSE-*", "README.md", "tests/"]
 
