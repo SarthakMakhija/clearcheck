@@ -2,6 +2,20 @@ use std::fmt::Debug;
 
 use crate::matchers::{Matcher, MatcherResult};
 
+/// OrderedMatcher offers a flexible way to assert ordering relationships between values.
+///
+/// Works with any data type that implements the PartialOrd trait.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::Matcher;
+/// use clearcheck::matchers::ordered::be_greater_than;
+///
+/// let value = 100;
+/// let matcher = be_greater_than(90);
+///
+/// assert!(matcher.test(&value).passed());
+/// ```
 pub enum OrderedMatcher<T: PartialOrd> {
     Gt(T),
     Gte(T),
@@ -39,18 +53,22 @@ impl<T: Debug + PartialOrd> Matcher<T> for OrderedMatcher<T> {
     }
 }
 
+/// Creates an OrderedMatcher that asserts whether a value is greater than the given value.
 pub fn be_greater_than<T: PartialOrd>(other: T) -> OrderedMatcher<T> {
     OrderedMatcher::Gt(other)
 }
 
+/// Creates an OrderedMatcher that asserts whether a value is greater than or equal to the given value.
 pub fn be_greater_than_equal_to<T: PartialOrd>(other: T) -> OrderedMatcher<T> {
     OrderedMatcher::Gte(other)
 }
 
+/// Creates an OrderedMatcher that asserts whether a value is less than the given value.
 pub fn be_less_than<T: PartialOrd>(other: T) -> OrderedMatcher<T> {
     OrderedMatcher::Lt(other)
 }
 
+/// Creates an OrderedMatcher that asserts whether a value is less than or equal to the given value.
 pub fn be_less_than_equal_to<T: PartialOrd>(other: T) -> OrderedMatcher<T> {
     OrderedMatcher::Lte(other)
 }
