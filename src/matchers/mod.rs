@@ -49,7 +49,7 @@ impl<T> ShouldNot<T> for T {
         if !passed {
             panic!(
                 "assertion failed: {}",
-                matcher_result.negated_failure_message
+                matcher_result.inverted_failure_message
             );
         }
     }
@@ -79,33 +79,33 @@ impl<M, T: Matcher<M> + 'static> BoxWrap<M> for T {
 pub struct MatcherResult {
     passed: bool,
     failure_message: String,
-    negated_failure_message: String,
+    inverted_failure_message: String,
 }
 
 impl MatcherResult {
-    /// Creates a new instance of MatcherResult using failure_message and negated_failure_message of type &'static str.
+    /// Creates a new instance of MatcherResult using failure_message and inverted_failure_message of type &'static str.
     pub fn new(
         passed: bool,
         failure_message: &'static str,
-        negated_failure_message: &'static str,
+        inverted_failure_message: &'static str,
     ) -> Self {
         MatcherResult::formatted(
             passed,
             failure_message.to_string(),
-            negated_failure_message.to_string(),
+            inverted_failure_message.to_string(),
         )
     }
 
-    /// Creates a new instance of MatcherResult using failure_message and negated_failure_message of type String.
+    /// Creates a new instance of MatcherResult using failure_message and inverted_failure_message of type String.
     pub fn formatted(
         passed: bool,
         failure_message: String,
-        negated_failure_message: String,
+        inverted_failure_message: String,
     ) -> Self {
         MatcherResult {
             passed,
             failure_message,
-            negated_failure_message,
+            inverted_failure_message,
         }
     }
 

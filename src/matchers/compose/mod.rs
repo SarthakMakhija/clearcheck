@@ -36,7 +36,7 @@ impl<T: Debug> MatcherBehavior<T> {
         if self.inverted {
             return MatcherResult::formatted(
                 !matcher_result.passed,
-                matcher_result.negated_failure_message,
+                matcher_result.inverted_failure_message,
                 matcher_result.failure_message,
             );
         }
@@ -155,7 +155,7 @@ impl<T: Debug> Matcher<T> for Matchers<T> {
                 messages(
                     &results,
                     |result| result.passed,
-                    |result| result.negated_failure_message.clone(),
+                    |result| result.inverted_failure_message.clone(),
                 ),
             ),
             Kind::Or => MatcherResult::formatted(
@@ -164,7 +164,7 @@ impl<T: Debug> Matcher<T> for Matchers<T> {
                 messages(
                     &results,
                     |_| true,
-                    |result| result.negated_failure_message.clone(),
+                    |result| result.inverted_failure_message.clone(),
                 ),
             ),
         }
