@@ -27,9 +27,9 @@ pub trait Should<T> {
 
 /// ShouldNot provides a convenient way to express negative assertions within tests, indicating that a value should not meet a certain condition.
 pub trait ShouldNot<T> {
-    /// - Takes a matcher as input and performs a negated assertion against the value itself.
+    /// - Takes a matcher as input and performs an inverted assertion against the value itself.
     /// - Inverts the result of the matcher's test method, ensuring the value does not match.
-    /// - Panics if the negated assertion fails, indicating that the value unexpectedly matched the matcher.
+    /// - Panics if the inverted assertion fails, indicating that the value unexpectedly matched the matcher.
     fn should_not(&self, matcher: &dyn Matcher<T>);
 }
 

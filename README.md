@@ -541,7 +541,7 @@ Let's craft a custom password matcher with specific criteria like length, digits
 
 ```rust
 fn be_a_valid_password<T: AsRef<str> + Debug>() -> Matchers<T> {
-    MatchersBuilder::start_building_with_negated(be_empty().boxed())
+    MatchersBuilder::start_building_with_inverted(be_empty().boxed())
       .push(have_atleast_same_length(10).boxed())
       .push(contain_a_digit().boxed())
       .push(contain_any_of_characters(vec!['@', '#']).boxed())

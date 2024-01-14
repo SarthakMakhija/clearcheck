@@ -55,7 +55,7 @@ impl<T: Debug> MatcherBehavior<T> {
 /// use clearcheck::matchers::string::length::have_atleast_same_length;
 /// use clearcheck::matchers::string::membership::{contain_a_digit, contain_any_of_characters, contain_ignoring_case};
 ///
-/// let matchers = MatchersBuilder::start_building_with_negated(be_empty().boxed())
+/// let matchers = MatchersBuilder::start_building_with_inverted(be_empty().boxed())
 ///    .push(have_atleast_same_length(10).boxed())
 ///    .push(contain_a_digit().boxed())
 ///    .push(contain_any_of_characters(vec!['@', '#']).boxed())
@@ -80,7 +80,7 @@ impl<T: Debug> MatchersBuilder<T> {
     }
 
     /// Creates an instance of MatchersBuilder with the given matcher inverted.
-    pub fn start_building_with_negated(matcher: Box<dyn Matcher<T>>) -> Self {
+    pub fn start_building_with_inverted(matcher: Box<dyn Matcher<T>>) -> Self {
         MatchersBuilder {
             matchers_behaviors: vec![MatcherBehavior::inverted(matcher)]
         }
@@ -242,7 +242,7 @@ mod string_matchers {
     }
 
     #[test]
-    fn should_run_negated_matchers_successfully() {
+    fn should_run_inverted_matchers_successfully() {
         let begin_with = begin_with("go").boxed();
         let not_end_with = end_with("test").boxed();
         let not_be_empty = be_empty().boxed();
@@ -337,7 +337,7 @@ mod custom_string_matchers_tests {
     use crate::matchers::string::membership::{contain_a_digit, contain_any_of_characters, contain_ignoring_case};
 
     fn be_a_valid_password<T: AsRef<str> + Debug>() -> Matchers<T> {
-        MatchersBuilder::start_building_with_negated(be_empty().boxed())
+        MatchersBuilder::start_building_with_inverted(be_empty().boxed())
             .push(have_atleast_same_length(10).boxed())
             .push(contain_a_digit().boxed())
             .push(contain_any_of_characters(vec!['@', '#']).boxed())
@@ -397,7 +397,7 @@ mod custom_collection_matchers_tests {
         let contain_all = contain_all(all);
         let sorted = be_sorted_ascending();
 
-        MatchersBuilder::<Vec<LaptopBrands>>::start_building_with_negated(empty.boxed())
+        MatchersBuilder::<Vec<LaptopBrands>>::start_building_with_inverted(empty.boxed())
             .push(size.boxed())
             .push(contain_all.boxed())
             .push(sorted.boxed())
