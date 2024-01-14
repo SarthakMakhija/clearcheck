@@ -1,5 +1,15 @@
 use crate::matchers::{Matcher, MatcherResult};
 
+/// StringLengthMatcher offers a flexible way to assert various length properties of string.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::string::length::have_atleast_same_length;
+/// use clearcheck::matchers::Matcher;
+///
+/// let matcher = have_atleast_same_length(3);
+/// assert!(matcher.test(&"clearcheck").passed());
+/// ```
 pub enum StringLengthMatcher {
     Same(usize),
     Atleast(usize),
@@ -48,14 +58,17 @@ impl<T> Matcher<T> for StringLengthMatcher
     }
 }
 
+/// Creates a StringLengthMatcher that asserts whether the length of a string is same as the given length.
 pub fn have_same_length(length: usize) -> StringLengthMatcher {
     StringLengthMatcher::Same(length)
 }
 
+/// Creates a StringLengthMatcher that asserts whether the length of a string is greater than or equal to the given length.
 pub fn have_atleast_same_length(length: usize) -> StringLengthMatcher {
     StringLengthMatcher::Atleast(length)
 }
 
+/// Creates a StringLengthMatcher that asserts whether the length of a string is less than or equal to the given length.
 pub fn have_atmost_same_length(length: usize) -> StringLengthMatcher {
     StringLengthMatcher::Atmost(length)
 }

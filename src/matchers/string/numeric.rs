@@ -3,6 +3,16 @@ use std::str::FromStr;
 
 use crate::matchers::{Matcher, MatcherResult};
 
+/// NumericMatcher offers a flexible way to assert whether a string is numeric.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::string::numeric::be_numeric;
+/// use clearcheck::matchers::Matcher;
+///
+/// let matcher = be_numeric::<i32>();
+/// assert!(matcher.test(&"12345").passed());
+/// ```
 pub struct NumericMatcher<M: FromStr> {
     _inner: PhantomData<M>,
 }
@@ -18,6 +28,7 @@ impl<T: AsRef<str>, M: FromStr> Matcher<T> for NumericMatcher<M> {
     }
 }
 
+/// Creates a NumericMatcher that asserts whether a string is numeric.
 pub fn be_numeric<M: FromStr>() -> NumericMatcher<M> {
     NumericMatcher {
         _inner: PhantomData,

@@ -1,5 +1,15 @@
 use crate::matchers::{Matcher, MatcherResult};
 
+/// StringEmptyMatcher offers a flexible way to assert whether a string is empty (no characters).
+///
+/// # Example
+///```
+/// use clearcheck::matchers::string::empty::be_empty;
+/// use clearcheck::matchers::Matcher;
+///
+/// let matcher = be_empty();
+/// assert!(matcher.test(&"").passed());
+/// ```
 pub enum StringEmptyMatcher {
     Empty,
     NotEmpty,
@@ -24,10 +34,12 @@ impl<T> Matcher<T> for StringEmptyMatcher
     }
 }
 
+/// Creates a StringEmptyMatcher that asserts whether a string is empty.
 pub fn be_empty() -> StringEmptyMatcher {
     StringEmptyMatcher::Empty
 }
 
+/// Creates a StringEmptyMatcher that asserts whether a string is not empty.
 pub fn not_be_empty() -> StringEmptyMatcher {
     StringEmptyMatcher::NotEmpty
 }

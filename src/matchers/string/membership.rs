@@ -1,5 +1,15 @@
 use crate::matchers::{Matcher, MatcherResult};
 
+/// MembershipMatcher offers a flexible way to assert the presence or absence of characters in a string.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::string::membership::contain_all_characters;
+/// use clearcheck::matchers::Matcher;
+///
+/// let matcher = contain_all_characters(vec!['@', '.']);
+/// assert!(matcher.test(&"john@gmail.com").passed());
+/// ```
 pub enum MembershipMatcher {
     OnlyDigits,
     ADigit,
@@ -9,6 +19,16 @@ pub enum MembershipMatcher {
     AnyChars(Vec<char>),
 }
 
+/// SubstringMatcher offers a flexible way to assert whether a string contains a substring.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::string::membership::contain_ignoring_case;
+/// use clearcheck::matchers::Matcher;
+///
+/// let matcher = contain_ignoring_case("Check");
+/// assert!(matcher.test(&"clearcheck").passed());
+/// ```
 pub enum SubstringMatcher {
     Substr(&'static str),
     SubstrIgnoringCase(&'static str),
@@ -79,34 +99,42 @@ impl<T> Matcher<T> for SubstringMatcher
 }
 
 
+/// Creates a MembershipMatcher that asserts whether a string contains only digits.
 pub fn contain_only_digits() -> MembershipMatcher {
     MembershipMatcher::OnlyDigits
 }
 
+/// Creates a MembershipMatcher that asserts whether a string contains a digits.
 pub fn contain_a_digit() -> MembershipMatcher {
     MembershipMatcher::ADigit
 }
 
+/// Creates a MembershipMatcher that asserts whether a string does not contain any digit.
 pub fn not_contain_digits() -> MembershipMatcher {
     MembershipMatcher::NoDigits
 }
 
+/// Creates a MembershipMatcher that asserts whether a string contains the given character.
 pub fn contain_character(ch: char) -> MembershipMatcher {
     MembershipMatcher::Char(ch)
 }
 
+/// Creates a MembershipMatcher that asserts whether a string contains all the given characters.
 pub fn contain_all_characters(chars: Vec<char>) -> MembershipMatcher {
     MembershipMatcher::AllChars(chars)
 }
 
+/// Creates a MembershipMatcher that asserts whether a string contains any of the given characters.
 pub fn contain_any_of_characters(chars: Vec<char>) -> MembershipMatcher {
     MembershipMatcher::AnyChars(chars)
 }
 
+/// Creates a SubstringMatcher that asserts whether a string contains the given substring.
 pub fn contain(substr: &'static str) -> SubstringMatcher {
     SubstringMatcher::Substr(substr)
 }
 
+/// Creates a SubstringMatcher that asserts whether a string contains the given substring, ignoring the case differences.
 pub fn contain_ignoring_case(substr: &'static str) -> SubstringMatcher {
     SubstringMatcher::SubstrIgnoringCase(substr)
 }

@@ -1,5 +1,15 @@
 use crate::matchers::{Matcher, MatcherResult};
 
+/// CaseMatcher offers a flexible way to assert that a string is either lowercase or uppercase.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::Matcher;
+/// use clearcheck::matchers::string::case::be_lowercase;
+///
+/// let matcher = be_lowercase();
+/// assert!(matcher.test(&"clearcheck").passed());
+/// ```
 pub enum CaseMatcher {
     Lower,
     Upper,
@@ -24,10 +34,12 @@ where T: AsRef<str> + PartialEq
     }
 }
 
+/// Creates a CaseMatcher that asserts whether a string value is composed of lowercase letters.
 pub fn be_lowercase() -> CaseMatcher {
     CaseMatcher::Lower
 }
 
+/// Creates a CaseMatcher that asserts whether a string value is composed of uppercase letters.
 pub fn be_uppercase() -> CaseMatcher {
     CaseMatcher::Upper
 }

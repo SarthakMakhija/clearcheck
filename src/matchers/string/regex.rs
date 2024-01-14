@@ -2,6 +2,17 @@ use regex::Regex;
 
 use crate::matchers::{Matcher, MatcherResult};
 
+/// RegexMatcher offers a flexible way to assert whether a string matches a regular expression.
+///
+/// # Example
+///```
+/// use regex::Regex;
+/// use clearcheck::matchers::string::regex::match_with;
+/// use clearcheck::matchers::Matcher;
+///
+/// let matcher = match_with(Regex::new(r"(\d{4})-(\d{2})-(\d{2})").unwrap());
+/// assert!(matcher.test(&"Started clearcheck on On 2024-01-02.").passed());
+/// ```
 pub struct RegexMatcher {
     regexp: Regex,
 }
@@ -22,6 +33,7 @@ impl<T: AsRef<str>> Matcher<T> for RegexMatcher {
     }
 }
 
+/// Creates a RegexMatcher that asserts whether a string matches the given regular expression.
 pub fn match_with(regular_expression: Regex) -> RegexMatcher {
     RegexMatcher {
         regexp: regular_expression,

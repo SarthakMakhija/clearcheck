@@ -1,5 +1,15 @@
 use crate::matchers::{Matcher, MatcherResult};
 
+/// BoundaryMatcher offers a flexible way to assert that a string begins or ends with specific values.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::Matcher;
+/// use clearcheck::matchers::string::boundary::begin_with;
+///
+/// let matcher = begin_with("clear");
+/// assert!(matcher.test(&"clearcheck").passed());
+/// ```
 pub enum BoundaryMatcher {
     Begin(&'static str),
     End(&'static str),
@@ -24,10 +34,12 @@ impl<T> Matcher<T> for BoundaryMatcher
     }
 }
 
+/// Creates a BoundaryMatcher that asserts whether a string value begins with the given prefix.
 pub fn begin_with(prefix: &'static str) -> BoundaryMatcher {
     BoundaryMatcher::Begin(prefix)
 }
 
+/// Creates a BoundaryMatcher that asserts whether a string value ends with the given suffix.
 pub fn end_with(suffix: &'static str) -> BoundaryMatcher {
     BoundaryMatcher::End(suffix)
 }
