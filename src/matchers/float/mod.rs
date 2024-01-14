@@ -4,6 +4,18 @@ use num::Float;
 
 use crate::matchers::{Matcher, MatcherResult};
 
+/// FloatMatcher offers a flexible way to make assertions about specific float attributes.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::float::be_zero;
+/// use clearcheck::matchers::Matcher;
+///
+/// let value: f64 = 0.0;
+/// let matcher = be_zero();
+///
+/// assert!(matcher.test(&value).passed());
+/// ```
 pub enum FloatMatcher {
     NaN,
     Zero,
@@ -38,18 +50,22 @@ impl<T: Float + Debug + Default + PartialEq> Matcher<T> for FloatMatcher {
     }
 }
 
+/// Creates a FloatMatcher that asserts whether a floating value is NaN (not a number).
 pub fn be_nan() -> FloatMatcher {
     FloatMatcher::NaN
 }
 
+/// Creates a FloatMatcher that asserts whether a floating value is zero.
 pub fn be_zero() -> FloatMatcher {
     FloatMatcher::Zero
 }
 
+/// Creates a FloatMatcher that asserts whether a floating value is positive.
 pub fn be_positive() -> FloatMatcher {
     FloatMatcher::Positive
 }
 
+/// Creates a FloatMatcher that asserts whether a floating value is negative.
 pub fn be_negative() -> FloatMatcher {
     FloatMatcher::Negative
 }

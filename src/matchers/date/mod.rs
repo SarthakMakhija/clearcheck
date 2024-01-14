@@ -12,6 +12,7 @@ use crate::matchers::{Matcher, MatcherResult};
 ///
 /// let date = NaiveDate::from_ymd_opt(2024, 1, 10).unwrap();
 /// let matcher = have_same_year(2024);
+///
 /// assert!(matcher.test(&date).passed());
 /// ```
 pub enum DateMatcher {

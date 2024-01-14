@@ -43,7 +43,7 @@ pub enum FilePathMatcher {
     Extension(&'static str),
 }
 
-/// FilePathMatcher offers a flexible way to make assertions about presence or absence of files or directories within a tree structure.
+/// TreeMatcher offers a flexible way to make assertions about presence or absence of files or directories within a tree structure.
 pub enum TreeMatcher {
     Contain(&'static str),
     ContainAll(Vec<&'static str>),

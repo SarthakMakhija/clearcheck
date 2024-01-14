@@ -4,6 +4,18 @@ use num::Integer;
 
 use crate::matchers::{Matcher, MatcherResult};
 
+/// IntMatcher offers a flexible way to make assertions about specific integer attributes.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::int::be_positive;
+/// use clearcheck::matchers::Matcher;
+///
+/// let value = 10;
+/// let matcher = be_positive();
+///
+/// assert!(matcher.test(&value).passed());
+/// ```
 pub enum IntMatcher {
     Positive,
     Negative,
@@ -44,22 +56,27 @@ impl<T: Integer + Debug + PartialEq + Default> Matcher<T> for IntMatcher {
     }
 }
 
+/// Creates an IntMatcher that asserts whether an integer value is positive.
 pub fn be_positive() -> IntMatcher {
     IntMatcher::Positive
 }
 
+/// Creates an IntMatcher that asserts whether an integer value is negative.
 pub fn be_negative() -> IntMatcher {
     IntMatcher::Negative
 }
 
+/// Creates an IntMatcher that asserts whether an integer value is even.
 pub fn be_even() -> IntMatcher {
     IntMatcher::Even
 }
 
+/// Creates an IntMatcher that asserts whether an integer value is odd.
 pub fn be_odd() -> IntMatcher {
     IntMatcher::Odd
 }
 
+/// Creates an IntMatcher that asserts whether an integer value is zero.
 pub fn be_zero() -> IntMatcher {
     IntMatcher::Zero
 }
