@@ -1,5 +1,17 @@
 use crate::matchers::{Matcher, MatcherResult};
 
+/// OkErrMatcher provides a way to assert whether [`Result`] values evaluate to Ok or Err.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::Matcher;
+/// use clearcheck::matchers::result::be_ok;
+///
+/// let matcher = be_ok();
+/// let value: Result<i32, &str> = Ok(100);
+///
+/// assert!(matcher.test(&value).passed());
+/// ```
 pub enum OkErrMatcher {
     Ok,
     Err,
@@ -22,10 +34,12 @@ impl<T, E> Matcher<Result<T, E>> for OkErrMatcher {
     }
 }
 
+/// Creates an OkErrMatcher::Ok instance for asserting that a result value evaluates to Ok.
 pub fn be_ok() -> OkErrMatcher {
     OkErrMatcher::Ok
 }
 
+/// Creates an OkErrMatcher::Err instance for asserting that a result value evaluates to Err.
 pub fn be_err() -> OkErrMatcher {
     OkErrMatcher::Err
 }

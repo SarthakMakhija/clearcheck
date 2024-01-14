@@ -1,5 +1,15 @@
 use crate::matchers::{Matcher, MatcherResult};
 
+/// SomeNoneMatcher provides a way to assert whether [`Option`] values evaluate to Some or None.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::Matcher;
+/// use clearcheck::matchers::option::be_some;
+///
+/// let matcher = be_some();
+/// assert!(matcher.test(&Some("clearcheck")).passed());
+/// ```
 pub enum SomeNoneMatcher {
     Some,
     None,
@@ -22,10 +32,12 @@ impl<T> Matcher<Option<T>> for SomeNoneMatcher {
     }
 }
 
+/// Creates a SomeNoneMatcher::Some instance for asserting that an option value evaluates to Some.
 pub fn be_some() -> SomeNoneMatcher {
     SomeNoneMatcher::Some
 }
 
+/// Creates a SomeNoneMatcher::None instance for asserting that an option value evaluates to None.
 pub fn be_none() -> SomeNoneMatcher {
     SomeNoneMatcher::None
 }

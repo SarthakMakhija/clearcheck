@@ -1,6 +1,7 @@
 use crate::matchers::{Matcher, MatcherResult};
 
 /// TrueFalseMatcher provides a way to assert whether boolean values evaluate to true or false.
+///
 /// # Example
 ///```
 /// use clearcheck::matchers::bool::{be_true, TrueFalseMatcher};
