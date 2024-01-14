@@ -52,7 +52,7 @@
         + [Assertions](#assertions-12)
         + [Length based assertions](#length-based-assertions)
         + [Usage](#usage-13)
-- [Unleashing the power of custom matchers and assertions](#unleashing-the-power-of-custom-matchers-and-assertions-)
+- [Unleashing the power of custom matchers and assertions](#unleashing-the-power-of-custom-matchers-and-assertions)
 - [Rust features](#rust-features)
 - [Example project](#example-project)
 - [Reference](#reference)
@@ -529,7 +529,7 @@ pass_phrase.should_not_be_empty()
     .should_not_contain_ignoring_case("word");
 ```
 
-### Unleashing the power of custom matchers and assertions 
+### Unleashing the power of custom matchers and assertions
 
 While this crate comes loaded with a plethora of ready-made assertions, sometimes your testing needs demand a bespoke touch.
 **clearcheck** allows crafting your own custom matchers and assertions!
