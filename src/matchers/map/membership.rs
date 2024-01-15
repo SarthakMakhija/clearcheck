@@ -23,7 +23,7 @@ use crate::matchers::{Matcher, MatcherResult};
 ///
 /// assert!(matcher.test(&key_value).passed());
 /// ```
-pub enum KeyMembershipMatcher<T: Eq + Debug> {
+pub enum KeyMembershipMatcher<T: Eq> {
     Key(T),
     AllKeys(Vec<T>),
     AnyOfKeys(Vec<T>),
@@ -48,7 +48,7 @@ pub enum KeyMembershipMatcher<T: Eq + Debug> {
 ///
 /// assert!(matcher.test(&key_value).passed());
 /// ```
-pub enum ValueMembershipMatcher<T: Eq + Debug> {
+pub enum ValueMembershipMatcher<T: Eq> {
     Value(T),
     AllValues(Vec<T>),
     AnyOfValues(Vec<T>),
@@ -72,7 +72,7 @@ pub enum ValueMembershipMatcher<T: Eq + Debug> {
 ///
 /// assert!(matcher.test(&collection).passed());
 /// ```
-pub enum KeyValueMembershipMatcher<K: Hash + Eq + Debug, V: Debug> {
+pub enum KeyValueMembershipMatcher<K: Hash + Eq, V: Eq> {
     KeyValue(K, V),
     AllKeyValues(HashMap<K, V>),
     AnyOfKeyValues(HashMap<K, V>),
