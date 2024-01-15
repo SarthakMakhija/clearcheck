@@ -8,7 +8,7 @@ enum Kind {
 }
 
 /// MatcherBehavior encapsulates a matcher and an inversion flag, governing how it's applied in assertions.
-pub struct MatcherBehavior<T: Debug> {
+pub struct MatcherBehavior<T> {
     matcher: Box<dyn Matcher<T>>,
     inverted: bool,
 }
@@ -67,7 +67,7 @@ impl<T: Debug> MatcherBehavior<T> {
 /// let password = "P@@sw0rd9082";
 /// assert!(matchers.test(&password).passed());
 /// ```
-pub struct MatchersBuilder<T: Debug> {
+pub struct MatchersBuilder<T> {
     matchers_behaviors: Vec<MatcherBehavior<T>>,
 }
 
@@ -114,7 +114,7 @@ impl<T: Debug> MatchersBuilder<T> {
 /// Matchers provides a way to combine various matchers using AND or OR operators.
 /// If an instance of Matchers is created using AND operator, all the underlying matchers MUST pass for Matchers to pass.
 /// If an instance of Matchers is created using OR operator, any of the underlying matchers MUST pass for Matchers to pass.
-pub struct Matchers<T: Debug> {
+pub struct Matchers<T> {
     matcher_behaviors: Vec<MatcherBehavior<T>>,
     kind: Kind,
 }
