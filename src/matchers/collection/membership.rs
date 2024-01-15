@@ -20,7 +20,7 @@ use crate::matchers::{Matcher, MatcherResult};
 ///
 /// assert!(matcher.test(&collection).passed());
 /// ```
-pub enum MembershipMatcher<T: Eq + Debug> {
+pub enum MembershipMatcher<T: Eq> {
     Contain(T),
     ContainAll(Vec<T>),
     ContainAny(Vec<T>),
