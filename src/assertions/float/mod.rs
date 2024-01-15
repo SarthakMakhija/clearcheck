@@ -19,7 +19,7 @@ use crate::matchers::{Should, ShouldNot};
 ///     .should_be_positive()
 ///     .should_be_in_inclusive_range_with_tolerance(1.11..=1.3458, 0.23);
 /// ```
-pub trait FloatAssertion<T: num::Float + Debug + Default + PartialEq> {
+pub trait FloatAssertion<T: num::Float + Default + PartialEq> {
     /// - Asserts that the floating-point value is NaN (Not a Number).
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.

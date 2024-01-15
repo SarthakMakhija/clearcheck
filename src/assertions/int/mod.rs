@@ -20,7 +20,7 @@ use crate::matchers::{Should, ShouldNot};
 ///     .should_be_even()
 ///     .should_be_in_inclusive_range(10..=40);
 /// ```
-pub trait IntAssertion<T: Integer + Debug + PartialEq + Default> {
+pub trait IntAssertion<T: Integer + PartialEq + Default> {
     /// - Asserts that the integer value is positive.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
