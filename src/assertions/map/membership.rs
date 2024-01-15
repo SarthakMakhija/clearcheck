@@ -11,7 +11,7 @@ use crate::matchers::map::membership::{
 };
 
 /// NoMembershipAssertion enables assertions about the emptiness or non-emptiness of the [`HashMap`].
-pub trait NoMembershipAssertion<K, V> {
+pub trait NoMembershipAssertion {
     /// - Asserts that the HashMap is empty.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
@@ -435,7 +435,7 @@ pub trait KeyValueMembershipAssertion<K, V>
             S: Debug + ?Sized + Eq;
 }
 
-impl<K, V> NoMembershipAssertion<K, V> for HashMap<K, V>
+impl<K, V> NoMembershipAssertion for HashMap<K, V>
     where
         K: Hash + Eq,
 {

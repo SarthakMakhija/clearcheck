@@ -11,7 +11,7 @@ use crate::matchers::range::{have_length_in_exclusive_range, have_length_in_incl
 
 impl<K, V> SizeAssertion for HashMap<K, V>
     where
-        K: Hash + Eq + PartialEq,
+        K: Hash + Eq
 {
     fn should_have_size(&self, size: usize) -> &Self {
         self.should(&have_same_length(size));
