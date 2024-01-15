@@ -555,12 +555,12 @@ fn be_a_valid_password<T: AsRef<str> + Debug>() -> Matchers<T> {
 ```
 
 The matcher enforces the following:
-- Must not be empty.
-- Must have a minimum length of 10 characters.
-- Must contain at least one digit.
-- Must contain any of the following characters: '@', '#'.
-- Must not begin with the string "pass" (case-insensitive).
-- Must not contain the strings "pass" or "word" (case-insensitive).
+- Input must not be empty.
+- Input must have a minimum length of 10 characters.
+- Input must contain at least one digit.
+- Input must contain any of the following characters: '@', '#'.
+- Input must not begin with the string "pass" (case-insensitive).
+- Input must not contain the strings "pass" or "word" (case-insensitive).
 
 Let's combine it into a powerful assertion for valid passwords.
 
