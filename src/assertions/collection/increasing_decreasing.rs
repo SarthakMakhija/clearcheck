@@ -4,7 +4,7 @@ use crate::matchers::collection::increasing_decreasing::{
 };
 use crate::matchers::Should;
 
-///IncreasingDecreasingAssertion enables assertions about the order of elements within a collection.
+/// IncreasingDecreasingAssertion enables assertions about the order of elements within a collection.
 pub trait IncreasingDecreasingAssertion<T>
 where
     T: PartialOrd
@@ -36,7 +36,7 @@ where
     fn should_be_monotonically_decreasing(&self) -> &Self;
 
     /// - Asserts that the elements in the collection are in strictly increasing order (no consecutive elements can be equal).
-    /// - An empty collection is considered monotonically increasing.
+    /// - An empty collection is considered strictly increasing.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example
@@ -49,7 +49,7 @@ where
     fn should_be_strictly_increasing(&self) -> &Self;
 
     /// - Asserts that the elements in the collection are in strictly decreasing order (no consecutive elements can be equal).
-    /// - An empty collection is considered monotonically increasing.
+    /// - An empty collection is considered strictly decreasing.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
     /// # Example

@@ -1,7 +1,7 @@
 use crate::matchers::collection::bound::{have_lower_bound, have_upper_bound};
 use crate::matchers::Should;
 
-//BoundAssertion enables assertions about the expected bounds on elements within a collection.
+/// BoundAssertion enables assertions about the expected bounds on elements within a collection.
 pub trait BoundAssertion<T>
 where
     T: PartialOrd

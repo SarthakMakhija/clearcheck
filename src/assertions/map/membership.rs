@@ -1,3 +1,5 @@
+//! Membership related assertions enable assertions about the presence or the absence of keys, values or key/value pairs in a HashMap.
+
 use std::borrow::Borrow;
 use std::collections::HashMap;
 use std::fmt::Debug;

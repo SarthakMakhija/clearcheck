@@ -4,7 +4,7 @@ use std::fmt::Debug;
 use crate::matchers::{Should, ShouldNot};
 use crate::matchers::equal::equal;
 
-/// IgnoreCaseEqualityAssertion enables assertions about the equality of two values of type T: Eq.
+/// EqualityAssertion enables assertions about the equality of two values of type T: Eq.
 pub trait EqualityAssertion<T: Eq> {
     /// - Asserts that the value held by self is equal to other.
     /// - Returns a reference to self for fluent chaining.

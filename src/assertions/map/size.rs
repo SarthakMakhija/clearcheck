@@ -1,3 +1,21 @@
+//! SizeAssertion enables assertions about the size of the HashMap.
+//!
+//! It offers a fluent interface for chaining multiple assertions.
+//!
+//! # Example
+//! ```rust
+//! use std::collections::HashMap;
+//! use clearcheck::assertions::collection::size::SizeAssertion;
+//!
+//! let mut key_value = HashMap::new();
+//! key_value.insert("rust", "assert");
+//!
+//! key_value.should_have_at_least_size(1)
+//!          .should_have_size_in_inclusive_range(1..=5);
+//! ```
+//!
+//! Refer to the trait [SizeAssertion].
+
 use std::collections::HashMap;
 use std::hash::Hash;
 use std::ops::{Range, RangeInclusive};

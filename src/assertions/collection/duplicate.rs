@@ -3,7 +3,7 @@ use std::fmt::Debug;
 use crate::matchers::collection::duplicate::contain_duplicates;
 use crate::matchers::{Should, ShouldNot};
 
-//DuplicateContentAssertion enables assertions about whether a collection contains duplicate elements.
+/// DuplicateContentAssertion enables assertions about whether a collection contains duplicate elements.
 pub trait DuplicateContentAssertion<T: Eq> {
     /// - Asserts that the collection contains atleast one duplicate element.
     /// - Returns a reference to self for fluent chaining.
