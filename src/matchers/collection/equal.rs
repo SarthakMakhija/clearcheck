@@ -1,3 +1,5 @@
+//! provides [IgnoreCaseEqualityMatcher] for collection of elements where the elements can be represented as strings.
+
 use std::collections::HashSet;
 use std::fmt::Debug;
 

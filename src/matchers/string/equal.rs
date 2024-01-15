@@ -1,3 +1,5 @@
+//! provides [IgnoreCaseEqualityMatcher] for &str.
+
 use crate::matchers::equal::IgnoreCaseEqualityMatcher;
 use crate::matchers::{Matcher, MatcherResult};
 

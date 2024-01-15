@@ -1,13 +1,4 @@
-//! equal module provides [IgnoreCaseEqualityMatcher] which offers a flexible way to assert the equality between two values of same type, ignoring case differences.
-//!
-//! # Example
-//!```
-//! use clearcheck::matchers::equal::be_equal_ignoring_case;
-//! use clearcheck::matchers::Matcher;
-//!
-//! let matcher = be_equal_ignoring_case('d');
-//! assert!(matcher.test(&'D').passed());
-//! ```
+//! provides [IgnoreCaseEqualityMatcher] for char.
 
 use crate::matchers::equal::IgnoreCaseEqualityMatcher;
 use crate::matchers::{Matcher, MatcherResult};
