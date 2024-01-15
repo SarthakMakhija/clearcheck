@@ -4,7 +4,7 @@ use crate::matchers::Should;
 //BoundAssertion enables assertions about the expected bounds on elements within a collection.
 pub trait BoundAssertion<T>
 where
-    T: PartialOrd + std::fmt::Debug,
+    T: PartialOrd
 {
     /// - Asserts that all elements in the collection are less than or equal to the given element.
     /// - Returns a reference to self for fluent chaining.

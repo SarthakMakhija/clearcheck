@@ -8,7 +8,7 @@ use crate::matchers::collection::membership::{contain, contain_all, contain_any}
 /// MembershipAssertion enables assertions about the presence or the absence of elements in a collection.
 pub trait MembershipAssertion<T>
 where
-    T: Eq + Debug,
+    T: Eq
 {
     /// - Asserts that the collection contains the given element.
     /// - Supports flexible comparison through the `Borrow<Q>` trait bound.

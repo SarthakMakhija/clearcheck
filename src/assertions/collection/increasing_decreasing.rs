@@ -7,7 +7,7 @@ use crate::matchers::Should;
 ///IncreasingDecreasingAssertion enables assertions about the order of elements within a collection.
 pub trait IncreasingDecreasingAssertion<T>
 where
-    T: PartialOrd + std::fmt::Debug,
+    T: PartialOrd
 {
     /// - Asserts that the elements in the collection are in non-decreasing order (allowing consecutive equal elements).
     /// - An empty collection is considered monotonically increasing.

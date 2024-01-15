@@ -4,7 +4,7 @@ use crate::matchers::collection::duplicate::contain_duplicates;
 use crate::matchers::{Should, ShouldNot};
 
 //DuplicateContentAssertion enables assertions about whether a collection contains duplicate elements.
-pub trait DuplicateContentAssertion {
+pub trait DuplicateContentAssertion<T: Eq> {
     /// - Asserts that the collection contains atleast one duplicate element.
     /// - Returns a reference to self for fluent chaining.
     /// - Panics if the assertion fails.
@@ -30,7 +30,7 @@ pub trait DuplicateContentAssertion {
     fn should_not_contain_duplicates(&self) -> &Self;
 }
 
-impl<T> DuplicateContentAssertion for Vec<T>
+impl<T> DuplicateContentAssertion<T> for Vec<T>
 where
     T: Debug,
     T: Eq,
@@ -46,7 +46,7 @@ where
     }
 }
 
-impl<T, const N: usize> DuplicateContentAssertion for [T; N]
+impl<T, const N: usize> DuplicateContentAssertion<T> for [T; N]
 where
     T: Debug,
     T: Eq,
@@ -62,7 +62,7 @@ where
     }
 }
 
-impl<T> DuplicateContentAssertion for [T]
+impl<T> DuplicateContentAssertion<T> for [T]
 where
     T: Debug,
     T: Eq,
