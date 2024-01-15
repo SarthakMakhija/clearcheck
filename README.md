@@ -60,7 +60,7 @@
 
 ### Introducing clearcheck
 
-Write expressive and readable assertions with ease!  
+Write expressive and elagant assertions with ease!  
 
 **clearcheck** is designed to make assertion statements as clear and concise as possible. It allows chaining multiple assertions together for a fluent and intuitive syntax, leading to more self-documenting test cases.
 
