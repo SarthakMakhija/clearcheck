@@ -2,7 +2,7 @@ use std::borrow::Borrow;
 use std::fmt::Debug;
 
 use crate::matchers::{Should, ShouldNot};
-use crate::matchers::equal::equal;
+use crate::matchers::equal::be_equal;
 
 /// EqualityAssertion enables assertions about the equality of two values of type T: Eq.
 pub trait EqualityAssertion<T: Eq> {
@@ -66,7 +66,7 @@ impl<T: Eq + Debug> EqualityAssertion<T> for T {
             T: Borrow<Q>,
             Q: Eq + Debug + ?Sized,
     {
-        self.borrow().should(&equal(other));
+        self.borrow().should(&be_equal(other));
         self
     }
 
@@ -75,7 +75,7 @@ impl<T: Eq + Debug> EqualityAssertion<T> for T {
             T: Borrow<Q>,
             Q: Eq + Debug + ?Sized,
     {
-        self.borrow().should_not(&equal(other));
+        self.borrow().should_not(&be_equal(other));
         self
     }
 }

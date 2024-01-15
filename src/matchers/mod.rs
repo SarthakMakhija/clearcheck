@@ -76,7 +76,7 @@ pub trait Matcher<T> {
     fn test(&self, value: &T) -> MatcherResult;
 }
 
-/// BoxWrap provides a boxed method to wrap a Matcher into Box object.
+/// BoxWrap provides a `boxed` method to wrap a Matcher into Box object.
 ///
 /// It is used to compose matchers in [`crate::matchers::compose::Matchers`].
 ///
