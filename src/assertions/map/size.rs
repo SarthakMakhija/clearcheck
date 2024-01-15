@@ -1,19 +1,17 @@
 use std::collections::HashMap;
-use std::fmt::Debug;
 use std::hash::Hash;
 use std::ops::{Range, RangeInclusive};
 
 use crate::assertions::collection::size::SizeAssertion;
+use crate::matchers::{Should, ShouldNot};
 use crate::matchers::map::length::{
     have_atleast_same_length, have_atmost_same_length, have_same_length,
 };
 use crate::matchers::range::{have_length_in_exclusive_range, have_length_in_inclusive_range};
-use crate::matchers::{Should, ShouldNot};
 
 impl<K, V> SizeAssertion for HashMap<K, V>
-where
-    K: Hash + Eq + PartialEq + Debug,
-    V: Debug,
+    where
+        K: Hash + Eq + PartialEq,
 {
     fn should_have_size(&self, size: usize) -> &Self {
         self.should(&have_same_length(size));
