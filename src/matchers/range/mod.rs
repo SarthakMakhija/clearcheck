@@ -17,7 +17,7 @@ use crate::matchers::{Matcher, MatcherResult};
 /// let matcher = be_in_inclusive_range(1..=4);
 /// assert!(matcher.test(&2).passed());
 /// ```
-pub enum RangeMatcher<T: Debug + PartialOrd> {
+pub enum RangeMatcher<T: PartialOrd> {
     Closed(&'static str, RangeInclusive<T>),
     HalfOpen(&'static str, Range<T>),
 }
