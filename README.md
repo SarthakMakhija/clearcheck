@@ -76,11 +76,15 @@ pass_phrase.should_not_be_empty()
 
 ### Key features:
 
-- **Fluent API**: Chain assertions for a natural and readable experience.
-- **Extensive assertions**: Variety of assertions covering common validation needs.
-- **Customizable**: Extend with your own assertions for specific domain requirements.
-- **Type-safe**: Built with Rust's type system for reliable and expressive assertions.
-- **Custom assertions**: Craft assertions tailored to your exact needs, ensuring comprehensive validations for various data structures.
+&#x1F539;  **Fluent API**: Chain assertions for a natural and readable experience.
+
+&#x1F539;  **Extensive assertions**: Variety of assertions covering common validation needs.
+
+&#x1F539;  **Customizable**: Extend with your own assertions for specific domain requirements.
+
+&#x1F539;  **Type-safe**: Built with Rust's type system for reliable and expressive assertions.
+
+&#x1F539;  **Custom assertions**: Craft assertions tailored to your exact needs, ensuring comprehensive validations for various data structures.
 
 ### Usage
 
