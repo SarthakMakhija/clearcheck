@@ -9,24 +9,6 @@ use walkdir::WalkDir;
 use crate::matchers::{Matcher, MatcherResult};
 
 /// FileTypeMatcher offers a flexible way to make assertions about various file type properties like: regular file, directory, symbolic link etc.
-///
-/// # Example
-///```
-/// use std::fs::File;
-/// use tempdir::TempDir;
-/// use clearcheck::matchers::file::contain_file_name;
-/// use clearcheck::matchers::Matcher;
-///
-/// let temporary_directory = TempDir::new(".").unwrap();
-/// let file_path = temporary_directory.path().join("clearcheck.txt");
-///
-/// let _ = File::create(file_path).unwrap();
-///
-/// let directory_path = temporary_directory.path();
-/// let matcher = contain_file_name("clearcheck.txt");
-///
-/// assert!(matcher.test(&directory_path).passed());
-/// ```
 pub enum FileTypeMatcher {
     File,
     Directory,
@@ -44,6 +26,23 @@ pub enum FilePathMatcher {
 }
 
 /// TreeMatcher offers a flexible way to make assertions about presence or absence of files or directories within a tree structure.
+/// # Example
+///```
+/// use std::fs::File;
+/// use tempdir::TempDir;
+/// use clearcheck::matchers::file::contain_file_name;
+/// use clearcheck::matchers::Matcher;
+///
+/// let temporary_directory = TempDir::new(".").unwrap();
+/// let file_path = temporary_directory.path().join("clearcheck.txt");
+///
+/// let _ = File::create(file_path).unwrap();
+///
+/// let directory_path = temporary_directory.path();
+/// let matcher = contain_file_name("clearcheck.txt");
+///
+/// assert!(matcher.test(&directory_path).passed());
+/// ```
 pub enum TreeMatcher {
     Contain(&'static str),
     ContainAll(Vec<&'static str>),

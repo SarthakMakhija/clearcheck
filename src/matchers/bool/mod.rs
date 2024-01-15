@@ -4,7 +4,7 @@ use crate::matchers::{Matcher, MatcherResult};
 ///
 /// # Example
 ///```
-/// use clearcheck::matchers::bool::{be_true, TrueFalseMatcher};
+/// use clearcheck::matchers::bool::be_true;
 /// use clearcheck::matchers::Matcher;
 ///
 /// let matcher = be_true();
