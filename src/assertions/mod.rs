@@ -2,7 +2,7 @@
 //! They act as a contract, ensuring that each data type (/data structure) adheres to its intended behavior.
 //! clearcheck provides plethora of ready-made assertions.
 //!
-//! Let's take an example of collection assertions.
+//! Let's take an example.
 //!
 //! ```rust
 //! use clearcheck::assertions::collection::duplicate::DuplicateContentAssertion;

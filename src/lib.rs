@@ -102,7 +102,7 @@
 //!     }
 //! }
 //!
-//! //3. Time to put our password assertion to use.
+//! //3. That's it. Use the password assertion.
 //! #[test]
 //! fn should_be_a_valid_password() {
 //!     let password = "P@@sw0rd9082";
