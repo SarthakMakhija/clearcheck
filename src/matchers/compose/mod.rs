@@ -380,21 +380,28 @@ mod custom_collection_matchers_tests {
     use crate::matchers::collection::empty::be_empty;
     use crate::matchers::collection::length::have_atleast_same_length;
     use crate::matchers::collection::membership::contain_all;
+    use crate::matchers::collection::predicate::satisfy_for_all;
     use crate::matchers::collection::sort::be_sorted_ascending;
     use crate::matchers::compose::{Matchers, MatchersBuilder};
 
     #[derive(Debug, Eq, PartialEq, PartialOrd)]
     enum LaptopBrands {
-        Apple,
-        Asus,
-        Dell,
-        Lenovo,
+        Apple(Processor),
+        Asus(Processor),
+        Dell(Processor),
+        Lenovo(Processor),
     }
 
-    fn be_valid_laptop_brands(all: Vec<LaptopBrands>) -> Matchers<Vec<LaptopBrands>> {
+    #[derive(Debug, Eq, PartialEq, PartialOrd)]
+    enum Processor {
+        Intel,
+        AMD,
+    }
+
+    fn be_valid_laptop_brands() -> Matchers<Vec<LaptopBrands>> {
         let empty = be_empty();
         let size = have_atleast_same_length(3);
-        let contain_all = contain_all(all);
+        let contain_all = contain_all(vec![LaptopBrands::Dell(Processor::Intel)]);
         let sorted = be_sorted_ascending();
 
         MatchersBuilder::<Vec<LaptopBrands>>::start_building_with_inverted(empty.boxed())
@@ -404,27 +411,83 @@ mod custom_collection_matchers_tests {
             .combine_as_and()
     }
 
+    fn be_intel_laptop_brands() -> Matchers<Vec<LaptopBrands>> {
+        let empty = be_empty();
+        let size = have_atleast_same_length(3);
+        let sorted = be_sorted_ascending();
+        let satisfy_all = satisfy_for_all(|brand| match brand {
+            LaptopBrands::Apple(processor) |
+            LaptopBrands::Asus(processor) |
+            LaptopBrands::Dell(processor) |
+            LaptopBrands::Lenovo(processor) => *processor == Processor::Intel,
+        });
+
+        MatchersBuilder::<Vec<LaptopBrands>>::start_building_with_inverted(empty.boxed())
+            .push(size.boxed())
+            .push(satisfy_all.boxed())
+            .push(sorted.boxed())
+            .combine_as_and()
+    }
+
     trait LaptopAssertion {
         fn should_be_valid_laptop_brands(&self) -> &Self;
+        fn should_be_intel_laptop_brands(&self) -> &Self;
     }
 
     impl LaptopAssertion for Vec<LaptopBrands> {
         fn should_be_valid_laptop_brands(&self) -> &Self {
-            self.should(&be_valid_laptop_brands(vec![LaptopBrands::Dell]));
+            self.should(&be_valid_laptop_brands());
+            self
+        }
+
+        fn should_be_intel_laptop_brands(&self) -> &Self {
+            self.should(&be_intel_laptop_brands());
             self
         }
     }
 
     #[test]
     fn should_be_a_valid_collection_of_laptop_brands() {
-        let brands = vec![LaptopBrands::Apple, LaptopBrands::Asus, LaptopBrands::Dell, LaptopBrands::Lenovo];
+        let brands = vec![
+            LaptopBrands::Apple(Processor::Intel),
+            LaptopBrands::Asus(Processor::AMD),
+            LaptopBrands::Dell(Processor::Intel),
+            LaptopBrands::Lenovo(Processor::Intel),
+        ];
         brands.should_be_valid_laptop_brands();
     }
 
     #[test]
     #[should_panic]
-    fn should_not_be_a_valid_collection_of_laptop_brands() {
-        let brands = vec![LaptopBrands::Apple, LaptopBrands::Asus, LaptopBrands::Lenovo];
+    fn should_be_a_valid_collection_of_laptop_brands_but_was_not() {
+        let brands = vec![
+            LaptopBrands::Apple(Processor::Intel),
+            LaptopBrands::Asus(Processor::Intel),
+            LaptopBrands::Lenovo(Processor::Intel),
+        ];
         brands.should_be_valid_laptop_brands();
+    }
+
+    #[test]
+    fn should_be_an_intel_collection_of_laptop_brands() {
+        let brands = vec![
+            LaptopBrands::Apple(Processor::Intel),
+            LaptopBrands::Asus(Processor::Intel),
+            LaptopBrands::Dell(Processor::Intel),
+            LaptopBrands::Lenovo(Processor::Intel),
+        ];
+        brands.should_be_intel_laptop_brands();
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_be_an_intel_collection_of_laptop_brands_but_was_not() {
+        let brands = vec![
+            LaptopBrands::Apple(Processor::Intel),
+            LaptopBrands::Asus(Processor::AMD),
+            LaptopBrands::Dell(Processor::Intel),
+            LaptopBrands::Lenovo(Processor::Intel),
+        ];
+        brands.should_be_intel_laptop_brands();
     }
 }
