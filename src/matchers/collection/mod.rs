@@ -7,3 +7,4 @@ pub mod length;
 pub mod membership;
 pub mod sort;
 pub mod predicate;
+pub mod min_max;
