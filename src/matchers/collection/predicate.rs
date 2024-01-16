@@ -63,7 +63,7 @@ impl<F, T> Matcher<&[T]> for PredicateMatcher<F, T>
     }
 }
 
-pub fn satisfy_any<F, T>(predicate: F) -> PredicateMatcher<F, T>
+pub fn satisfy_for_any<F, T>(predicate: F) -> PredicateMatcher<F, T>
     where
         F: Fn(&T) -> bool,
         T: Eq + Debug,
@@ -71,7 +71,7 @@ pub fn satisfy_any<F, T>(predicate: F) -> PredicateMatcher<F, T>
     PredicateMatcher::SatisfyAny(predicate, PhantomData)
 }
 
-pub fn satisfy_all<F, T>(predicate: F) -> PredicateMatcher<F, T>
+pub fn satisfy_for_all<F, T>(predicate: F) -> PredicateMatcher<F, T>
     where
         F: Fn(&T) -> bool,
         T: Eq + Debug,
@@ -82,34 +82,34 @@ pub fn satisfy_all<F, T>(predicate: F) -> PredicateMatcher<F, T>
 #[cfg(test)]
 mod tests {
     use crate::assertions::bool::TrueFalseAssertion;
-    use crate::matchers::collection::predicate::{satisfy_all, satisfy_any};
+    use crate::matchers::collection::predicate::{satisfy_for_all, satisfy_for_any};
 
     #[test]
-    fn should_satisfy_any() {
+    fn should_satisfy_for_any() {
         let collection = vec!["junit", "testify", "xunit"];
-        let matcher = satisfy_any(|element: &&str| element.len() > 6);
+        let matcher = satisfy_for_any(|element: &&str| element.len() > 6);
         matcher.test(&collection).passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
-    fn should_satisfy_any_but_id_did_not() {
+    fn should_satisfy_for_any_but_id_did_not() {
         let collection = vec!["unit4j", "testify"];
-        let matcher = satisfy_any(|element: &&str| element.starts_with("clear"));
+        let matcher = satisfy_for_any(|element: &&str| element.starts_with("clear"));
         matcher.test(&collection).passed.should_be_true();
     }
     #[test]
-    fn should_satisfy_all() {
+    fn should_satisfy_for_all() {
         let collection = vec!["junit", "testify"];
-        let matcher = satisfy_all(|element: &&str| element.len() > 3);
+        let matcher = satisfy_for_all(|element: &&str| element.len() > 3);
         matcher.test(&collection).passed.should_be_true();
     }
 
     #[test]
     #[should_panic]
-    fn should_satisfy_all_but_id_did_not() {
+    fn should_satisfy_for_all_but_id_did_not() {
         let collection = vec!["unit4j", "testify"];
-        let matcher = satisfy_all(|element: &&str| element.starts_with("clear"));
+        let matcher = satisfy_for_all(|element: &&str| element.starts_with("clear"));
         matcher.test(&collection).passed.should_be_true();
     }
 }

@@ -5,3 +5,4 @@ pub mod increasing_decreasing;
 pub mod membership;
 pub mod size;
 pub mod sort;
+pub mod predicate;
