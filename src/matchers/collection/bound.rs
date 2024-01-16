@@ -6,7 +6,7 @@ use crate::matchers::{Matcher, MatcherResult};
 ///
 /// Works with any data type that implements the PartialOrd trait.
 ///
-/// clearcheck implements BoundMatcher for collection types including vector, arrays and slices.
+/// clearcheck implements BoundMatcher for collection types including vector, arrays and reference to slices.
 ///
 /// # Example
 ///```

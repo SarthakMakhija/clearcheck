@@ -6,7 +6,7 @@ use crate::matchers::{Matcher, MatcherResult};
 ///
 /// Works with any data type that implements the Eq and Debug trait.
 ///
-/// clearcheck implements MembershipMatcher for collection types including vector, arrays and slices.
+/// clearcheck implements MembershipMatcher for collection types including vector, arrays and reference to slices.
 ///
 /// # Example
 ///```

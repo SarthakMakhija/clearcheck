@@ -4,7 +4,7 @@ use crate::matchers::{Matcher, MatcherResult};
 
 /// DuplicateContentMatcher offers a flexible way to assert whether a collection contains any duplicates.
 ///
-/// clearcheck implements DuplicateContentMatcher for collection types including vector, arrays and slices.
+/// clearcheck implements DuplicateContentMatcher for collection types including vector, arrays and reference to slices.
 ///
 /// # Example
 ///```

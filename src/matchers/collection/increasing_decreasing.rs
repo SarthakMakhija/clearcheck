@@ -4,7 +4,7 @@ use crate::matchers::{Matcher, MatcherResult};
 
 /// OrderedMatcher offers a flexible way to assert whether a sequence of values exhibits a specific pattern of increasing or decreasing behavior.
 ///
-/// clearcheck implements OrderedMatcher for collection types including vector, arrays and slices.
+/// clearcheck implements OrderedMatcher for collection types including vector, arrays and reference to slices.
 ///
 /// # Example
 ///```

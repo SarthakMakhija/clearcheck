@@ -2,7 +2,7 @@ use crate::matchers::{Matcher, MatcherResult};
 
 /// CollectionEmptyMatcher offers a flexible way to assert whether a collection is empty.
 ///
-/// clearcheck implements CollectionEmptyMatcher for collection types including vector, arrays and slices.
+/// clearcheck implements CollectionEmptyMatcher for collection types including vector, arrays and reference to slices.
 ///
 /// # Example
 ///```

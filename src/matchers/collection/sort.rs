@@ -4,7 +4,7 @@ use crate::matchers::{Matcher, MatcherResult};
 
 /// SortMatcher offers a flexible way to assert whether a collection is sorted in ascending or descending order.
 ///
-/// clearcheck implements SortMatcher for collection types including vector, arrays and slices.
+/// clearcheck implements SortMatcher for collection types including vector, arrays and reference to slices.
 ///
 /// # Example
 ///```

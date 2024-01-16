@@ -2,7 +2,7 @@ use crate::matchers::{Matcher, MatcherResult};
 
 /// CollectionLengthMatcher offers a flexible way to assert various length properties of collections.
 ///
-/// clearcheck implements CollectionLengthMatcher for collection types including vector, arrays and slices.
+/// clearcheck implements CollectionLengthMatcher for collection types including vector, arrays and reference to slices.
 ///
 /// # Example
 ///```
