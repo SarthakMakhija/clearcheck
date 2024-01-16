@@ -395,7 +395,7 @@ mod custom_collection_matchers_tests {
     #[derive(Debug, Eq, PartialEq, PartialOrd)]
     enum Processor {
         Intel,
-        AMD,
+        Apple,
     }
 
     fn be_valid_laptop_brands() -> Matchers<Vec<LaptopBrands>> {
@@ -450,7 +450,7 @@ mod custom_collection_matchers_tests {
     fn should_be_a_valid_collection_of_laptop_brands() {
         let brands = vec![
             LaptopBrands::Apple(Processor::Intel),
-            LaptopBrands::Asus(Processor::AMD),
+            LaptopBrands::Asus(Processor::Apple),
             LaptopBrands::Dell(Processor::Intel),
             LaptopBrands::Lenovo(Processor::Intel),
         ];
@@ -484,7 +484,7 @@ mod custom_collection_matchers_tests {
     fn should_be_an_intel_collection_of_laptop_brands_but_was_not() {
         let brands = vec![
             LaptopBrands::Apple(Processor::Intel),
-            LaptopBrands::Asus(Processor::AMD),
+            LaptopBrands::Asus(Processor::Apple),
             LaptopBrands::Dell(Processor::Intel),
             LaptopBrands::Lenovo(Processor::Intel),
         ];
