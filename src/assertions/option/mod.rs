@@ -1,3 +1,5 @@
+pub mod predicate;
+
 use std::fmt::Debug;
 
 use crate::matchers::option::{be_none, be_some};

@@ -1,5 +1,7 @@
 use crate::matchers::{Matcher, MatcherResult};
 
+pub mod predicate;
+
 /// SomeNoneMatcher provides a way to assert whether [`Option`] values evaluate to Some or None.
 ///
 /// # Example
