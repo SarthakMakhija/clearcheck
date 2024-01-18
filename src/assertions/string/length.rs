@@ -1,10 +1,10 @@
 use std::ops::{Range, RangeInclusive};
 
+use crate::matchers::{Should, ShouldNot};
+use crate::matchers::range::{have_length_in_exclusive_range, have_length_in_inclusive_range};
 use crate::matchers::string::length::{
     have_atleast_same_length, have_atmost_same_length, have_same_length,
 };
-use crate::matchers::range::{have_length_in_exclusive_range, have_length_in_inclusive_range};
-use crate::matchers::{Should, ShouldNot};
 
 /// LengthAssertion enables assertions about the length of string (or str) values.
 ///
@@ -122,49 +122,8 @@ pub trait LengthAssertion {
     fn should_not_have_length_in_exclusive_range(&self, range: Range<usize>) -> &Self;
 }
 
-impl LengthAssertion for String {
-    fn should_have_length(&self, length: usize) -> &Self {
-        (self as &str).should_have_length(length);
-        self
-    }
-
-    fn should_not_have_length(&self, length: usize) -> &Self {
-        (self as &str).should_not_have_length(length);
-        self
-    }
-
-    fn should_have_at_least_length(&self, length: usize) -> &Self {
-        (self as &str).should_have_at_least_length(length);
-        self
-    }
-
-    fn should_have_at_most_length(&self, length: usize) -> &Self {
-        (self as &str).should_have_at_most_length(length);
-        self
-    }
-
-    fn should_have_length_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
-        (self as &str).should_have_length_in_inclusive_range(range);
-        self
-    }
-
-    fn should_not_have_length_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
-        (self as &str).should_not_have_length_in_inclusive_range(range);
-        self
-    }
-
-    fn should_have_length_in_exclusive_range(&self, range: Range<usize>) -> &Self {
-        (self as &str).should_have_length_in_exclusive_range(range);
-        self
-    }
-
-    fn should_not_have_length_in_exclusive_range(&self, range: Range<usize>) -> &Self {
-        (self as &str).should_not_have_length_in_exclusive_range(range);
-        self
-    }
-}
-
-impl LengthAssertion for &str {
+impl<T> LengthAssertion for T
+    where T: AsRef<str> {
     fn should_have_length(&self, length: usize) -> &Self {
         self.should(&have_same_length(length));
         self
@@ -186,23 +145,23 @@ impl LengthAssertion for &str {
     }
 
     fn should_have_length_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
-        self.len().should(&have_length_in_inclusive_range(range));
+        self.as_ref().len().should(&have_length_in_inclusive_range(range));
         self
     }
 
     fn should_not_have_length_in_inclusive_range(&self, range: RangeInclusive<usize>) -> &Self {
-        self.len()
+        self.as_ref().len()
             .should_not(&have_length_in_inclusive_range(range));
         self
     }
 
     fn should_have_length_in_exclusive_range(&self, range: Range<usize>) -> &Self {
-        self.len().should(&have_length_in_exclusive_range(range));
+        self.as_ref().len().should(&have_length_in_exclusive_range(range));
         self
     }
 
     fn should_not_have_length_in_exclusive_range(&self, range: Range<usize>) -> &Self {
-        self.len()
+        self.as_ref().len()
             .should_not(&have_length_in_exclusive_range(range));
         self
     }
