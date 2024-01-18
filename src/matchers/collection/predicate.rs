@@ -3,6 +3,20 @@ use std::marker::PhantomData;
 
 use crate::matchers::{Matcher, MatcherResult};
 
+/// PredicateMatcher offers a flexible way to assert whether the elements in a collection satisfy the given predicate.
+///
+/// clearcheck implements PredicateMatcher for collection types including vector, arrays and reference to slices.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::collection::predicate::satisfy_for_any;
+/// use clearcheck::matchers::Matcher;
+///
+/// let collection = vec!["junit", "testify", "xunit"];
+/// let matcher = satisfy_for_any(|element: &&str| element.len() > 6);
+///
+/// assert!(matcher.test(&collection).passed());
+/// ```
 pub enum PredicateMatcher<F, T>
     where F: Fn(&T) -> bool,
           T: Eq
@@ -63,6 +77,7 @@ impl<F, T> Matcher<&[T]> for PredicateMatcher<F, T>
     }
 }
 
+/// Creates a PredicateMatcher that asserts whether any of the elements in a collection satisfy the given predicate.
 pub fn satisfy_for_any<F, T>(predicate: F) -> PredicateMatcher<F, T>
     where
         F: Fn(&T) -> bool,
@@ -71,6 +86,7 @@ pub fn satisfy_for_any<F, T>(predicate: F) -> PredicateMatcher<F, T>
     PredicateMatcher::SatisfyAny(predicate, PhantomData)
 }
 
+/// Creates a PredicateMatcher that asserts whether all the elements in a collection satisfy the given predicate.
 pub fn satisfy_for_all<F, T>(predicate: F) -> PredicateMatcher<F, T>
     where
         F: Fn(&T) -> bool,

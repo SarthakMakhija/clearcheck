@@ -3,22 +3,63 @@ use std::fmt::Debug;
 use crate::matchers::{Should, ShouldNot};
 use crate::matchers::collection::predicate::{satisfy_for_all, satisfy_for_any};
 
+/// PredicateAssertion enables assertions about whether the elements in a collection satisfy the given predicate.
 pub trait PredicateAssertion<T>
     where
         T: Eq
 {
+    /// - Asserts that all the elements in the collection satisfy the given predicate.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::predicate::PredicateAssertion;
+    ///
+    /// let collection = vec!["clearcheck-1", "junit-2", "assert-3"];
+    /// collection.should_satisfy_for_all(|element| element.chars().any(|ch| ch.is_numeric()));
+    /// ```
     fn should_satisfy_for_all<F>(&self, predicate: F) -> &Self
         where
             F: Fn(&T) -> bool;
 
+    /// - Asserts that not all the elements in the collection satisfy the given predicate.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::predicate::PredicateAssertion;
+    ///
+    /// let collection = vec!["clearcheck", "junit-2", "assert-3"];
+    /// collection.should_not_satisfy_for_all(|element| element.chars().any(|ch| ch.is_numeric()));
+    /// ```
     fn should_not_satisfy_for_all<F>(&self, predicate: F) -> &Self
         where
             F: Fn(&T) -> bool;
 
+    /// - Asserts that any of the elements in the collection satisfy the given predicate.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::predicate::PredicateAssertion;
+    ///
+    /// let collection = vec!["clearcheck", "junit-1", "assert"];
+    /// collection.should_satisfy_for_any(|element| element.chars().any(|ch| ch.is_numeric()));
+    /// ```
     fn should_satisfy_for_any<F>(&self, predicate: F) -> &Self
         where
             F: Fn(&T) -> bool;
 
+    /// - Asserts that none of the elements in the collection satisfy the given predicate.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::collection::predicate::PredicateAssertion;
+    ///
+    /// let collection = vec!["clearcheck", "junit", "assert"];
+    /// collection.should_not_satisfy_for_any(|element| element.chars().any(|ch| ch.is_numeric()));
+    /// ```
     fn should_not_satisfy_for_any<F>(&self, predicate: F) -> &Self
         where
             F: Fn(&T) -> bool;
