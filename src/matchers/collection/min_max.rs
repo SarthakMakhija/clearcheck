@@ -3,6 +3,20 @@ use std::ops::{Range, RangeInclusive};
 
 use crate::matchers::{Matcher, MatcherResult};
 
+/// MembershipMatcher offers a flexible way for verifying the minimum and maximum values within a collection.
+///
+/// clearcheck implements MembershipMatcher for collection types including vector, arrays and reference to slices.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::collection::min_max::have_min_in_inclusive_range;
+/// use clearcheck::matchers::Matcher;
+///
+/// let collection = vec!["assert", "clearcheck", "junit"];
+/// let matcher = have_min_in_inclusive_range("assert"..="junit");
+///
+/// assert!(matcher.test(&collection).passed());
+/// ```
 pub enum MinMaxMatcher<T: Ord> {
     Min(T),
     Max(T),
@@ -67,26 +81,32 @@ impl<T: Ord + Debug> Matcher<&[T]> for MinMaxMatcher<T> {
     }
 }
 
+/// Creates a MinMaxMatcher that asserts whether the minimum value in the underlying collection equals the given minimum value.
 pub fn have_min<T: Ord>(min: T) -> MinMaxMatcher<T> {
     MinMaxMatcher::Min(min)
 }
 
+/// Creates a MinMaxMatcher that asserts whether the maximum value in the underlying collection equals the given maximum value.
 pub fn have_max<T: Ord>(max: T) -> MinMaxMatcher<T> {
     MinMaxMatcher::Max(max)
 }
 
+/// Creates a MinMaxMatcher that asserts whether the minimum value in the underlying collection falls within the given inclusive range.
 pub fn have_min_in_inclusive_range<T: Ord>(range: RangeInclusive<T>) -> MinMaxMatcher<T> {
     MinMaxMatcher::MinInInclusiveRange(range)
 }
 
+/// Creates a MinMaxMatcher that asserts whether the minimum value in the underlying collection falls within the given exclusive range.
 pub fn have_min_in_exclusive_range<T: Ord>(range: Range<T>) -> MinMaxMatcher<T> {
     MinMaxMatcher::MinInExclusiveRange(range)
 }
 
+/// Creates a MinMaxMatcher that asserts whether the maximum value in the underlying collection falls within the given inclusive range.
 pub fn have_max_in_inclusive_range<T: Ord>(range: RangeInclusive<T>) -> MinMaxMatcher<T> {
     MinMaxMatcher::MaxInInclusiveRange(range)
 }
 
+/// Creates a MinMaxMatcher that asserts whether the maximum value in the underlying collection falls within the given exclusive range.
 pub fn have_max_in_exclusive_range<T: Ord>(range: Range<T>) -> MinMaxMatcher<T> {
     MinMaxMatcher::MaxInExclusiveRange(range)
 }
