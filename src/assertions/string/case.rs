@@ -1,5 +1,5 @@
-use crate::matchers::string::case::{be_lowercase, be_uppercase};
 use crate::matchers::Should;
+use crate::matchers::string::case::{be_lowercase, be_uppercase};
 
 /// CaseAssertion enables assertions about whether a string (or str) is lowercase or uppercase.
 pub trait CaseAssertion {
@@ -28,19 +28,8 @@ pub trait CaseAssertion {
     fn should_be_upper_case(&self) -> &Self;
 }
 
-impl CaseAssertion for String {
-    fn should_be_lower_case(&self) -> &Self {
-        (self as &str).should_be_lower_case();
-        self
-    }
-
-    fn should_be_upper_case(&self) -> &Self {
-        (self as &str).should_be_upper_case();
-        self
-    }
-}
-
-impl CaseAssertion for &str {
+impl<T> CaseAssertion for T
+    where T: AsRef<str> + PartialEq {
     fn should_be_lower_case(&self) -> &Self {
         self.should(&be_lowercase());
         self
