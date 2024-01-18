@@ -1,7 +1,7 @@
 use std::str::FromStr;
 
-use crate::matchers::string::numeric::be_numeric;
 use crate::matchers::{Should, ShouldNot};
+use crate::matchers::string::numeric::be_numeric;
 
 /// NumericAssertion enables assertions about whether a string (or str) is numeric.
 pub trait NumericAssertion {
@@ -30,19 +30,9 @@ pub trait NumericAssertion {
     fn should_not_be_numeric<T: FromStr>(&self) -> &Self;
 }
 
-impl NumericAssertion for String {
-    fn should_be_numeric<T: FromStr>(&self) -> &Self {
-        (self as &str).should_be_numeric::<T>();
-        self
-    }
-
-    fn should_not_be_numeric<T: FromStr>(&self) -> &Self {
-        (self as &str).should_not_be_numeric::<T>();
-        self
-    }
-}
-
-impl NumericAssertion for &str {
+impl<S> NumericAssertion for S
+    where S: AsRef<str>
+{
     fn should_be_numeric<T: FromStr>(&self) -> &Self {
         self.should(&be_numeric::<T>());
         self
