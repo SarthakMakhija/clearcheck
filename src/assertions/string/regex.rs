@@ -1,7 +1,7 @@
 use regex::Regex;
 
-use crate::matchers::string::regex::match_with;
 use crate::matchers::{Should, ShouldNot};
+use crate::matchers::string::regex::match_with;
 
 /// RegularExpressionAssertion enables assertions about whether a string (or str) matches a regular expression.
 pub trait RegularExpressionAssertion {
@@ -34,19 +34,8 @@ pub trait RegularExpressionAssertion {
     fn should_not_match(&self, regex: Regex) -> &Self;
 }
 
-impl RegularExpressionAssertion for String {
-    fn should_match(&self, regex: Regex) -> &Self {
-        (self as &str).should_match(regex);
-        self
-    }
-
-    fn should_not_match(&self, regex: Regex) -> &Self {
-        (self as &str).should_not_match(regex);
-        self
-    }
-}
-
-impl RegularExpressionAssertion for &str {
+impl<T> RegularExpressionAssertion for T
+    where T: AsRef<str> {
     fn should_match(&self, regex: Regex) -> &Self {
         self.should(&match_with(regex));
         self
@@ -60,8 +49,9 @@ impl RegularExpressionAssertion for &str {
 
 #[cfg(all(test, feature = "regex"))]
 mod tests {
-    use crate::assertions::string::regex::RegularExpressionAssertion;
     use regex::Regex;
+
+    use crate::assertions::string::regex::RegularExpressionAssertion;
 
     #[test]
     fn should_match_regular_expression() {
@@ -96,8 +86,9 @@ mod tests {
 
 #[cfg(all(test, feature = "regex"))]
 mod string_tests {
-    use crate::assertions::string::regex::RegularExpressionAssertion;
     use regex::Regex;
+
+    use crate::assertions::string::regex::RegularExpressionAssertion;
 
     #[test]
     fn should_match_regular_expression() {
