@@ -52,6 +52,8 @@
         + [Assertions](#assertions-12)
         + [Length based assertions](#length-based-assertions)
         + [Usage](#usage-13)
+- [Changelog](#changelog)
+  * [Version 0.0.2](#version-002) 
 - [Unleashing the power of custom matchers and assertions](#unleashing-the-power-of-custom-matchers-and-assertions)
 - [Rust features](#rust-features)
 - [Example project](#example-project)
@@ -532,6 +534,53 @@ pass_phrase.should_not_be_empty()
     .should_not_contain_ignoring_case("pass")
     .should_not_contain_ignoring_case("word");
 ```
+
+### Changelog
+
+#### Version 0.0.2
+
+Version 0.0.2 refactored the String assertions to remove the duplication and introduced the following assertions:
+
+##### Collection (Predicate based assertions)
+
+| **Assertion**              | **Description**                                                                  |
+|----------------------------|----------------------------------------------------------------------------------|
+| should_satisfy_for_all     | Asserts that all the elements in the collection satisfy the given predicate.     |
+| should_not_satisfy_for_all | Asserts that not all the elements in the collection satisfy the given predicate. |
+| should_satisfy_for_any     | Asserts that any of the elements in the collection satisfy the given predicate.  |
+| should_not_satisfy_for_any | Asserts that none of the elements in the collection satisfy the given predicate. | 
+
+##### Collection (Min-max based assertions)
+
+| **Assertion**                          | **Description**                                                                                             |
+|----------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| should_have_min                        | Asserts that the minimum value in the underlying collection equals the given minimum value.                 |
+| should_not_have_min                    | Asserts that the minimum value in the underlying collection does not equal the given minimum value.         |
+| should_have_max                        | Asserts that the maximum value in the underlying collection equals the given maximum value.                 |
+| should_not_have_max                    | Asserts that the maximum value in the underlying collection does not equal the given maximum value.         | 
+| should_have_min_in_inclusive_range     | Asserts that the minimum value in the underlying collection falls within the given inclusive range.         | 
+| should_not_have_min_in_inclusive_range | Asserts that the minimum value in the underlying collection does not fall within the given inclusive range. | 
+| should_have_min_in_exclusive_range     | Asserts that the minimum value in the underlying collection falls within the given exclusive range.         | 
+| should_not_have_min_in_exclusive_range | Asserts that the minimum value in the underlying collection does not fall within the given exclusive range. |  
+| should_have_max_in_inclusive_range     | Asserts that the maximum value in the underlying collection falls within the given inclusive range.         |  
+| should_not_have_max_in_inclusive_range | Asserts that the maximum value in the underlying collection does not fall within the given inclusive range. |
+| should_have_max_in_exclusive_range     | Asserts that the maximum value in the underlying collection falls within the given exclusive range.         |
+| should_not_have_max_in_exclusive_range | Asserts that the maximum value in the underlying collection does not fall within the given exclusive range. |
+
+##### Option (Predicate based assertions)
+
+| **Assertion**                  | **Description**                                                                 |
+|--------------------------------|---------------------------------------------------------------------------------|
+| should_be_some_and_satisfy     | Asserts that the Option value is Some and satisfies the given predicate.        |
+| should_be_some_and_not_satisfy | Asserts that the Option value is Some and does not satisfy the given predicate. |
+
+##### Result (Predicate based assertions)
+
+| **Assertion**                | **Description**                                                               |
+|------------------------------|-------------------------------------------------------------------------------|
+| should_be_ok_and_satisfy     | Asserts that the Result value is Ok and satisfies the given predicate.        |
+| should_be_ok_and_not_satisfy | Asserts that the Result value is Ok and does not satisfy the given predicate. |
+
 
 ### Unleashing the power of custom matchers and assertions
 
