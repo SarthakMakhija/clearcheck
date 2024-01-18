@@ -1,5 +1,5 @@
-use crate::matchers::string::boundary::{begin_with, end_with};
 use crate::matchers::{Should, ShouldNot};
+use crate::matchers::string::boundary::{begin_with, end_with};
 
 /// BoundaryAssertion enables assertions about the beginning and the ending boundaries of string (or str) values.
 ///
@@ -64,29 +64,8 @@ pub trait BoundaryAssertion {
     fn should_not_end_with(&self, suffix: &'static str) -> &Self;
 }
 
-impl BoundaryAssertion for String {
-    fn should_begin_with(&self, prefix: &'static str) -> &Self {
-        (self as &str).should_begin_with(prefix);
-        self
-    }
-
-    fn should_not_begin_with(&self, prefix: &'static str) -> &Self {
-        (self as &str).should_not_begin_with(prefix);
-        self
-    }
-
-    fn should_end_with(&self, suffix: &'static str) -> &Self {
-        (self as &str).should_end_with(suffix);
-        self
-    }
-
-    fn should_not_end_with(&self, suffix: &'static str) -> &Self {
-        (self as &str).should_not_end_with(suffix);
-        self
-    }
-}
-
-impl BoundaryAssertion for &str {
+impl<T> BoundaryAssertion for T
+    where T: AsRef<str> {
     fn should_begin_with(&self, prefix: &'static str) -> &Self {
         self.should(&begin_with(prefix));
         self
