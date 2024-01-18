@@ -1,5 +1,5 @@
-use crate::matchers::equal::be_equal_ignoring_case;
 use crate::matchers::{Should, ShouldNot};
+use crate::matchers::equal::be_equal_ignoring_case;
 
 /// IgnoreCaseEqualityAssertion enables assertions about whether a string (or str) equals other string, with case ignored.
 pub trait IgnoreCaseEqualityAssertion {
@@ -28,19 +28,8 @@ pub trait IgnoreCaseEqualityAssertion {
     fn should_not_be_equal_ignoring_case(&self, other: &str) -> &Self;
 }
 
-impl IgnoreCaseEqualityAssertion for String {
-    fn should_be_equal_ignoring_case(&self, other: &str) -> &Self {
-        (self as &str).should_be_equal_ignoring_case(other);
-        self
-    }
-
-    fn should_not_be_equal_ignoring_case(&self, other: &str) -> &Self {
-        (self as &str).should_not_be_equal_ignoring_case(other);
-        self
-    }
-}
-
-impl IgnoreCaseEqualityAssertion for &str {
+impl<T> IgnoreCaseEqualityAssertion for T
+    where T: AsRef<str> {
     fn should_be_equal_ignoring_case(&self, other: &str) -> &Self {
         self.should(&be_equal_ignoring_case(other));
         self
