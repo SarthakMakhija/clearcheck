@@ -2,6 +2,16 @@ use std::marker::PhantomData;
 
 use crate::matchers::{Matcher, MatcherResult};
 
+/// SomePredicateMatcher offers a flexible way to assert whether the Option value is both Some and that the contained value meets certain conditions defined by the predicate.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::Matcher;
+/// use clearcheck::matchers::option::predicate::satisfy;
+///
+/// let matcher = satisfy(|value| value > &&400);
+/// assert!(matcher.test(&Some(1000)).passed());
+/// ```
 pub struct SomePredicateMatcher<F, T>
     where F: Fn(&&T) -> bool
 {
@@ -21,6 +31,7 @@ impl<F, T> Matcher<Option<T>> for SomePredicateMatcher<F, T>
     }
 }
 
+/// Creates a SomePredicateMatcher that asserts whether the Option value is both Some and that the contained value meets certain conditions defined by the predicate.
 pub fn satisfy<F, T>(predicate: F) -> SomePredicateMatcher<F, T>
     where F: Fn(&&T) -> bool
 {

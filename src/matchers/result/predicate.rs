@@ -1,6 +1,18 @@
 use std::marker::PhantomData;
 use crate::matchers::{Matcher, MatcherResult};
 
+/// OkPredicateMatcher offers a flexible way to assert whether the Result value is both Ok and that the contained value meets certain conditions defined by the predicate.
+///
+/// # Example
+///```
+/// use clearcheck::matchers::Matcher;
+/// use clearcheck::matchers::result::predicate::satisfy;
+///
+/// let matcher = satisfy(|value| value > &400);
+/// let value: Result<i32, &str> = Ok(1000);
+///
+/// assert!(matcher.test(&value).passed());
+/// ```
 pub struct OkPredicateMatcher<F, T>
     where F: Fn(&T) -> bool
 {
@@ -20,6 +32,7 @@ impl<F, T, E> Matcher<Result<T, E>> for OkPredicateMatcher<F, T>
     }
 }
 
+/// Creates an OkPredicateMatcher that asserts whether the Result value is both Ok and that the contained value meets certain conditions defined by the predicate.
 pub fn satisfy<F, T>(predicate: F) -> OkPredicateMatcher<F, T>
     where F: Fn(&T) -> bool
 {

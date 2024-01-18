@@ -2,9 +2,30 @@ use crate::matchers::{Should, ShouldNot};
 use crate::matchers::option::be_some;
 use crate::matchers::option::predicate::satisfy;
 
+/// SomePredicateAssertion enables assertions about whether the Option value is both Some and that the contained value meets or doesn't meet certain conditions defined by a predicate.
 pub trait SomePredicateAssertion<T> {
+    /// - Asserts that the Option value is Some and satisfies the given predicate.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::option::predicate::SomePredicateAssertion;
+    ///
+    /// let option = Some(100);
+    /// option.should_be_some_and_satisfy(|value| value > &&50);
+    /// ```
     fn should_be_some_and_satisfy<F: Fn(&&T) -> bool>(&self, predicate: F) -> &Self;
 
+    /// - Asserts that the Option value is Some and does not satisfy the given predicate.
+    /// - Returns a reference to self for fluent chaining.
+    /// - Panics if the assertion fails.
+    /// # Example
+    /// ```
+    /// use clearcheck::assertions::option::predicate::SomePredicateAssertion;
+    ///
+    /// let option = Some(100);
+    /// option.should_be_some_and_not_satisfy(|value| value > &&500);
+    /// ```
     fn should_be_some_and_not_satisfy<F: Fn(&&T) -> bool>(&self, predicate: F) -> &Self;
 }
 
