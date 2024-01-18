@@ -94,14 +94,14 @@ Add this to your `Cargo.toml` (no features):
 
 ```toml
 [dev-dependencies]
-clearcheck = { version = "0.0.1" }
+clearcheck = { version = "0.0.2" }
 ```
 
 Add this to your `Cargo.toml` (all features):
 
 ```toml
 [dev-dependencies]
-clearcheck = { version = "0.0.1", features = ["num", "date", "regex", "file"] }
+clearcheck = { version = "0.0.2", features = ["num", "date", "regex", "file"] }
 chrono = { version = "0.4.31" }
 num = { version = "0.4.1" }
 regex = { version = "1.10.2" }
