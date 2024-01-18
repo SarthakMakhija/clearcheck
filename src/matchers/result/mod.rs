@@ -1,3 +1,5 @@
+pub mod predicate;
+
 use crate::matchers::{Matcher, MatcherResult};
 
 /// OkErrMatcher provides a way to assert whether [`Result`] values evaluate to Ok or Err.

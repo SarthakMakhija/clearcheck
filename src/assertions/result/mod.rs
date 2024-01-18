@@ -1,3 +1,5 @@
+pub mod predicate;
+
 use std::fmt::Debug;
 
 use crate::matchers::result::{be_err, be_ok};
