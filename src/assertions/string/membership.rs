@@ -199,84 +199,8 @@ pub trait MembershipAssertion {
     fn should_not_be_empty(&self) -> &Self;
 }
 
-impl MembershipAssertion for String {
-    fn should_only_contain_digits(&self) -> &Self {
-        (self as &str).should_only_contain_digits();
-        self
-    }
-
-    fn should_contain_a_digit(&self) -> &Self {
-        (self as &str).should_contain_a_digit();
-        self
-    }
-
-    fn should_not_contain_digits(&self) -> &Self {
-        (self as &str).should_not_contain_digits();
-        self
-    }
-
-    fn should_contain_character(&self, ch: char) -> &Self {
-        (self as &str).should_contain_character(ch);
-        self
-    }
-
-    fn should_not_contain_character(&self, ch: char) -> &Self {
-        (self as &str).should_not_contain_character(ch);
-        self
-    }
-
-    fn should_contain_all_characters(&self, chars: Vec<char>) -> &Self {
-        (self as &str).should_contain_all_characters(chars);
-        self
-    }
-
-    fn should_not_contain_all_characters(&self, chars: Vec<char>) -> &Self {
-        (self as &str).should_not_contain_all_characters(chars);
-        self
-    }
-
-    fn should_contain_any_characters(&self, chars: Vec<char>) -> &Self {
-        (self as &str).should_contain_any_characters(chars);
-        self
-    }
-
-    fn should_not_contain_any_characters(&self, chars: Vec<char>) -> &Self {
-        (self as &str).should_not_contain_any_characters(chars);
-        self
-    }
-
-    fn should_contain(&self, substr: &'static str) -> &Self {
-        (self as &str).should_contain(substr);
-        self
-    }
-
-    fn should_not_contain(&self, substr: &'static str) -> &Self {
-        (self as &str).should_not_contain(substr);
-        self
-    }
-
-    fn should_contain_ignoring_case(&self, substr: &'static str) -> &Self {
-        (self as &str).should_contain_ignoring_case(substr);
-        self
-    }
-
-    fn should_not_contain_ignoring_case(&self, substr: &'static str) -> &Self {
-        (self as &str).should_not_contain_ignoring_case(substr);
-        self
-    }
-
-    fn should_be_empty(&self) -> &Self {
-        (self as &str).should_be_empty();
-        self
-    }
-
-    fn should_not_be_empty(&self) -> &Self {
-        (self as &str).should_not_be_empty();
-        self
-    }
-}
-
-impl MembershipAssertion for &str {
+impl<T> MembershipAssertion for T
+    where T: AsRef<str> {
     fn should_only_contain_digits(&self) -> &Self {
         self.should(&contain_only_digits());
         self
